@@ -60,7 +60,9 @@ public class QuestScreen extends ActivityCircle implements
 			fig2.setText(lq.FIGURAS[nivel][1]);
 
 			fig3.setText(lq.FIGURAS[nivel][2]);
+
 		} catch (ArrayIndexOutOfBoundsException e) {
+
 			e.printStackTrace();
 
 			alert.alertDialogError(this, "NÃO HÀ FILMES",
@@ -78,9 +80,20 @@ public class QuestScreen extends ActivityCircle implements
 		String resposta = responseText.getText().toString().toLowerCase()
 				.trim();
 
-		for (int i = 0; i < lq.RESPOSTA[nivel].length; i++) {
+		String[] aux = lq.RESPOSTA[nivel];
 
-			if (resposta.equals(lq.RESPOSTA[nivel][i])) {
+		for (int i = 0; i < aux.length; i++) {
+
+			// resposta não preenchida
+			if (resposta.equals("")) {
+
+				Toast.makeText(this, "Por favor, responda algo.",
+						Toast.LENGTH_SHORT).show();
+
+				continue;
+			}
+
+			if (resposta.equals(aux[i])) {
 
 				Toast.makeText(this, "Resposta correta.", Toast.LENGTH_SHORT)
 						.show();
@@ -90,7 +103,7 @@ public class QuestScreen extends ActivityCircle implements
 					public void run() {
 						prepareNextQuest();
 					}
-				}, 1000);
+				}, 1500);
 
 				break;
 			} else {

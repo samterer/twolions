@@ -8,25 +8,52 @@
 
     <application
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:theme="@style/tema" >
         <activity
             android:name=".screen.TwoLionsSplashScreen"
-            android:clearTaskOnLaunch="false"
-            android:finishOnTaskLaunch="true"
-            android:screenOrientation="portrait" 
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screen.AboutScreen" />
-        <activity android:name=".screen.LogonScreen" />
-        <activity android:name=".screen.MenuScreen" />
-        <activity android:name=".screen.QuestScreen" />
-        <activity android:name=".screen.RankingScreen" />
-        <activity android:name=".screen.SplashScreen" />
+
+        <!-- tela de about -->
+        <activity
+            android:name=".screen.AboutScreen"
+            android:clearTaskOnLaunch="false"
+            android:finishOnTaskLaunch="true"
+            android:screenOrientation="portrait" />
+
+        <!-- tela de logon -->
+        <activity
+            android:name=".screen.LogonScreen"
+            android:screenOrientation="portrait" />
+
+        <!-- tela do menu -->
+        <activity
+            android:name=".screen.MenuScreen"
+            android:screenOrientation="portrait" />
+
+        <!-- tela do jogo -->
+        <activity
+            android:name=".screen.QuestScreen"
+            android:screenOrientation="portrait" />
+
+        <!-- tela de ranking -->
+        <activity
+            android:name=".screen.RankingScreen"
+            android:screenOrientation="portrait" />
+
+        <!-- tela de splash screen -->
+        <activity
+            android:name=".screen.SplashScreen"
+            android:clearTaskOnLaunch="false"
+            android:finishOnTaskLaunch="true"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
