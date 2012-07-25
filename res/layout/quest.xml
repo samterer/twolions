@@ -2,33 +2,35 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/bgd"
     android:stretchColumns="1" >
 
-    <TableRow android:layout_width="wrap_content" >
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_weight="1" >
 
         <TextView
             android:id="@+id/figura1"
-            android:textSize="22dp"
-            android:textStyle="bold"
-            android:text="fig1" />
+            style="@style/texto14Negrito"
+            android:text="fig1"
+            android:textAppearance="@style/texto14Negrito" />
 
         <TextView
             android:id="@+id/figura3"
+            style="@style/texto14Negrito"
             android:gravity="right"
-            android:textSize="22dp"
-            android:textStyle="bold"
             android:text="fig3" />
     </TableRow>
 
     <TableRow
-        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        ayout_width="wrap_content"
         android:gravity="center" >
 
         <TextView
             android:id="@+id/figura2"
+            style="@style/texto14Negrito"
             android:gravity="center"
-            android:textSize="22dp"
-            android:textStyle="bold"
             android:text="fig2" />
     </TableRow>
 
@@ -37,26 +39,52 @@
         android:background="#FF909090" />
 
     <TableRow
+        android:layout_width="wrap_content"
         android:layout_weight="1"
         android:gravity="center" >
 
-        <AutoCompleteTextView
+        <TextView
+            android:id="@+id/retorno"
+            style="@style/texto14Negrito"
+            android:gravity="center"
+            android:text="" 
+            android:visibility="gone"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+             android:visibility="visible"/>
+    </TableRow>
+
+    <View
+        android:layout_height="2dip"
+        android:background="#FF909090" />
+
+    <TableRow
+        android:layout_weight="2"
+        android:gravity="center" >
+
+        <EditText
             android:id="@+id/responseText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="22dp"
-            android:textStyle="bold"
             android:ems="10"
-            android:text="" >
+            android:text=""
+            android:textSize="22dp"
+            android:textStyle="bold" >
 
             <requestFocus />
-        </AutoCompleteTextView>
+        </EditText>
     </TableRow>
 
     <TableRow android:gravity="center" >
 
         <Button
             android:id="@+id/respostaBT"
+            style="@style/texto14Negrito"
             android:layout_width="wrap_content"
             android:clickable="true"
             android:onClick="verifyResponse"
