@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="42dp"
+    android:background="@drawable/i_menu_sup"
+    android:orientation="vertical"
+    android:stretchColumns="3" >
+
+    <TableRow>
+
+        <!-- buttons in left -->
+
+        <ImageView
+            android:id="@+id/bt_select_vehicle"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"
+            android:onClick="backToSelectBehicle"
+            android:paddingTop="1dp"
+            android:src="@drawable/bt_select_vehicle"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/bt_help"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:onClick="help"
+            android:paddingTop="1dp"
+            android:src="@drawable/bt_help"
+            android:visibility="visible" />
+
+        <!-- title -->
+
+        <ImageView
+            android:id="@+id/t_report"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="helpAboutReport"
+            android:src="@drawable/t_report"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/t_select_vehicle"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="helpAboutSelectVehicle"
+            android:src="@drawable/t_select_vehicle" />
+
+        <!-- buttons in right -->
+
+        <ImageView
+            android:id="@+id/bt_add"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:onClick="addNewRegister"
+            android:paddingTop="1dp"
+            android:src="@drawable/bt_add" />
+    </TableRow>
+
+</TableLayout>
