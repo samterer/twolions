@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="left|center_vertical"
+    android:background="@color/pastel" >
+
+    <!-- Layout com Imagem do Carro, Nome e Descrição -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:layout_marginRight="12dp"
+        android:gravity="center_vertical"
+        android:minHeight="40dp"
+        android:orientation="horizontal"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp" >
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <!-- Imagem do carro -->
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center|center_vertical"
+                android:src="@drawable/icon" />
+            <!-- Barra de progresso enquanto carrega a imagem -->
+
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@android:style/Widget.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_vertical"
+                android:layout_marginRight="6dp"
+                android:gravity="center|center_vertical"
+                android:visibility="invisible" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="5dp"
+            android:orientation="vertical" >
+
+            <!-- Nome do Carro -->
+
+            <TextView
+                android:id="@+id/tNome"
+                style="@style/texto28"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:textColor="@color/preto"
+                android:textStyle="bold"
+                android:typeface="monospace" />
+            <!-- Descrição -->
+
+            <TextView
+                android:id="@+id/tNome"
+                style="@style/texto12"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Last update: 08.11.2012"
+                android:textColor="@color/preto"
+                android:typeface="monospace" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- Seta na Direita -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:layout_gravity="right|center_vertical"
+        android:gravity="right|center_vertical" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="10dp"
+            android:gravity="right|center_vertical"
+            android:src="@drawable/seta_direita" />
+
+    </LinearLayout>
+
+</FrameLayout>
