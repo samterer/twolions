@@ -3,5 +3,7 @@
 
     <string name="hello">Hello World, FuelActivity!</string>
     <string name="app_name">Fuel</string>
+    <string name="name">Name Car</string>
+    <string name="aguarde">Aguarde um momento.</string>
 
 </resources>
