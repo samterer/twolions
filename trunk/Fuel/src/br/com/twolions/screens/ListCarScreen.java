@@ -1,129 +1,117 @@
 package br.com.twolions.screens;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
-import br.com.transacao.Transacao;
 import br.com.twolions.R;
+import br.com.twolions.base.RepositorioCarro;
+import br.com.twolions.base.RepositorioCarroScript;
+import br.com.twolions.core.ListCarActivity;
+import br.com.twolions.interfaces.InterfaceBar;
+import br.com.twolions.object.CarListAdapter;
 import br.com.twolions.object.Carro;
-import br.com.twolions.object.CarroAdapter;
-import br.com.twolions.service.CarroService;
+import br.com.twolions.object.Carro.Carros;
 
-public class ListCarScreen extends ListCarActivity implements
-		OnItemClickListener, Transacao {
+public class ListCarScreen extends ListCarActivity
+		implements
+			OnItemClickListener,
+			InterfaceBar {
+	protected static final int INSERIR_EDITAR = 1;
 
-	private ListView listView;
+	public static RepositorioCarro repositorio;
+
 	private List<Carro> carros;
 
+	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		mountScreen();
+		repositorio = new RepositorioCarroScript(this);
 
+		atualizarLista();
 	}
 
-	private void mountScreen() {
+	protected void atualizarLista() {
+		// Pega a lista de carros e exibe na tela
+		carros = repositorio.listarCarros();
 
-		setContentView(R.layout.carros);
+		// Adaptador de lista customizado para cada linha de um carro
+		// setListAdapter(new CarListAdapter(this, carros));
 
-		listView = (ListView) findViewById(R.id.listview);
+		setContentView(R.layout.list_car);
+
+		ListView listView = (ListView) findViewById(R.id.listview);
+		listView.setAdapter(new CarListAdapter(this, carros));
 		listView.setOnItemClickListener(this);
 
-		carros = new ArrayList<Carro>();
-
-		startTransaction(this);
-	}
-
-	public void executar() throws Exception {
-		// busca os carros em uma thread
-		this.carros = CarroService.getCarros();
-
-		for (int i = 0; i < carros.size(); i++) {
-			Log.i("appLog", "item: " + carros.get(i).getNome());
-		}
-
-	}
-
-	public void atualizarView() {
-		Log.i("appLog", "> atualizarView");
-
-		// atualiza os carros na thread principal
-		if (carros != null) {
-			listView.setAdapter(new CarroAdapter(this, carros));
-		}
-
+		// organize bts
+		organizeBt();
 	}
 
 	public void onItemClick(AdapterView<?> parent, View view, int posicao,
 			long id) {
-		Carro c = (Carro) parent.getAdapter().getItem(posicao);
-		Toast.makeText(this, "Carro: " + c.nome, Toast.LENGTH_SHORT).show();
+		editarCarro(posicao);
+	}
+
+	// Recupera o id do carro, e abre a tela de edição
+	protected void editarCarro(int posicao) {
+		// Usuário clicou em algum carro da lista
+		// Recupera o carro selecionado
+		Carro carro = carros.get(posicao);
+
+		// Cria a intent para abrir a tela de editar
+		Intent it = new Intent(this, FormCarScreen.class);
+
+		// Passa o id do carro como parâmetro
+		it.putExtra(Carros._ID, carro.id);
+
+		// Abre a tela de edição
+		startActivityForResult(it, INSERIR_EDITAR);
+	}
+
+	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
+		super.onActivityResult(codigo, codigoRetorno, it);
+
+		// Quando a activity EditarCarro retornar, seja se foi para adicionar
+		// vamos atualizar a lista
+		if (codigoRetorno == RESULT_OK) {
+			// atualiza a lista na tela
+			atualizarLista();
+		}
+	}
+
+	protected void onDestroy() {
+		super.onDestroy();
+
+		// Fecha o banco
+		repositorio.fechar();
+	}
+
+	public void btBarLeft(View v) {
+		// TODO Auto-generated method stub
 
 	}
 
-	// TESTS
-	// public void helpAboutReport(View v) {
-	//
-	// ImageView t_report = (ImageView) findViewById(R.id.t_report);
-	// t_report.setVisibility(View.GONE);
-	//
-	// ImageView t_select_vehicle = (ImageView)
-	// findViewById(R.id.t_select_vehicle);
-	// t_select_vehicle.setVisibility(View.VISIBLE);
-	//
-	// Toast.makeText(this, "help about report(single car)",
-	// Toast.LENGTH_SHORT).show();
-	//
-	// }
-	//
-	// public void helpAboutSelectVehicle(View v) {
-	//
-	// ImageView t_report = (ImageView) findViewById(R.id.t_report);
-	// t_report.setVisibility(View.VISIBLE);
-	//
-	// ImageView t_select_vehicle = (ImageView)
-	// findViewById(R.id.t_select_vehicle);
-	// t_select_vehicle.setVisibility(View.GONE);
-	//
-	// Toast.makeText(this, "help about selection of vehicles",
-	// Toast.LENGTH_SHORT).show();
-	//
-	// }
-	//
-	// public void help(View v) {
-	// ImageView bt_help = (ImageView) findViewById(R.id.bt_help);
-	// bt_help.setVisibility(View.GONE);
-	//
-	// ImageView bt_select_vehicle = (ImageView)
-	// findViewById(R.id.bt_select_vehicle);
-	// bt_select_vehicle.setVisibility(View.VISIBLE);
-	//
-	// Toast.makeText(this, "go to help screen", Toast.LENGTH_SHORT).show();
-	// }
-	//
-	// public void backToSelectBehicle(View v) {
-	//
-	// ImageView bt_help = (ImageView) findViewById(R.id.bt_help);
-	// bt_help.setVisibility(View.VISIBLE);
-	//
-	// ImageView bt_select_vehicle = (ImageView)
-	// findViewById(R.id.bt_select_vehicle);
-	// bt_select_vehicle.setVisibility(View.GONE);
-	//
-	// Toast.makeText(this, "back to vehicle list", Toast.LENGTH_SHORT).show();
-	//
-	// }
-	//
-	// public void addNewRegister(View v) {
-	//
-	// Toast.makeText(this, "add new register", Toast.LENGTH_SHORT).show();
-	//
-	// }
+	public void btBarRight(View v) {
+
+		startActivityForResult(new Intent(this, FormCarScreen.class),
+				INSERIR_EDITAR);
+
+	}
+
+	public void organizeBt() {
+		// bt left
+		ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
+		bt_left.setBackgroundResource(R.drawable.bt_help);
+
+		// bt rigt
+		ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
+		bt_right.setBackgroundResource(R.drawable.bt_add);
+	}
 }
