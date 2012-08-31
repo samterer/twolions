@@ -108,10 +108,14 @@ public class ListCarScreen extends ListCarActivity
 	public void organizeBt() {
 		// bt left
 		ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		bt_left.setBackgroundResource(R.drawable.bt_help);
+		bt_left.setImageResource(R.drawable.bt_help);
 
 		// bt rigt
 		ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
-		bt_right.setBackgroundResource(R.drawable.bt_add);
+		bt_right.setImageResource(R.drawable.bt_add);
+
+		ImageView title = (ImageView) findViewById(R.id.title);
+		title.setImageResource(R.drawable.t_select_vehicle);
+
 	}
 }

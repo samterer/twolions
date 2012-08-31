@@ -14,7 +14,7 @@ import br.com.twolions.object.Carro;
 import br.com.twolions.object.Carro.Carros;
 
 public class RepositorioCarro {
-	private static final String CATEGORIA = "appLog";
+	private static final String CATEGORIA = "base";
 
 	// Nome do banco
 	private static final String NOME_BANCO = "db_fuel";
@@ -51,6 +51,7 @@ public class RepositorioCarro {
 		ContentValues values = new ContentValues();
 		values.put(Carros.NOME, carro.nome);
 		values.put(Carros.PLACA, carro.placa);
+		values.put(Carros.TIPO, carro.tipo);
 
 		long id = inserir(values);
 		return id;
@@ -67,6 +68,7 @@ public class RepositorioCarro {
 		ContentValues values = new ContentValues();
 		values.put(Carros.NOME, carro.nome);
 		values.put(Carros.PLACA, carro.placa);
+		values.put(Carros.TIPO, carro.tipo);
 
 		String _id = String.valueOf(carro.id);
 
@@ -122,6 +124,7 @@ public class RepositorioCarro {
 			carro.id = c.getLong(0);
 			carro.nome = c.getString(1);
 			carro.placa = c.getString(2);
+			carro.tipo = c.getString(3);
 
 			return carro;
 		}
@@ -153,6 +156,7 @@ public class RepositorioCarro {
 			int idxId = c.getColumnIndex(Carros._ID);
 			int idxNome = c.getColumnIndex(Carros.NOME);
 			int idxPlaca = c.getColumnIndex(Carros.PLACA);
+			int idxTipo = c.getColumnIndex(Carros.TIPO);
 
 			// Loop até o final
 			do {
@@ -163,6 +167,7 @@ public class RepositorioCarro {
 				carro.id = c.getLong(idxId);
 				carro.nome = c.getString(idxNome);
 				carro.placa = c.getString(idxPlaca);
+				carro.tipo = c.getString(idxTipo);
 
 			} while (c.moveToNext());
 		}
@@ -189,6 +194,7 @@ public class RepositorioCarro {
 				carro.id = c.getLong(0);
 				carro.nome = c.getString(1);
 				carro.placa = c.getString(2);
+				carro.tipo = c.getString(3);
 			}
 		} catch (SQLException e) {
 			Log.e(CATEGORIA,
