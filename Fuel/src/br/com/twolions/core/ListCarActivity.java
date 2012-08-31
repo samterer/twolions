@@ -1,6 +1,6 @@
-package br.com.twolions.screens;
+package br.com.twolions.core;
 
-import br.com.game.ActivityCircle;
+import br.com.core.ActivityCircle;
 import br.com.transacao.Transacao;
 import br.com.transacao.TransacaoTask;
 import br.com.twolions.R;
