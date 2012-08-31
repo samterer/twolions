@@ -9,16 +9,18 @@ public class RepositorioCarroScript extends RepositorioCarro {
 
 	// Cria a tabela com o "_id" sequencial
 	private static final String[] SCRIPT_DATABASE_CREATE = new String[]{
-			"create table carro ( _id integer primary key autoincrement, nome text not null,placa text not null);",
-			"insert into carro(nome,placa) values('Fusca','ABC-1234');",
-			"insert into carro(nome,placa) values('Brasilia','DEF-5678');",
-			"insert into carro(nome,placa) values('Chevete','GHI-9999');"};
+			"create table carro ( _id integer primary key autoincrement, nome text not null,placa text not null,tipo text not null);",
+
+			"insert into carro(nome,placa,tipo) values('Fusca','ABC-1234','carro');",
+			"insert into carro(nome,placa,tipo) values('XRE','FDL-9495','moto');",
+			"insert into carro(nome,placa,tipo) values('Brasilia','DEF-5678','carro');",
+			"insert into carro(nome,placa,tipo) values('YBR','GHI-9999','moto');"};
 
 	// Nome do banco
 	private static final String NOME_BANCO = "bd_fuel";
 
 	// Controle de versão
-	private static final int VERSAO_BANCO = 1;
+	private static final int VERSAO_BANCO = 3;
 
 	// Nome da tabela
 	public static final String TABELA_CARRO = "carro";

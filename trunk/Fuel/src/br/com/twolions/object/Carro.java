@@ -12,7 +12,7 @@ import android.provider.BaseColumns;
 public class Carro {
 
 	public static String[] colunas = new String[]{Carros._ID, Carros.NOME,
-			Carros.PLACA};
+			Carros.PLACA, Carros.TIPO};
 
 	/**
 	 * Pacote do Content Provider. Precisa ser único.
@@ -22,21 +22,24 @@ public class Carro {
 	public long id;
 	public String nome;
 	public String placa;
+	public String tipo;
 
 	public Carro() {
 	}
 
-	public Carro(String nome, String placa, int ano) {
+	public Carro(String nome, String placa, String tipo) {
 		super();
 		this.nome = nome;
 		this.placa = placa;
+		this.tipo = tipo;
 	}
 
-	public Carro(long id, String nome, String placa, int ano) {
+	public Carro(long id, String nome, String placa, String tipo) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.placa = placa;
+		this.tipo = tipo;
 	}
 
 	/**
@@ -67,6 +70,7 @@ public class Carro {
 
 		public static final String NOME = "nome";
 		public static final String PLACA = "placa";
+		public static final String TIPO = "tipo";
 
 		// Método que constrói uma Uri para um Carro específico, com o seu id
 		// A Uri é no formato
@@ -80,6 +84,6 @@ public class Carro {
 
 	@Override
 	public String toString() {
-		return "Nome: " + nome + ", Placa: " + placa;
+		return "Nome: " + nome + ", Placa: " + placa + ", Tipo: " + tipo;
 	}
 }

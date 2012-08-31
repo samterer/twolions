@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="120dp"
+        android:layout_height="200dp"
         android:layout_marginRight="12dp"
         android:gravity="center_vertical"
         android:minHeight="40dp"
@@ -24,22 +24,10 @@
             <!-- Imagem do carro -->
 
             <ImageView
-                android:id="@+id/img"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center|center_vertical"
-                android:src="@drawable/icon" />
-            <!-- Barra de progresso enquanto carrega a imagem -->
-
-            <ProgressBar
-                android:id="@+id/progress"
-                style="@android:style/Widget.ProgressBar.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|center_vertical"
-                android:layout_marginRight="6dp"
-                android:gravity="center|center_vertical"
-                android:visibility="invisible" />
+                android:id="@+id/tipo"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center|center_vertical" />
         </FrameLayout>
 
         <LinearLayout
@@ -52,22 +40,20 @@
             <!-- Nome do Carro -->
 
             <TextView
-                android:id="@+id/tNome"
+                android:id="@+id/nome"
                 style="@style/texto28"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/name"
                 android:textColor="@color/preto"
                 android:textStyle="bold"
                 android:typeface="monospace" />
             <!-- Descrição -->
 
             <TextView
-                android:id="@+id/tNome"
+                android:id="@+id/placa"
                 style="@style/texto12"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Last update: 08.11.2012"
                 android:textColor="@color/preto"
                 android:typeface="monospace" />
         </LinearLayout>

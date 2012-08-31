@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.twolions.R;
 
@@ -45,6 +46,13 @@ public class CarListAdapter extends BaseAdapter {
 
 		TextView placa = (TextView) view.findViewById(R.id.placa);
 		placa.setText(c.placa);
+
+		ImageView tipo = (ImageView) view.findViewById(R.id.tipo);
+		if (c.tipo.equals("carro")) {
+			tipo.setImageResource(R.drawable.type_car_on);
+		} else {
+			tipo.setImageResource(R.drawable.type_moto_on);
+		}
 
 		return view;
 	}

@@ -13,7 +13,7 @@ import android.util.Log;
  */
 class SQLiteHelper extends SQLiteOpenHelper {
 
-	private static final String CATEGORIA = "livro";
+	private static final String CATEGORIA = "appLog";
 
 	private String[] scriptSQLCreate;
 	private String scriptSQLDelete;
