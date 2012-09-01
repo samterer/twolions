@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frameLayout"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="150dp"
     android:layout_gravity="left|center_vertical"
-    android:background="@color/pastel" >
+    android:background="@drawable/fundo_carro_item" >
 
     <!-- Layout com Imagem do Carro, Nome e Descrição -->
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginRight="12dp"
         android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"
         android:minHeight="40dp"
         android:orientation="horizontal"
         android:paddingBottom="2dp"
@@ -58,11 +60,12 @@
                 android:typeface="monospace" />
         </LinearLayout>
     </LinearLayout>
+
     <!-- Seta na Direita -->
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:layout_gravity="right|center_vertical"
         android:gravity="right|center_vertical" >
 
@@ -74,6 +77,37 @@
             android:gravity="right|center_vertical"
             android:src="@drawable/seta_direita" />
 
+        <TableLayout
+            android:id="@+id/tb_edicao"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:visibility="gone" >
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/bt_delete"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bt_delete_red" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/bt_delete"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bt_edit" />
+            </TableRow>
+        </TableLayout>
     </LinearLayout>
 
 </FrameLayout>
