@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -84,17 +83,18 @@ public class FormCarScreen extends ActivityCircle implements InterfaceBar {
 
 		ImageView btExcluir = (ImageView) findViewById(R.id.btExcluir);
 
-		if (id == null) {
-			// Se id está nulo, não pode excluir
-			btExcluir.setVisibility(View.INVISIBLE);
-		} else {
-			// Listener para excluir o carro
-			btExcluir.setOnClickListener(new OnClickListener() {
-				public void onClick(View view) {
-					excluir();
-				}
-			});
-		}
+		// bt delete
+		// if (id == null) {
+		// // Se id está nulo, não pode excluir
+		// btExcluir.setVisibility(View.INVISIBLE);
+		// } else {
+		// // Listener para excluir o carro
+		// btExcluir.setOnClickListener(new OnClickListener() {
+		// public void onClick(View view) {
+		// excluir();
+		// }
+		// });
+		// }
 
 		// carro
 		campoTipoCar.setOnTouchListener(new OnTouchListener() {
