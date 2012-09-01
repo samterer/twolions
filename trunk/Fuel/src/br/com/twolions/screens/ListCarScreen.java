@@ -4,11 +4,13 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TableLayout;
 import br.com.twolions.R;
 import br.com.twolions.base.RepositorioCarro;
 import br.com.twolions.base.RepositorioCarroScript;
@@ -28,6 +30,8 @@ public class ListCarScreen extends ListCarActivity
 
 	private List<Carro> carros;
 
+	private TableLayout tb;
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -37,6 +41,9 @@ public class ListCarScreen extends ListCarActivity
 		atualizarLista();
 	}
 
+	private void init() {
+
+	}
 	protected void atualizarLista() {
 		// Pega a lista de carros e exibe na tela
 		carros = repositorio.listarCarros();
@@ -56,8 +63,31 @@ public class ListCarScreen extends ListCarActivity
 
 	public void onItemClick(AdapterView<?> parent, View view, int posicao,
 			long id) {
-		editarCarro(posicao);
+		// editarCarro(posicao);
+		// get the row the clicked button is in
+		TableLayout tb = (TableLayout) findViewById((int) id);// parent.getChildAt(posicao);
+
+		Log.i("appLog", "tb: " + tb);
+		if (tb.getVisibility() == View.VISIBLE) {
+			tb.setVisibility(View.GONE);
+		} else {
+			tb.setVisibility(View.VISIBLE);
+		}
+
 	}
+
+	/*
+	 * public void myClickHandler(View v) {
+	 * 
+	 * // get the row the clicked button is in FrameLayout frameLayout =
+	 * (FrameLayout) v.getParent();
+	 * 
+	 * TableLayout tb = (TableLayout) frameLayout.getChildAt(0);
+	 * 
+	 * if (tb.getVisibility() == View.VISIBLE) { tb.setVisibility(View.GONE); }
+	 * else { tb.setVisibility(View.VISIBLE); }
+	 * frameLayout.refreshDrawableState(); }
+	 */
 
 	// Recupera o id do carro, e abre a tela de edição
 	protected void editarCarro(int posicao) {
