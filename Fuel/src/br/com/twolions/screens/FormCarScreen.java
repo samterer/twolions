@@ -3,7 +3,6 @@ package br.com.twolions.screens;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -69,26 +68,19 @@ public class FormCarScreen extends ActivityCircle implements InterfaceBar {
 				campoPlaca.setText(c.placa);
 				// tipo
 				if (c.tipo.equals("moto")) {
-					campoTipoMoto
-							.setBackgroundResource(R.drawable.type_moto_on);
+					tipo = "moto";
+					campoTipoMoto.setPressed(true);
+					campoTipoCar.setPressed(false);
 				} else {
-					campoTipoMoto.setBackgroundResource(R.drawable.type_car_on);
+					tipo = "carro";
+					campoTipoCar.setPressed(true);
+					campoTipoMoto.setPressed(false);
 				}
 			}
 		}
 	}
 
 	public void actionBt(Context context) {
-		/*
-		 * ImageButton btCancelar = (ImageButton) findViewById(R.id.btCancelar);
-		 * btCancelar.setOnClickListener(new OnClickListener() { public void
-		 * onClick(View view) { setResult(RESULT_CANCELED); // Fecha a tela
-		 * finish(); } });
-		 * 
-		 * // Listener para salvar o carro ImageButton btSalvar = (ImageButton)
-		 * findViewById(R.id.btSalvar); btSalvar.setOnClickListener(new
-		 * OnClickListener() { public void onClick(View view) { salvar(); } });
-		 */
 
 		ImageView btExcluir = (ImageView) findViewById(R.id.btExcluir);
 
@@ -103,14 +95,6 @@ public class FormCarScreen extends ActivityCircle implements InterfaceBar {
 				}
 			});
 		}
-
-		// selecionou o tipo car
-		// Listener para excluir o carro
-		/*
-		 * campoTipoCar.setOnClickListener(new OnClickListener() { public void
-		 * onClick(View view) { tipo = "carro"; campoTipoCar.setPressed(true);
-		 * campoTipoMoto.setEnabled(false); } });
-		 */
 
 		// carro
 		campoTipoCar.setOnTouchListener(new OnTouchListener() {
@@ -179,7 +163,7 @@ public class FormCarScreen extends ActivityCircle implements InterfaceBar {
 			tipo = "carro";
 		}
 		carro.tipo = tipo.trim();
-		Log.i("appLog", "carro: " + carro.toString());
+
 		// Salvar
 		salvarCarro(carro);
 
