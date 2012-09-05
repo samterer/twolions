@@ -19,6 +19,7 @@ import br.com.twolions.dao.CarroDAO;
 import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.Carro.Carros;
 import br.com.twolions.interfaces.InterfaceBar;
+import br.com.twolions.sql.SqlScript;
 
 public class ListCarScreen extends ListCarActivity
 		implements
@@ -41,6 +42,8 @@ public class ListCarScreen extends ListCarActivity
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+
+		SqlScript sql = new SqlScript(this);
 
 		repositorio = new CarroDAO(this);
 

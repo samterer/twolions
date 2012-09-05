@@ -81,21 +81,6 @@ public class FormCarScreen extends ActivityCircle implements InterfaceBar {
 
 	public void actionBt(Context context) {
 
-		ImageView btExcluir = (ImageView) findViewById(R.id.btExcluir);
-
-		// bt delete
-		// if (id == null) {
-		// // Se id está nulo, não pode excluir
-		// btExcluir.setVisibility(View.INVISIBLE);
-		// } else {
-		// // Listener para excluir o carro
-		// btExcluir.setOnClickListener(new OnClickListener() {
-		// public void onClick(View view) {
-		// excluir();
-		// }
-		// });
-		// }
-
 		// carro
 		campoTipoCar.setOnTouchListener(new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {

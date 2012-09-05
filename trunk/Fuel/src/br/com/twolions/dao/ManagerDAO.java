@@ -25,14 +25,14 @@ public class ManagerDAO {
 
 		this.nome_tabela = table;
 
-		if (db.getInstance() == null) {
+		if (db == null) {
 			db = new DBConnection(ctx, banco);
 		}
 
 	}
 	public ManagerDAO(Context ctx, String banco) {
 
-		if (db.getInstance() == null) {
+		if (db == null) {
 			db = new DBConnection(ctx, banco);
 		}
 
