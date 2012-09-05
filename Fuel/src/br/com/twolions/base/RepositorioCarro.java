@@ -10,8 +10,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
-import br.com.twolions.object.Carro;
-import br.com.twolions.object.Carro.Carros;
+import br.com.twolions.dao.Carro;
+import br.com.twolions.dao.Carro.Carros;
 
 public class RepositorioCarro {
 	private static final String CATEGORIA = "base";
