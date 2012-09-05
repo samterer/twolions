@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.twolions.R;
-import br.com.twolions.dao.Carro;
+import br.com.twolions.daoobjects.Carro;
 
 public class CarListAdapter extends BaseAdapter {
 	private Context context;
