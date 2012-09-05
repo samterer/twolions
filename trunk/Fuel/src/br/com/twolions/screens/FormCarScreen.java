@@ -11,8 +11,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import br.com.core.ActivityCircle;
 import br.com.twolions.R;
-import br.com.twolions.dao.Carro;
-import br.com.twolions.dao.Carro.Carros;
+import br.com.twolions.daoobjects.Carro;
+import br.com.twolions.daoobjects.Carro.Carros;
 import br.com.twolions.interfaces.InterfaceBar;
 
 /**

@@ -14,11 +14,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import br.com.twolions.R;
 import br.com.twolions.adapters.CarListAdapter;
-import br.com.twolions.base.RepositorioCarro;
-import br.com.twolions.base.RepositorioCarroScript;
 import br.com.twolions.core.ListCarActivity;
-import br.com.twolions.dao.Carro;
-import br.com.twolions.dao.Carro.Carros;
+import br.com.twolions.dao.CarroDAO;
+import br.com.twolions.daoobjects.Carro;
+import br.com.twolions.daoobjects.Carro.Carros;
 import br.com.twolions.interfaces.InterfaceBar;
 
 public class ListCarScreen extends ListCarActivity
@@ -27,7 +26,7 @@ public class ListCarScreen extends ListCarActivity
 			InterfaceBar {
 	protected static final int INSERIR_EDITAR = 1;
 
-	public static RepositorioCarro repositorio;
+	public static CarroDAO repositorio;
 
 	private List<Carro> carros;
 
@@ -43,7 +42,7 @@ public class ListCarScreen extends ListCarActivity
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		repositorio = new RepositorioCarroScript(this);
+		repositorio = new CarroDAO(this);
 
 		atualizarLista();
 
