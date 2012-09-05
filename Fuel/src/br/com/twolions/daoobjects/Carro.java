@@ -1,7 +1,5 @@
 package br.com.twolions.daoobjects;
 
-import android.content.ContentUris;
-import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
