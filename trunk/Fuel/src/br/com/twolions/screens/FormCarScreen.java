@@ -11,9 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import br.com.core.ActivityCircle;
 import br.com.twolions.R;
+import br.com.twolions.dao.Carro;
+import br.com.twolions.dao.Carro.Carros;
 import br.com.twolions.interfaces.InterfaceBar;
-import br.com.twolions.object.Carro;
-import br.com.twolions.object.Carro.Carros;
 
 /**
  * Activity que utiliza o TableLayout para editar o carro
