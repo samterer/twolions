@@ -1,7 +1,5 @@
 package br.com.twolions.object;
 
-import android.content.ContentUris;
-import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
@@ -55,18 +53,20 @@ public class Carro {
 		private Carros() {
 		}
 
-		// content://br.livro.android.provider.carro/carros
-		public static final Uri CONTENT_URI = Uri.parse("content://"
-				+ AUTHORITY + "/carros");
-
-		// Mime Type para todos os carros
-		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.google.carros";
-
-		// Mime Type para um único carro
-		public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.google.carros";
-
-		// Ordenação default para inserir no order by
-		public static final String DEFAULT_SORT_ORDER = "_id ASC";
+		// // content://br.livro.android.provider.carro/carros
+		// public static final Uri CONTENT_URI = Uri.parse("content://"
+		// + AUTHORITY + "/carros");
+		//
+		// // Mime Type para todos os carros
+		// public static final String CONTENT_TYPE =
+		// "vnd.android.cursor.dir/vnd.google.carros";
+		//
+		// // Mime Type para um único carro
+		// public static final String CONTENT_ITEM_TYPE =
+		// "vnd.android.cursor.item/vnd.google.carros";
+		//
+		// // Ordenação default para inserir no order by
+		// public static final String DEFAULT_SORT_ORDER = "_id ASC";
 
 		public static final String NOME = "nome";
 		public static final String PLACA = "placa";
@@ -75,11 +75,11 @@ public class Carro {
 		// Método que constrói uma Uri para um Carro específico, com o seu id
 		// A Uri é no formato
 		// "content://br.livro.android.provider.carro/carros/id"
-		public static Uri getUriId(long id) {
-			// Adiciona o id na URI default do /carros
-			Uri uriCarro = ContentUris.withAppendedId(Carros.CONTENT_URI, id);
-			return uriCarro;
-		}
+		// public static Uri getUriId(long id) {
+		// // Adiciona o id na URI default do /carros
+		// Uri uriCarro = ContentUris.withAppendedId(Carros.CONTENT_URI, id);
+		// return uriCarro;
+		// }
 	}
 
 	@Override
