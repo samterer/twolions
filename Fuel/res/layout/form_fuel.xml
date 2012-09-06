@@ -2,8 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:visibility="gone">
-    
+    android:background="@color/pastel"
+    android:orientation="vertical" >
+
+    <include layout="@layout/bar_sup" />
+
+    <include layout="@layout/edit_fuel" />
 
 </LinearLayout>

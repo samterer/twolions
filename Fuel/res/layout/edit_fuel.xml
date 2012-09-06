@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical" >
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center" >
+
+        <LinearLayout
+            android:gravity="center"
+            >
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="80dp"
+                android:layout_height="53dp"
+                android:background="@drawable/f_time"
+                android:gravity="center"
+                android:scaleType="centerInside"
+                android:text="22 40"
+                android:textColor="@color/preto"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:typeface="monospace" />
+        </LinearLayout>
+    </TableRow>
+
+    <!-- TITULO VEHICLE -->
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/text1"
+            style="@style/texto12Negrito"
+            android:gravity="center"
+            android:text="GALLON PRICE"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </TableRow>
+    <!-- EDIT VEHICLE -->
+
+        <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:scaleType="centerInside"
+            android:text="$0003,74"
+            android:textColor="@color/preto"
+            android:textSize="60dp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </TableRow>
+    <!-- TITULO PLATE -->
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/text1"
+            style="@style/texto12Negrito"
+            android:gravity="center"
+            android:text="AMOUNT PAID"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </TableRow>
+    
+        <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:scaleType="centerInside"
+            android:text="$0045,29"
+            android:textColor="@color/preto"
+            android:textSize="60dp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </TableRow>
+    <!-- EDIT PLATE -->
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/text1"
+            style="@style/texto12Negrito"
+            android:gravity="center"
+            android:text="ODOMETER"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </TableRow>
+    
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:scaleType="centerInside"
+            android:text="025789"
+            android:textColor="@color/preto"
+            android:textSize="60dp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </TableRow>
+
+</TableLayout>

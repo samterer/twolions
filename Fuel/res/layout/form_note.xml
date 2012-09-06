@@ -7,6 +7,6 @@
 
     <include layout="@layout/bar_sup" />
 
-    <include layout="@layout/edit_car" />
+    <include layout="@layout/edit_note" />
 
 </LinearLayout>
