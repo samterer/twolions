@@ -39,7 +39,7 @@ public class CarListAdapter extends BaseAdapter {
 
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = inflater.inflate(R.layout.car_item, null);
+		View view = inflater.inflate(R.layout.item_car, null);
 
 		// Atualiza o valor do TextView
 		TextView nome = (TextView) view.findViewById(R.id.nome);
