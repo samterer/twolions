@@ -13,7 +13,7 @@ import android.util.Log;
  */
 class SQLiteHelper extends SQLiteOpenHelper {
 
-	private static final String CATEGORIA = "appLog";
+	private static final String CATEGORIA = "base";
 
 	private String[] scriptSQLCreate;
 	private String[] scriptSQLDelete;
@@ -70,7 +70,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
 			db.execSQL(sql);
 		}
 
-		// db.execSQL(scriptSQLDelete);
+		// dbCon.execSQL(scriptSQLDelete);
 		// Cria novamente...
 		onCreate(db);
 	}
