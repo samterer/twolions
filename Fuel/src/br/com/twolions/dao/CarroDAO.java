@@ -12,27 +12,27 @@ import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.Carro.Carros;
 
 public class CarroDAO extends ManagerDAO {
-	private static final String CATEGORIA = "appLog";
+	private static final String CATEGORIA = "base";
 
 	// Nome do banco
 	private static final String NOME_BANCO = "db_itsmycar";
 	// Nome da tabela
-	public static final String NOME_TABELA = "car";
+	public static final String NOME_TABELA = "carros";
 
-	// protected SQLiteDatabase db;
+	// protected SQLiteDatabase dbCon;
 
-	// protected DBConnection db;
+	// protected DBConnection dbCon;
 
 	public CarroDAO(Context ctx) {
 		super(ctx, NOME_BANCO, NOME_TABELA);
 		// Abre o banco de dados já existente
 		// try {
-		// db = ctx.openOrCreateDatabase(NOME_BANCO, Context.MODE_PRIVATE,
+		// dbCon = ctx.openOrCreateDatabase(NOME_BANCO, Context.MODE_PRIVATE,
 		// null);
 		// } catch (SQLException e) {
 		// e.printStackTrace();
 		// }
-		// db = new DBConnection(ctx, NOME_BANCO);
+		// dbCon = new DBConnection(ctx, NOME_BANCO);
 	}
 
 	// Salva o carro, insere um novo ou atualiza
@@ -62,7 +62,7 @@ public class CarroDAO extends ManagerDAO {
 
 	// Insere um novo carro
 	// public long inserir(ContentValues valores) {
-	// long id = db.getInstance().insert(NOME_TABELA, "", valores);
+	// long id = dbCon.getInstance().insert(NOME_TABELA, "", valores);
 	// return id;
 	// }
 
@@ -87,7 +87,7 @@ public class CarroDAO extends ManagerDAO {
 	// A cláusula where é utilizada para identificar o carro a ser atualizado
 	// public int atualizar(ContentValues valores, String where, String[]
 	// whereArgs) {
-	// int count = db.getInstance().update(NOME_TABELA, valores, where,
+	// int count = dbCon.getInstance().update(NOME_TABELA, valores, where,
 	// whereArgs);
 	// Log.i(CATEGORIA, "Atualizou [" + count + "] registros");
 	// return count;
@@ -107,7 +107,7 @@ public class CarroDAO extends ManagerDAO {
 
 	// Deleta o carro com os argumentos fornecidos
 	// public int deletar(String where, String[] whereArgs) {
-	// int count = db.getInstance().delete(NOME_TABELA, where, whereArgs);
+	// int count = dbCon.getInstance().delete(NOME_TABELA, where, whereArgs);
 	// Log.i(CATEGORIA, "Deletou [" + count + "] registros");
 	// return count;
 	// }
@@ -115,7 +115,7 @@ public class CarroDAO extends ManagerDAO {
 	// Busca o carro pelo id
 	public Carro buscarCarro(long id) {
 		// select * from carro where _id=?
-		Cursor c = db.getInstance().query(true, NOME_TABELA, Carro.colunas,
+		Cursor c = dbCon.getInstance().query(true, NOME_TABELA, Carro.colunas,
 				Carros._ID + "=" + id, null, null, null, null, null);
 
 		if (c.getCount() > 0) {
@@ -141,7 +141,7 @@ public class CarroDAO extends ManagerDAO {
 	// public Cursor getCursor() {
 	// try {
 	// // select * from carros
-	// return db.getInstance().query(NOME_TABELA, Carro.colunas, null,
+	// return dbCon.getInstance().query(NOME_TABELA, Carro.colunas, null,
 	// null, null, null, null, null);
 	// } catch (SQLException e) {
 	// Log.e(CATEGORIA, "Erro ao buscar os carros: " + e.toString());
@@ -174,6 +174,8 @@ public class CarroDAO extends ManagerDAO {
 				carro.placa = c.getString(idxPlaca);
 				carro.tipo = c.getString(idxTipo);
 
+				Log.i(CATEGORIA, "Carro: " + carro.toString());
+
 			} while (c.moveToNext());
 		}
 
@@ -186,7 +188,7 @@ public class CarroDAO extends ManagerDAO {
 
 		try {
 			// Idem a: SELECT _id,nome,placa,ano from CARRO where nome = ?
-			Cursor c = db.getInstance().query(NOME_TABELA, Carro.colunas,
+			Cursor c = dbCon.getInstance().query(NOME_TABELA, Carro.colunas,
 					Carros.NOME + "='" + nome + "'", null, null, null, null);
 
 			// Se encontrou...
@@ -216,16 +218,9 @@ public class CarroDAO extends ManagerDAO {
 	// public Cursor query(SQLiteQueryBuilder queryBuilder, String[] projection,
 	// String selection, String[] selectionArgs, String groupBy,
 	// String having, String orderBy) {
-	// Cursor c = queryBuilder.query(db.getInstance(), projection, selection,
+	// Cursor c = queryBuilder.query(dbCon.getInstance(), projection, selection,
 	// selectionArgs, groupBy, having, orderBy);
 	// return c;
 	// }
 
-	// Fecha o banco
-	public void fechar() {
-		// fecha o banco de dados
-		if (db != null) {
-			db.getInstance().close();
-		}
-	}
 }

@@ -9,7 +9,7 @@ import android.database.Cursor;
 import br.com.twolions.daoobjects.Note;
 
 public class NoteDAO extends ManagerDAO {
-	private static final String CATEGORIA = "appLog";
+	private static final String CATEGORIA = "base";
 
 	// Nome do banco
 	private static final String NOME_BANCO = "db_itsmycar";
@@ -75,7 +75,7 @@ public class NoteDAO extends ManagerDAO {
 
 	public Note buscarNote(long id) {
 		// select * from note where _id=?
-		Cursor c = db.getInstance().query(true, NOME_TABELA, Note.colunas,
+		Cursor c = dbCon.getInstance().query(true, NOME_TABELA, Note.colunas,
 				Note._ID + "=" + id, null, null, null, null, null);
 
 		if (c.getCount() > 0) {
@@ -100,7 +100,7 @@ public class NoteDAO extends ManagerDAO {
 
 	// Retorna uma lista com todos os notes pelo id do carro
 	public List<Note> listarNotes(long id_Car) {
-		Cursor c = db.getInstance().query(NOME_TABELA, Note.colunas,
+		Cursor c = dbCon.getInstance().query(NOME_TABELA, Note.colunas,
 				Note.ID_CAR + "='" + id_Car + "'", null, null, null, null);
 
 		List<Note> notes = new ArrayList<Note>();
@@ -135,8 +135,8 @@ public class NoteDAO extends ManagerDAO {
 	// Fecha o banco
 	public void fechar() {
 		// fecha o banco de dados
-		if (db != null) {
-			db.getInstance().close();
+		if (dbCon != null) {
+			dbCon.getInstance().close();
 		}
 	}
 }
