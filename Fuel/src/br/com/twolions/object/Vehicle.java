@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
  * 
  * 
  */
-public class Carro {
+public class Vehicle {
 
 	public static String[] colunas = new String[]{Carros._ID, Carros.NOME,
 			Carros.PLACA, Carros.TIPO};
@@ -22,17 +22,17 @@ public class Carro {
 	public String placa;
 	public String tipo;
 
-	public Carro() {
+	public Vehicle() {
 	}
 
-	public Carro(String nome, String placa, String tipo) {
+	public Vehicle(String nome, String placa, String tipo) {
 		super();
 		this.nome = nome;
 		this.placa = placa;
 		this.tipo = tipo;
 	}
 
-	public Carro(long id, String nome, String placa, String tipo) {
+	public Vehicle(long id, String nome, String placa, String tipo) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -77,7 +77,7 @@ public class Carro {
 		// "content://br.livro.android.provider.carro/carros/id"
 		// public static Uri getUriId(long id) {
 		// // Adiciona o id na URI default do /carros
-		// Uri uriCarro = ContentUris.withAppendedId(Carros.CONTENT_URI, id);
+		// Uri uriCarro = ContentUris.withAppendedId(Carro.CONTENT_URI, id);
 		// return uriCarro;
 		// }
 	}

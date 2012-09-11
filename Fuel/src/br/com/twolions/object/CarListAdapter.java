@@ -13,9 +13,9 @@ import br.com.twolions.R;
 
 public class CarListAdapter extends BaseAdapter {
 	private Context context;
-	private List<Carro> lista;
+	private List<Vehicle> lista;
 
-	public CarListAdapter(Context context, List<Carro> lista) {
+	public CarListAdapter(Context context, List<Vehicle> lista) {
 		this.context = context;
 		this.lista = lista;
 	}
@@ -34,7 +34,7 @@ public class CarListAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// Recupera o Carro da posição atual
-		Carro c = lista.get(position);
+		Vehicle c = lista.get(position);
 
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
