@@ -9,7 +9,7 @@ import android.database.Cursor;
 import br.com.twolions.daoobjects.Expense;
 
 public class ExpenseDAO extends ManagerDAO {
-	private static final String CATEGORIA = "appLog";
+	private static final String CATEGORIA = "base";
 
 	// Nome do banco
 	private static final String NOME_BANCO = "db_itsmycar";
@@ -56,7 +56,7 @@ public class ExpenseDAO extends ManagerDAO {
 
 		String _id = String.valueOf(expense.id);
 
-		String where = expense._ID + "=?";
+		String where = Expense._ID + "=?";
 		String[] whereArgs = new String[]{_id};
 
 		int count = atualizar(values, where, whereArgs);
@@ -77,8 +77,9 @@ public class ExpenseDAO extends ManagerDAO {
 
 	public Expense buscarExpense(long id) {
 		// select * from Expense where _id=?
-		Cursor c = db.getInstance().query(true, NOME_TABELA, Expense.colunas,
-				Expense._ID + "=" + id, null, null, null, null, null);
+		Cursor c = dbCon.getInstance().query(true, NOME_TABELA,
+				Expense.colunas, Expense._ID + "=" + id, null, null, null,
+				null, null);
 
 		if (c.getCount() > 0) {
 
@@ -103,7 +104,7 @@ public class ExpenseDAO extends ManagerDAO {
 
 	// Retorna uma lista com todos os Expenses pelo id do carro
 	public List<Expense> listarExpenses(long id_Car) {
-		Cursor c = db.getInstance().query(NOME_TABELA, Expense.colunas,
+		Cursor c = dbCon.getInstance().query(NOME_TABELA, Expense.colunas,
 				Expense.ID_CAR + "='" + id_Car + "'", null, null, null, null);
 
 		List<Expense> expenses = new ArrayList<Expense>();
@@ -140,8 +141,8 @@ public class ExpenseDAO extends ManagerDAO {
 	// Fecha o banco
 	public void fechar() {
 		// fecha o banco de dados
-		if (db != null) {
-			db.getInstance().close();
+		if (dbCon != null) {
+			dbCon.getInstance().close();
 		}
 	}
 }

@@ -14,40 +14,38 @@ public class ManagerDAO {
 	private static final String CATEGORIA = "base";
 
 	// Nome da tabela
-	public static String nome_tabela = "";
+	private String NOME_TABELA = "";
 
-	protected DBConnection db;
+	protected DBConnection dbCon;
 
 	/*
 	 * Instancia da classe Nome do banco Nome da tabela
 	 */
 	public ManagerDAO(Context ctx, String banco, String table) {
 
-		this.nome_tabela = table;
-
-		if (db == null) {
-			db = new DBConnection(ctx, banco);
+		if (table != null) {
+			this.NOME_TABELA = table;
 		}
 
-	}
-	public ManagerDAO(Context ctx, String banco) {
+		// if (dbCon == null) {
+		Log.e(CATEGORIA, "Open a new connection with dbCon. ");
+		dbCon = new DBConnection(ctx, banco);
+		// }
 
-		if (db == null) {
-			db = new DBConnection(ctx, banco);
-		}
+		Log.e(CATEGORIA, "NOME_TABELA: " + NOME_TABELA);
 
 	}
 
 	// Insere um novo carro
 	public long inserir(ContentValues valores) {
-		long id = db.getInstance().insert(nome_tabela, "", valores);
+		long id = dbCon.getInstance().insert(NOME_TABELA, "", valores);
 		return id;
 	}
 
 	// Atualiza o carro com os valores abaixo
 	// A cláusula where é utilizada para identificar o carro a ser atualizado
 	public int atualizar(ContentValues valores, String where, String[] whereArgs) {
-		int count = db.getInstance().update(nome_tabela, valores, where,
+		int count = dbCon.getInstance().update(NOME_TABELA, valores, where,
 				whereArgs);
 		Log.i(CATEGORIA, "Atualizou [" + count + "] registros");
 		return count;
@@ -55,32 +53,44 @@ public class ManagerDAO {
 
 	// Deleta o carro com os argumentos fornecidos
 	public int deletar(String where, String[] whereArgs) {
-		int count = db.getInstance().delete(nome_tabela, where, whereArgs);
+		int count = dbCon.getInstance().delete(NOME_TABELA, where, whereArgs);
 		Log.i(CATEGORIA, "Deletou [" + count + "] registros");
 		return count;
 	}
 
-	// Retorna um cursor com todos os carros
+	// Retorna um cursor com todos os elementos
 	public Cursor getCursor() {
 		try {
 			// select * from carros
-			return db.getInstance().query(nome_tabela, Carro.colunas, null,
+			return dbCon.getInstance().query(NOME_TABELA, Carro.colunas, null,
 					null, null, null, null, null);
 		} catch (SQLException e) {
 			Log.e(CATEGORIA, "Erro ao buscar os objs: " + e.toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
 
 	// Busca um carro utilizando as configurações definidas no
 	// SQLiteQueryBuilder
-	// Utilizado pelo Content Provider de carro
+	// Utilizado pelo Content Provider
 	public Cursor query(SQLiteQueryBuilder queryBuilder, String[] projection,
 			String selection, String[] selectionArgs, String groupBy,
 			String having, String orderBy) {
-		Cursor c = queryBuilder.query(db.getInstance(), projection, selection,
-				selectionArgs, groupBy, having, orderBy);
+		Cursor c = queryBuilder.query(dbCon.getInstance(), projection,
+				selection, selectionArgs, groupBy, having, orderBy);
 		return c;
 	}
 
+	// Fecha o banco
+	public void fechar() {
+		// fecha o banco de dados
+		if (dbCon != null) {
+			if (dbCon.getInstance() != null) {
+				dbCon.getInstance().close();
+				dbCon = null;
+			}
+		}
+
+	}
 }

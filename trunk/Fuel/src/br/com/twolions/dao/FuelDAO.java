@@ -9,7 +9,7 @@ import android.database.Cursor;
 import br.com.twolions.daoobjects.Fuel;
 
 public class FuelDAO extends ManagerDAO {
-	private static final String CATEGORIA = "appLog";
+	private static final String CATEGORIA = "base";
 
 	// Nome do banco
 	private static final String NOME_BANCO = "db_itsmycar";
@@ -56,7 +56,7 @@ public class FuelDAO extends ManagerDAO {
 
 		String _id = String.valueOf(fuel.id);
 
-		String where = fuel._ID + "=?";
+		String where = Fuel._ID + "=?";
 		String[] whereArgs = new String[]{_id};
 
 		int count = atualizar(values, where, whereArgs);
@@ -77,7 +77,7 @@ public class FuelDAO extends ManagerDAO {
 
 	public Fuel buscarFuel(long id) {
 		// select * from Fuel where _id=?
-		Cursor c = db.getInstance().query(true, NOME_TABELA, Fuel.colunas,
+		Cursor c = dbCon.getInstance().query(true, NOME_TABELA, Fuel.colunas,
 				Fuel._ID + "=" + id, null, null, null, null, null);
 
 		if (c.getCount() > 0) {
@@ -103,7 +103,7 @@ public class FuelDAO extends ManagerDAO {
 
 	// Retorna uma lista com todos os Fuels pelo id do carro
 	public List<Fuel> listarFuels(long id_Car) {
-		Cursor c = db.getInstance().query(NOME_TABELA, Fuel.colunas,
+		Cursor c = dbCon.getInstance().query(NOME_TABELA, Fuel.colunas,
 				Fuel.ID_CAR + "='" + id_Car + "'", null, null, null, null);
 
 		List<Fuel> fuels = new ArrayList<Fuel>();
@@ -140,8 +140,8 @@ public class FuelDAO extends ManagerDAO {
 	// Fecha o banco
 	public void fechar() {
 		// fecha o banco de dados
-		if (db != null) {
-			db.getInstance().close();
+		if (dbCon != null) {
+			dbCon.getInstance().close();
 		}
 	}
 }
