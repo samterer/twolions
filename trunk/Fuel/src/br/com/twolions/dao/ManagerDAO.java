@@ -4,56 +4,59 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 import br.com.twolions.daoobjects.Carro;
-import br.com.twolions.sql.DBConnection;
 
 public class ManagerDAO {
 
 	private static final String CATEGORIA = "base";
 
-	// Nome da tabela
-	private String NOME_TABELA = "";
+	protected SQLiteDatabase db = null;
 
-	protected DBConnection dbCon;
+	private String table_name = "";
 
 	/*
 	 * Instancia da classe Nome do banco Nome da tabela
 	 */
-	public ManagerDAO(Context ctx, String banco, String table) {
+	public ManagerDAO(Context ctx, String banco, String table,
+			SQLiteDatabase dbSql) {
 
-		if (table != null) {
-			this.NOME_TABELA = table;
-		}
+		db = dbSql;
 
-		// if (dbCon == null) {
-		Log.e(CATEGORIA, "Open a new connection with dbCon. ");
-		dbCon = new DBConnection(ctx, banco);
+		table_name = table;
+
+		// if (table != null && table != "") {
+		// this.NOME_TABELA = table;
+		// Log.e(CATEGORIA, "Table name: " + table);
+		// } else {
+		// Log.e(CATEGORIA, "The name table is empty.");
 		// }
 
-		Log.e(CATEGORIA, "NOME_TABELA: " + NOME_TABELA);
+		// db = new DBConnection(ctx, banco);
+		// Log.e(CATEGORIA, "Open a new connection with db. ["+
+		// db.getInstance().getPath() + "]");
 
 	}
-
 	// Insere um novo carro
 	public long inserir(ContentValues valores) {
-		long id = dbCon.getInstance().insert(NOME_TABELA, "", valores);
+		Log.i(CATEGORIA, "table_name [" + table_name + "]");
+		long id = db.insert(table_name, "", valores);
 		return id;
 	}
 
 	// Atualiza o carro com os valores abaixo
 	// A cláusula where é utilizada para identificar o carro a ser atualizado
 	public int atualizar(ContentValues valores, String where, String[] whereArgs) {
-		int count = dbCon.getInstance().update(NOME_TABELA, valores, where,
-				whereArgs);
+		int count = db.update(table_name, valores, where, whereArgs);
 		Log.i(CATEGORIA, "Atualizou [" + count + "] registros");
 		return count;
 	}
 
 	// Deleta o carro com os argumentos fornecidos
 	public int deletar(String where, String[] whereArgs) {
-		int count = dbCon.getInstance().delete(NOME_TABELA, where, whereArgs);
+		int count = db.delete(table_name, where, whereArgs);
 		Log.i(CATEGORIA, "Deletou [" + count + "] registros");
 		return count;
 	}
@@ -61,9 +64,9 @@ public class ManagerDAO {
 	// Retorna um cursor com todos os elementos
 	public Cursor getCursor() {
 		try {
-			// select * from carros
-			return dbCon.getInstance().query(NOME_TABELA, Carro.colunas, null,
-					null, null, null, null, null);
+			// select from carros
+			return db.query(table_name, Carro.colunas, null, null, null, null,
+					null, null);
 		} catch (SQLException e) {
 			Log.e(CATEGORIA, "Erro ao buscar os objs: " + e.toString());
 			e.printStackTrace();
@@ -77,20 +80,20 @@ public class ManagerDAO {
 	public Cursor query(SQLiteQueryBuilder queryBuilder, String[] projection,
 			String selection, String[] selectionArgs, String groupBy,
 			String having, String orderBy) {
-		Cursor c = queryBuilder.query(dbCon.getInstance(), projection,
-				selection, selectionArgs, groupBy, having, orderBy);
+		Cursor c = queryBuilder.query(db, projection, selection, selectionArgs,
+				groupBy, having, orderBy);
 		return c;
 	}
 
 	// Fecha o banco
 	public void fechar() {
 		// fecha o banco de dados
-		if (dbCon != null) {
-			if (dbCon.getInstance() != null) {
-				dbCon.getInstance().close();
-				dbCon = null;
+		if (db != null) {
+			if (db != null) {
+				db.close();
+				db = null;
 			}
 		}
-
 	}
+
 }

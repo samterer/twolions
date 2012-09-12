@@ -6,18 +6,23 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import br.com.twolions.daoobjects.Expense;
+import br.com.twolions.sql.DBConnection;
 
-public class ExpenseDAO extends ManagerDAO {
+public class ExpenseDAO extends DBConnection {
 	private static final String CATEGORIA = "base";
 
 	// Nome do banco
-	private static final String NOME_BANCO = "db_itsmycar";
+	private static final String base_name = "db_itsmycar";
 	// Nome da tabela
-	public static final String NOME_TABELA = "expense";
+	public static final String table_name = "expense";
+
+	// private ManagerDAO dao;
 
 	public ExpenseDAO(Context ctx) {
-		super(ctx, NOME_BANCO, NOME_TABELA);
+		super(ctx, base_name);
+		// dao = new ManagerDAO(ctx, base_name, table_name, db);
 	}
 
 	// Salva o carro, insere um novo ou atualiza
@@ -42,7 +47,7 @@ public class ExpenseDAO extends ManagerDAO {
 		values.put(Expense.VALUE, expense.value);
 		values.put(Expense.TIPO, expense.tipo);
 
-		long id = inserir(values);
+		long id = inserir(values, table_name);
 		return id;
 	}
 
@@ -59,7 +64,7 @@ public class ExpenseDAO extends ManagerDAO {
 		String where = Expense._ID + "=?";
 		String[] whereArgs = new String[]{_id};
 
-		int count = atualizar(values, where, whereArgs);
+		int count = atualizar(values, where, whereArgs, table_name);
 
 		return count;
 	}
@@ -70,16 +75,15 @@ public class ExpenseDAO extends ManagerDAO {
 		String _id = String.valueOf(id);
 		String[] whereArgs = new String[]{_id};
 
-		int count = deletar(where, whereArgs);
+		int count = deletar(where, whereArgs, table_name);
 
 		return count;
 	}
 
 	public Expense buscarExpense(long id) {
 		// select * from Expense where _id=?
-		Cursor c = dbCon.getInstance().query(true, NOME_TABELA,
-				Expense.colunas, Expense._ID + "=" + id, null, null, null,
-				null, null);
+		Cursor c = db.query(true, table_name, Expense.colunas, Expense._ID
+				+ "=" + id, null, null, null, null, null);
 
 		if (c.getCount() > 0) {
 
@@ -104,8 +108,8 @@ public class ExpenseDAO extends ManagerDAO {
 
 	// Retorna uma lista com todos os Expenses pelo id do carro
 	public List<Expense> listarExpenses(long id_Car) {
-		Cursor c = dbCon.getInstance().query(NOME_TABELA, Expense.colunas,
-				Expense.ID_CAR + "='" + id_Car + "'", null, null, null, null);
+		Cursor c = db.query(table_name, Expense.colunas, Expense.ID_CAR + "='"
+				+ id_Car + "'", null, null, null, null);
 
 		List<Expense> expenses = new ArrayList<Expense>();
 
@@ -132,6 +136,8 @@ public class ExpenseDAO extends ManagerDAO {
 				expense.value = c.getDouble(idxIdValue);
 				expense.tipo = c.getString(idxIdTipo);
 
+				Log.i(CATEGORIA, "Expense: " + expense.toString());
+
 			} while (c.moveToNext());
 		}
 
@@ -141,8 +147,8 @@ public class ExpenseDAO extends ManagerDAO {
 	// Fecha o banco
 	public void fechar() {
 		// fecha o banco de dados
-		if (dbCon != null) {
-			dbCon.getInstance().close();
+		if (db != null) {
+			db.close();
 		}
 	}
 }

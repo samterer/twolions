@@ -70,7 +70,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
 			db.execSQL(sql);
 		}
 
-		// dbCon.execSQL(scriptSQLDelete);
+		// db.execSQL(scriptSQLDelete);
 		// Cria novamente...
 		onCreate(db);
 	}

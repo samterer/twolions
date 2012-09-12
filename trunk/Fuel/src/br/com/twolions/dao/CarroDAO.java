@@ -10,31 +10,34 @@ import android.database.SQLException;
 import android.util.Log;
 import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.Carro.Carros;
+import br.com.twolions.sql.DBConnection;
 
-public class CarroDAO extends ManagerDAO {
+public class CarroDAO extends DBConnection {
 	private static final String CATEGORIA = "base";
 
 	// Nome do banco
-	private static final String NOME_BANCO = "db_itsmycar";
+	private static final String base_name = "db_itsmycar";
 	// Nome da tabela
-	public static final String NOME_TABELA = "carros";
+	public static final String table_name = "carro";
 
-	// protected SQLiteDatabase dbCon;
+	// protected SQLiteDatabase db;
 
-	// protected DBConnection dbCon;
+	// protected SQLiteDatabase db;
+
+	// private ManagerDAO dao;
 
 	public CarroDAO(Context ctx) {
-		super(ctx, NOME_BANCO, NOME_TABELA);
+		super(ctx, base_name);
 		// Abre o banco de dados já existente
 		// try {
-		// dbCon = ctx.openOrCreateDatabase(NOME_BANCO, Context.MODE_PRIVATE,
+		// db = ctx.openOrCreateDatabase(base_name, Context.MODE_PRIVATE,
 		// null);
 		// } catch (SQLException e) {
 		// e.printStackTrace();
 		// }
-		// dbCon = new DBConnection(ctx, NOME_BANCO);
+		// db = new DBConnection(ctx, base_name);
+		// dao = new ManagerDAO(ctx, base_name, table_name, db);
 	}
-
 	// Salva o carro, insere um novo ou atualiza
 	public long salvar(Carro carro) {
 		long id = carro.id;
@@ -56,13 +59,13 @@ public class CarroDAO extends ManagerDAO {
 		values.put(Carros.PLACA, carro.placa);
 		values.put(Carros.TIPO, carro.tipo);
 
-		long id = inserir(values);
+		long id = inserir(values, table_name);
 		return id;
 	}
 
 	// Insere um novo carro
 	// public long inserir(ContentValues valores) {
-	// long id = dbCon.getInstance().insert(NOME_TABELA, "", valores);
+	// long id = db.insert(table_name, "", valores);
 	// return id;
 	// }
 
@@ -78,7 +81,7 @@ public class CarroDAO extends ManagerDAO {
 		String where = Carros._ID + "=?";
 		String[] whereArgs = new String[]{_id};
 
-		int count = atualizar(values, where, whereArgs);
+		int count = atualizar(values, where, whereArgs, table_name);
 
 		return count;
 	}
@@ -87,8 +90,7 @@ public class CarroDAO extends ManagerDAO {
 	// A cláusula where é utilizada para identificar o carro a ser atualizado
 	// public int atualizar(ContentValues valores, String where, String[]
 	// whereArgs) {
-	// int count = dbCon.getInstance().update(NOME_TABELA, valores, where,
-	// whereArgs);
+	// int count = db.update(table_name, valores, where, whereArgs);
 	// Log.i(CATEGORIA, "Atualizou [" + count + "] registros");
 	// return count;
 	// }
@@ -100,14 +102,14 @@ public class CarroDAO extends ManagerDAO {
 		String _id = String.valueOf(id);
 		String[] whereArgs = new String[]{_id};
 
-		int count = deletar(where, whereArgs);
+		int count = deletar(where, whereArgs, table_name);
 
 		return count;
 	}
 
 	// Deleta o carro com os argumentos fornecidos
 	// public int deletar(String where, String[] whereArgs) {
-	// int count = dbCon.getInstance().delete(NOME_TABELA, where, whereArgs);
+	// int count = db.delete(table_name, where, whereArgs);
 	// Log.i(CATEGORIA, "Deletou [" + count + "] registros");
 	// return count;
 	// }
@@ -115,8 +117,8 @@ public class CarroDAO extends ManagerDAO {
 	// Busca o carro pelo id
 	public Carro buscarCarro(long id) {
 		// select * from carro where _id=?
-		Cursor c = dbCon.getInstance().query(true, NOME_TABELA, Carro.colunas,
-				Carros._ID + "=" + id, null, null, null, null, null);
+		Cursor c = db.query(true, table_name, Carro.colunas, Carros._ID + "="
+				+ id, null, null, null, null, null);
 
 		if (c.getCount() > 0) {
 
@@ -138,16 +140,15 @@ public class CarroDAO extends ManagerDAO {
 	}
 
 	// Retorna um cursor com todos os carros
-	// public Cursor getCursor() {
-	// try {
-	// // select * from carros
-	// return dbCon.getInstance().query(NOME_TABELA, Carro.colunas, null,
-	// null, null, null, null, null);
-	// } catch (SQLException e) {
-	// Log.e(CATEGORIA, "Erro ao buscar os carros: " + e.toString());
-	// return null;
-	// }
-	// }
+	public Cursor getCursor() {
+		try {
+			return db.query(table_name, Carro.colunas, null, null, null, null,
+					null, null);
+		} catch (SQLException e) {
+			Log.e(CATEGORIA, "Erro ao buscar os carros: " + e.toString());
+			return null;
+		}
+	}
 
 	// Retorna uma lista com todos os carros
 	public List<Carro> listarCarros() {
@@ -188,8 +189,8 @@ public class CarroDAO extends ManagerDAO {
 
 		try {
 			// Idem a: SELECT _id,nome,placa,ano from CARRO where nome = ?
-			Cursor c = dbCon.getInstance().query(NOME_TABELA, Carro.colunas,
-					Carros.NOME + "='" + nome + "'", null, null, null, null);
+			Cursor c = db.query(table_name, Carro.colunas, Carros.NOME + "='"
+					+ nome + "'", null, null, null, null);
 
 			// Se encontrou...
 			if (c.moveToNext()) {
@@ -218,9 +219,17 @@ public class CarroDAO extends ManagerDAO {
 	// public Cursor query(SQLiteQueryBuilder queryBuilder, String[] projection,
 	// String selection, String[] selectionArgs, String groupBy,
 	// String having, String orderBy) {
-	// Cursor c = queryBuilder.query(dbCon.getInstance(), projection, selection,
-	// selectionArgs, groupBy, having, orderBy);
+	// Cursor c = queryBuilder.query(db, projection, selection, selectionArgs,
+	// groupBy, having, orderBy);
 	// return c;
 	// }
+
+	// Fecha o banco
+	public void fechar() {
+		// fecha o banco de dados
+		if (db != null) {
+			db.close();
+		}
+	}
 
 }
