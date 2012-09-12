@@ -6,18 +6,23 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import br.com.twolions.daoobjects.Note;
+import br.com.twolions.sql.DBConnection;
 
-public class NoteDAO extends ManagerDAO {
+public class NoteDAO extends DBConnection {
 	private static final String CATEGORIA = "base";
 
 	// Nome do banco
-	private static final String NOME_BANCO = "db_itsmycar";
+	private static final String base_name = "db_itsmycar";
 	// Nome da tabela
-	public static final String NOME_TABELA = "note";
+	public static final String table_name = "note";
+
+	// private ManagerDAO dao;
 
 	public NoteDAO(Context ctx) {
-		super(ctx, NOME_BANCO, NOME_TABELA);
+		super(ctx, base_name);
+		// dao = new ManagerDAO(ctx, base_name, table_name, db);
 	}
 
 	// Salva o carro, insere um novo ou atualiza
@@ -41,7 +46,7 @@ public class NoteDAO extends ManagerDAO {
 		values.put(Note.SUBJECT, note.subject);
 		values.put(Note.TEXT, note.text);
 
-		long id = inserir(values);
+		long id = inserir(values, table_name);
 		return id;
 	}
 
@@ -57,7 +62,7 @@ public class NoteDAO extends ManagerDAO {
 		String where = Note._ID + "=?";
 		String[] whereArgs = new String[]{_id};
 
-		int count = atualizar(values, where, whereArgs);
+		int count = atualizar(values, where, whereArgs, table_name);
 
 		return count;
 	}
@@ -68,14 +73,14 @@ public class NoteDAO extends ManagerDAO {
 		String _id = String.valueOf(id);
 		String[] whereArgs = new String[]{_id};
 
-		int count = deletar(where, whereArgs);
+		int count = deletar(where, whereArgs, table_name);
 
 		return count;
 	}
 
 	public Note buscarNote(long id) {
 		// select * from note where _id=?
-		Cursor c = dbCon.getInstance().query(true, NOME_TABELA, Note.colunas,
+		Cursor c = db.query(true, table_name, Note.colunas,
 				Note._ID + "=" + id, null, null, null, null, null);
 
 		if (c.getCount() > 0) {
@@ -100,8 +105,8 @@ public class NoteDAO extends ManagerDAO {
 
 	// Retorna uma lista com todos os notes pelo id do carro
 	public List<Note> listarNotes(long id_Car) {
-		Cursor c = dbCon.getInstance().query(NOME_TABELA, Note.colunas,
-				Note.ID_CAR + "='" + id_Car + "'", null, null, null, null);
+		Cursor c = db.query(table_name, Note.colunas, Note.ID_CAR + "='"
+				+ id_Car + "'", null, null, null, null);
 
 		List<Note> notes = new ArrayList<Note>();
 
@@ -126,6 +131,8 @@ public class NoteDAO extends ManagerDAO {
 				note.subject = c.getString(idxIdSubject);
 				note.text = c.getString(idxIdText);
 
+				Log.i(CATEGORIA, "Expense: " + note.toString());
+
 			} while (c.moveToNext());
 		}
 
@@ -135,8 +142,8 @@ public class NoteDAO extends ManagerDAO {
 	// Fecha o banco
 	public void fechar() {
 		// fecha o banco de dados
-		if (dbCon != null) {
-			dbCon.getInstance().close();
+		if (db != null) {
+			db.close();
 		}
 	}
 }

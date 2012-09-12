@@ -1,15 +1,15 @@
 package br.com.twolions.sql;
 
 import android.content.Context;
-import br.com.twolions.dao.ManagerDAO;
+import br.com.twolions.dao.CarroDAO;
 
-public class SqlScript extends ManagerDAO {
+public class SqlScript extends CarroDAO {
 
 	// Nome do banco
 	private static final String NOME_BANCO = "bd_itsmycar";
 
 	// Controle de versão
-	private static final int VERSAO_BANCO = 4;
+	private static final int VERSAO_BANCO = 7;
 
 	// Classe utilitária para abrir, criar, e atualizar o banco de dados
 	private SQLiteHelper dbHelper;
@@ -19,7 +19,7 @@ public class SqlScript extends ManagerDAO {
 	// ///////////////
 	// TABLE CAR
 	// ///////////////
-	public static final String TB_CARRO = "carros";
+	public static final String TB_CARRO = "carro";
 
 	// Script para fazer drop na tabela
 	private static final String SCRIPT_DELETE_TB_CAR = "DROP TABLE IF EXISTS "
@@ -104,7 +104,7 @@ public class SqlScript extends ManagerDAO {
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(Context ctx) {
-		super(ctx, NOME_BANCO, null);
+		super(ctx);
 
 		// create
 		String[] script_tables_create = {
@@ -143,7 +143,7 @@ public class SqlScript extends ManagerDAO {
 				script_tables_delete);
 
 		// abre o banco no modo escrita para poder alterar também
-		dbCon.setDb(dbHelper.getWritableDatabase());
+		db = dbHelper.getWritableDatabase();
 	}
 	// Fecha o banco
 	public void fechar() {

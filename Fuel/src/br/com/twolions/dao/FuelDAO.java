@@ -6,18 +6,23 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import br.com.twolions.daoobjects.Fuel;
+import br.com.twolions.sql.DBConnection;
 
-public class FuelDAO extends ManagerDAO {
+public class FuelDAO extends DBConnection {
 	private static final String CATEGORIA = "base";
 
 	// Nome do banco
-	private static final String NOME_BANCO = "db_itsmycar";
+	private static final String base_name = "db_itsmycar";
 	// Nome da tabela
-	public static final String NOME_TABELA = "fuel";
+	public static final String table_name = "fuel";
+
+	// private ManagerDAO dao;
 
 	public FuelDAO(Context ctx) {
-		super(ctx, NOME_BANCO, NOME_TABELA);
+		super(ctx, base_name);
+		// dao = new ManagerDAO(ctx, base_name, table_name, db);
 	}
 
 	// Salva o carro, insere um novo ou atualiza
@@ -42,7 +47,7 @@ public class FuelDAO extends ManagerDAO {
 		values.put(Fuel.VALUE_P, fuel.value_p);
 		values.put(Fuel.ODOMETER, fuel.odometer);
 
-		long id = inserir(values);
+		long id = inserir(values, table_name);
 		return id;
 	}
 
@@ -59,7 +64,7 @@ public class FuelDAO extends ManagerDAO {
 		String where = Fuel._ID + "=?";
 		String[] whereArgs = new String[]{_id};
 
-		int count = atualizar(values, where, whereArgs);
+		int count = atualizar(values, where, whereArgs, table_name);
 
 		return count;
 	}
@@ -70,14 +75,14 @@ public class FuelDAO extends ManagerDAO {
 		String _id = String.valueOf(id);
 		String[] whereArgs = new String[]{_id};
 
-		int count = deletar(where, whereArgs);
+		int count = deletar(where, whereArgs, table_name);
 
 		return count;
 	}
 
 	public Fuel buscarFuel(long id) {
 		// select * from Fuel where _id=?
-		Cursor c = dbCon.getInstance().query(true, NOME_TABELA, Fuel.colunas,
+		Cursor c = db.query(true, table_name, Fuel.colunas,
 				Fuel._ID + "=" + id, null, null, null, null, null);
 
 		if (c.getCount() > 0) {
@@ -103,8 +108,8 @@ public class FuelDAO extends ManagerDAO {
 
 	// Retorna uma lista com todos os Fuels pelo id do carro
 	public List<Fuel> listarFuels(long id_Car) {
-		Cursor c = dbCon.getInstance().query(NOME_TABELA, Fuel.colunas,
-				Fuel.ID_CAR + "='" + id_Car + "'", null, null, null, null);
+		Cursor c = db.query(table_name, Fuel.colunas, Fuel.ID_CAR + "='"
+				+ id_Car + "'", null, null, null, null);
 
 		List<Fuel> fuels = new ArrayList<Fuel>();
 
@@ -131,6 +136,8 @@ public class FuelDAO extends ManagerDAO {
 				fuel.value_p = c.getDouble(idxIdValueP);
 				fuel.odometer = c.getLong(idxIdOdometer);
 
+				Log.i(CATEGORIA, "Expense: " + fuel.toString());
+
 			} while (c.moveToNext());
 		}
 
@@ -140,8 +147,8 @@ public class FuelDAO extends ManagerDAO {
 	// Fecha o banco
 	public void fechar() {
 		// fecha o banco de dados
-		if (dbCon != null) {
-			dbCon.getInstance().close();
+		if (db != null) {
+			db.close();
 		}
 	}
 }

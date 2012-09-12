@@ -43,9 +43,10 @@ public class ListCarScreen extends ListCarActivity
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		SqlScript sql = new SqlScript(this);
+		// SqlScript sql = new SqlScript(this);
 
-		repositorio = new CarroDAO(this);
+		// repositorio = new CarroDAO(this);
+		repositorio = new SqlScript(this);
 
 		atualizarLista();
 
