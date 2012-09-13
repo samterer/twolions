@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/pastel"
+    android:orientation="vertical" >
+
+    <!-- TITULO VEHICLE -->
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/text1"
+            style="@style/texto12Negrito"
+            android:gravity="center"
+            android:text="VEHICLE REGISTRATION"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </TableRow>
+    <!-- EDIT VEHICLE -->
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:gravity="center" >
+
+        <EditText
+            android:id="@+id/campoNome"
+            android:maxLength="20"
+            android:width="240px" />
+    </TableRow>
+    <!-- TITULO PLATE -->
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/text2"
+            style="@style/texto12Negrito"
+            android:gravity="center"
+            android:text="PLATE REGISTRATION"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </TableRow>
+    <!-- EDIT PLATE -->
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:gravity="center" >
+
+        <EditText
+            android:id="@+id/campoPlaca"
+            android:maxLength="20"
+            android:width="240px" />
+    </TableRow>
+
+    <!-- TITULO SELECET TYPE VEHICLE -->
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/text3"
+            style="@style/texto12Negrito"
+            android:gravity="center"
+            android:text="TYPE VEHICLE"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/campoTipoCar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:background="@null"
+            android:drawableTop="@drawable/bt_car" />
+
+        <Button
+            android:id="@+id/campoTipoMoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@null"
+            android:drawableTop="@drawable/bt_moto" />
+    </TableRow>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center" >
+
+        <!--
+             <ImageButton
+            android:id="@+id/btCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cancelar"
+            android:text="Cancelar" />
+
+        <ImageButton
+            android:id="@+id/btSalvar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/salvar"
+            android:text=" Salvar " />
+        -->
+
+        <ImageView
+            android:id="@+id/btExcluir"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bt_delete"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</TableLayout>
