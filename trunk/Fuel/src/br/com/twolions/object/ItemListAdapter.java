@@ -10,13 +10,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.twolions.R;
-import br.com.twolions.daoobjects.Carro;
+import br.com.twolions.daoobjects.ItemLog;
+import br.com.twolions.daoobjects.Note;
 
-public class CarListAdapter extends BaseAdapter {
+public class ItemListAdapter extends BaseAdapter {
 	private Context context;
-	private List<Carro> lista;
+	private List<ItemLog> lista;
 
-	public CarListAdapter(Context context, List<Carro> lista) {
+	public ItemListAdapter(Context context, List<ItemLog> lista) {
 		this.context = context;
 		this.lista = lista;
 	}
@@ -35,25 +36,34 @@ public class CarListAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// Recupera o Carro da posição atual
-		Carro c = lista.get(position);
+		ItemLog item = lista.get(position);
 
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = inflater.inflate(R.layout.item_car, null);
+		View view = inflater.inflate(R.layout.item_log, null);
 
-		// Atualiza o valor do TextView
+		Note n;
+		// if (item.equals(n)) {
+
+		// }
+
+		// fuel
+
+		// expense
+
+		// note
 		TextView nome = (TextView) view.findViewById(R.id.nome);
-		nome.setText(c.nome);
+		// nome.setText(c.nome);
 
 		TextView placa = (TextView) view.findViewById(R.id.placa);
-		placa.setText(c.placa);
+		// placa.setText(c.placa);
 
 		ImageView tipo = (ImageView) view.findViewById(R.id.tipo);
-		if (c.tipo.equals("carro")) {
-			tipo.setImageResource(R.drawable.type_car_on);
-		} else {
-			tipo.setImageResource(R.drawable.type_moto_on);
-		}
+		/*
+		 * if (c.tipo.equals("carro")) {
+		 * tipo.setImageResource(R.drawable.type_car_on); } else {
+		 * tipo.setImageResource(R.drawable.type_moto_on); }
+		 */
 
 		return view;
 	}
