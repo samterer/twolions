@@ -65,7 +65,6 @@ public class ItemLog implements BaseColumns {
 		this.text = text;
 	}
 
-	@Override
 	public String toString() {
 		return "Date: " + date + ", Value_u: " + value_u + ", Value_p: "
 				+ value_p + ", Odometer: " + odometer + ", Subject: " + subject
