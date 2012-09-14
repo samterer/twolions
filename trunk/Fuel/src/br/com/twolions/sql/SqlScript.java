@@ -19,7 +19,7 @@ public class SqlScript extends CarroDAO {
 	// ///////////////
 	// TABLE CAR
 	// ///////////////
-	public static final String TB_CARRO = "carro";
+	public static final String TB_CARRO = "Carro";
 
 	// Script para fazer drop na tabela
 	private static final String SCRIPT_DELETE_TB_CAR = "DROP TABLE IF EXISTS "
@@ -36,71 +36,30 @@ public class SqlScript extends CarroDAO {
 					+ "(nome,placa,tipo) values('Fiesta','JUH-8266','carro');"};
 
 	// ///////////////
-	// TABLE FUEL
+	// TABLE ITEM LOG
 	// ///////////////
-	public static final String TB_FUEL = "fuel";
+	public static final String TB_ITEM_LOG = "ItemLog";
 
 	// Script para fazer drop na tabela
-	private static final String SCRIPT_DELETE_TB_FUEL = "DROP TABLE IF EXISTS "
-			+ TB_FUEL;
+	private static final String SCRIPT_DELETE_TB_ITEM_LOG = "DROP TABLE IF EXISTS "
+			+ TB_ITEM_LOG;
 
 	// Cria a tabela com o "_id" sequencial
-	private static final String[] SCRIPT_CREATE_TB_FUEL = new String[]{
+	private static final String[] SCRIPT_CREATE_TB_ITEM_LOG = new String[]{
 			sqlScript[0]
 					+ " "
-					+ TB_FUEL
-					+ " ( _id integer primary key autoincrement, id_car integer not null, date text not null,value_u text not null,value_p text not null,odometer text not null)",
+					+ TB_ITEM_LOG
+					+ " ( "
+					+ "_id integer primary key autoincrement, id_car integer not null, "
+					+ "date text not null,                     type integer not null,"
+					+ "subject text not null,                  value_p text not null,"
+					+ "value_u text not null,                  odometer text not null,"
+					+ "text text not null)",
 
 			sqlScript[1]
 					+ " "
-					+ TB_FUEL
-					+ "(id_car,date,value_u,value_p,odometer) values('0','2012-09-04','2.45','25.56','85040');"};
-
-	// ///////////////
-	// TABLE NOTE
-	// ///////////////
-	public static final String TB_NOTE = "note";
-
-	// Script para fazer drop na tabela
-	private static final String SCRIPT_DELETE_TB_NOTE = "DROP TABLE IF EXISTS "
-			+ TB_NOTE;
-
-	// Cria a tabela com o "_id" sequencial
-	private static final String[] SCRIPT_CREATE_TB_NOTE = new String[]{
-			sqlScript[0]
-					+ " "
-					+ TB_NOTE
-					+ " ( _id integer primary key autoincrement, id_car integer not null, date text not null,subject text not null,text text not null)",
-
-			sqlScript[1]
-					+ " "
-					+ TB_NOTE
-					+ "(id_car,date,subject,text) values('0','2012-05-04','primeiro note','Testanto o meu primeiro app');"};
-
-	// ///////////////
-	// TABLE EXPENSE
-	// ///////////////
-	public static final String TB_EXPENSE = "expense";
-
-	// Script para fazer drop na tabela
-	private static final String SCRIPT_DELETE_TB_EXPENSE = "DROP TABLE IF EXISTS "
-			+ TB_EXPENSE;
-
-	// Cria a tabela com o "_id" sequencial
-	private static final String[] SCRIPT_CREATE_TB_EXPENSE = new String[]{
-			sqlScript[0]
-					+ " "
-					+ TB_EXPENSE
-					+ " ( _id integer primary key autoincrement, id_car integer not null, date text not null,subject text not null,value text not null,tipo text not null)",
-
-			sqlScript[1]
-					+ " "
-					+ TB_EXPENSE
-					+ "(id_car,date,subject,value,tipo) values('0','2012-09-04','troca de oleo','150','repair');",
-			sqlScript[1]
-					+ " "
-					+ TB_EXPENSE
-					+ "(id_car,date,subject,value,tipo) values('0','2012-10-14','shop dom pedro','4','expense'),"};
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p,value_u,odometer,text) values('0','2012-09-04','0','','60.00','2.39','81456','');"};
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(Context ctx) {
@@ -113,29 +72,15 @@ public class SqlScript extends CarroDAO {
 				SqlScript.SCRIPT_CREATE_TB_CAR[1],
 
 				// create fuel car and 1 register
-				SqlScript.SCRIPT_CREATE_TB_FUEL[0],
-				SqlScript.SCRIPT_CREATE_TB_FUEL[1],
-
-				// create table note and 1 register
-				SqlScript.SCRIPT_CREATE_TB_NOTE[0],
-				SqlScript.SCRIPT_CREATE_TB_NOTE[1],
-
-				// create table expense and 1 register
-				SqlScript.SCRIPT_CREATE_TB_EXPENSE[0],
-				SqlScript.SCRIPT_CREATE_TB_EXPENSE[1]};
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[0],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[1]};
 		// delete
 		String[] script_tables_delete = {
 				// delete table car
 				SqlScript.SCRIPT_DELETE_TB_CAR,
 
 				// delete table fuel
-				SqlScript.SCRIPT_DELETE_TB_FUEL,
-
-				// delete table note
-				SqlScript.SCRIPT_DELETE_TB_NOTE,
-
-				// delete table expense
-				SqlScript.SCRIPT_DELETE_TB_EXPENSE};
+				SqlScript.SCRIPT_DELETE_TB_ITEM_LOG};
 
 		// Criar utilizando um script SQL
 		dbHelper = new SQLiteHelper(ctx, SqlScript.NOME_BANCO,

@@ -14,9 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import br.com.twolions.R;
 import br.com.twolions.core.ListCarActivity;
-import br.com.twolions.dao.ExpenseDAO;
-import br.com.twolions.dao.FuelDAO;
-import br.com.twolions.dao.NoteDAO;
+import br.com.twolions.dao.ItemLogDAO;
 import br.com.twolions.daoobjects.Carro.Carros;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
@@ -28,10 +26,7 @@ public class ListLogScreen extends ListCarActivity
 			InterfaceBar {
 	protected static final int INSERIR_EDITAR = 1;
 
-	public static FuelDAO rep_f;
-	public static ExpenseDAO rep_e;
-	public static NoteDAO rep_n;
-
+	public static ItemLogDAO itemLogDAO;
 	private List<ItemLog> itens;
 
 	ListView listView;
@@ -50,9 +45,7 @@ public class ListLogScreen extends ListCarActivity
 		// repositorio = new CarroDAO(this);
 		// repositorio = new SqlScript(this);
 
-		rep_f = new FuelDAO(this);
-		rep_e = new ExpenseDAO(this);
-		rep_n = new NoteDAO(this);
+		itemLogDAO = new ItemLogDAO(this);
 
 		atualizarLista();
 
@@ -66,10 +59,7 @@ public class ListLogScreen extends ListCarActivity
 		// Pega a lista de carros e exibe na tela
 		itens = getItens();
 
-		// Adaptador de lista customizado para cada linha de um carro
-		// setListAdapter(new CarListAdapter(this, carros));
-
-		setContentView(R.layout.list_car);
+		setContentView(R.layout.list_log);
 
 		listView = (ListView) findViewById(R.id.listview);
 		listView.setAdapter(new ItemListAdapter(this, itens));
@@ -108,10 +98,10 @@ public class ListLogScreen extends ListCarActivity
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case EDITAR :
-				editCar();
+				editItem();
 				break;
 			case DELETE :
-				deleteCar();
+				deleteItemLog();
 				break;
 			default :
 				return false;
@@ -120,7 +110,7 @@ public class ListLogScreen extends ListCarActivity
 	}
 
 	// Recupera o id do carro, e abre a tela de edição
-	protected void editCar() {
+	protected void editItem() {
 		// Usuário clicou em algum carro da lista
 		// Recupera o carro selecionado
 		// Carro carro = carros.get(posicao);
@@ -135,9 +125,9 @@ public class ListLogScreen extends ListCarActivity
 		startActivityForResult(it, INSERIR_EDITAR);
 	}
 	// delete car
-	public void deleteCar() {
+	public void deleteItemLog() {
 		if (id_item != null) {
-			excluirCarro(id_item);
+			excluirItem(id_item);
 		}
 
 		// OK
@@ -147,7 +137,7 @@ public class ListLogScreen extends ListCarActivity
 		atualizarLista();
 	}
 	// Excluir o carro
-	protected void excluirCarro(long id) {
+	protected void excluirItem(long id) {
 		// ListLogScreen.repositorio.deletar(id);
 	}
 

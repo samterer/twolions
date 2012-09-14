@@ -60,9 +60,6 @@ public class ListCarScreen extends ListCarActivity
 		// Pega a lista de carros e exibe na tela
 		carros = repositorio.listarCarros();
 
-		// Adaptador de lista customizado para cada linha de um carro
-		// setListAdapter(new CarListAdapter(this, carros));
-
 		setContentView(R.layout.list_car);
 
 		listView = (ListView) findViewById(R.id.listview);
