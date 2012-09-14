@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.twolions.R;
 import br.com.twolions.daoobjects.ItemLog;
-import br.com.twolions.daoobjects.Note;
 
 public class ItemListAdapter extends BaseAdapter {
 	private Context context;
@@ -42,16 +41,33 @@ public class ItemListAdapter extends BaseAdapter {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.item_log, null);
 
-		Note n;
-		// if (item.equals(n)) {
-
-		// }
-
 		// fuel
+		if (item.type == 0) {
+			// value p
+			// value u
+			// value total abastecido
+			// date
 
+		}
 		// expense
-
+		if (item.type == 1) {
+			// value p
+			// subject
+			// date
+		}
 		// note
+		if (item.type == 2) {
+			// text
+			// subject
+			// date
+		}
+		// repair
+		if (item.type == 3) {
+			// value p
+			// subject
+			// date
+		}
+
 		TextView nome = (TextView) view.findViewById(R.id.nome);
 		// nome.setText(c.nome);
 
