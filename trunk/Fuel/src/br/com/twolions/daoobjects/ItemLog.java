@@ -13,15 +13,87 @@ public class ItemLog implements BaseColumns {
 	 */
 	public static final String AUTHORITY = "br.com.twolions";
 
-	public long id;
-	public long id_car;
-	public String date;
-	public int type;
-	public String subject;
-	public double value_p;
-	public double value_u;
-	public long odometer;
-	public String text;
+	private long id;
+	private long id_car;
+	private String date;
+	private int type;
+	private String subject;
+	private double value_p;
+	private double value_u;
+	private long odometer;
+	private String text;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public long getId_car() {
+		return id_car;
+	}
+
+	public void setId_car(long id_car) {
+		this.id_car = id_car;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public double getValue_p() {
+		return value_p;
+	}
+
+	public void setValue_p(double value_p) {
+		this.value_p = value_p;
+	}
+
+	public double getValue_u() {
+		return value_u;
+	}
+
+	public void setValue_u(double value_u) {
+		this.value_u = value_u;
+	}
+
+	public long getOdometer() {
+		return odometer;
+	}
+
+	public void setOdometer(long odometer) {
+		this.odometer = odometer;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
 
 	public static final String DEFAULT_SORT_ORDER = "_id ASC";
 

@@ -27,7 +27,7 @@ public class ItemLogDAO extends DBConnection {
 
 	// Salva o carro, insere um novo ou atualiza
 	public long salvar(ItemLog itemLog) {
-		long id = itemLog.id;
+		long id = itemLog.getId();
 
 		if (id != 0) {
 			atualizar(itemLog);
@@ -41,14 +41,14 @@ public class ItemLogDAO extends DBConnection {
 
 	public long inserir(ItemLog itemLog) {
 		ContentValues values = new ContentValues();
-		values.put(ItemLog.ID_CAR, itemLog.id_car);
-		values.put(ItemLog.DATE, String.valueOf(itemLog.date));
-		values.put(ItemLog.TYPE, itemLog.type);
-		values.put(ItemLog.SUBJECT, itemLog.subject);
-		values.put(ItemLog.VALUE_P, itemLog.value_p);
-		values.put(ItemLog.VALUE_U, itemLog.value_u);
-		values.put(ItemLog.ODOMETER, itemLog.odometer);
-		values.put(ItemLog.TEXT, itemLog.text);
+		values.put(ItemLog.ID_CAR, itemLog.getId_car());
+		values.put(ItemLog.DATE, String.valueOf(itemLog.getDate()));
+		values.put(ItemLog.TYPE, itemLog.getType());
+		values.put(ItemLog.SUBJECT, itemLog.getSubject());
+		values.put(ItemLog.VALUE_P, itemLog.getValue_p());
+		values.put(ItemLog.VALUE_U, itemLog.getValue_u());
+		values.put(ItemLog.ODOMETER, itemLog.getOdometer());
+		values.put(ItemLog.TEXT, itemLog.getText());
 
 		long id = inserir(values, table_name);
 		return id;
@@ -56,16 +56,16 @@ public class ItemLogDAO extends DBConnection {
 
 	public int atualizar(ItemLog itemLog) {
 		ContentValues values = new ContentValues();
-		values.put(ItemLog.ID_CAR, itemLog.id_car);
-		values.put(ItemLog.DATE, String.valueOf(itemLog.date));
-		values.put(ItemLog.TYPE, itemLog.type);
-		values.put(ItemLog.SUBJECT, itemLog.subject);
-		values.put(ItemLog.VALUE_P, itemLog.value_p);
-		values.put(ItemLog.VALUE_U, itemLog.value_u);
-		values.put(ItemLog.ODOMETER, itemLog.odometer);
-		values.put(ItemLog.TEXT, itemLog.text);
+		values.put(ItemLog.ID_CAR, itemLog.getId_car());
+		values.put(ItemLog.DATE, String.valueOf(itemLog.getDate()));
+		values.put(ItemLog.TYPE, itemLog.getType());
+		values.put(ItemLog.SUBJECT, itemLog.getSubject());
+		values.put(ItemLog.VALUE_P, itemLog.getValue_p());
+		values.put(ItemLog.VALUE_U, itemLog.getValue_u());
+		values.put(ItemLog.ODOMETER, itemLog.getOdometer());
+		values.put(ItemLog.TEXT, itemLog.getText());
 
-		String _id = String.valueOf(itemLog.id);
+		String _id = String.valueOf(itemLog.getId_car());
 
 		String where = ItemLog._ID + "=?";
 		String[] whereArgs = new String[]{_id};
@@ -99,15 +99,15 @@ public class ItemLogDAO extends DBConnection {
 			ItemLog itemLog = new ItemLog();
 
 			// Lê os dados
-			itemLog.id = c.getLong(0);
-			itemLog.id_car = c.getLong(1);
-			itemLog.date = c.getString(2);
-			itemLog.type = c.getInt(3);
-			itemLog.subject = c.getString(4);
-			itemLog.value_p = c.getDouble(5);
-			itemLog.value_u = c.getDouble(6);
-			itemLog.odometer = c.getLong(7);
-			itemLog.text = c.getString(8);
+			itemLog.setId(c.getLong(0));
+			itemLog.setId_car(c.getLong(1));
+			itemLog.setDate(c.getString(2));
+			itemLog.setType(c.getInt(3));
+			itemLog.setSubject(c.getString(4));
+			itemLog.setValue_p(c.getDouble(5));
+			itemLog.setValue_u(c.getDouble(6));
+			itemLog.setOdometer(c.getLong(7));
+			itemLog.setText(c.getString(8));
 
 			return itemLog;
 		}
@@ -141,15 +141,15 @@ public class ItemLogDAO extends DBConnection {
 				itemLogs.add(itemLog);
 
 				// recupera os atributos de carro
-				itemLog.id = c.getLong(idxId);
-				itemLog.id_car = c.getLong(idxIdCar);
-				itemLog.date = c.getString(idxIdDate);
-				itemLog.type = c.getInt(idxIdType);
-				itemLog.subject = c.getString(idxIdSubject);
-				itemLog.value_p = c.getDouble(idxIdValueP);
-				itemLog.value_u = c.getDouble(idxIdValueU);
-				itemLog.odometer = c.getLong(idxIdOdometer);
-				itemLog.text = c.getString(idxIdText);
+				itemLog.setId(c.getLong(idxId));
+				itemLog.setId_car(c.getLong(idxIdCar));
+				itemLog.setDate(c.getString(idxIdDate));
+				itemLog.setType(c.getInt(idxIdType));
+				itemLog.setSubject(c.getString(idxIdSubject));
+				itemLog.setValue_p(c.getDouble(idxIdValueP));
+				itemLog.setValue_u(c.getDouble(idxIdValueU));
+				itemLog.setOdometer(c.getLong(idxIdOdometer));
+				itemLog.setText(c.getString(idxIdText));
 
 				Log.i(CATEGORIA, "ItemLog: " + itemLog.toString());
 
@@ -190,15 +190,15 @@ public class ItemLogDAO extends DBConnection {
 				itemLogs.add(itemLog);
 
 				// recupera os atributos de carro
-				itemLog.id = c.getLong(idxId);
-				itemLog.id_car = c.getLong(idxIdCar);
-				itemLog.date = c.getString(idxIdDate);
-				itemLog.type = c.getInt(idxIdType);
-				itemLog.subject = c.getString(idxIdSubject);
-				itemLog.value_p = c.getDouble(idxIdValueP);
-				itemLog.value_u = c.getDouble(idxIdValueU);
-				itemLog.odometer = c.getLong(idxIdOdometer);
-				itemLog.text = c.getString(idxIdText);
+				itemLog.setId(c.getLong(idxId));
+				itemLog.setId_car(c.getLong(idxIdCar));
+				itemLog.setDate(c.getString(idxIdDate));
+				itemLog.setType(c.getInt(idxIdType));
+				itemLog.setSubject(c.getString(idxIdSubject));
+				itemLog.setValue_p(c.getDouble(idxIdValueP));
+				itemLog.setValue_u(c.getDouble(idxIdValueU));
+				itemLog.setOdometer(c.getLong(idxIdOdometer));
+				itemLog.setText(c.getString(idxIdText));
 
 				Log.i(CATEGORIA, "ItemLog: " + itemLog.toString());
 

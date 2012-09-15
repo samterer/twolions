@@ -63,10 +63,10 @@ public class FormCarScreen extends ActivityCircle implements InterfaceBar {
 			if (id != null) {
 				// é uma edição, busca o carro...
 				Carro c = buscarCarro(id);
-				campoNome.setText(c.nome);
-				campoPlaca.setText(c.placa);
+				campoNome.setText(c.getNome());
+				campoPlaca.setText(c.getPlaca());
 				// tipo
-				if (c.tipo.equals("moto")) {
+				if (c.getTipo().equals("moto")) {
 					tipo = "moto";
 					campoTipoMoto.setPressed(true);
 					campoTipoCar.setPressed(false);
@@ -140,14 +140,14 @@ public class FormCarScreen extends ActivityCircle implements InterfaceBar {
 		Carro carro = new Carro();
 		if (id != null) {
 			// É uma atualização
-			carro.id = id;
+			carro.setId(id);
 		}
-		carro.nome = campoNome.getText().toString();
-		carro.placa = campoPlaca.getText().toString();
+		carro.setNome(campoNome.getText().toString());
+		carro.setPlaca(campoPlaca.getText().toString());
 		if (tipo.equals("")) {
 			tipo = "carro";
 		}
-		carro.tipo = tipo.trim();
+		carro.setTipo(tipo.trim());
 
 		// Salvar
 		salvarCarro(carro);

@@ -40,7 +40,7 @@ public class CarroDAO extends DBConnection {
 	}
 	// Salva o carro, insere um novo ou atualiza
 	public long salvar(Carro carro) {
-		long id = carro.id;
+		long id = carro.getId();
 
 		if (id != 0) {
 			atualizar(carro);
@@ -55,9 +55,9 @@ public class CarroDAO extends DBConnection {
 	// Insere um novo carro
 	public long inserir(Carro carro) {
 		ContentValues values = new ContentValues();
-		values.put(Carros.NOME, carro.nome);
-		values.put(Carros.PLACA, carro.placa);
-		values.put(Carros.TIPO, carro.tipo);
+		values.put(Carros.NOME, carro.getNome());
+		values.put(Carros.PLACA, carro.getPlaca());
+		values.put(Carros.TIPO, carro.getTipo());
 
 		long id = inserir(values, table_name);
 		return id;
@@ -72,11 +72,11 @@ public class CarroDAO extends DBConnection {
 	// Atualiza o carro no banco. O id do carro é utilizado.
 	public int atualizar(Carro carro) {
 		ContentValues values = new ContentValues();
-		values.put(Carros.NOME, carro.nome);
-		values.put(Carros.PLACA, carro.placa);
-		values.put(Carros.TIPO, carro.tipo);
+		values.put(Carros.NOME, carro.getNome());
+		values.put(Carros.PLACA, carro.getPlaca());
+		values.put(Carros.TIPO, carro.getTipo());
 
-		String _id = String.valueOf(carro.id);
+		String _id = String.valueOf(carro.getId());
 
 		String where = Carros._ID + "=?";
 		String[] whereArgs = new String[]{_id};
@@ -128,10 +128,10 @@ public class CarroDAO extends DBConnection {
 			Carro carro = new Carro();
 
 			// Lê os dados
-			carro.id = c.getLong(0);
-			carro.nome = c.getString(1);
-			carro.placa = c.getString(2);
-			carro.tipo = c.getString(3);
+			carro.setId(c.getLong(0));
+			carro.setNome(c.getString(1));
+			carro.setPlaca(c.getString(2));
+			carro.setTipo(c.getString(3));
 
 			return carro;
 		}
@@ -170,10 +170,10 @@ public class CarroDAO extends DBConnection {
 				carros.add(carro);
 
 				// recupera os atributos de carro
-				carro.id = c.getLong(idxId);
-				carro.nome = c.getString(idxNome);
-				carro.placa = c.getString(idxPlaca);
-				carro.tipo = c.getString(idxTipo);
+				carro.setId(c.getLong(idxId));
+				carro.setNome(c.getString(idxNome));
+				carro.setPlaca(c.getString(idxPlaca));
+				carro.setTipo(c.getString(idxTipo));
 
 				Log.i(CATEGORIA, "Carro: " + carro.toString());
 
@@ -199,10 +199,10 @@ public class CarroDAO extends DBConnection {
 
 				// utiliza os métodos getLong(), getString(), getInt(), etc para
 				// recuperar os valores
-				carro.id = c.getLong(0);
-				carro.nome = c.getString(1);
-				carro.placa = c.getString(2);
-				carro.tipo = c.getString(3);
+				carro.setId(c.getLong(0));
+				carro.setNome(c.getString(1));
+				carro.setPlaca(c.getString(2));
+				carro.setTipo(c.getString(3));
 			}
 		} catch (SQLException e) {
 			Log.e(CATEGORIA,

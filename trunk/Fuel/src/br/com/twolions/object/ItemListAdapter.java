@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.twolions.R;
 import br.com.twolions.daoobjects.ItemLog;
@@ -41,45 +40,50 @@ public class ItemListAdapter extends BaseAdapter {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.item_log, null);
 
-		// fuel
-		if (item.type == 0) {
-			// value p
-			// value u
-			// value total abastecido
-			// date
+		// date
+		TextView date = (TextView) view.findViewById(R.id.date);
+		date.setText(String.valueOf(item.getDate()));
+		// icone
 
+		// fuel
+		if (item.getType() == 0) {
+			// value p
+			TextView value_p = (TextView) view.findViewById(R.id.textRightUp);
+			value_p.setText(String.valueOf(item.getValue_p()));
+			// value u
+			TextView value_u = (TextView) view.findViewById(R.id.textRightDown);
+			value_u.setText(String.valueOf(item.getValue_u()));
+			// value total abastecido
+			TextView value_t = (TextView) view.findViewById(R.id.textLeftDown);
+			// calcula qtd de litro abastecido
+			Double total = Math.floor(item.getValue_p() / item.getValue_u());
+			value_t.setText(String.valueOf(total));
 		}
 		// expense
-		if (item.type == 1) {
+		if (item.getType() == 1) {
 			// value p
+			TextView value_p = (TextView) view.findViewById(R.id.textRightUp);
+			value_p.setText(String.valueOf(item.getValue_p()));
 			// subject
-			// date
+			TextView subject = (TextView) view.findViewById(R.id.textLeftDown);
+			subject.setText(String.valueOf(item.getSubject()));
 		}
 		// note
-		if (item.type == 2) {
+		if (item.getType() == 2) {
 			// text
 			// subject
-			// date
+			TextView subject = (TextView) view.findViewById(R.id.textLeftDown);
+			subject.setText(String.valueOf(item.getSubject()));
 		}
 		// repair
-		if (item.type == 3) {
+		if (item.getType() == 3) {
 			// value p
+			TextView value_p = (TextView) view.findViewById(R.id.textRightUp);
+			value_p.setText(String.valueOf(item.getValue_p()));
 			// subject
-			// date
+			TextView subject = (TextView) view.findViewById(R.id.textLeftDown);
+			subject.setText(String.valueOf(item.getSubject()));
 		}
-
-		TextView nome = (TextView) view.findViewById(R.id.nome);
-		// nome.setText(c.nome);
-
-		TextView placa = (TextView) view.findViewById(R.id.placa);
-		// placa.setText(c.placa);
-
-		ImageView tipo = (ImageView) view.findViewById(R.id.tipo);
-		/*
-		 * if (c.tipo.equals("carro")) {
-		 * tipo.setImageResource(R.drawable.type_car_on); } else {
-		 * tipo.setImageResource(R.drawable.type_moto_on); }
-		 */
 
 		return view;
 	}
