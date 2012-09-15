@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
@@ -13,44 +14,49 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import br.com.twolions.R;
-import br.com.twolions.core.ListCarActivity;
+import br.com.twolions.core.ListLogActivity;
 import br.com.twolions.dao.ItemLogDAO;
 import br.com.twolions.daoobjects.Carro.Carros;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.object.ItemListAdapter;
 
-public class ListLogScreen extends ListCarActivity
+public class ListLogScreen extends ListLogActivity
 		implements
 			OnItemClickListener,
 			InterfaceBar {
 	protected static final int INSERIR_EDITAR = 1;
 
+	private String CATEGORIA = "appLog";
+
 	public static ItemLogDAO itemLogDAO;
+
 	private List<ItemLog> itens;
 
 	ListView listView;
 
-	private Long id_item;
+	private Long id_Item;
+	private Long id_Car;
 
 	private static final int EDITAR = 0;
 	private static final int DELETE = 1;
 
-	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		// SqlScript sql = new SqlScript(this);
-
-		// repositorio = new CarroDAO(this);
-		// repositorio = new SqlScript(this);
-
 		itemLogDAO = new ItemLogDAO(this);
 
-		atualizarLista();
+		// id do carro da vez
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			id_Car = extras.getLong(Carros._ID);
+
+			if (id_Car != null) {
+				atualizarLista();
+			}
+		}
 
 	}
-
 	private void init() {
 
 	}
@@ -71,16 +77,20 @@ public class ListLogScreen extends ListCarActivity
 	}
 
 	private List<ItemLog> getItens() {
-		List<ItemLog> list = null;
+		Log.i(CATEGORIA, "getItens()");
+
+		List<ItemLog> list = itemLogDAO.listarItemLogs(id_Car);
+
+		for (int i = 0; i < list.size(); i++) {
+			ItemLog item = list.get(i);
+
+			Log.i(CATEGORIA, "Item type[" + item.getType() + "]");
+		}
 
 		return list;
 	}
-
 	public void onItemClick(AdapterView<?> parent, View view, int posicao,
 			long id) {
-		// get the row the clicked button is in
-		// Carro c = carros.get(posicao);
-		// id_item = c.id;
 
 		registerForContextMenu(view);
 
@@ -111,23 +121,20 @@ public class ListLogScreen extends ListCarActivity
 
 	// Recupera o id do carro, e abre a tela de edição
 	protected void editItem() {
-		// Usuário clicou em algum carro da lista
-		// Recupera o carro selecionado
-		// Carro carro = carros.get(posicao);
 
 		// Cria a intent para abrir a tela de editar
 		Intent it = new Intent(this, FormCarScreen.class);
 
 		// Passa o id do carro como parâmetro
-		it.putExtra(Carros._ID, id_item);
+		it.putExtra(Carros._ID, id_Car);
 
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
 	}
 	// delete car
 	public void deleteItemLog() {
-		if (id_item != null) {
-			excluirItem(id_item);
+		if (id_Item != null) {
+			excluirItem(id_Item);
 		}
 
 		// OK
@@ -138,7 +145,7 @@ public class ListLogScreen extends ListCarActivity
 	}
 	// Excluir o carro
 	protected void excluirItem(long id) {
-		// ListLogScreen.repositorio.deletar(id);
+		itemLogDAO.deletar(id);
 	}
 
 	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
@@ -180,8 +187,8 @@ public class ListLogScreen extends ListCarActivity
 		ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
 		bt_right.setImageResource(R.drawable.bt_add);
 
-		ImageView title = (ImageView) findViewById(R.id.title);
-		title.setImageResource(R.drawable.t_select_vehicle);
+		// ImageView title = (ImageView) findViewById(R.id.title);
+		// title.setImageResource(R.drawable.t_select_vehicle);
 
 	}
 }

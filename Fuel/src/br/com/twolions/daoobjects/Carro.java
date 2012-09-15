@@ -17,10 +17,42 @@ public class Carro {
 	 */
 	public static final String AUTHORITY = "br.com.twolions";
 
-	public long id;
-	public String nome;
-	public String placa;
-	public String tipo;
+	private long id;
+	private String nome;
+	private String placa;
+	private String tipo;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getPlaca() {
+		return placa;
+	}
+
+	public void setPlaca(String placa) {
+		this.placa = placa;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 
 	public Carro() {
 	}
@@ -53,16 +85,17 @@ public class Carro {
 		private Carros() {
 		}
 
-		/*// content://br.livro.android.provider.carro/carros
-		public static final Uri CONTENT_URI = Uri.parse("content://"
-				+ AUTHORITY + "/carros");
-
-		// Mime Type para todos os carros
-		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.google.carros";
-
-		// Mime Type para um único carro
-		public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.google.carros";
-*/
+		/*
+		 * // content://br.livro.android.provider.carro/carros public static
+		 * final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY +
+		 * "/carros");
+		 * 
+		 * // Mime Type para todos os carros public static final String
+		 * CONTENT_TYPE = "vnd.android.cursor.dir/vnd.google.carros";
+		 * 
+		 * // Mime Type para um único carro public static final String
+		 * CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.google.carros";
+		 */
 		// Ordenação default para inserir no order by
 		public static final String DEFAULT_SORT_ORDER = "_id ASC";
 
@@ -73,11 +106,12 @@ public class Carro {
 		// Método que constrói uma Uri para um Carro específico, com o seu id
 		// A Uri é no formato
 		// "content://br.livro.android.provider.carro/carros/id"
-		/*public static Uri getUriId(long id) {
-			// Adiciona o id na URI default do /carros
-			Uri uriCarro = ContentUris.withAppendedId(Carros.CONTENT_URI, id);
-			return uriCarro;
-		}*/
+		/*
+		 * public static Uri getUriId(long id) { // Adiciona o id na URI default
+		 * do /carros Uri uriCarro =
+		 * ContentUris.withAppendedId(Carros.CONTENT_URI, id); return uriCarro;
+		 * }
+		 */
 	}
 
 	@Override

@@ -43,13 +43,13 @@ public class CarListAdapter extends BaseAdapter {
 
 		// Atualiza o valor do TextView
 		TextView nome = (TextView) view.findViewById(R.id.nome);
-		nome.setText(c.nome);
+		nome.setText(c.getNome());
 
 		TextView placa = (TextView) view.findViewById(R.id.placa);
-		placa.setText(c.placa);
+		placa.setText(c.getPlaca());
 
 		ImageView tipo = (ImageView) view.findViewById(R.id.tipo);
-		if (c.tipo.equals("carro")) {
+		if (c.getTipo().equals("carro")) {
 			tipo.setImageResource(R.drawable.type_car_on);
 		} else {
 			tipo.setImageResource(R.drawable.type_moto_on);

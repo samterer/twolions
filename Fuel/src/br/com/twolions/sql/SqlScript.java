@@ -9,7 +9,7 @@ public class SqlScript extends CarroDAO {
 	private static final String NOME_BANCO = "bd_itsmycar";
 
 	// Controle de versão
-	private static final int VERSAO_BANCO = 7;
+	private static final int VERSAO_BANCO = 8;
 
 	// Classe utilitária para abrir, criar, e atualizar o banco de dados
 	private SQLiteHelper dbHelper;
@@ -59,7 +59,7 @@ public class SqlScript extends CarroDAO {
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,value_p,value_u,odometer,text) values('0','2012-09-04','0','','60.00','2.39','81456','');"};
+					+ "(id_car,date,type,subject,value_p,value_u,odometer,text) values('1','2012-09-04','0','','60.00','2.39','81456','');"};
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(Context ctx) {

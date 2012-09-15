@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.adapters.CarListAdapter;
 import br.com.twolions.core.ListCarActivity;
@@ -25,6 +27,9 @@ public class ListCarScreen extends ListCarActivity
 		implements
 			OnItemClickListener,
 			InterfaceBar {
+
+	private String CATEGORIA = "appLog";
+
 	protected static final int INSERIR_EDITAR = 1;
 
 	public static CarroDAO repositorio;
@@ -75,12 +80,38 @@ public class ListCarScreen extends ListCarActivity
 			long id) {
 		// get the row the clicked button is in
 		Carro c = carros.get(posicao);
-		name_car = c.nome;
-		id_car = c.id;
+		name_car = c.getNome();
+		id_car = c.getId();
 
+		// long click
 		registerForContextMenu(view);
 
+		// open list item log
+		openScreenListItemLog();
 	}
+
+	/*
+	 * Abre lista de itens
+	 */
+	private void openScreenListItemLog() {
+
+		Log.i(CATEGORIA, "open list()");
+
+		// abre lista de logs do carro
+		Intent it = new Intent(this, ListCarScreen.class);
+
+		// Passa o id do carro como parâmetro
+		it.putExtra(Carros._ID, id_car);
+
+		// Abre a tela de edição
+		// startActivityForResult(it, INSERIR_EDITAR);
+
+		startActivity(it);
+
+		Toast.makeText(this, "OPEN LIST CAR [" + id_car + "]",
+				Toast.LENGTH_SHORT).show();
+	}
+
 	// sub menu
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -107,10 +138,6 @@ public class ListCarScreen extends ListCarActivity
 
 	// Recupera o id do carro, e abre a tela de edição
 	protected void editCar() {
-		// Usuário clicou em algum carro da lista
-		// Recupera o carro selecionado
-		// Carro carro = carros.get(posicao);
-
 		// Cria a intent para abrir a tela de editar
 		Intent it = new Intent(this, FormCarScreen.class);
 
@@ -134,7 +161,7 @@ public class ListCarScreen extends ListCarActivity
 	}
 	// Excluir o carro
 	protected void excluirCarro(long id) {
-		ListCarScreen.repositorio.deletar(id);
+		repositorio.deletar(id);
 	}
 
 	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
