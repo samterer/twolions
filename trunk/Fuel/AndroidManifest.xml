@@ -25,6 +25,11 @@
             android:label="FormCarScreen"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
+         <activity
+            android:name=".core.ListLogActivity"
+            android:label="ListLogActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>   
     </application>
 
 </manifest>
