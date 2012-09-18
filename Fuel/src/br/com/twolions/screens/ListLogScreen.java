@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.BaseColumns;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -17,6 +16,7 @@ import android.widget.ListView;
 import br.com.twolions.R;
 import br.com.twolions.core.ListLogActivity;
 import br.com.twolions.dao.ItemLogDAO;
+import br.com.twolions.daoobjects.Carro.Carros;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.object.ItemListAdapter;
@@ -29,14 +29,14 @@ public class ListLogScreen extends ListLogActivity
 
 	private String CATEGORIA = "appLog";
 
-	public static ItemLogDAO itemLogDAO;
+	public static ItemLogDAO repositorio;
 
 	private List<ItemLog> itens;
 
 	ListView listView;
 
-	private Long id_Item;
-	private Long id_Car;
+	private Long id_item;
+	private Long id_car;
 
 	private static final int EDITAR = 0;
 	private static final int DELETE = 1;
@@ -45,16 +45,16 @@ public class ListLogScreen extends ListLogActivity
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		if (itemLogDAO == null) {
-			itemLogDAO = new ItemLogDAO(this);
+		if (repositorio == null) {
+			repositorio = new ItemLogDAO(this);
 		}
 
 		// id do carro da vez
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			id_Car = extras.getLong(BaseColumns._ID);
+			id_car = extras.getLong(Carros._ID);
 
-			if (id_Car != null) {
+			if (id_car != null) {
 				Log.i(CATEGORIA, "Atualiza lista de cars");
 				atualizarLista();
 			}
@@ -81,9 +81,9 @@ public class ListLogScreen extends ListLogActivity
 	}
 
 	private List<ItemLog> getItens() {
-		Log.i(CATEGORIA, "getItens() id[" + id_Car + "]");
+		Log.i(CATEGORIA, "getItens() id[" + id_car + "]");
 
-		List<ItemLog> list = itemLogDAO.listarItemLogs(id_Car);
+		List<ItemLog> list = repositorio.listarItemLogs(id_car);
 
 		for (int i = 0; i < list.size(); i++) {
 			ItemLog item = list.get(i);
@@ -95,6 +95,8 @@ public class ListLogScreen extends ListLogActivity
 	}
 	public void onItemClick(AdapterView<?> parent, View view, int posicao,
 			long id) {
+		final ItemLog i = itens.get(posicao);
+		id_item = i.getId();
 
 		registerForContextMenu(view);
 
@@ -129,18 +131,20 @@ public class ListLogScreen extends ListLogActivity
 	protected void editItem() {
 
 		// Cria a intent para abrir a tela de editar
-		Intent it = new Intent(this, FormCarScreen.class);
+		Intent it = new Intent(this, FormItemScreen.class);
 
 		// Passa o id do carro como parâmetro
-		it.putExtra(BaseColumns._ID, id_Car);
+		it.putExtra(ItemLog._ID, id_item);
+		// id do item
+		it.putExtra(ItemLog.ID_CAR, id_car);
 
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
 	}
 	// delete car
 	public void deleteItemLog() {
-		if (id_Item != null) {
-			excluirItem(id_Item);
+		if (id_item != null) {
+			excluirItem(id_item);
 		}
 
 		// OK
@@ -151,7 +155,7 @@ public class ListLogScreen extends ListLogActivity
 	}
 	// Excluir o carro
 	protected void excluirItem(long id) {
-		itemLogDAO.deletar(id);
+		repositorio.deletar(id);
 	}
 
 	@Override
