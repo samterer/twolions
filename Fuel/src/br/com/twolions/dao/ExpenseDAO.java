@@ -20,13 +20,13 @@ public class ExpenseDAO extends DBConnection {
 
 	// private ManagerDAO dao;
 
-	public ExpenseDAO(Context ctx) {
+	public ExpenseDAO(final Context ctx) {
 		super(ctx, base_name);
 		// dao = new ManagerDAO(ctx, base_name, table_name, db);
 	}
 
 	// Salva o carro, insere um novo ou atualiza
-	public long salvar(Expense expense) {
+	public long salvar(final Expense expense) {
 		long id = expense.id;
 
 		if (id != 0) {
@@ -39,58 +39,58 @@ public class ExpenseDAO extends DBConnection {
 		return id;
 	}
 
-	public long inserir(Expense expense) {
-		ContentValues values = new ContentValues();
+	public long inserir(final Expense expense) {
+		final ContentValues values = new ContentValues();
 		values.put(Expense.ID_CAR, expense.id_car);
 		values.put(Expense.DATE, String.valueOf(expense.date));
 		values.put(Expense.SUBJECT, expense.subject);
 		values.put(Expense.VALUE, expense.value);
 		values.put(Expense.TIPO, expense.tipo);
 
-		long id = inserir(values, table_name);
+		final long id = inserir(values, table_name);
 		return id;
 	}
 
-	public int atualizar(Expense expense) {
-		ContentValues values = new ContentValues();
+	public int atualizar(final Expense expense) {
+		final ContentValues values = new ContentValues();
 		values.put(Expense.ID_CAR, expense.id_car);
 		values.put(Expense.DATE, String.valueOf(expense.date));
 		values.put(Expense.SUBJECT, expense.subject);
 		values.put(Expense.VALUE, expense.value);
 		values.put(Expense.TIPO, expense.tipo);
 
-		String _id = String.valueOf(expense.id);
+		final String _id = String.valueOf(expense.id);
 
-		String where = Expense._ID + "=?";
-		String[] whereArgs = new String[]{_id};
+		final String where = Expense._ID + "=?";
+		final String[] whereArgs = new String[]{_id};
 
-		int count = atualizar(values, where, whereArgs, table_name);
-
-		return count;
-	}
-
-	public int deletar(long id) {
-		String where = Expense._ID + "=?";
-
-		String _id = String.valueOf(id);
-		String[] whereArgs = new String[]{_id};
-
-		int count = deletar(where, whereArgs, table_name);
+		final int count = atualizar(values, where, whereArgs, table_name);
 
 		return count;
 	}
 
-	public Expense buscarExpense(long id) {
+	public int deletar(final long id) {
+		final String where = Expense._ID + "=?";
+
+		final String _id = String.valueOf(id);
+		final String[] whereArgs = new String[]{_id};
+
+		final int count = deletar(where, whereArgs, table_name);
+
+		return count;
+	}
+
+	public Expense buscarExpense(final long id) {
 		// select * from Expense where _id=?
-		Cursor c = db.query(true, table_name, Expense.colunas, Expense._ID
-				+ "=" + id, null, null, null, null, null);
+		final Cursor c = db.query(true, table_name, Expense.colunas,
+				Expense._ID + "=" + id, null, null, null, null, null);
 
 		if (c.getCount() > 0) {
 
 			// Posicinoa no primeiro elemento do cursor
 			c.moveToFirst();
 
-			Expense expense = new Expense();
+			final Expense expense = new Expense();
 
 			// Lê os dados
 			expense.id = c.getLong(0);
@@ -107,25 +107,25 @@ public class ExpenseDAO extends DBConnection {
 	}
 
 	// Retorna uma lista com todos os Expenses pelo id do carro
-	public List<Expense> listarExpenses(long id_Car) {
-		Cursor c = db.query(table_name, Expense.colunas, Expense.ID_CAR + "='"
-				+ id_Car + "'", null, null, null, null);
+	public List<Expense> listarExpenses(final long id_Car) {
+		final Cursor c = db.query(table_name, Expense.colunas, Expense.ID_CAR
+				+ "='" + id_Car + "'", null, null, null, null);
 
-		List<Expense> expenses = new ArrayList<Expense>();
+		final List<Expense> expenses = new ArrayList<Expense>();
 
 		if (c.moveToFirst()) {
 
 			// Recupera os índices das colunas
-			int idxId = c.getColumnIndex(Expense._ID);
-			int idxIdCar = c.getColumnIndex(Expense.ID_CAR);
-			int idxIdDate = c.getColumnIndex(Expense.DATE);
-			int idxIdSubject = c.getColumnIndex(Expense.SUBJECT);
-			int idxIdValue = c.getColumnIndex(Expense.VALUE);
-			int idxIdTipo = c.getColumnIndex(Expense.TIPO);
+			final int idxId = c.getColumnIndex(Expense._ID);
+			final int idxIdCar = c.getColumnIndex(Expense.ID_CAR);
+			final int idxIdDate = c.getColumnIndex(Expense.DATE);
+			final int idxIdSubject = c.getColumnIndex(Expense.SUBJECT);
+			final int idxIdValue = c.getColumnIndex(Expense.VALUE);
+			final int idxIdTipo = c.getColumnIndex(Expense.TIPO);
 
 			// Loop até o final
 			do {
-				Expense expense = new Expense();
+				final Expense expense = new Expense();
 				expenses.add(expense);
 
 				// recupera os atributos de carro

@@ -28,7 +28,7 @@ public class ListCarScreen extends ListCarActivity
 			OnItemClickListener,
 			InterfaceBar {
 
-	private String CATEGORIA = "appLog";
+	private final String CATEGORIA = "appLog";
 
 	protected static final int INSERIR_EDITAR = 1;
 
@@ -45,13 +45,12 @@ public class ListCarScreen extends ListCarActivity
 	private static final int DELETE = 1;
 
 	@Override
-	public void onCreate(Bundle icicle) {
+	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
 
-		// SqlScript sql = new SqlScript(this);
-
-		// repositorio = new CarroDAO(this);
-		repositorio = new SqlScript(this);
+		if (repositorio == null) {
+			repositorio = new SqlScript(this);
+		}
 
 		atualizarLista();
 
@@ -76,10 +75,10 @@ public class ListCarScreen extends ListCarActivity
 
 	}
 
-	public void onItemClick(AdapterView<?> parent, View view, int posicao,
-			long id) {
+	public void onItemClick(final AdapterView<?> parent, final View view,
+			final int posicao, final long id) {
 		// get the row the clicked button is in
-		Carro c = carros.get(posicao);
+		final Carro c = carros.get(posicao);
 		name_car = c.getNome();
 		id_car = c.getId();
 
@@ -98,23 +97,24 @@ public class ListCarScreen extends ListCarActivity
 		Log.i(CATEGORIA, "open list()");
 
 		// abre lista de logs do carro
-		Intent it = new Intent(this, ListCarScreen.class);
+		final Intent it = new Intent(this, ListLogScreen.class);
 
 		// Passa o id do carro como parâmetro
 		it.putExtra(Carros._ID, id_car);
 
 		// Abre a tela de edição
-		// startActivityForResult(it, INSERIR_EDITAR);
+		startActivityForResult(it, INSERIR_EDITAR);
 
-		startActivity(it);
+		// startActivity(it);
 
 		Toast.makeText(this, "OPEN LIST CAR [" + id_car + "]",
 				Toast.LENGTH_SHORT).show();
 	}
 
 	// sub menu
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
+	@Override
+	public void onCreateContextMenu(final ContextMenu menu, final View v,
+			final ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.setHeaderTitle(name_car);
 		menu.add(0, EDITAR, 0, "Edit");
@@ -122,7 +122,8 @@ public class ListCarScreen extends ListCarActivity
 		menu.add(0, v.getId(), 0, "Cancel");
 	}
 	// click in item of sub menu
-	public boolean onContextItemSelected(MenuItem item) {
+	@Override
+	public boolean onContextItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 			case EDITAR :
 				editCar();
@@ -139,7 +140,7 @@ public class ListCarScreen extends ListCarActivity
 	// Recupera o id do carro, e abre a tela de edição
 	protected void editCar() {
 		// Cria a intent para abrir a tela de editar
-		Intent it = new Intent(this, FormCarScreen.class);
+		final Intent it = new Intent(this, FormCarScreen.class);
 
 		// Passa o id do carro como parâmetro
 		it.putExtra(Carros._ID, id_car);
@@ -160,11 +161,13 @@ public class ListCarScreen extends ListCarActivity
 		atualizarLista();
 	}
 	// Excluir o carro
-	protected void excluirCarro(long id) {
+	protected void excluirCarro(final long id) {
 		repositorio.deletar(id);
 	}
 
-	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
+	@Override
+	protected void onActivityResult(final int codigo, final int codigoRetorno,
+			final Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
 
 		// Quando a activity EditarCarro retornar, seja se foi para adicionar
@@ -182,12 +185,13 @@ public class ListCarScreen extends ListCarActivity
 		repositorio.fechar();
 	}
 
-	public void btBarLeft(View v) {
-		// TODO Auto-generated method stub
+	public void btBarLeft(final View v) {
+		// Fecha a tela
+		finish();
 
 	}
 
-	public void btBarRight(View v) {
+	public void btBarRight(final View v) {
 
 		startActivityForResult(new Intent(this, FormCarScreen.class),
 				INSERIR_EDITAR);
@@ -196,14 +200,14 @@ public class ListCarScreen extends ListCarActivity
 
 	public void organizeBt() {
 		// bt left
-		ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		bt_left.setImageResource(R.drawable.bt_help);
+		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
+		bt_left.setImageResource(R.drawable.bt_cancel_long);
 
 		// bt rigt
-		ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
+		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
 		bt_right.setImageResource(R.drawable.bt_add);
 
-		ImageView title = (ImageView) findViewById(R.id.title);
+		final ImageView title = (ImageView) findViewById(R.id.title);
 		title.setImageResource(R.drawable.t_select_vehicle);
 
 	}

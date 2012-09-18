@@ -11,12 +11,12 @@ import android.util.Log;
  * Classe utilitária para abrir, criar, e atualizar o banco de dados
  * 
  */
-class SQLiteHelper extends SQLiteOpenHelper {
+public class SQLiteHelper extends SQLiteOpenHelper {
 
 	private static final String CATEGORIA = "base";
 
-	private String[] scriptSQLCreate;
-	private String[] scriptSQLDelete;
+	private final String[] scriptSQLCreate;
+	private final String[] scriptSQLDelete;
 
 	/**
 	 * Cria uma instância de SQLiteHelper
@@ -31,22 +31,26 @@ class SQLiteHelper extends SQLiteOpenHelper {
 	 * @param scriptSQLDelete
 	 *            SQL com o drop table...
 	 */
-	SQLiteHelper(Context context, String nomeBanco, int versaoBanco,
-			String[] scriptSQLCreate, String[] scriptSQLDelete) {
+	SQLiteHelper(final Context context, final String nomeBanco,
+			final int versaoBanco, final String[] scriptSQLCreate,
+			final String[] scriptSQLDelete) {
 		super(context, nomeBanco, null, versaoBanco);
+
 		this.scriptSQLCreate = scriptSQLCreate;
+
 		this.scriptSQLDelete = scriptSQLDelete;
+
 	}
 
 	@Override
 	// Criar novo banco...
-	public void onCreate(SQLiteDatabase db) {
-		Log.i(CATEGORIA, "Criando banco com sql");
-		int qtdeScripts = scriptSQLCreate.length;
+	public void onCreate(final SQLiteDatabase db) {
+		Log.i(CATEGORIA, "Criando banco com sql em [" + db.getPath() + "]");
+		final int qtdeScripts = scriptSQLCreate.length;
 
 		// Executa cada sql passado como parâmetro
 		for (int i = 0; i < qtdeScripts; i++) {
-			String sql = scriptSQLCreate[i];
+			final String sql = scriptSQLCreate[i];
 			Log.i(CATEGORIA, sql);
 			// Cria o banco de dados executando o script de criação
 			db.execSQL(sql);
@@ -55,16 +59,17 @@ class SQLiteHelper extends SQLiteOpenHelper {
 
 	@Override
 	// Mudou a versão...
-	public void onUpgrade(SQLiteDatabase db, int versaoAntiga, int novaVersao) {
+	public void onUpgrade(final SQLiteDatabase db, final int versaoAntiga,
+			final int novaVersao) {
 		Log.w(CATEGORIA, "Atualizando da versão " + versaoAntiga + " para "
 				+ novaVersao + ". Todos os registros serão deletados.");
 		// Log.i(CATEGORIA, scriptSQLDelete);
 		// Deleta as tabelas...
-		int qtdeScripts = scriptSQLDelete.length;
+		final int qtdeScripts = scriptSQLDelete.length;
 
 		// Executa cada sql passado como parâmetro
 		for (int i = 0; i < qtdeScripts; i++) {
-			String sql = scriptSQLDelete[i];
+			final String sql = scriptSQLDelete[i];
 			Log.i(CATEGORIA, sql);
 			// Cria o banco de dados executando o script de criação
 			db.execSQL(sql);

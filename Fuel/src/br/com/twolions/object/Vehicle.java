@@ -8,39 +8,39 @@ import android.provider.BaseColumns;
  * 
  */
 /*
-public class Vehicle {
+ public class Vehicle {
 
-public static String[] colunas = new String[]{Carros._ID, Carros.NOME,
-		Carros.PLACA, Carros.TIPO};
+ public static String[] colunas = new String[]{Carros._ID, Carros.NOME,
+ Carros.PLACA, Carros.TIPO};
 
  *//**
  * Pacote do Content Provider. Precisa ser único.
  */
 /*
-public static final String AUTHORITY = "br.com.twolions";
+ public static final String AUTHORITY = "br.com.twolions";
 
-public long id;
-public String nome;
-public String placa;
-public String tipo;
+ public long id;
+ public String nome;
+ public String placa;
+ public String tipo;
 
-public Vehicle() {
-}
+ public Vehicle() {
+ }
 
-public Vehicle(String nome, String placa, String tipo) {
-super();
-this.nome = nome;
-this.placa = placa;
-this.tipo = tipo;
-}
+ public Vehicle(String nome, String placa, String tipo) {
+ super();
+ this.nome = nome;
+ this.placa = placa;
+ this.tipo = tipo;
+ }
 
-public Vehicle(long id, String nome, String placa, String tipo) {
-super();
-this.id = id;
-this.nome = nome;
-this.placa = placa;
-this.tipo = tipo;
-}
+ public Vehicle(long id, String nome, String placa, String tipo) {
+ super();
+ this.id = id;
+ this.nome = nome;
+ this.placa = placa;
+ this.tipo = tipo;
+ }
 
  *//**
  * Classe interna para representar as colunas e ser utilizada por um Content

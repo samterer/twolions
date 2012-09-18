@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -16,7 +17,6 @@ import android.widget.ListView;
 import br.com.twolions.R;
 import br.com.twolions.core.ListLogActivity;
 import br.com.twolions.dao.ItemLogDAO;
-import br.com.twolions.daoobjects.Carro.Carros;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.object.ItemListAdapter;
@@ -41,17 +41,21 @@ public class ListLogScreen extends ListLogActivity
 	private static final int EDITAR = 0;
 	private static final int DELETE = 1;
 
+	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		itemLogDAO = new ItemLogDAO(this);
+		if (itemLogDAO == null) {
+			itemLogDAO = new ItemLogDAO(this);
+		}
 
 		// id do carro da vez
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			id_Car = extras.getLong(Carros._ID);
+			id_Car = extras.getLong(BaseColumns._ID);
 
 			if (id_Car != null) {
+				Log.i(CATEGORIA, "Atualiza lista de cars");
 				atualizarLista();
 			}
 		}
@@ -77,7 +81,7 @@ public class ListLogScreen extends ListLogActivity
 	}
 
 	private List<ItemLog> getItens() {
-		Log.i(CATEGORIA, "getItens()");
+		Log.i(CATEGORIA, "getItens() id[" + id_Car + "]");
 
 		List<ItemLog> list = itemLogDAO.listarItemLogs(id_Car);
 
@@ -96,6 +100,7 @@ public class ListLogScreen extends ListLogActivity
 
 	}
 	// sub menu
+	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
@@ -105,6 +110,7 @@ public class ListLogScreen extends ListLogActivity
 		menu.add(0, v.getId(), 0, "Cancel");
 	}
 	// click in item of sub menu
+	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case EDITAR :
@@ -126,7 +132,7 @@ public class ListLogScreen extends ListLogActivity
 		Intent it = new Intent(this, FormCarScreen.class);
 
 		// Passa o id do carro como parâmetro
-		it.putExtra(Carros._ID, id_Car);
+		it.putExtra(BaseColumns._ID, id_Car);
 
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
@@ -148,6 +154,7 @@ public class ListLogScreen extends ListLogActivity
 		itemLogDAO.deletar(id);
 	}
 
+	@Override
 	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
 
@@ -159,15 +166,10 @@ public class ListLogScreen extends ListLogActivity
 		}
 	}
 
-	protected void onDestroy() {
-		super.onDestroy();
-
-		// Fecha o banco
-		// repositorio.fechar();
-	}
-
 	public void btBarLeft(View v) {
-		// TODO Auto-generated method stub
+		setResult(RESULT_CANCELED);
+		// Fecha a tela
+		finish();
 
 	}
 
@@ -181,7 +183,7 @@ public class ListLogScreen extends ListLogActivity
 	public void organizeBt() {
 		// bt left
 		ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		bt_left.setImageResource(R.drawable.bt_help);
+		bt_left.setImageResource(R.drawable.bt_cancel_long);
 
 		// bt rigt
 		ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
@@ -191,4 +193,11 @@ public class ListLogScreen extends ListLogActivity
 		// title.setImageResource(R.drawable.t_select_vehicle);
 
 	}
+	public void onBackPressed() { // call my backbutton pressed method when
+									// boolean==true
+
+		Log.i(CATEGORIA, "Clicked");
+
+	}
+
 }

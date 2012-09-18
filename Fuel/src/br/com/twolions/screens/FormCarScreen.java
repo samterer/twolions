@@ -34,7 +34,7 @@ public class FormCarScreen extends ActivityCircle implements InterfaceBar {
 	private Long id;
 
 	@Override
-	public void onCreate(Bundle icicle) {
+	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
 
 		setContentView(R.layout.form_car);
@@ -55,14 +55,14 @@ public class FormCarScreen extends ActivityCircle implements InterfaceBar {
 
 		id = null;
 
-		Bundle extras = getIntent().getExtras();
+		final Bundle extras = getIntent().getExtras();
 		// Se for para Editar, recuperar os valores ...
 		if (extras != null) {
 			id = extras.getLong(Carros._ID);
 
 			if (id != null) {
 				// é uma edição, busca o carro...
-				Carro c = buscarCarro(id);
+				final Carro c = buscarCarro(id);
 				campoNome.setText(c.getNome());
 				campoPlaca.setText(c.getPlaca());
 				// tipo
@@ -79,15 +79,17 @@ public class FormCarScreen extends ActivityCircle implements InterfaceBar {
 		}
 	}
 
-	public void actionBt(Context context) {
+	public void actionBt(final Context context) {
 
 		// carro
 		campoTipoCar.setOnTouchListener(new OnTouchListener() {
-			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_DOWN)
+			public boolean onTouch(final View v, final MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
 					return true;
-				if (event.getAction() != MotionEvent.ACTION_UP)
+				}
+				if (event.getAction() != MotionEvent.ACTION_UP) {
 					return false;
+				}
 
 				if (campoTipoCar.isPressed()) {
 					tipo = "";
@@ -104,11 +106,13 @@ public class FormCarScreen extends ActivityCircle implements InterfaceBar {
 
 		// moto
 		campoTipoMoto.setOnTouchListener(new OnTouchListener() {
-			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_DOWN)
+			public boolean onTouch(final View v, final MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
 					return true;
-				if (event.getAction() != MotionEvent.ACTION_UP)
+				}
+				if (event.getAction() != MotionEvent.ACTION_UP) {
 					return false;
+				}
 
 				if (campoTipoMoto.isPressed()) {
 					tipo = "";
@@ -137,7 +141,7 @@ public class FormCarScreen extends ActivityCircle implements InterfaceBar {
 
 	public void salvar() {
 
-		Carro carro = new Carro();
+		final Carro carro = new Carro();
 		if (id != null) {
 			// É uma atualização
 			carro.setId(id);
@@ -172,42 +176,42 @@ public class FormCarScreen extends ActivityCircle implements InterfaceBar {
 	}
 
 	// Buscar o carro pelo id
-	protected Carro buscarCarro(long id) {
+	protected Carro buscarCarro(final long id) {
 		return ListCarScreen.repositorio.buscarCarro(id);
 	}
 
 	// Salvar o carro
-	protected void salvarCarro(Carro carro) {
+	protected void salvarCarro(final Carro carro) {
 		ListCarScreen.repositorio.salvar(carro);
 	}
 
 	// Excluir o carro
-	protected void excluirCarro(long id) {
+	protected void excluirCarro(final long id) {
 		ListCarScreen.repositorio.deletar(id);
 	}
 
 	public void organizeBt() {
 		// bt left
-		ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
+		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
 		bt_left.setImageResource(R.drawable.bt_cancel_long);
 
 		// bt rigt
-		ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
+		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
 		bt_right.setImageResource(R.drawable.bt_save);
 
 		// title
-		ImageView title = (ImageView) findViewById(R.id.title);
+		final ImageView title = (ImageView) findViewById(R.id.title);
 		title.setVisibility(View.INVISIBLE);
 	}
 
-	public void btBarLeft(View v) {
+	public void btBarLeft(final View v) {
 		setResult(RESULT_CANCELED);
 		// Fecha a tela
 		finish();
 
 	}
 
-	public void btBarRight(View v) {
+	public void btBarRight(final View v) {
 		salvar();
 	}
 }

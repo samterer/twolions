@@ -20,8 +20,8 @@ public class ManagerDAO {
 	/*
 	 * Instancia da classe Nome do banco Nome da tabela
 	 */
-	public ManagerDAO(Context ctx, String banco, String table,
-			SQLiteDatabase dbSql) {
+	public ManagerDAO(final Context ctx, final String banco,
+			final String table, final SQLiteDatabase dbSql) {
 
 		db = dbSql;
 
@@ -40,23 +40,24 @@ public class ManagerDAO {
 
 	}
 	// Insere um novo carro
-	public long inserir(ContentValues valores) {
+	public long inserir(final ContentValues valores) {
 		Log.i(CATEGORIA, "table_name [" + table_name + "]");
-		long id = db.insert(table_name, "", valores);
+		final long id = db.insert(table_name, "", valores);
 		return id;
 	}
 
 	// Atualiza o carro com os valores abaixo
 	// A cláusula where é utilizada para identificar o carro a ser atualizado
-	public int atualizar(ContentValues valores, String where, String[] whereArgs) {
-		int count = db.update(table_name, valores, where, whereArgs);
+	public int atualizar(final ContentValues valores, final String where,
+			final String[] whereArgs) {
+		final int count = db.update(table_name, valores, where, whereArgs);
 		Log.i(CATEGORIA, "Atualizou [" + count + "] registros");
 		return count;
 	}
 
 	// Deleta o carro com os argumentos fornecidos
-	public int deletar(String where, String[] whereArgs) {
-		int count = db.delete(table_name, where, whereArgs);
+	public int deletar(final String where, final String[] whereArgs) {
+		final int count = db.delete(table_name, where, whereArgs);
 		Log.i(CATEGORIA, "Deletou [" + count + "] registros");
 		return count;
 	}
@@ -67,7 +68,7 @@ public class ManagerDAO {
 			// select from carros
 			return db.query(table_name, Carro.colunas, null, null, null, null,
 					null, null);
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			Log.e(CATEGORIA, "Erro ao buscar os objs: " + e.toString());
 			e.printStackTrace();
 			return null;
@@ -77,11 +78,12 @@ public class ManagerDAO {
 	// Busca um carro utilizando as configurações definidas no
 	// SQLiteQueryBuilder
 	// Utilizado pelo Content Provider
-	public Cursor query(SQLiteQueryBuilder queryBuilder, String[] projection,
-			String selection, String[] selectionArgs, String groupBy,
-			String having, String orderBy) {
-		Cursor c = queryBuilder.query(db, projection, selection, selectionArgs,
-				groupBy, having, orderBy);
+	public Cursor query(final SQLiteQueryBuilder queryBuilder,
+			final String[] projection, final String selection,
+			final String[] selectionArgs, final String groupBy,
+			final String having, final String orderBy) {
+		final Cursor c = queryBuilder.query(db, projection, selection,
+				selectionArgs, groupBy, having, orderBy);
 		return c;
 	}
 

@@ -27,7 +27,7 @@ public class ItemLog implements BaseColumns {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(final long id) {
 		this.id = id;
 	}
 
@@ -35,7 +35,7 @@ public class ItemLog implements BaseColumns {
 		return id_car;
 	}
 
-	public void setId_car(long id_car) {
+	public void setId_car(final long id_car) {
 		this.id_car = id_car;
 	}
 
@@ -43,7 +43,7 @@ public class ItemLog implements BaseColumns {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(final String date) {
 		this.date = date;
 	}
 
@@ -51,7 +51,7 @@ public class ItemLog implements BaseColumns {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(final int type) {
 		this.type = type;
 	}
 
@@ -59,7 +59,7 @@ public class ItemLog implements BaseColumns {
 		return subject;
 	}
 
-	public void setSubject(String subject) {
+	public void setSubject(final String subject) {
 		this.subject = subject;
 	}
 
@@ -67,7 +67,7 @@ public class ItemLog implements BaseColumns {
 		return value_p;
 	}
 
-	public void setValue_p(double value_p) {
+	public void setValue_p(final double value_p) {
 		this.value_p = value_p;
 	}
 
@@ -75,7 +75,7 @@ public class ItemLog implements BaseColumns {
 		return value_u;
 	}
 
-	public void setValue_u(double value_u) {
+	public void setValue_u(final double value_u) {
 		this.value_u = value_u;
 	}
 
@@ -83,7 +83,7 @@ public class ItemLog implements BaseColumns {
 		return odometer;
 	}
 
-	public void setOdometer(long odometer) {
+	public void setOdometer(final long odometer) {
 		this.odometer = odometer;
 	}
 
@@ -91,7 +91,7 @@ public class ItemLog implements BaseColumns {
 		return text;
 	}
 
-	public void setText(String text) {
+	public void setText(final String text) {
 		this.text = text;
 	}
 
@@ -109,8 +109,9 @@ public class ItemLog implements BaseColumns {
 	public ItemLog() {
 	}
 
-	public ItemLog(long id_car, String date, int type, String subject,
-			double value_p, double value_u, long odometer, String text) {
+	public ItemLog(final long id_car, final String date, final int type,
+			final String subject, final double value_p, final double value_u,
+			final long odometer, final String text) {
 		super();
 		this.id_car = id_car;
 		this.date = date;
@@ -122,8 +123,9 @@ public class ItemLog implements BaseColumns {
 		this.text = text;
 
 	}
-	public ItemLog(long id, long id_car, String date, int type, String subject,
-			double value_p, double value_u, long odometer, String text) {
+	public ItemLog(final long id, final long id_car, final String date,
+			final int type, final String subject, final double value_p,
+			final double value_u, final long odometer, final String text) {
 		super();
 		this.id = id;
 		this.id_car = id_car;
@@ -136,9 +138,11 @@ public class ItemLog implements BaseColumns {
 		this.text = text;
 	}
 
+	@Override
 	public String toString() {
-		return "Date: " + date + ", Value_u: " + value_u + ", Value_p: "
-				+ value_p + ", Odometer: " + odometer + ", Subject: " + subject
+		return "Id: " + id + ", Id_Car: " + id_car + ", Date: " + date
+				+ ", Value_u: " + value_u + ", Value_p: " + value_p
+				+ ", Odometer: " + odometer + ", Subject: " + subject
 				+ ", Text: " + text + ", Type: " + type;
 	}
 }

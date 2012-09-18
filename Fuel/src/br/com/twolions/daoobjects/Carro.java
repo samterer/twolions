@@ -26,7 +26,7 @@ public class Carro {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(final long id) {
 		this.id = id;
 	}
 
@@ -34,7 +34,7 @@ public class Carro {
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	public void setNome(final String nome) {
 		this.nome = nome;
 	}
 
@@ -42,7 +42,7 @@ public class Carro {
 		return placa;
 	}
 
-	public void setPlaca(String placa) {
+	public void setPlaca(final String placa) {
 		this.placa = placa;
 	}
 
@@ -50,21 +50,22 @@ public class Carro {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(final String tipo) {
 		this.tipo = tipo;
 	}
 
 	public Carro() {
 	}
 
-	public Carro(String nome, String placa, String tipo) {
+	public Carro(final String nome, final String placa, final String tipo) {
 		super();
 		this.nome = nome;
 		this.placa = placa;
 		this.tipo = tipo;
 	}
 
-	public Carro(long id, String nome, String placa, String tipo) {
+	public Carro(final long id, final String nome, final String placa,
+			final String tipo) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -116,6 +117,7 @@ public class Carro {
 
 	@Override
 	public String toString() {
-		return "Nome: " + nome + ", Placa: " + placa + ", Tipo: " + tipo;
+		return "Id: " + id + ", Nome: " + nome + ", Placa: " + placa
+				+ ", Tipo: " + tipo;
 	}
 }

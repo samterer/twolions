@@ -30,8 +30,8 @@ public class Expense implements BaseColumns {
 	public Expense() {
 	}
 
-	public Expense(long id_car, String date, String subject, double value,
-			String tipo) {
+	public Expense(final long id_car, final String date, final String subject,
+			final double value, final String tipo) {
 		super();
 		this.id_car = id_car;
 		this.date = date;
@@ -40,8 +40,8 @@ public class Expense implements BaseColumns {
 		this.tipo = tipo;
 	}
 
-	public Expense(long id, long id_car, String date, String subject,
-			double value, String tipo) {
+	public Expense(final long id, final long id_car, final String date,
+			final String subject, final double value, final String tipo) {
 		super();
 		this.id = id;
 		this.id_car = id_car;

@@ -13,10 +13,10 @@ import br.com.twolions.R;
 import br.com.twolions.daoobjects.Carro;
 
 public class CarListAdapter extends BaseAdapter {
-	private Context context;
-	private List<Carro> lista;
+	private final Context context;
+	private final List<Carro> lista;
 
-	public CarListAdapter(Context context, List<Carro> lista) {
+	public CarListAdapter(final Context context, final List<Carro> lista) {
 		this.context = context;
 		this.lista = lista;
 	}
@@ -25,30 +25,31 @@ public class CarListAdapter extends BaseAdapter {
 		return lista.size();
 	}
 
-	public Object getItem(int position) {
+	public Object getItem(final int position) {
 		return lista.get(position);
 	}
 
-	public long getItemId(int position) {
+	public long getItemId(final int position) {
 		return position;
 	}
 
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, final View convertView,
+			final ViewGroup parent) {
 		// Recupera o Carro da posição atual
-		Carro c = lista.get(position);
+		final Carro c = lista.get(position);
 
-		LayoutInflater inflater = (LayoutInflater) context
+		final LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = inflater.inflate(R.layout.item_car, null);
+		final View view = inflater.inflate(R.layout.item_car, null);
 
 		// Atualiza o valor do TextView
-		TextView nome = (TextView) view.findViewById(R.id.nome);
+		final TextView nome = (TextView) view.findViewById(R.id.nome);
 		nome.setText(c.getNome());
 
-		TextView placa = (TextView) view.findViewById(R.id.placa);
+		final TextView placa = (TextView) view.findViewById(R.id.placa);
 		placa.setText(c.getPlaca());
 
-		ImageView tipo = (ImageView) view.findViewById(R.id.tipo);
+		final ImageView tipo = (ImageView) view.findViewById(R.id.tipo);
 		if (c.getTipo().equals("carro")) {
 			tipo.setImageResource(R.drawable.type_car_on);
 		} else {

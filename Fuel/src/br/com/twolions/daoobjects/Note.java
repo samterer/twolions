@@ -28,7 +28,8 @@ public class Note implements BaseColumns {
 	public Note() {
 	}
 
-	public Note(long id_car, String date, String subject, String text) {
+	public Note(final long id_car, final String date, final String subject,
+			final String text) {
 		super();
 		this.id_car = id_car;
 		this.date = date;
@@ -36,7 +37,8 @@ public class Note implements BaseColumns {
 		this.text = text;
 	}
 
-	public Note(long id, long id_car, String date, String subject, String text) {
+	public Note(final long id, final long id_car, final String date,
+			final String subject, final String text) {
 		super();
 		this.id = id;
 		this.id_car = id_car;
