@@ -9,8 +9,8 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import br.com.core.ActivityCircle;
 import br.com.twolions.R;
+import br.com.twolions.core.FormCarActivity;
 import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.Carro.Carros;
 import br.com.twolions.interfaces.InterfaceBar;
@@ -21,7 +21,7 @@ import br.com.twolions.interfaces.InterfaceBar;
  * @author rlecheta
  * 
  */
-public class FormCarScreen extends ActivityCircle implements InterfaceBar {
+public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 	static final int RESULT_SALVAR = 1;
 	static final int RESULT_EXCLUIR = 2;
 

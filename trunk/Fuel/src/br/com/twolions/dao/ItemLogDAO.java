@@ -24,6 +24,8 @@ public class ItemLogDAO extends DBConnection {
 	public ItemLogDAO(final Context ctx) {
 		super(ctx, base_name);
 
+		Log.i(CATEGORIA, "ItemLogDAO...");
+
 	}
 
 	// Salva o carro, insere um novo ou atualiza
@@ -109,6 +111,8 @@ public class ItemLogDAO extends DBConnection {
 			itemLog.setValue_u(c.getDouble(6));
 			itemLog.setOdometer(c.getLong(7));
 			itemLog.setText(c.getString(8));
+
+			Log.i(CATEGORIA, "ItemLog: " + itemLog.toString());
 
 			return itemLog;
 		}
