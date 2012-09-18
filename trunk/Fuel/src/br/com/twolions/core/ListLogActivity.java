@@ -8,15 +8,15 @@ import br.com.utils.AndroidUtils;
 
 public class ListLogActivity extends ActivityCircle {
 
-	protected void alert(int mensagem) {
+	protected void alert(final int mensagem) {
 		AndroidUtils.alertDialog(this, mensagem);
 	}
 
 	// inicia a thread
-	public void startTransaction(Transacao transacao) {
+	public void startTransaction(final Transacao transacao) {
 
 		// inicia a transacao
-		TransacaoTask task = new TransacaoTask(this, transacao,
+		final TransacaoTask task = new TransacaoTask(this, transacao,
 				R.string.aguarde);
 		task.execute();
 	}

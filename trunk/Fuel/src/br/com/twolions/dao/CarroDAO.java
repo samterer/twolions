@@ -20,26 +20,12 @@ public class CarroDAO extends DBConnection {
 	// Nome da tabela
 	public static final String table_name = "carro";
 
-	// protected SQLiteDatabase db;
-
-	// protected SQLiteDatabase db;
-
-	// private ManagerDAO dao;
-
-	public CarroDAO(Context ctx) {
+	public CarroDAO(final Context ctx) {
 		super(ctx, base_name);
-		// Abre o banco de dados já existente
-		// try {
-		// db = ctx.openOrCreateDatabase(base_name, Context.MODE_PRIVATE,
-		// null);
-		// } catch (SQLException e) {
-		// e.printStackTrace();
-		// }
-		// db = new DBConnection(ctx, base_name);
-		// dao = new ManagerDAO(ctx, base_name, table_name, db);
+
 	}
 	// Salva o carro, insere um novo ou atualiza
-	public long salvar(Carro carro) {
+	public long salvar(final Carro carro) {
 		long id = carro.getId();
 
 		if (id != 0) {
@@ -53,13 +39,13 @@ public class CarroDAO extends DBConnection {
 	}
 
 	// Insere um novo carro
-	public long inserir(Carro carro) {
-		ContentValues values = new ContentValues();
+	public long inserir(final Carro carro) {
+		final ContentValues values = new ContentValues();
 		values.put(Carros.NOME, carro.getNome());
 		values.put(Carros.PLACA, carro.getPlaca());
 		values.put(Carros.TIPO, carro.getTipo());
 
-		long id = inserir(values, table_name);
+		final long id = inserir(values, table_name);
 		return id;
 	}
 
@@ -70,18 +56,18 @@ public class CarroDAO extends DBConnection {
 	// }
 
 	// Atualiza o carro no banco. O id do carro é utilizado.
-	public int atualizar(Carro carro) {
-		ContentValues values = new ContentValues();
+	public int atualizar(final Carro carro) {
+		final ContentValues values = new ContentValues();
 		values.put(Carros.NOME, carro.getNome());
 		values.put(Carros.PLACA, carro.getPlaca());
 		values.put(Carros.TIPO, carro.getTipo());
 
-		String _id = String.valueOf(carro.getId());
+		final String _id = String.valueOf(carro.getId());
 
-		String where = Carros._ID + "=?";
-		String[] whereArgs = new String[]{_id};
+		final String where = Carros._ID + "=?";
+		final String[] whereArgs = new String[]{_id};
 
-		int count = atualizar(values, where, whereArgs, table_name);
+		final int count = atualizar(values, where, whereArgs, table_name);
 
 		return count;
 	}
@@ -96,13 +82,13 @@ public class CarroDAO extends DBConnection {
 	// }
 
 	// Deleta o carro com o id fornecido
-	public int deletar(long id) {
-		String where = Carros._ID + "=?";
+	public int deletar(final long id) {
+		final String where = Carros._ID + "=?";
 
-		String _id = String.valueOf(id);
-		String[] whereArgs = new String[]{_id};
+		final String _id = String.valueOf(id);
+		final String[] whereArgs = new String[]{_id};
 
-		int count = deletar(where, whereArgs, table_name);
+		final int count = deletar(where, whereArgs, table_name);
 
 		return count;
 	}
@@ -115,17 +101,17 @@ public class CarroDAO extends DBConnection {
 	// }
 
 	// Busca o carro pelo id
-	public Carro buscarCarro(long id) {
+	public Carro buscarCarro(final long id) {
 		// select * from carro where _id=?
-		Cursor c = db.query(true, table_name, Carro.colunas, Carros._ID + "="
-				+ id, null, null, null, null, null);
+		final Cursor c = db.query(true, table_name, Carro.colunas, Carros._ID
+				+ "=" + id, null, null, null, null, null);
 
 		if (c.getCount() > 0) {
 
 			// Posicinoa no primeiro elemento do cursor
 			c.moveToFirst();
 
-			Carro carro = new Carro();
+			final Carro carro = new Carro();
 
 			// Lê os dados
 			carro.setId(c.getLong(0));
@@ -144,7 +130,7 @@ public class CarroDAO extends DBConnection {
 		try {
 			return db.query(table_name, Carro.colunas, null, null, null, null,
 					null, null);
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			Log.e(CATEGORIA, "Erro ao buscar os carros: " + e.toString());
 			return null;
 		}
@@ -152,21 +138,21 @@ public class CarroDAO extends DBConnection {
 
 	// Retorna uma lista com todos os carros
 	public List<Carro> listarCarros() {
-		Cursor c = getCursor();
+		final Cursor c = getCursor();
 
-		List<Carro> carros = new ArrayList<Carro>();
+		final List<Carro> carros = new ArrayList<Carro>();
 
 		if (c.moveToFirst()) {
 
 			// Recupera os índices das colunas
-			int idxId = c.getColumnIndex(Carros._ID);
-			int idxNome = c.getColumnIndex(Carros.NOME);
-			int idxPlaca = c.getColumnIndex(Carros.PLACA);
-			int idxTipo = c.getColumnIndex(Carros.TIPO);
+			final int idxId = c.getColumnIndex(Carros._ID);
+			final int idxNome = c.getColumnIndex(Carros.NOME);
+			final int idxPlaca = c.getColumnIndex(Carros.PLACA);
+			final int idxTipo = c.getColumnIndex(Carros.TIPO);
 
 			// Loop até o final
 			do {
-				Carro carro = new Carro();
+				final Carro carro = new Carro();
 				carros.add(carro);
 
 				// recupera os atributos de carro
@@ -184,13 +170,13 @@ public class CarroDAO extends DBConnection {
 	}
 
 	// Busca o carro pelo nome "select * from carro where nome=?"
-	public Carro buscarCarroPorNome(String nome) {
+	public Carro buscarCarroPorNome(final String nome) {
 		Carro carro = null;
 
 		try {
 			// Idem a: SELECT _id,nome,placa,ano from CARRO where nome = ?
-			Cursor c = db.query(table_name, Carro.colunas, Carros.NOME + "='"
-					+ nome + "'", null, null, null, null);
+			final Cursor c = db.query(table_name, Carro.colunas, Carros.NOME
+					+ "='" + nome + "'", null, null, null, null);
 
 			// Se encontrou...
 			if (c.moveToNext()) {
@@ -204,7 +190,7 @@ public class CarroDAO extends DBConnection {
 				carro.setPlaca(c.getString(2));
 				carro.setTipo(c.getString(3));
 			}
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			Log.e(CATEGORIA,
 					"Erro ao buscar o carro pelo nome: " + e.toString());
 			return null;

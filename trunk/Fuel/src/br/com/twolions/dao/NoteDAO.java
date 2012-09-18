@@ -20,13 +20,13 @@ public class NoteDAO extends DBConnection {
 
 	// private ManagerDAO dao;
 
-	public NoteDAO(Context ctx) {
+	public NoteDAO(final Context ctx) {
 		super(ctx, base_name);
 		// dao = new ManagerDAO(ctx, base_name, table_name, db);
 	}
 
 	// Salva o carro, insere um novo ou atualiza
-	public long salvar(Note note) {
+	public long salvar(final Note note) {
 		long id = note.id;
 
 		if (id != 0) {
@@ -39,56 +39,56 @@ public class NoteDAO extends DBConnection {
 		return id;
 	}
 
-	public long inserir(Note note) {
-		ContentValues values = new ContentValues();
+	public long inserir(final Note note) {
+		final ContentValues values = new ContentValues();
 		values.put(Note.ID_CAR, note.id_car);
 		values.put(Note.DATE, String.valueOf(note.date));
 		values.put(Note.SUBJECT, note.subject);
 		values.put(Note.TEXT, note.text);
 
-		long id = inserir(values, table_name);
+		final long id = inserir(values, table_name);
 		return id;
 	}
 
-	public int atualizar(Note note) {
-		ContentValues values = new ContentValues();
+	public int atualizar(final Note note) {
+		final ContentValues values = new ContentValues();
 		values.put(Note.ID_CAR, note.id_car);
 		values.put(Note.DATE, String.valueOf(note.date));
 		values.put(Note.SUBJECT, note.subject);
 		values.put(Note.TEXT, note.text);
 
-		String _id = String.valueOf(note.id);
+		final String _id = String.valueOf(note.id);
 
-		String where = Note._ID + "=?";
-		String[] whereArgs = new String[]{_id};
+		final String where = Note._ID + "=?";
+		final String[] whereArgs = new String[]{_id};
 
-		int count = atualizar(values, where, whereArgs, table_name);
-
-		return count;
-	}
-
-	public int deletar(long id) {
-		String where = Note._ID + "=?";
-
-		String _id = String.valueOf(id);
-		String[] whereArgs = new String[]{_id};
-
-		int count = deletar(where, whereArgs, table_name);
+		final int count = atualizar(values, where, whereArgs, table_name);
 
 		return count;
 	}
 
-	public Note buscarNote(long id) {
+	public int deletar(final long id) {
+		final String where = Note._ID + "=?";
+
+		final String _id = String.valueOf(id);
+		final String[] whereArgs = new String[]{_id};
+
+		final int count = deletar(where, whereArgs, table_name);
+
+		return count;
+	}
+
+	public Note buscarNote(final long id) {
 		// select * from note where _id=?
-		Cursor c = db.query(true, table_name, Note.colunas,
-				Note._ID + "=" + id, null, null, null, null, null);
+		final Cursor c = db.query(true, table_name, Note.colunas, Note._ID
+				+ "=" + id, null, null, null, null, null);
 
 		if (c.getCount() > 0) {
 
 			// Posicinoa no primeiro elemento do cursor
 			c.moveToFirst();
 
-			Note note = new Note();
+			final Note note = new Note();
 
 			// Lê os dados
 			note.id = c.getLong(0);
@@ -104,24 +104,24 @@ public class NoteDAO extends DBConnection {
 	}
 
 	// Retorna uma lista com todos os notes pelo id do carro
-	public List<Note> listarNotes(long id_Car) {
-		Cursor c = db.query(table_name, Note.colunas, Note.ID_CAR + "='"
+	public List<Note> listarNotes(final long id_Car) {
+		final Cursor c = db.query(table_name, Note.colunas, Note.ID_CAR + "='"
 				+ id_Car + "'", null, null, null, null);
 
-		List<Note> notes = new ArrayList<Note>();
+		final List<Note> notes = new ArrayList<Note>();
 
 		if (c.moveToFirst()) {
 
 			// Recupera os índices das colunas
-			int idxId = c.getColumnIndex(Note._ID);
-			int idxIdCar = c.getColumnIndex(Note.ID_CAR);
-			int idxIdDate = c.getColumnIndex(Note.DATE);
-			int idxIdSubject = c.getColumnIndex(Note.SUBJECT);
-			int idxIdText = c.getColumnIndex(Note.TEXT);
+			final int idxId = c.getColumnIndex(Note._ID);
+			final int idxIdCar = c.getColumnIndex(Note.ID_CAR);
+			final int idxIdDate = c.getColumnIndex(Note.DATE);
+			final int idxIdSubject = c.getColumnIndex(Note.SUBJECT);
+			final int idxIdText = c.getColumnIndex(Note.TEXT);
 
 			// Loop até o final
 			do {
-				Note note = new Note();
+				final Note note = new Note();
 				notes.add(note);
 
 				// recupera os atributos de carro

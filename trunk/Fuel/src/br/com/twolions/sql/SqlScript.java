@@ -9,10 +9,10 @@ public class SqlScript extends CarroDAO {
 	private static final String NOME_BANCO = "bd_itsmycar";
 
 	// Controle de versão
-	private static final int VERSAO_BANCO = 8;
+	private static final int VERSAO_BANCO = 5;
 
 	// Classe utilitária para abrir, criar, e atualizar o banco de dados
-	private SQLiteHelper dbHelper;
+	// private final SQLiteHelper dbHelper;
 
 	private static String[] sqlScript = {"create table", "insert into"};
 
@@ -51,9 +51,9 @@ public class SqlScript extends CarroDAO {
 					+ TB_ITEM_LOG
 					+ " ( "
 					+ "_id integer primary key autoincrement, id_car integer not null, "
-					+ "date text not null,                     type integer not null,"
-					+ "subject text not null,                  value_p text not null,"
-					+ "value_u text not null,                  odometer text not null,"
+					+ "date text not null, type integer not null,"
+					+ "subject text not null, value_p text not null,"
+					+ "value_u text not null, odometer text not null,"
 					+ "text text not null)",
 
 			sqlScript[1]
@@ -62,11 +62,11 @@ public class SqlScript extends CarroDAO {
 					+ "(id_car,date,type,subject,value_p,value_u,odometer,text) values('1','2012-09-04','0','','60.00','2.39','81456','');"};
 
 	// Cria o banco de dados com um script SQL
-	public SqlScript(Context ctx) {
+	public SqlScript(final Context ctx) {
 		super(ctx);
 
 		// create
-		String[] script_tables_create = {
+		final String[] script_tables_create = {
 				// create table car and 1 register
 				SqlScript.SCRIPT_CREATE_TB_CAR[0],
 				SqlScript.SCRIPT_CREATE_TB_CAR[1],
@@ -75,7 +75,7 @@ public class SqlScript extends CarroDAO {
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[0],
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[1]};
 		// delete
-		String[] script_tables_delete = {
+		final String[] script_tables_delete = {
 				// delete table car
 				SqlScript.SCRIPT_DELETE_TB_CAR,
 
@@ -91,6 +91,7 @@ public class SqlScript extends CarroDAO {
 		db = dbHelper.getWritableDatabase();
 	}
 	// Fecha o banco
+	@Override
 	public void fechar() {
 		super.fechar();
 		if (dbHelper != null) {

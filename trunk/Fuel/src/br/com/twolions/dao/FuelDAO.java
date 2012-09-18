@@ -20,13 +20,13 @@ public class FuelDAO extends DBConnection {
 
 	// private ManagerDAO dao;
 
-	public FuelDAO(Context ctx) {
+	public FuelDAO(final Context ctx) {
 		super(ctx, base_name);
 		// dao = new ManagerDAO(ctx, base_name, table_name, db);
 	}
 
 	// Salva o carro, insere um novo ou atualiza
-	public long salvar(Fuel fuel) {
+	public long salvar(final Fuel fuel) {
 		long id = fuel.id;
 
 		if (id != 0) {
@@ -39,58 +39,58 @@ public class FuelDAO extends DBConnection {
 		return id;
 	}
 
-	public long inserir(Fuel fuel) {
-		ContentValues values = new ContentValues();
+	public long inserir(final Fuel fuel) {
+		final ContentValues values = new ContentValues();
 		values.put(Fuel.ID_CAR, fuel.id_car);
 		values.put(Fuel.DATE, String.valueOf(fuel.date));
 		values.put(Fuel.VALUE_U, fuel.value_u);
 		values.put(Fuel.VALUE_P, fuel.value_p);
 		values.put(Fuel.ODOMETER, fuel.odometer);
 
-		long id = inserir(values, table_name);
+		final long id = inserir(values, table_name);
 		return id;
 	}
 
-	public int atualizar(Fuel fuel) {
-		ContentValues values = new ContentValues();
+	public int atualizar(final Fuel fuel) {
+		final ContentValues values = new ContentValues();
 		values.put(Fuel.ID_CAR, fuel.id_car);
 		values.put(Fuel.DATE, String.valueOf(fuel.date));
 		values.put(Fuel.VALUE_U, fuel.value_u);
 		values.put(Fuel.VALUE_P, fuel.value_p);
 		values.put(Fuel.ODOMETER, fuel.odometer);
 
-		String _id = String.valueOf(fuel.id);
+		final String _id = String.valueOf(fuel.id);
 
-		String where = Fuel._ID + "=?";
-		String[] whereArgs = new String[]{_id};
+		final String where = Fuel._ID + "=?";
+		final String[] whereArgs = new String[]{_id};
 
-		int count = atualizar(values, where, whereArgs, table_name);
-
-		return count;
-	}
-
-	public int deletar(long id) {
-		String where = Fuel._ID + "=?";
-
-		String _id = String.valueOf(id);
-		String[] whereArgs = new String[]{_id};
-
-		int count = deletar(where, whereArgs, table_name);
+		final int count = atualizar(values, where, whereArgs, table_name);
 
 		return count;
 	}
 
-	public Fuel buscarFuel(long id) {
+	public int deletar(final long id) {
+		final String where = Fuel._ID + "=?";
+
+		final String _id = String.valueOf(id);
+		final String[] whereArgs = new String[]{_id};
+
+		final int count = deletar(where, whereArgs, table_name);
+
+		return count;
+	}
+
+	public Fuel buscarFuel(final long id) {
 		// select * from Fuel where _id=?
-		Cursor c = db.query(true, table_name, Fuel.colunas,
-				Fuel._ID + "=" + id, null, null, null, null, null);
+		final Cursor c = db.query(true, table_name, Fuel.colunas, Fuel._ID
+				+ "=" + id, null, null, null, null, null);
 
 		if (c.getCount() > 0) {
 
 			// Posicinoa no primeiro elemento do cursor
 			c.moveToFirst();
 
-			Fuel fuel = new Fuel();
+			final Fuel fuel = new Fuel();
 
 			// Lê os dados
 			fuel.id = c.getLong(0);
@@ -107,25 +107,25 @@ public class FuelDAO extends DBConnection {
 	}
 
 	// Retorna uma lista com todos os Fuels pelo id do carro
-	public List<Fuel> listarFuels(long id_Car) {
-		Cursor c = db.query(table_name, Fuel.colunas, Fuel.ID_CAR + "='"
+	public List<Fuel> listarFuels(final long id_Car) {
+		final Cursor c = db.query(table_name, Fuel.colunas, Fuel.ID_CAR + "='"
 				+ id_Car + "'", null, null, null, null);
 
-		List<Fuel> fuels = new ArrayList<Fuel>();
+		final List<Fuel> fuels = new ArrayList<Fuel>();
 
 		if (c.moveToFirst()) {
 
 			// Recupera os índices das colunas
-			int idxId = c.getColumnIndex(Fuel._ID);
-			int idxIdCar = c.getColumnIndex(Fuel.ID_CAR);
-			int idxIdDate = c.getColumnIndex(Fuel.DATE);
-			int idxIdValueU = c.getColumnIndex(Fuel.VALUE_U);
-			int idxIdValueP = c.getColumnIndex(Fuel.VALUE_P);
-			int idxIdOdometer = c.getColumnIndex(Fuel.ODOMETER);
+			final int idxId = c.getColumnIndex(Fuel._ID);
+			final int idxIdCar = c.getColumnIndex(Fuel.ID_CAR);
+			final int idxIdDate = c.getColumnIndex(Fuel.DATE);
+			final int idxIdValueU = c.getColumnIndex(Fuel.VALUE_U);
+			final int idxIdValueP = c.getColumnIndex(Fuel.VALUE_P);
+			final int idxIdOdometer = c.getColumnIndex(Fuel.ODOMETER);
 
 			// Loop até o final
 			do {
-				Fuel fuel = new Fuel();
+				final Fuel fuel = new Fuel();
 				fuels.add(fuel);
 
 				// recupera os atributos de carro
