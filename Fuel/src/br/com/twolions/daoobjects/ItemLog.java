@@ -16,6 +16,12 @@ public class ItemLog implements BaseColumns {
 	private long id;
 	private long id_car;
 	private String date;
+	// type
+	// - fuel - 0
+	// - expense - 1
+	// - note - 2
+	// - repair - 3
+
 	private int type;
 	private String subject;
 	private double value_p;
@@ -141,8 +147,8 @@ public class ItemLog implements BaseColumns {
 	@Override
 	public String toString() {
 		return "Id: " + id + ", Id_Car: " + id_car + ", Date: " + date
-				+ ", Value_u: " + value_u + ", Value_p: " + value_p
-				+ ", Odometer: " + odometer + ", Subject: " + subject
-				+ ", Text: " + text + ", Type: " + type;
+				+ ", Type: " + type + ", Subject: " + subject + ", Value_p: "
+				+ value_p + ", Value_u: " + value_u + ", Odometer: " + odometer
+				+ ", Text: " + text;
 	}
 }

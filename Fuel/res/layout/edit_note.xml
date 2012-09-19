@@ -30,11 +30,11 @@
             android:layout_width="120dp"
             android:layout_height="63dp"
             android:layout_gravity="center"
-            android:src="@drawable/f_time" />
+            android:src="@drawable/f_time" />
         -->
     </TableRow>
 
-    <!-- TITULO VEHICLE -->
+    <!-- subject -->
 
     <TableRow
         android:layout_width="wrap_content"
@@ -43,27 +43,31 @@
         android:gravity="center" >
 
         <TextView
-            android:id="@+id/text1"
+            android:id="@+id/t_subject"
             style="@style/texto12Negrito"
             android:gravity="center"
             android:text="SUBJECT"
             android:textStyle="bold"
             android:typeface="monospace" />
     </TableRow>
-    <!-- EDIT VEHICLE -->
 
-     <TableRow
+    <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:gravity="center" >
 
         <EditText
-            android:id="@+id/campoNome"
+            android:id="@+id/subject"
+            android:height="5dp"
             android:maxLength="20"
-             android:height="5dp"
             android:width="240dp" />
     </TableRow>
+
+    <View
+        android:layout_height="2dip"
+        android:background="#FF909090" 
+        android:layout_marginTop="5dp"/>
     <!-- TITULO PLATE -->
 
     <TableRow
@@ -73,14 +77,13 @@
         android:gravity="center" >
 
         <TextView
-            android:id="@+id/text2"
+            android:id="@+id/t_text"
             style="@style/texto12Negrito"
             android:gravity="center"
             android:text="NOTE"
             android:textStyle="bold"
             android:typeface="monospace" />
     </TableRow>
-    <!-- EDIT PLATE -->
 
     <TableRow
         android:layout_width="wrap_content"
@@ -89,7 +92,7 @@
         android:gravity="center" >
 
         <EditText
-            android:id="@+id/campoPlaca"
+            android:id="@+id/text"
             android:height="200dp"
             android:maxLength="20"
             android:width="200dp" />

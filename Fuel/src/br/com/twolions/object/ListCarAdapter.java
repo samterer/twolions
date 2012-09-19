@@ -12,11 +12,11 @@ import android.widget.TextView;
 import br.com.twolions.R;
 import br.com.twolions.daoobjects.Carro;
 
-public class CarListAdapter extends BaseAdapter {
+public class ListCarAdapter extends BaseAdapter {
 	private final Context context;
 	private final List<Carro> lista;
 
-	public CarListAdapter(final Context context, final List<Carro> lista) {
+	public ListCarAdapter(final Context context, final List<Carro> lista) {
 		this.context = context;
 		this.lista = lista;
 	}

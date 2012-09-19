@@ -19,7 +19,7 @@ import br.com.twolions.dao.ItemLogDAO;
 import br.com.twolions.daoobjects.Carro.Carros;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
-import br.com.twolions.object.ItemListAdapter;
+import br.com.twolions.object.ListItemAdapter;
 
 public class ListLogScreen extends ListLogActivity
 		implements
@@ -37,6 +37,7 @@ public class ListLogScreen extends ListLogActivity
 
 	private Long id_item;
 	private Long id_car;
+	private int type;
 
 	private static final int EDITAR = 0;
 	private static final int DELETE = 1;
@@ -72,7 +73,7 @@ public class ListLogScreen extends ListLogActivity
 		setContentView(R.layout.list_log);
 
 		listView = (ListView) findViewById(R.id.listview);
-		listView.setAdapter(new ItemListAdapter(this, itens));
+		listView.setAdapter(new ListItemAdapter(this, itens));
 		listView.setOnItemClickListener(this);
 
 		// organize bts
@@ -97,6 +98,7 @@ public class ListLogScreen extends ListLogActivity
 			long id) {
 		final ItemLog i = itens.get(posicao);
 		id_item = i.getId();
+		type = i.getType();
 
 		registerForContextMenu(view);
 
@@ -133,10 +135,12 @@ public class ListLogScreen extends ListLogActivity
 		// Cria a intent para abrir a tela de editar
 		Intent it = new Intent(this, FormItemScreen.class);
 
-		// Passa o id do carro como parâmetro
-		it.putExtra(ItemLog._ID, id_item);
 		// id do item
+		it.putExtra(ItemLog._ID, id_item);
+		// id do carro
 		it.putExtra(ItemLog.ID_CAR, id_car);
+		// passa o tipo do item
+		it.putExtra(ItemLog.TYPE, type);
 
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
@@ -172,11 +176,17 @@ public class ListLogScreen extends ListLogActivity
 
 	public void btBarLeft(View v) {
 		setResult(RESULT_CANCELED);
-		// Fecha a tela
+		// go next screen
 		finish();
+		/*
+		 * flipper = (ViewFlipper) findViewById(R.id.flipper);
+		 * 
+		 * flipper.setInAnimation(inFromLeftAnimation());
+		 * flipper.setOutAnimation(outToRightAnimation());
+		 * flipper.showPrevious();
+		 */
 
 	}
-
 	public void btBarRight(View v) {
 
 		startActivityForResult(new Intent(this, FormCarScreen.class),

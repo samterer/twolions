@@ -2,6 +2,7 @@ package br.com.twolions.screens;
 
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.adapters.CarListAdapter;
 import br.com.twolions.core.ListCarActivity;
@@ -64,7 +64,7 @@ public class ListCarScreen extends ListCarActivity
 		// Pega a lista de carros e exibe na tela
 		carros = repositorio.listarCarros();
 
-		setContentView(R.layout.list_car);
+		setContentView(R.layout.transaction);
 
 		listView = (ListView) findViewById(R.id.listview);
 		listView.setAdapter(new CarListAdapter(this, carros));
@@ -85,6 +85,8 @@ public class ListCarScreen extends ListCarActivity
 		// long click
 		registerForContextMenu(view);
 
+		Log.i(CATEGORIA, "click");
+
 		// open list item log
 		openScreenListItemLog();
 	}
@@ -94,7 +96,14 @@ public class ListCarScreen extends ListCarActivity
 	 */
 	private void openScreenListItemLog() {
 
-		Log.i(CATEGORIA, "open list()");
+		Log.i(CATEGORIA, "OPEN LIST CAR [" + id_car + "]");
+
+		// ImageView v = (ImageView) findViewById(R.id.view);
+		// v.setVisibility(View.VISIBLE);
+		// v.setAlpha(0);
+
+		dialog = ProgressDialog.show(this, "Pesquisando itens", "Loading...",
+				true);
 
 		// abre lista de logs do carro
 		final Intent it = new Intent(this, ListLogScreen.class);
@@ -105,12 +114,20 @@ public class ListCarScreen extends ListCarActivity
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
 
-		// startActivity(it);
+		// go next screen
+		/*
+		 * flipper = (ViewFlipper) findViewById(R.id.flipper);
+		 * 
+		 * flipper.setInAnimation(inFromRightAnimation());
+		 * flipper.setOutAnimation(outToLeftAnimation()); flipper.showNext();
+		 */
 
-		Toast.makeText(this, "OPEN LIST CAR [" + id_car + "]",
-				Toast.LENGTH_SHORT).show();
+		// ImageView img = (ImageView) findViewById(R.id.tipo);
+		// img.setVisibility(View.INVISIBLE);
+
+		// ProgressBar progress = (ProgressBar) findViewById(R.id.progress);
+		// progress.setVisibility(View.VISIBLE);
 	}
-
 	// sub menu
 	@Override
 	public void onCreateContextMenu(final ContextMenu menu, final View v,
@@ -178,6 +195,15 @@ public class ListCarScreen extends ListCarActivity
 		}
 	}
 
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+
+		if (dialog != null) {
+			dialog.dismiss();
+		}
+	}
 	protected void onDestroy() {
 		super.onDestroy();
 

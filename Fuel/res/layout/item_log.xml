@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="80dp"
     android:layout_gravity="left|center_vertical"
-    android:background="@drawable/fundo_carro_item" >
+    android:background="@drawable/fundo_item_log" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,9 +22,10 @@
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
             android:src="@drawable/ic_launcher" />
 
@@ -33,10 +34,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
+             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/imageView1"
-            android:text="15 Gallons" />
+            style="@style/texto14cinza"
+            android:text="XXXXXXX" />
 
         <TextView
             android:id="@+id/textRightUp"
@@ -45,8 +48,9 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:text="$60,00" />
+            android:layout_marginTop="10dp"
+            style="@style/texto14cinza"
+            android:text="XXXXX" />
 
         <TextView
             android:id="@+id/textRightDown"
@@ -54,9 +58,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginRight="10dp"
-            android:text="$3,76/g" />
+            style="@style/texto14cinza"
+            android:text="XXXXXX" />
 
         <TextView
             android:id="@+id/date"
@@ -65,7 +70,8 @@
             android:layout_alignBaseline="@+id/textRightUp"
             android:layout_alignBottom="@+id/textRightUp"
             android:layout_alignLeft="@+id/textLeftDown"
-            android:text="08-28-2012 21:45" />
+            style="@style/texto16cinzaDarkNegrito"
+            android:text="XXXXX" />
     </RelativeLayout>
 
 </FrameLayout>
