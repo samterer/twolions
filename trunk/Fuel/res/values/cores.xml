@@ -6,7 +6,8 @@
 	<color name="branco">#ffffff</color>
 	<color name="cinza_c">#cccccc</color>
 	<color name="cinza_d">#dddddd</color>
-	<color name="cinza_e">#eeeeee</color>
+	<color name="cinza_dark">#656363</color>
+	<color name="cinza_default">#7b7979</color>
 	<color name="laranja">#FFA500</color>
 	<color name="preto">#000000</color>
 	<color name="transparente">#00000000</color>

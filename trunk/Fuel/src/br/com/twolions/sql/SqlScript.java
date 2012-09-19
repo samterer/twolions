@@ -9,7 +9,7 @@ public class SqlScript extends CarroDAO {
 	private static final String NOME_BANCO = "bd_itsmycar";
 
 	// Controle de versão
-	private static final int VERSAO_BANCO = 5;
+	private static final int VERSAO_BANCO = 2;
 
 	// Classe utilitária para abrir, criar, e atualizar o banco de dados
 	// private final SQLiteHelper dbHelper;
@@ -45,21 +45,33 @@ public class SqlScript extends CarroDAO {
 			+ TB_ITEM_LOG;
 
 	// Cria a tabela com o "_id" sequencial
+	// type item
+	// - fuel - 0
+	// - expense - 1
+	// - note - 2
+	// - repair - 3
 	private static final String[] SCRIPT_CREATE_TB_ITEM_LOG = new String[]{
 			sqlScript[0]
 					+ " "
 					+ TB_ITEM_LOG
-					+ " ( "
-					+ "_id integer primary key autoincrement, id_car integer not null, "
-					+ "date text not null, type integer not null,"
-					+ "subject text not null, value_p text not null,"
-					+ "value_u text not null, odometer text not null,"
-					+ "text text not null)",
+					+ " ( _id integer primary key autoincrement, id_car integer not null, date text not null, type integer not null, subject text, value_p text, value_u text, odometer text, text text)",
 
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,value_p,value_u,odometer,text) values('1','2012-09-04','0','','60.00','2.39','81456','');"};
+					+ "(id_car,date,type,value_p,value_u,odometer) values('1','20:30','0','60.00','2.39','81456');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,text) values('1','21:30','2','Pagar seguro','Não posso esquecer de pagar a merda do seguro. Valor R$178.');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p) values('1','14:30','1','Troca de oleo','25.00');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p) values('1','2:30','3','Troca de pneu','677.00');"};
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(final Context ctx) {
@@ -73,7 +85,10 @@ public class SqlScript extends CarroDAO {
 
 				// create fuel car and 1 register
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[0],
-				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[1]};
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[1],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[2],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[3],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[4]};
 		// delete
 		final String[] script_tables_delete = {
 				// delete table car

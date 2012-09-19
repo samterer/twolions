@@ -1,11 +1,16 @@
 package br.com.twolions.screens;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FormItemActivity;
 import br.com.twolions.daoobjects.ItemLog;
@@ -18,6 +23,9 @@ import br.com.twolions.interfaces.InterfaceBar;
  * 
  */
 public class FormItemScreen extends FormItemActivity implements InterfaceBar {
+
+	private final String CATEGORIA = "appLog";
+
 	static final int RESULT_SALVAR = 1;
 	static final int RESULT_EXCLUIR = 2;
 
@@ -26,8 +34,17 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private TextView value_p;
 	private TextView odometer;
 	private TextView date;
-	private String tipo = "";
+	private TextView subject;
+	private TextView text;
+
+	private int type;
+	private static final int FUEL = 0;
+	private static final int EXPENSE = 1;
+	private static final int REPAIR = 3;
+	private static final int NOTE = 2;
+
 	private Long id;
+
 	// id car
 	private Long id_car;
 
@@ -35,21 +52,15 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
 
-		setContentView(R.layout.form_fuel);
+		init();
 
 		// organize bt
 		organizeBt();
-
-		init();
 
 		actionBt(this);
 	}
 
 	private void init() {
-		value_u = (TextView) findViewById(R.id.value_u);
-		value_p = (TextView) findViewById(R.id.value_p);
-		odometer = (TextView) findViewById(R.id.odometer);
-		date = (TextView) findViewById(R.id.date);
 
 		id = null;
 
@@ -58,16 +69,119 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		if (extras != null) {
 			id = extras.getLong(ItemLog._ID);
 			id_car = extras.getLong(ItemLog.ID_CAR);
-
-			if (id != null) {
-				// é uma edição, busca o itemLog...
-				final ItemLog i = buscarItemLog(id);
-				value_u.setText(String.valueOf((i.getValue_u())));
-				value_p.setText(String.valueOf((i.getValue_p())));
-				odometer.setText(String.valueOf((i.getOdometer())));
-				date.setText(String.valueOf((i.getDate())));
-			}
+			type = extras.getInt(ItemLog.TYPE);
 		}
+
+		// instance itens of xml
+		switch (type) {
+			case FUEL :
+				setContentView(R.layout.form_fuel);
+				break;
+
+			case EXPENSE :
+				setContentView(R.layout.form_expense);
+
+				break;
+			case NOTE :
+				setContentView(R.layout.form_note);
+				break;
+			case REPAIR :
+				setContentView(R.layout.form_repair);
+				break;
+		}
+
+		// create Date object
+		Date dateCurrent = new Date();
+
+		// formatting hour in h (1-12 in AM/PM) format like 1, 2..12.
+		String strDateFormat = "h";
+		SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+
+		Log.i(CATEGORIA, "hour in h format : " + sdf.format(dateCurrent));
+
+		// date
+		date = (TextView) findViewById(R.id.date);
+
+		// subject
+		if (type == EXPENSE || type == REPAIR || type == NOTE) {
+			subject = (TextView) findViewById(R.id.subject);
+		}
+
+		// value u
+		if (type == FUEL) {
+			value_u = (TextView) findViewById(R.id.value_u);
+		}
+
+		// value p
+		if (type == EXPENSE || type == REPAIR || type == NOTE) {
+			value_p = (TextView) findViewById(R.id.value_p);
+		}
+
+		// text
+		if (type == NOTE) {
+			text = (TextView) findViewById(R.id.text);
+		}
+
+		// odemeter
+		if (type == FUEL) {
+			odometer = (TextView) findViewById(R.id.odometer);
+		}
+
+		// edit ?
+		if (id != null) {
+			loadingEdit();
+		}
+
+	}
+
+	// open screen with datas of object
+	public void loadingEdit() {
+
+		// searching item
+		final ItemLog i = buscarItemLog(id);
+
+		if (i == null) {
+			Toast.makeText(this, "Dados do item não encontrados na base.",
+					Toast.LENGTH_SHORT).show();
+			return;
+		}
+
+		try {
+
+			// date
+			date.setText(String.valueOf((i.getDate())));
+
+			// subject
+			if (type == EXPENSE || type == REPAIR || type == NOTE) {
+				subject.setText(String.valueOf((i.getSubject())));
+			}
+
+			// value u
+			if (type == FUEL) {
+				value_u.setText(String.valueOf((i.getValue_u())));
+			}
+
+			// value p
+			if (type == EXPENSE || type == REPAIR || type == NOTE) {
+				value_p.setText(String.valueOf((i.getValue_p())));
+			}
+
+			// text
+			if (type == NOTE) {
+				text.setText(String.valueOf((i.getText())));
+			}
+
+			// odemeter
+			if (type == FUEL) {
+				odometer.setText(String.valueOf((i.getOdometer())));
+			}
+
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+
+			Log.e(CATEGORIA, i.toString());
+		}
+
 	}
 	public void actionBt(final Context context) {
 

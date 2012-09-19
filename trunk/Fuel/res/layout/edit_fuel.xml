@@ -57,12 +57,16 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:scaleType="centerInside"
-            android:text="$0003,74"
+            android:text="XXXXXXX"
             android:textColor="@color/preto"
             android:textSize="60dp"
             android:textStyle="bold"
             android:typeface="monospace" />
     </TableRow>
+
+    <View
+        android:layout_height="2dip"
+        android:background="#FF909090" />
 
     <!-- VALUE P -->
 
@@ -93,12 +97,16 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:scaleType="centerInside"
-            android:text="$0045,29"
+            android:text="XXXXXXX"
             android:textColor="@color/preto"
             android:textSize="60dp"
             android:textStyle="bold"
             android:typeface="monospace" />
     </TableRow>
+
+    <View
+        android:layout_height="2dip"
+        android:background="#FF909090" />
 
     <!-- ODOMETER -->
 
@@ -129,7 +137,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:scaleType="centerInside"
-            android:text="025789"
+            android:text="XXXXXXX"
             android:textColor="@color/preto"
             android:textSize="60dp"
             android:textStyle="bold"
