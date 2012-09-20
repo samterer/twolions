@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import br.com.twolions.R;
 import br.com.twolions.daoobjects.ItemLog;
+import br.com.twolions.util.Constants;
 
 public class ListItemAdapter extends BaseAdapter {
 	private Context context;
@@ -70,7 +71,8 @@ public class ListItemAdapter extends BaseAdapter {
 
 		}
 
-		if (item.getType() == 0) {
+		// stocked
+		if (item.getType() == Constants.FUEL) {
 			// value total abastecido
 			TextView value_t = (TextView) view.findViewById(R.id.textLeftDown);
 			// calcula qtd de litro abastecido

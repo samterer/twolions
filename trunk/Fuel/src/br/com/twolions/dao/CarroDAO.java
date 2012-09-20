@@ -9,16 +9,16 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.util.Log;
 import br.com.twolions.daoobjects.Carro;
-import br.com.twolions.daoobjects.Carro.Carros;
 import br.com.twolions.sql.DBConnection;
+import br.com.twolions.util.Constants;
 
 public class CarroDAO extends DBConnection {
 	private static final String CATEGORIA = "base";
 
 	// Nome do banco
-	private static final String base_name = "db_itsmycar";
+	private static final String base_name = Constants.DB_NAME;
 	// Nome da tabela
-	public static final String table_name = "carro";
+	public static final String table_name = Constants.TB_CARRO;
 
 	public CarroDAO(final Context ctx) {
 		super(ctx, base_name);
@@ -41,9 +41,9 @@ public class CarroDAO extends DBConnection {
 	// Insere um novo carro
 	public long inserir(final Carro carro) {
 		final ContentValues values = new ContentValues();
-		values.put(Carros.NOME, carro.getNome());
-		values.put(Carros.PLACA, carro.getPlaca());
-		values.put(Carros.TIPO, carro.getTipo());
+		values.put(Carro.NOME, carro.getNome());
+		values.put(Carro.PLACA, carro.getPlaca());
+		values.put(Carro.TIPO, carro.getTipo());
 
 		final long id = inserir(values, table_name);
 		return id;
@@ -58,13 +58,13 @@ public class CarroDAO extends DBConnection {
 	// Atualiza o carro no banco. O id do carro é utilizado.
 	public int atualizar(final Carro carro) {
 		final ContentValues values = new ContentValues();
-		values.put(Carros.NOME, carro.getNome());
-		values.put(Carros.PLACA, carro.getPlaca());
-		values.put(Carros.TIPO, carro.getTipo());
+		values.put(Carro.NOME, carro.getNome());
+		values.put(Carro.PLACA, carro.getPlaca());
+		values.put(Carro.TIPO, carro.getTipo());
 
 		final String _id = String.valueOf(carro.getId());
 
-		final String where = Carros._ID + "=?";
+		final String where = Carro._ID + "=?";
 		final String[] whereArgs = new String[]{_id};
 
 		final int count = atualizar(values, where, whereArgs, table_name);
@@ -83,7 +83,7 @@ public class CarroDAO extends DBConnection {
 
 	// Deleta o carro com o id fornecido
 	public int deletar(final long id) {
-		final String where = Carros._ID + "=?";
+		final String where = Carro._ID + "=?";
 
 		final String _id = String.valueOf(id);
 		final String[] whereArgs = new String[]{_id};
@@ -103,7 +103,7 @@ public class CarroDAO extends DBConnection {
 	// Busca o carro pelo id
 	public Carro buscarCarro(final long id) {
 		// select * from carro where _id=?
-		final Cursor c = db.query(true, table_name, Carro.colunas, Carros._ID
+		final Cursor c = db.query(true, table_name, Carro.colunas, Carro._ID
 				+ "=" + id, null, null, null, null, null);
 
 		if (c.getCount() > 0) {
@@ -133,6 +133,9 @@ public class CarroDAO extends DBConnection {
 		} catch (final SQLException e) {
 			Log.e(CATEGORIA, "Erro ao buscar os carros: " + e.toString());
 			return null;
+		} catch (IllegalStateException e) {
+			Log.e(CATEGORIA, "Erro ao buscar os carros: " + e.toString());
+			return null;
 		}
 	}
 
@@ -145,10 +148,10 @@ public class CarroDAO extends DBConnection {
 		if (c.moveToFirst()) {
 
 			// Recupera os índices das colunas
-			final int idxId = c.getColumnIndex(Carros._ID);
-			final int idxNome = c.getColumnIndex(Carros.NOME);
-			final int idxPlaca = c.getColumnIndex(Carros.PLACA);
-			final int idxTipo = c.getColumnIndex(Carros.TIPO);
+			final int idxId = c.getColumnIndex(Carro._ID);
+			final int idxNome = c.getColumnIndex(Carro.NOME);
+			final int idxPlaca = c.getColumnIndex(Carro.PLACA);
+			final int idxTipo = c.getColumnIndex(Carro.TIPO);
 
 			// Loop até o final
 			do {
@@ -175,7 +178,7 @@ public class CarroDAO extends DBConnection {
 
 		try {
 			// Idem a: SELECT _id,nome,placa,ano from CARRO where nome = ?
-			final Cursor c = db.query(table_name, Carro.colunas, Carros.NOME
+			final Cursor c = db.query(table_name, Carro.colunas, Carro.NOME
 					+ "='" + nome + "'", null, null, null, null);
 
 			// Se encontrou...

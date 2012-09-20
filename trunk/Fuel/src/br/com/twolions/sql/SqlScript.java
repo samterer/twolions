@@ -2,11 +2,12 @@ package br.com.twolions.sql;
 
 import android.content.Context;
 import br.com.twolions.dao.CarroDAO;
+import br.com.twolions.util.Constants;
 
 public class SqlScript extends CarroDAO {
 
 	// Nome do banco
-	private static final String NOME_BANCO = "bd_itsmycar";
+	private static final String BASE_NAME = Constants.DB_NAME;
 
 	// Controle de versão
 	private static final int VERSAO_BANCO = 2;
@@ -19,7 +20,7 @@ public class SqlScript extends CarroDAO {
 	// ///////////////
 	// TABLE CAR
 	// ///////////////
-	public static final String TB_CARRO = "Carro";
+	public static final String TB_CARRO = Constants.TB_CARRO;
 
 	// Script para fazer drop na tabela
 	private static final String SCRIPT_DELETE_TB_CAR = "DROP TABLE IF EXISTS "
@@ -38,7 +39,7 @@ public class SqlScript extends CarroDAO {
 	// ///////////////
 	// TABLE ITEM LOG
 	// ///////////////
-	public static final String TB_ITEM_LOG = "ItemLog";
+	public static final String TB_ITEM_LOG = Constants.TB_ITEM_LOG;
 
 	// Script para fazer drop na tabela
 	private static final String SCRIPT_DELETE_TB_ITEM_LOG = "DROP TABLE IF EXISTS "
@@ -71,7 +72,73 @@ public class SqlScript extends CarroDAO {
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,value_p) values('1','2:30','3','Troca de pneu','677.00');"};
+					+ "(id_car,date,type,subject,value_p) values('1','2:30','3','Troca de pneu','677.00');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,value_p,value_u,odometer) values('1','20:30','0','60.00','2.39','81456');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,text) values('1','21:30','2','Pagar seguro','Não posso esquecer de pagar a merda do seguro. Valor R$178.');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p) values('1','14:30','1','Troca de oleo','25.00');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p) values('1','2:30','3','Troca de pneu','677.00');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,value_p,value_u,odometer) values('1','20:30','0','60.00','2.39','81456');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,text) values('1','21:30','2','Pagar seguro','Não posso esquecer de pagar a merda do seguro. Valor R$178.');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p) values('1','14:30','1','Troca de oleo','25.00');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p) values('1','2:30','3','Troca de pneu','677.00');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,value_p,value_u,odometer) values('1','20:30','0','60.00','2.39','81456');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,text) values('1','21:30','2','Pagar seguro','Não posso esquecer de pagar a merda do seguro. Valor R$178.');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p) values('1','14:30','1','Troca de oleo','25.00');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p) values('1','2:30','3','Troca de pneu','677.00');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,value_p,value_u,odometer) values('1','20:30','0','60.00','2.39','81456');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,text) values('1','21:30','2','Pagar seguro','Não posso esquecer de pagar a merda do seguro. Valor R$178.');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p) values('1','14:30','1','Troca de oleo','25.00');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p) values('1','2:30','3','Troca de pneu','677.00');",
+
+	};
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(final Context ctx) {
@@ -88,7 +155,23 @@ public class SqlScript extends CarroDAO {
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[1],
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[2],
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[3],
-				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[4]};
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[4],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[5],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[6],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[7],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[8],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[9],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[10],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[11],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[12],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[13],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[14],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[15],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[16],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[17],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[18],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[19],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[20]};
 		// delete
 		final String[] script_tables_delete = {
 				// delete table car
@@ -98,7 +181,7 @@ public class SqlScript extends CarroDAO {
 				SqlScript.SCRIPT_DELETE_TB_ITEM_LOG};
 
 		// Criar utilizando um script SQL
-		dbHelper = new SQLiteHelper(ctx, SqlScript.NOME_BANCO,
+		dbHelper = new SQLiteHelper(ctx, SqlScript.BASE_NAME,
 				SqlScript.VERSAO_BANCO, script_tables_create,
 				script_tables_delete);
 

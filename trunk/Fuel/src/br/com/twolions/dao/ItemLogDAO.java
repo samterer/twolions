@@ -10,14 +10,15 @@ import android.database.SQLException;
 import android.util.Log;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.sql.DBConnection;
+import br.com.twolions.util.Constants;
 
 public class ItemLogDAO extends DBConnection {
 	private static final String CATEGORIA = "base";
 
 	// Nome do banco
-	private static final String base_name = "db_itsmycar";
+	private static final String base_name = Constants.DB_NAME;
 	// Nome da tabela
-	public static final String table_name = "ItemLog";
+	public static final String table_name = Constants.TB_ITEM_LOG;
 
 	// private ManagerDAO dao;
 

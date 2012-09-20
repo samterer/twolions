@@ -1,17 +1,18 @@
 package br.com.twolions.daoobjects;
 
 import android.provider.BaseColumns;
+import br.com.twolions.util.Constants;
 
 public class ItemLog implements BaseColumns {
 
 	public static String[] colunas = new String[]{ItemLog._ID, ItemLog.ID_CAR,
-			ItemLog.DATE, ItemLog.VALUE_U, ItemLog.VALUE_P, ItemLog.ODOMETER,
-			ItemLog.SUBJECT, ItemLog.TYPE, Note.TEXT};
+			ItemLog.DATE, ItemLog.TYPE, ItemLog.SUBJECT, ItemLog.VALUE_P,
+			ItemLog.VALUE_U, ItemLog.ODOMETER, Note.TEXT};
 
 	/**
 	 * Pacote do Content Provider. Precisa ser único.
 	 */
-	public static final String AUTHORITY = "br.com.twolions";
+	public static final String AUTHORITY = Constants.AUTHORITY;
 
 	private long id;
 	private long id_car;
@@ -101,7 +102,7 @@ public class ItemLog implements BaseColumns {
 		this.text = text;
 	}
 
-	public static final String DEFAULT_SORT_ORDER = "_id ASC";
+	public static final String DEFAULT_SORT_ORDER = Constants.DEFAULT_SORT_ORDER;
 
 	public static final String ID_CAR = "id_car";
 	public static final String DATE = "date";

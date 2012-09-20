@@ -14,7 +14,7 @@
         <LinearLayout android:gravity="center" >
 
             <TextView
-                android:id="@+id/time"
+                android:id="@+id/date"
                 android:layout_width="80dp"
                 android:layout_height="53dp"
                 android:background="@drawable/f_time"
@@ -24,6 +24,7 @@
                 android:textColor="@color/preto"
                 android:textSize="20dp"
                 android:textStyle="bold"
+                 android:onClick="showTimePickerDialog"
                 android:typeface="monospace" />
         </LinearLayout>
 
