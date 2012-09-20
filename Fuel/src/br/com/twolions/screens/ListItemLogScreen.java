@@ -9,6 +9,8 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -16,18 +18,19 @@ import android.widget.ListView;
 import br.com.twolions.R;
 import br.com.twolions.core.ListLogActivity;
 import br.com.twolions.dao.ItemLogDAO;
-import br.com.twolions.daoobjects.Carro.Carros;
+import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.object.ListItemAdapter;
+import br.com.twolions.util.Constants;
 
-public class ListLogScreen extends ListLogActivity
+public class ListItemLogScreen extends ListLogActivity
 		implements
 			OnItemClickListener,
 			InterfaceBar {
 	protected static final int INSERIR_EDITAR = 1;
 
-	private String CATEGORIA = "appLog";
+	private String CATEGORIA = Constants.LOG_APP;
 
 	public static ItemLogDAO repositorio;
 
@@ -39,6 +42,7 @@ public class ListLogScreen extends ListLogActivity
 	private Long id_car;
 	private int type;
 
+	// menu
 	private static final int EDITAR = 0;
 	private static final int DELETE = 1;
 
@@ -53,10 +57,10 @@ public class ListLogScreen extends ListLogActivity
 		// id do carro da vez
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			id_car = extras.getLong(Carros._ID);
+			id_car = extras.getLong(Carro._ID);
 
 			if (id_car != null) {
-				Log.i(CATEGORIA, "Atualiza lista de cars");
+				Log.i(CATEGORIA, "Atualizando lista de itens...");
 				atualizarLista();
 			}
 		}
@@ -68,13 +72,21 @@ public class ListLogScreen extends ListLogActivity
 
 	protected void atualizarLista() {
 		// Pega a lista de carros e exibe na tela
-		itens = getItens();
+		if (id_car != null) {
+			itens = getItens();
+		}
 
 		setContentView(R.layout.list_log);
 
 		listView = (ListView) findViewById(R.id.listview);
 		listView.setAdapter(new ListItemAdapter(this, itens));
 		listView.setOnItemClickListener(this);
+
+		listView.setTextFilterEnabled(true);
+
+		LayoutAnimationController controller = AnimationUtils
+				.loadLayoutAnimation(this, R.anim.layout_controller);
+		listView.setLayoutAnimation(controller);
 
 		// organize bts
 		organizeBt();
@@ -88,8 +100,8 @@ public class ListLogScreen extends ListLogActivity
 
 		for (int i = 0; i < list.size(); i++) {
 			ItemLog item = list.get(i);
-
 			Log.i(CATEGORIA, "Item type[" + item.getType() + "]");
+			Log.i(CATEGORIA, "Item id[" + item.getId() + "]");
 		}
 
 		return list;
@@ -100,11 +112,16 @@ public class ListLogScreen extends ListLogActivity
 		id_item = i.getId();
 		type = i.getType();
 
+		Log.i(CATEGORIA, "Open edit... id [" + id_item + "]");
+		Log.i(CATEGORIA, i.toString());
+
 		registerForContextMenu(view);
+		view.setLongClickable(true); // undo setting of this flag in
+										// registerForContextMenu
+		this.openContextMenu(view);
 
 	}
 	// sub menu
-	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
@@ -113,8 +130,8 @@ public class ListLogScreen extends ListLogActivity
 		menu.add(0, DELETE, 0, "Delete");
 		menu.add(0, v.getId(), 0, "Cancel");
 	}
+
 	// click in item of sub menu
-	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case EDITAR :
@@ -137,8 +154,6 @@ public class ListLogScreen extends ListLogActivity
 
 		// id do item
 		it.putExtra(ItemLog._ID, id_item);
-		// id do carro
-		it.putExtra(ItemLog.ID_CAR, id_car);
 		// passa o tipo do item
 		it.putExtra(ItemLog.TYPE, type);
 
@@ -178,13 +193,6 @@ public class ListLogScreen extends ListLogActivity
 		setResult(RESULT_CANCELED);
 		// go next screen
 		finish();
-		/*
-		 * flipper = (ViewFlipper) findViewById(R.id.flipper);
-		 * 
-		 * flipper.setInAnimation(inFromLeftAnimation());
-		 * flipper.setOutAnimation(outToRightAnimation());
-		 * flipper.showPrevious();
-		 */
 
 	}
 	public void btBarRight(View v) {

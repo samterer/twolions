@@ -10,6 +10,8 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -19,16 +21,16 @@ import br.com.twolions.adapters.CarListAdapter;
 import br.com.twolions.core.ListCarActivity;
 import br.com.twolions.dao.CarroDAO;
 import br.com.twolions.daoobjects.Carro;
-import br.com.twolions.daoobjects.Carro.Carros;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.sql.SqlScript;
+import br.com.twolions.util.Constants;
 
 public class ListCarScreen extends ListCarActivity
 		implements
 			OnItemClickListener,
 			InterfaceBar {
 
-	private final String CATEGORIA = "appLog";
+	private final String CATEGORIA = Constants.LOG_APP;
 
 	protected static final int INSERIR_EDITAR = 1;
 
@@ -70,6 +72,10 @@ public class ListCarScreen extends ListCarActivity
 		listView.setAdapter(new CarListAdapter(this, carros));
 		listView.setOnItemClickListener(this);
 
+		LayoutAnimationController controller = AnimationUtils
+				.loadLayoutAnimation(this, R.anim.layout_controller);
+		listView.setLayoutAnimation(controller);
+
 		// organize bts
 		organizeBt();
 
@@ -84,6 +90,7 @@ public class ListCarScreen extends ListCarActivity
 
 		// long click
 		registerForContextMenu(view);
+		view.setClickable(false);
 
 		Log.i(CATEGORIA, "click");
 
@@ -106,10 +113,10 @@ public class ListCarScreen extends ListCarActivity
 				true);
 
 		// abre lista de logs do carro
-		final Intent it = new Intent(this, ListLogScreen.class);
+		final Intent it = new Intent(this, ListItemLogScreen.class);
 
 		// Passa o id do carro como parâmetro
-		it.putExtra(Carros._ID, id_car);
+		it.putExtra(Carro._ID, id_car);
 
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
@@ -160,7 +167,7 @@ public class ListCarScreen extends ListCarActivity
 		final Intent it = new Intent(this, FormCarScreen.class);
 
 		// Passa o id do carro como parâmetro
-		it.putExtra(Carros._ID, id_car);
+		it.putExtra(Carro._ID, id_car);
 
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
@@ -209,6 +216,8 @@ public class ListCarScreen extends ListCarActivity
 
 		// Fecha o banco
 		repositorio.fechar();
+
+		finish();
 	}
 
 	public void btBarLeft(final View v) {

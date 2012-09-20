@@ -5,10 +5,12 @@
     android:background="@drawable/bg"
     android:orientation="vertical" >
 
+    <!-- Date -->
+
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:gravity="center" >
 
         <LinearLayout android:gravity="center" >
@@ -19,6 +21,7 @@
                 android:layout_height="53dp"
                 android:background="@drawable/f_time"
                 android:gravity="center"
+                android:onClick="showTimePickerDialog"
                 android:scaleType="centerInside"
                 android:text="22 40"
                 android:textColor="@color/preto"
@@ -33,7 +36,7 @@
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:gravity="center" >
 
         <TextView
@@ -73,7 +76,7 @@
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:gravity="center" >
 
         <TextView
@@ -113,7 +116,7 @@
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:gravity="center" >
 
         <TextView

@@ -1,20 +1,25 @@
 package br.com.twolions.screens;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
+import br.com.core.ActivityCircle;
 import br.com.twolions.R;
-import br.com.twolions.core.FormItemActivity;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
+import br.com.twolions.util.Constants;
 
 /**
  * Activity que utiliza o TableLayout para editar o itemLog
@@ -22,33 +27,26 @@ import br.com.twolions.interfaces.InterfaceBar;
  * @author rlecheta
  * 
  */
-public class FormItemScreen extends FormItemActivity implements InterfaceBar {
+public class FormItemScreen extends ActivityCircle implements InterfaceBar {
 
-	private final String CATEGORIA = "appLog";
-
-	static final int RESULT_SALVAR = 1;
-	static final int RESULT_EXCLUIR = 2;
+	private final String CATEGORIA = Constants.LOG_APP;
 
 	// Campos texto
 	private TextView value_u;
 	private TextView value_p;
 	private TextView odometer;
 	private TextView date;
-	private TextView subject;
-	private TextView text;
+	private EditText subject;
+	private EditText text;
 
-	private int type;
-	private static final int FUEL = 0;
-	private static final int EXPENSE = 1;
-	private static final int REPAIR = 3;
-	private static final int NOTE = 2;
-
-	private Long id;
-
-	// id car
+	private Long id_item;
 	private Long id_car;
+	private int type;
+	private static final int FUEL = Constants.FUEL;
+	private static final int EXPENSE = Constants.EXPENSE;
+	private static final int NOTE = Constants.NOTE;
+	private static final int REPAIR = Constants.REPAIR;
 
-	@Override
 	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
 
@@ -58,18 +56,20 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		organizeBt();
 
 		actionBt(this);
+
+		addListenerOnButton();
 	}
 
 	private void init() {
 
-		id = null;
-
 		final Bundle extras = getIntent().getExtras();
 		// Se for para Editar, recuperar os valores ...
 		if (extras != null) {
-			id = extras.getLong(ItemLog._ID);
-			id_car = extras.getLong(ItemLog.ID_CAR);
+			id_item = extras.getLong(ItemLog._ID);
+			// Log.i(CATEGORIA, "searching item [" + id_item + "]");
+			// id_car = extras.getLong(Carro._ID);
 			type = extras.getInt(ItemLog.TYPE);
+			// Log.i(CATEGORIA, "searching type [" + type + "]");
 		}
 
 		// instance itens of xml
@@ -77,10 +77,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			case FUEL :
 				setContentView(R.layout.form_fuel);
 				break;
-
 			case EXPENSE :
 				setContentView(R.layout.form_expense);
-
 				break;
 			case NOTE :
 				setContentView(R.layout.form_note);
@@ -91,20 +89,26 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		}
 
 		// create Date object
-		Date dateCurrent = new Date();
+		// Date dateCurrent = new Date();
 
 		// formatting hour in h (1-12 in AM/PM) format like 1, 2..12.
-		String strDateFormat = "h";
-		SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+		// String strDateFormat = "h";
+		// SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
 
-		Log.i(CATEGORIA, "hour in h format : " + sdf.format(dateCurrent));
+		// Log.i(CATEGORIA, "hour in h format : " + sdf.format(dateCurrent));
 
 		// date
 		date = (TextView) findViewById(R.id.date);
+		final Calendar c = Calendar.getInstance();
+		hour = c.get(Calendar.HOUR_OF_DAY);
+		minute = c.get(Calendar.MINUTE);
+
+		date.setText(new StringBuilder().append(pad(hour)).append("")
+				.append(pad(minute)));
 
 		// subject
 		if (type == EXPENSE || type == REPAIR || type == NOTE) {
-			subject = (TextView) findViewById(R.id.subject);
+			subject = (EditText) findViewById(R.id.subject);
 		}
 
 		// value u
@@ -113,13 +117,13 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		}
 
 		// value p
-		if (type == EXPENSE || type == REPAIR || type == NOTE) {
+		if (type == EXPENSE || type == REPAIR || type == NOTE || type == FUEL) {
 			value_p = (TextView) findViewById(R.id.value_p);
 		}
 
 		// text
 		if (type == NOTE) {
-			text = (TextView) findViewById(R.id.text);
+			text = (EditText) findViewById(R.id.text);
 		}
 
 		// odemeter
@@ -128,7 +132,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		}
 
 		// edit ?
-		if (id != null) {
+		if (id_item != null) {
 			loadingEdit();
 		}
 
@@ -138,17 +142,24 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	public void loadingEdit() {
 
 		// searching item
-		final ItemLog i = buscarItemLog(id);
+		Log.i(CATEGORIA, "searching item [" + id_item + "]");
+		final ItemLog i = buscarItemLog(id_item);
 
 		if (i == null) {
 			Toast.makeText(this, "Dados do item não encontrados na base.",
 					Toast.LENGTH_SHORT).show();
 			return;
+		} else {
+			// get id car
+			id_car = i.getId_car();
+			Log.i(CATEGORIA, "Data for edit");
+			Log.i(CATEGORIA, i.toString());
 		}
 
 		try {
 
 			// date
+
 			date.setText(String.valueOf((i.getDate())));
 
 			// subject
@@ -162,7 +173,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			}
 
 			// value p
-			if (type == EXPENSE || type == REPAIR || type == NOTE) {
+			if (type == EXPENSE || type == REPAIR || type == FUEL) {
 				value_p.setText(String.valueOf((i.getValue_p())));
 			}
 
@@ -200,17 +211,49 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	public void salvar() {
 
 		final ItemLog itemLog = new ItemLog();
-		if (id != null) {
+		if (id_item != null) {
 			// É uma atualização
-			itemLog.setId(id);
+			itemLog.setId(id_item);
 			itemLog.setId_car(id_car);
 		}
-		itemLog.setValue_u(Double
-				.valueOf((String) value_u.getText().toString()));
-		itemLog.setValue_p(Double.valueOf(value_p.getText().toString()));
-		itemLog.setOdometer(Long.valueOf(odometer.getText().toString()));
-		itemLog.setValue_p(Double.valueOf(value_p.getText().toString()));
+
+		// date
 		itemLog.setDate(date.getText().toString());
+
+		// subject
+		if (type == EXPENSE || type == REPAIR || type == NOTE) {
+			itemLog.setSubject(subject.getText().toString());
+		} else {
+			itemLog.setSubject("");
+		}
+
+		// value u
+		if (type == FUEL) {
+			itemLog.setValue_u(Double.valueOf(value_u.getText().toString()));
+		} else {
+			itemLog.setValue_u(0.0);
+		}
+
+		// value p
+		if (type == EXPENSE || type == REPAIR || type == FUEL) {
+			itemLog.setValue_p(Double.valueOf(value_p.getText().toString()));
+		} else {
+			itemLog.setValue_p(0.0);
+		}
+
+		// text
+		if (type == NOTE) {
+			itemLog.setText(text.getText().toString());
+		} else {
+			itemLog.setText("");
+		}
+
+		// odemeter
+		if (type == FUEL) {
+			itemLog.setOdometer(Long.valueOf(odometer.getText().toString()));
+		} else {
+			itemLog.setOdometer(0L);
+		}
 
 		// Salvar
 		salvarItemLog(itemLog);
@@ -223,8 +266,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	}
 
 	public void excluir() {
-		if (id != null) {
-			excluirItemLog(id);
+		if (id_item != null) {
+			excluirItemLog(id_item);
 		}
 
 		// OK
@@ -234,19 +277,19 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		finish();
 	}
 
-	// Buscar o itemLog pelo id
+	// Buscar o itemLog pelo id_item
 	protected ItemLog buscarItemLog(final long id) {
-		return ListLogScreen.repositorio.buscarItemLog(id);
+		return ListItemLogScreen.repositorio.buscarItemLog(id);
 	}
 
 	// Salvar o itemLog
 	protected void salvarItemLog(final ItemLog itemLog) {
-		ListLogScreen.repositorio.salvar(itemLog);
+		ListItemLogScreen.repositorio.salvar(itemLog);
 	}
 
 	// Excluir o itemLog
 	protected void excluirItemLog(final long id) {
-		ListLogScreen.repositorio.deletar(id);
+		ListItemLogScreen.repositorio.deletar(id);
 	}
 
 	public void organizeBt() {
@@ -273,4 +316,57 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	public void btBarRight(final View v) {
 		salvar();
 	}
+
+	// date
+	static final int TIME_DIALOG_ID = 999;
+	private int hour;
+	private int minute;
+
+	// public void showTimePickerDialog(final View v) {
+	// Log.i(CATEGORIA, "open time picker");
+	// showDialog(TIME_DIALOG_ID);
+	// }
+
+	public void addListenerOnButton() {
+
+		date.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+
+				showDialog(TIME_DIALOG_ID);
+
+			}
+
+		});
+
+	}
+
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+			case TIME_DIALOG_ID :
+				// set time picker as current time
+				return new TimePickerDialog(this, timePickerListener, hour,
+						minute, false);
+		}
+		return null;
+	}
+	private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
+		public void onTimeSet(TimePicker view, int selectedHour,
+				int selectedMinute) {
+			hour = selectedHour;
+			minute = selectedMinute;
+
+			// set current time into textview
+			date.setText(new StringBuilder().append(pad(hour)).append(":")
+					.append(pad(minute)));
+
+		}
+	};
+	private static String pad(int c) {
+		if (c >= 10)
+			return String.valueOf(c);
+		else
+			return "0" + String.valueOf(c);
+	}
+
 }

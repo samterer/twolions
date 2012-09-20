@@ -30,7 +30,7 @@
             android:label="FormItemScreen"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>         <activity
-            android:name=".screens.ListLogScreen"
+            android:name=".screens.ListItemLogScreen"
             android:label="ListLogActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>   

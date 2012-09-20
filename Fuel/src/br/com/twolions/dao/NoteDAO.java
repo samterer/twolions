@@ -22,7 +22,7 @@ public class NoteDAO extends DBConnection {
 
 	public NoteDAO(final Context ctx) {
 		super(ctx, base_name);
-		// dao = new ManagerDAO(ctx, base_name, table_name, db);
+		// dao = new ManagerDAO(ctx, DB_NAME, table_name, db);
 	}
 
 	// Salva o carro, insere um novo ou atualiza

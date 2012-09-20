@@ -1,21 +1,22 @@
 package br.com.twolions.daoobjects;
 
 import android.provider.BaseColumns;
+import br.com.twolions.util.Constants;
 
 /**
  * Classe entidade para armazenar os valores de Carro
  * 
  * 
  */
-public class Carro {
+public class Carro implements BaseColumns {
 
-	public static String[] colunas = new String[]{Carros._ID, Carros.NOME,
-			Carros.PLACA, Carros.TIPO};
+	public static String[] colunas = new String[]{Carro._ID, Carro.NOME,
+			Carro.PLACA, Carro.TIPO};
 
 	/**
 	 * Pacote do Content Provider. Precisa ser único.
 	 */
-	public static final String AUTHORITY = "br.com.twolions";
+	public static final String AUTHORITY = Constants.AUTHORITY;
 
 	private long id;
 	private String nome;
@@ -73,47 +74,12 @@ public class Carro {
 		this.tipo = tipo;
 	}
 
-	/**
-	 * Classe interna para representar as colunas e ser utilizada por um Content
-	 * Provider
-	 * 
-	 * Filha de BaseColumns que já define (_id e _count), para seguir o padrão
-	 * Android
-	 */
-	public static final class Carros implements BaseColumns {
+	// Ordenação default para inserir no order by
+	public static final String DEFAULT_SORT_ORDER = Constants.DEFAULT_SORT_ORDER;
 
-		// Não pode instanciar esta Classe
-		private Carros() {
-		}
-
-		/*
-		 * // content://br.livro.android.provider.carro/carros public static
-		 * final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY +
-		 * "/carros");
-		 * 
-		 * // Mime Type para todos os carros public static final String
-		 * CONTENT_TYPE = "vnd.android.cursor.dir/vnd.google.carros";
-		 * 
-		 * // Mime Type para um único carro public static final String
-		 * CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.google.carros";
-		 */
-		// Ordenação default para inserir no order by
-		public static final String DEFAULT_SORT_ORDER = "_id ASC";
-
-		public static final String NOME = "nome";
-		public static final String PLACA = "placa";
-		public static final String TIPO = "tipo";
-
-		// Método que constrói uma Uri para um Carro específico, com o seu id
-		// A Uri é no formato
-		// "content://br.livro.android.provider.carro/carros/id"
-		/*
-		 * public static Uri getUriId(long id) { // Adiciona o id na URI default
-		 * do /carros Uri uriCarro =
-		 * ContentUris.withAppendedId(Carros.CONTENT_URI, id); return uriCarro;
-		 * }
-		 */
-	}
+	public static final String NOME = "nome";
+	public static final String PLACA = "placa";
+	public static final String TIPO = "tipo";
 
 	@Override
 	public String toString() {

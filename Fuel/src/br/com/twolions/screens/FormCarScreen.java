@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import br.com.twolions.R;
 import br.com.twolions.core.FormCarActivity;
 import br.com.twolions.daoobjects.Carro;
-import br.com.twolions.daoobjects.Carro.Carros;
 import br.com.twolions.interfaces.InterfaceBar;
 
 /**
@@ -58,7 +57,7 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 		final Bundle extras = getIntent().getExtras();
 		// Se for para Editar, recuperar os valores ...
 		if (extras != null) {
-			id = extras.getLong(Carros._ID);
+			id = extras.getLong(Carro._ID);
 
 			if (id != null) {
 				// é uma edição, busca o carro...

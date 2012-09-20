@@ -39,7 +39,7 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/imageView1"
             style="@style/texto14cinza"
-            android:text="XXXXXXX" />
+            android:text="" />
 
         <TextView
             android:id="@+id/textRightUp"
@@ -50,7 +50,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             style="@style/texto14cinza"
-            android:text="XXXXX" />
+            android:text="" />
 
         <TextView
             android:id="@+id/textRightDown"
@@ -61,7 +61,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginRight="10dp"
             style="@style/texto14cinza"
-            android:text="XXXXXX" />
+            android:text="" />
 
         <TextView
             android:id="@+id/date"
@@ -71,7 +71,7 @@
             android:layout_alignBottom="@+id/textRightUp"
             android:layout_alignLeft="@+id/textLeftDown"
             style="@style/texto16cinzaDarkNegrito"
-            android:text="XXXXX" />
+            android:text="" />
     </RelativeLayout>
 
 </FrameLayout>
