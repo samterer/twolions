@@ -5,7 +5,6 @@ import java.util.Calendar;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
 import android.widget.TimePicker;
 
@@ -13,7 +12,6 @@ public class TimePickerFragment extends DialogFragment
 		implements
 			TimePickerDialog.OnTimeSetListener {
 
-	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		// Use the current time as the default values for the picker
 		final Calendar c = Calendar.getInstance();
