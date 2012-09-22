@@ -179,7 +179,7 @@ public class ListCarScreen extends FuelActivity
 				true);
 
 		// abre lista de logs do carro
-		final Intent it = new Intent(this, ListItemLogScreen.class);
+		final Intent it = new Intent(this, ListLogScreen.class);
 
 		// Passa o id do carro como parâmetro
 		it.putExtra(Carro._ID, id_car);

@@ -27,7 +27,7 @@ import br.com.twolions.object.ListItemAdapter;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
-public class ListItemLogScreen extends FuelActivity
+public class ListLogScreen extends FuelActivity
 		implements
 			OnItemClickListener,
 			InterfaceBar,
@@ -65,12 +65,12 @@ public class ListItemLogScreen extends FuelActivity
 			}
 		}
 
-		if (itens != null) {
-			// Atualiza o ListView diretamente
-			listview_log.setAdapter(new ListItemAdapter(this, itens));
-		} else {
-			startTransaction(this);
-		}
+		/*
+		 * if (itens != null) { // Atualiza o ListView diretamente
+		 * listview_log.setAdapter(new ListItemAdapter(this, itens)); } else {
+		 */
+		// startTransaction(this);
+		// }
 
 	}
 
@@ -79,11 +79,17 @@ public class ListItemLogScreen extends FuelActivity
 		setContentView(R.layout.list_log);
 
 		listview_log = (ListView) findViewById(R.id.listview_log);
+		listview_log.setAdapter(new ListItemAdapter(this, itens));
 		listview_log.setOnItemClickListener(this);
+
 		itens = (List<ItemLog>) getLastNonConfigurationInstance();
 
+		LayoutAnimationController controller = AnimationUtils
+				.loadLayoutAnimation(this, R.anim.layout_controller);
+		listview_log.setLayoutAnimation(controller);
+
 		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
-		if (itens == null && icicle != null) {
+		if (icicle != null) {
 			// Recuperamos a lista de carros salva pelo
 			// onSaveInstanceState(bundle)
 			ListItemLog lista = (ListItemLog) icicle
@@ -92,8 +98,13 @@ public class ListItemLogScreen extends FuelActivity
 			this.itens = lista.itens;
 		}
 
-	}
+		if (itens != null) { // Atualiza o ListView diretamente
+			listview_log.setAdapter(new ListItemAdapter(this, itens));
+		} else {
+			startTransaction(this);
+		}
 
+	}
 	@Override
 	public Object onRetainNonConfigurationInstance() {
 		Log.i(TAG, "Salvando Estado: onRetainNonConfigurationInstance()");
@@ -109,15 +120,15 @@ public class ListItemLogScreen extends FuelActivity
 	}
 
 	public void execute() throws Exception {
+		Log.i(TAG, ">> execute()");
 		// Busca os carros em uma thread
-		itens = getItens();
+		this.itens = getItens();
 	}
-	public void atualizarView() {
-		// Atualiza os carros na thread principal
-		if (itens != null) {
-			listview_log.setAdapter(new ListItemAdapter(this, itens));
-		}
-	}
+	/*
+	 * public void atualizarView() { // Atualiza os carros na thread principal
+	 * if (itens != null) { listview_log.setAdapter(new ListItemAdapter(this,
+	 * itens)); } }
+	 */
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -134,43 +145,22 @@ public class ListItemLogScreen extends FuelActivity
 
 	public void updateList() {
 		// Pega a lista de carros e exibe na tela
-		itens = getItens();
+		// itens = getItens();
 
-		setContentView(R.layout.transaction);
+		// setContentView(R.layout.transaction);
 
-		listview_log = (ListView) findViewById(R.id.listview_log);
+		// listview_log = (ListView) findViewById(R.id.listview_log);
 		listview_log.setAdapter(new ListItemAdapter(this, itens));
-		listview_log.setOnItemClickListener(this);
+		// listview_log.setOnItemClickListener(this);
 
-		LayoutAnimationController controller = AnimationUtils
-				.loadLayoutAnimation(this, R.anim.layout_controller);
-		listview_log.setLayoutAnimation(controller);
+		// LayoutAnimationController controller =
+		// AnimationUtils.loadLayoutAnimation(this, R.anim.layout_controller);
+		// listview_log.setLayoutAnimation(controller);
 
 		// organize bts
 		organizeBt();
 
 	}
-
-	/*
-	 * protected void atualizarLista() { // Pega a lista de carros e exibe na
-	 * tela if (id_car != null) { itens = getItens(); }
-	 * 
-	 * setContentView(R.layout.list_log);
-	 * 
-	 * listview_log = (ListView) findViewById(R.id.listview_log);
-	 * listview_log.setAdapter(new ListItemAdapter(this, itens));
-	 * listview_log.setOnItemClickListener(this);
-	 * 
-	 * listview_log.setTextFilterEnabled(true);
-	 * 
-	 * LayoutAnimationController controller = AnimationUtils
-	 * .loadLayoutAnimation(this, R.anim.layout_controller);
-	 * listview_log.setLayoutAnimation(controller);
-	 * 
-	 * // organize bts organizeBt();
-	 * 
-	 * }
-	 */
 
 	private List<ItemLog> getItens() {
 		Log.i(TAG, "Atualizando lista de itens...");

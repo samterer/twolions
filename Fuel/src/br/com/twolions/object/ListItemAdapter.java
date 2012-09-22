@@ -14,18 +14,14 @@ import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.util.Constants;
 
 public class ListItemAdapter extends BaseAdapter {
-	private Activity context;
+	protected static final String TAG = "appLog";
 	private LayoutInflater inflater;
 	private List<ItemLog> itens;
 
 	public ListItemAdapter(Activity context, List<ItemLog> itens) {
-		this.context = context;
 		this.itens = itens;
 		this.inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		// Recupera o objeto global da aplicação
-		// FuelApplication application = (FuelApplication)
-		// context.getApplication();
 	}
 
 	public int getCount() {
@@ -55,10 +51,9 @@ public class ListItemAdapter extends BaseAdapter {
 			holder.subject = (TextView) view.findViewById(R.id.textLeftDown);
 			holder.text = (TextView) view.findViewById(R.id.textLeftDown);
 		} else {
-
 			holder = (ViewHolder) view.getTag();
-
 		}
+
 		ItemLog item = itens.get(position);
 		// TODO
 		String moeda = "$";
