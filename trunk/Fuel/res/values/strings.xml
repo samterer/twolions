@@ -4,11 +4,14 @@
     <string name="hello">Hello World, FuelActivity!</string>
     <string name="app_name">Mabu</string>
     <string name="name">Name Car</string>
-    <string name="aguarde">Aguarde um momento.</string>
+    <string name="aguarde">Por favor, aguarde um momento.</string>
 	
     <!-- BASE -->
     <string name="dbname">bd_itsmycar</string>
     <string name="tb_itemlog">ItemLog</string>
     <string name="tb_carro">Carro</string>
+    
+    <!-- Error msg user -->
+    <string name="erro_conexao_db_indisponivel">Não há conexão com a base de dados, por favor, tenter abrir novamente.</string>
     
 </resources>

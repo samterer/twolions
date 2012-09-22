@@ -3,6 +3,7 @@ package br.com.twolions.screens;
 import java.util.List;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -15,28 +16,31 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import br.com.twolions.FuelActivity;
 import br.com.twolions.R;
-import br.com.twolions.core.ListLogActivity;
+import br.com.twolions.Transaction;
 import br.com.twolions.dao.ItemLogDAO;
 import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.ItemLog;
+import br.com.twolions.daoobjects.ListItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.object.ListItemAdapter;
 import br.com.twolions.util.Constants;
 
-public class ListItemLogScreen extends ListLogActivity
+public class ListItemLogScreen extends FuelActivity
 		implements
 			OnItemClickListener,
-			InterfaceBar {
+			InterfaceBar,
+			Transaction {
 	protected static final int INSERIR_EDITAR = 1;
 
-	private String CATEGORIA = Constants.LOG_APP;
+	private String TAG = Constants.LOG_APP;
 
 	public static ItemLogDAO repositorio;
 
 	private List<ItemLog> itens;
 
-	ListView listView;
+	ListView listview_log;
 
 	private Long id_item;
 	private Long id_car;
@@ -50,70 +54,147 @@ public class ListItemLogScreen extends ListLogActivity
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		if (repositorio == null) {
-			repositorio = new ItemLogDAO(this);
-		}
+		repositorio = new ItemLogDAO(this);
 
 		// id do carro da vez
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			id_car = extras.getLong(Carro._ID);
-
 			if (id_car != null) {
-				Log.i(CATEGORIA, "Atualizando lista de itens...");
-				atualizarLista();
+				montaTela(icicle);
 			}
 		}
 
-	}
-	private void init() {
-
-	}
-
-	protected void atualizarLista() {
-		// Pega a lista de carros e exibe na tela
-		if (id_car != null) {
-			itens = getItens();
+		if (itens != null) {
+			// Atualiza o ListView diretamente
+			listview_log.setAdapter(new ListItemAdapter(this, itens));
+		} else {
+			startTransaction(this);
 		}
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public void montaTela(Bundle icicle) {
+		setContentView(R.layout.list_log);
+
+		listview_log = (ListView) findViewById(R.id.listview_log);
+		listview_log.setOnItemClickListener(this);
+		itens = (List<ItemLog>) getLastNonConfigurationInstance();
+
+		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
+		if (itens == null && icicle != null) {
+			// Recuperamos a lista de carros salva pelo
+			// onSaveInstanceState(bundle)
+			ListItemLog lista = (ListItemLog) icicle
+					.getSerializable(ListItemLog.KEY);
+			Log.i(TAG, "Lendo estado: savedInstanceState(carros)");
+			this.itens = lista.itens;
+		}
+
+	}
+
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		Log.i(TAG, "Salvando Estado: onRetainNonConfigurationInstance()");
+		return itens;
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		Log.i(TAG, "Salvando Estado: onSaveInstanceState(bundle)");
+		// Salvar o estado da tela
+		outState.putSerializable(ListItemLog.KEY, new ListItemLog(itens));
+	}
+
+	public void execute() throws Exception {
+		// Busca os carros em uma thread
+		itens = getItens();
+	}
+	public void atualizarView() {
+		// Atualiza os carros na thread principal
+		if (itens != null) {
+			listview_log.setAdapter(new ListItemAdapter(this, itens));
+		}
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
 
 		setContentView(R.layout.list_log);
 
-		listView = (ListView) findViewById(R.id.listview);
-		listView.setAdapter(new ListItemAdapter(this, itens));
-		listView.setOnItemClickListener(this);
+		listview_log = (ListView) findViewById(R.id.listview_log);
+		listview_log.setOnItemClickListener(this);
+		if (itens != null) {
+			listview_log.setAdapter(new ListItemAdapter(this, itens));
+		}
+	}
 
-		listView.setTextFilterEnabled(true);
+	public void updateList() {
+		// Pega a lista de carros e exibe na tela
+		itens = getItens();
+
+		setContentView(R.layout.transaction);
+
+		listview_log = (ListView) findViewById(R.id.listview_log);
+		listview_log.setAdapter(new ListItemAdapter(this, itens));
+		listview_log.setOnItemClickListener(this);
 
 		LayoutAnimationController controller = AnimationUtils
 				.loadLayoutAnimation(this, R.anim.layout_controller);
-		listView.setLayoutAnimation(controller);
+		listview_log.setLayoutAnimation(controller);
 
 		// organize bts
 		organizeBt();
 
 	}
 
+	/*
+	 * protected void atualizarLista() { // Pega a lista de carros e exibe na
+	 * tela if (id_car != null) { itens = getItens(); }
+	 * 
+	 * setContentView(R.layout.list_log);
+	 * 
+	 * listview_log = (ListView) findViewById(R.id.listview_log);
+	 * listview_log.setAdapter(new ListItemAdapter(this, itens));
+	 * listview_log.setOnItemClickListener(this);
+	 * 
+	 * listview_log.setTextFilterEnabled(true);
+	 * 
+	 * LayoutAnimationController controller = AnimationUtils
+	 * .loadLayoutAnimation(this, R.anim.layout_controller);
+	 * listview_log.setLayoutAnimation(controller);
+	 * 
+	 * // organize bts organizeBt();
+	 * 
+	 * }
+	 */
+
 	private List<ItemLog> getItens() {
-		Log.i(CATEGORIA, "getItens() id[" + id_car + "]");
+		Log.i(TAG, "Atualizando lista de itens...");
+		Log.i(TAG, "getItens() id[" + id_car + "]");
 
 		List<ItemLog> list = repositorio.listarItemLogs(id_car);
 
-		for (int i = 0; i < list.size(); i++) {
-			ItemLog item = list.get(i);
-			Log.i(CATEGORIA, "Item type[" + item.getType() + "]");
-			Log.i(CATEGORIA, "Item id[" + item.getId() + "]");
-		}
+		// for (int i = 0; i < list.size(); i++) {
+		// ItemLog item = list.get(i);
+		// Log.i(TAG, "Item type[" + item.getType() + "]");
+		// Log.i(TAG, "Item id[" + item.getId() + "]");
+		// }
 
 		return list;
 	}
+
 	public void onItemClick(AdapterView<?> parent, View view, int posicao,
 			long id) {
 		final ItemLog i = itens.get(posicao);
 		id_item = i.getId();
 		type = i.getType();
 
-		Log.i(CATEGORIA, "Open edit... id [" + id_item + "]");
-		Log.i(CATEGORIA, i.toString());
+		// Log.i(TAG, "Open edit... id [" + id_item + "]");
+		// Log.i(TAG, i.toString());
 
 		registerForContextMenu(view);
 		view.setLongClickable(true); // undo setting of this flag in
@@ -170,7 +251,8 @@ public class ListItemLogScreen extends ListLogActivity
 		setResult(RESULT_OK);
 
 		// atualiza a lista na tela
-		atualizarLista();
+		// atualizarLista();
+		updateList();
 	}
 	// Excluir o carro
 	protected void excluirItem(long id) {
@@ -185,7 +267,8 @@ public class ListItemLogScreen extends ListLogActivity
 		// vamos atualizar a lista
 		if (codigoRetorno == RESULT_OK) {
 			// atualiza a lista na tela
-			atualizarLista();
+			// atualizarLista();
+			updateList();
 		}
 	}
 
@@ -218,7 +301,7 @@ public class ListItemLogScreen extends ListLogActivity
 	public void onBackPressed() { // call my backbutton pressed method when
 									// boolean==true
 
-		Log.i(CATEGORIA, "Clicked");
+		Log.i(TAG, "Clicked");
 
 	}
 

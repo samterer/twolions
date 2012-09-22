@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -16,21 +17,24 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import br.com.twolions.FuelActivity;
 import br.com.twolions.R;
+import br.com.twolions.Transaction;
 import br.com.twolions.adapters.CarListAdapter;
-import br.com.twolions.core.ListCarActivity;
 import br.com.twolions.dao.CarroDAO;
 import br.com.twolions.daoobjects.Carro;
+import br.com.twolions.daoobjects.ListCarros;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.sql.SqlScript;
 import br.com.twolions.util.Constants;
 
-public class ListCarScreen extends ListCarActivity
+public class ListCarScreen extends FuelActivity
 		implements
 			OnItemClickListener,
-			InterfaceBar {
+			InterfaceBar,
+			Transaction {
 
-	private final String CATEGORIA = Constants.LOG_APP;
+	private final String TAG = Constants.LOG_APP;
 
 	protected static final int INSERIR_EDITAR = 1;
 
@@ -38,7 +42,7 @@ public class ListCarScreen extends ListCarActivity
 
 	private List<Carro> carros;
 
-	ListView listView;
+	ListView listview_car;
 
 	private String name_car;
 	private Long id_car;
@@ -46,35 +50,101 @@ public class ListCarScreen extends ListCarActivity
 	private static final int EDITAR = 0;
 	private static final int DELETE = 1;
 
-	@Override
-	public void onCreate(final Bundle icicle) {
+	@SuppressWarnings("unchecked")
+	/*
+	 * public void onCreate(final Bundle icicle) { super.onCreate(icicle);
+	 * 
+	 * if (repositorio == null) { repositorio = new SqlScript(this); }
+	 * 
+	 * atualizarLista();
+	 * 
+	 * }
+	 */
+	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		if (repositorio == null) {
-			repositorio = new SqlScript(this);
+		repositorio = new SqlScript(this);
+
+		montaTela(icicle);
+
+		if (carros != null) {
+			// Atualiza o ListView diretamente
+			listview_car.setAdapter(new CarListAdapter(this, carros));
+		} else {
+			startTransaction(this);
 		}
 
-		atualizarLista();
+	}
+	@SuppressWarnings("unchecked")
+	public void montaTela(Bundle icicle) {
+		setContentView(R.layout.list_car);
+
+		listview_car = (ListView) findViewById(R.id.listview_car);
+		listview_car.setOnItemClickListener(this);
+		carros = (List<Carro>) getLastNonConfigurationInstance();
+
+		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
+		if (carros == null && icicle != null) {
+			// Recuperamos a lista de carros salva pelo
+			// onSaveInstanceState(bundle)
+			ListCarros lista = (ListCarros) icicle
+					.getSerializable(ListCarros.KEY);
+			Log.i(TAG, "Lendo estado: savedInstanceState(carros)");
+			this.carros = lista.carros;
+		}
 
 	}
 
-	private void init() {
-
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		Log.i(TAG, "Salvando Estado: onRetainNonConfigurationInstance()");
+		return carros;
 	}
 
-	protected void atualizarLista() {
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		Log.i(TAG, "Salvando Estado: onSaveInstanceState(bundle)");
+		// Salvar o estado da tela
+		outState.putSerializable(ListCarros.KEY, new ListCarros(carros));
+	}
+
+	public void execute() throws Exception {
+		// Busca os carros em uma thread
+		carros = repositorio.listarCarros();
+	}
+
+	public void atualizarView() {
+		// Atualiza os carros na thread principal
+		if (carros != null) {
+			listview_car.setAdapter(new CarListAdapter(this, carros));
+		}
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		setContentView(R.layout.list_car);
+		listview_car = (ListView) findViewById(R.id.listview_car);
+		listview_car.setOnItemClickListener(this);
+		if (carros != null) {
+			listview_car.setAdapter(new CarListAdapter(this, carros));
+		}
+	}
+
+	public void updateList() {
 		// Pega a lista de carros e exibe na tela
 		carros = repositorio.listarCarros();
 
 		setContentView(R.layout.transaction);
 
-		listView = (ListView) findViewById(R.id.listview);
-		listView.setAdapter(new CarListAdapter(this, carros));
-		listView.setOnItemClickListener(this);
+		listview_car = (ListView) findViewById(R.id.listview_car);
+		listview_car.setAdapter(new CarListAdapter(this, carros));
+		listview_car.setOnItemClickListener(this);
 
 		LayoutAnimationController controller = AnimationUtils
 				.loadLayoutAnimation(this, R.anim.layout_controller);
-		listView.setLayoutAnimation(controller);
+		listview_car.setLayoutAnimation(controller);
 
 		// organize bts
 		organizeBt();
@@ -92,7 +162,7 @@ public class ListCarScreen extends ListCarActivity
 		registerForContextMenu(view);
 		view.setClickable(false);
 
-		Log.i(CATEGORIA, "click");
+		Log.i(TAG, "click");
 
 		// open list item log
 		openScreenListItemLog();
@@ -103,11 +173,7 @@ public class ListCarScreen extends ListCarActivity
 	 */
 	private void openScreenListItemLog() {
 
-		Log.i(CATEGORIA, "OPEN LIST CAR [" + id_car + "]");
-
-		// ImageView v = (ImageView) findViewById(R.id.view);
-		// v.setVisibility(View.VISIBLE);
-		// v.setAlpha(0);
+		Log.i(TAG, "OPEN LIST CAR [" + id_car + "]");
 
 		dialog = ProgressDialog.show(this, "Pesquisando itens", "Loading...",
 				true);
@@ -121,19 +187,6 @@ public class ListCarScreen extends ListCarActivity
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
 
-		// go next screen
-		/*
-		 * flipper = (ViewFlipper) findViewById(R.id.flipper);
-		 * 
-		 * flipper.setInAnimation(inFromRightAnimation());
-		 * flipper.setOutAnimation(outToLeftAnimation()); flipper.showNext();
-		 */
-
-		// ImageView img = (ImageView) findViewById(R.id.tipo);
-		// img.setVisibility(View.INVISIBLE);
-
-		// ProgressBar progress = (ProgressBar) findViewById(R.id.progress);
-		// progress.setVisibility(View.VISIBLE);
 	}
 	// sub menu
 	@Override
@@ -182,7 +235,7 @@ public class ListCarScreen extends ListCarActivity
 		setResult(RESULT_OK);
 
 		// atualiza a lista na tela
-		atualizarLista();
+		updateList();
 	}
 	// Excluir o carro
 	protected void excluirCarro(final long id) {
@@ -198,7 +251,7 @@ public class ListCarScreen extends ListCarActivity
 		// vamos atualizar a lista
 		if (codigoRetorno == RESULT_OK) {
 			// atualiza a lista na tela
-			atualizarLista();
+			updateList();
 		}
 	}
 
@@ -246,4 +299,5 @@ public class ListCarScreen extends ListCarActivity
 		title.setImageResource(R.drawable.t_select_vehicle);
 
 	}
+
 }
