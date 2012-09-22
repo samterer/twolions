@@ -279,17 +279,17 @@ public class FormItemScreen extends ActivityCircle implements InterfaceBar {
 
 	// Buscar o itemLog pelo id_item
 	protected ItemLog buscarItemLog(final long id) {
-		return ListItemLogScreen.repositorio.buscarItemLog(id);
+		return ListLogScreen.repositorio.buscarItemLog(id);
 	}
 
 	// Salvar o itemLog
 	protected void salvarItemLog(final ItemLog itemLog) {
-		ListItemLogScreen.repositorio.salvar(itemLog);
+		ListLogScreen.repositorio.salvar(itemLog);
 	}
 
 	// Excluir o itemLog
 	protected void excluirItemLog(final long id) {
-		ListItemLogScreen.repositorio.deletar(id);
+		ListLogScreen.repositorio.deletar(id);
 	}
 
 	public void organizeBt() {

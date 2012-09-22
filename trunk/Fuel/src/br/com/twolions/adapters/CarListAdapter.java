@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +14,11 @@ import br.com.twolions.R;
 import br.com.twolions.daoobjects.Carro;
 
 public class CarListAdapter extends BaseAdapter {
-	private final Activity context;
+	protected static final String TAG = "appLog";
 	private LayoutInflater inflater;
-	private List<Carro> carros;
+	private final List<Carro> carros;
 
 	public CarListAdapter(Activity context, List<Carro> carros) {
-		this.context = context;
 		this.carros = carros;
 		this.inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -40,7 +38,6 @@ public class CarListAdapter extends BaseAdapter {
 
 	public View getView(int position, View view, ViewGroup parent) {
 		ViewHolder holder = null;
-		Log.i("appLog", "getView position: " + position);
 		if (view == null) {
 			// Nao existe a View no cache para esta linha então cria um novo
 			holder = new ViewHolder();
@@ -48,16 +45,16 @@ public class CarListAdapter extends BaseAdapter {
 			int layout = R.layout.item_car;
 			view = inflater.inflate(layout, null);
 			view.setTag(holder);
-			holder.nome = (TextView) view.findViewById(R.id.textRightDown);
-			holder.placa = (TextView) view.findViewById(R.id.textRightUp);
-			holder.tipo = (ImageView) view.findViewById(R.id.date);
+			holder.date = (TextView) view.findViewById(R.id.date);
+			holder.nome = (TextView) view.findViewById(R.id.nome);
+			holder.placa = (TextView) view.findViewById(R.id.placa);
+			holder.tipo = (ImageView) view.findViewById(R.id.tipo);
 		} else {
+			// Ja existe no cache, bingo entao pega!
 			holder = (ViewHolder) view.getTag();
 		}
-		// Recupera o Carro da posição atual
+
 		Carro c = carros.get(position);
-		Log.i("appLog", ">>" + c.getNome());
-		// Atualiza o valor do TextView
 		holder.nome.setText(c.getNome());
 		holder.placa.setText(c.getPlaca());
 
@@ -69,8 +66,10 @@ public class CarListAdapter extends BaseAdapter {
 
 		return view;
 	}
+
 	// Design Patter "ViewHolder" para Android
 	static class ViewHolder {
+		TextView date;
 		TextView nome;
 		TextView placa;
 		ImageView tipo;
