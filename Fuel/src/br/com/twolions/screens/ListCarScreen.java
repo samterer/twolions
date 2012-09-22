@@ -17,15 +17,15 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import br.com.twolions.FuelActivity;
 import br.com.twolions.R;
-import br.com.twolions.Transaction;
 import br.com.twolions.adapters.CarListAdapter;
+import br.com.twolions.core.FuelActivity;
 import br.com.twolions.dao.CarroDAO;
 import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.ListCarros;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.sql.SqlScript;
+import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
 public class ListCarScreen extends FuelActivity
