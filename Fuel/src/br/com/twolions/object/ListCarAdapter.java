@@ -2,6 +2,7 @@ package br.com.twolions.object;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,49 +14,64 @@ import br.com.twolions.R;
 import br.com.twolions.daoobjects.Carro;
 
 public class ListCarAdapter extends BaseAdapter {
-	private final Context context;
-	private final List<Carro> lista;
+	protected static final String TAG = "appLog";
+	private LayoutInflater inflater;
+	private List<Carro> carros;
 
-	public ListCarAdapter(final Context context, final List<Carro> lista) {
-		this.context = context;
-		this.lista = lista;
+	public ListCarAdapter(Activity context, List<Carro> carros) {
+		this.carros = carros;
+		this.inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
 	public int getCount() {
-		return lista.size();
+		return carros != null ? carros.size() : 0;
 	}
 
-	public Object getItem(final int position) {
-		return lista.get(position);
+	public Object getItem(int position) {
+		return carros != null ? carros.get(position) : null;
 	}
 
-	public long getItemId(final int position) {
+	public long getItemId(int position) {
 		return position;
 	}
 
-	public View getView(final int position, final View convertView,
-			final ViewGroup parent) {
-		// Recupera o Carro da posição atual
-		final Carro c = lista.get(position);
-
-		final LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		final View view = inflater.inflate(R.layout.item_car, null);
-
-		// Atualiza o valor do TextView
-		final TextView nome = (TextView) view.findViewById(R.id.nome);
-		nome.setText(c.getNome());
-
-		final TextView placa = (TextView) view.findViewById(R.id.placa);
-		placa.setText(c.getPlaca());
-
-		final ImageView tipo = (ImageView) view.findViewById(R.id.tipo);
-		if (c.getTipo().equals("carro")) {
-			tipo.setImageResource(R.drawable.type_car_on);
+	public View getView(int position, View view, ViewGroup parent) {
+		ViewHolder holder = null;
+		if (view == null) {
+			// Nao existe a View no cache para esta linha então cria um novo
+			holder = new ViewHolder();
+			// Busca o layout para cada carro com a foto
+			int layout = R.layout.item_car;
+			view = inflater.inflate(layout, null);
+			view.setTag(holder);
+			holder.nome = (TextView) view.findViewById(R.id.nome);
+			holder.placa = (TextView) view.findViewById(R.id.placa);
+			holder.tipo = (ImageView) view.findViewById(R.id.tipo);
 		} else {
-			tipo.setImageResource(R.drawable.type_moto_on);
+			// Ja existe no cache, bingo entao pega!
+			holder = (ViewHolder) view.getTag();
+		}
+
+		Carro c = carros.get(position);
+		// Agora que temos a view atualizada os valores
+		holder.nome.setText(c.getNome());
+		holder.placa.setText(c.getPlaca());
+
+		if (c.getTipo().equals("carro")) {
+			holder.tipo.setImageResource(R.drawable.type_car_on);
+		} else {
+			holder.tipo.setImageResource(R.drawable.type_moto_on);
 		}
 
 		return view;
 	}
+
+	// Design Patter "ViewHolder" para Android
+	static class ViewHolder {
+		TextView nome;
+		TextView placa;
+		ImageView tipo;
+	}
+
 }
