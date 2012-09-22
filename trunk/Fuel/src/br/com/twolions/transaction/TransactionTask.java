@@ -4,8 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import br.com.twolions.util.AndroidUtils;
 import br.com.twolions.util.Constants;
-import br.com.utils.AndroidUtils;
 
 /**
  * Classe para controlar a thread

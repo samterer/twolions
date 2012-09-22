@@ -1,11 +1,10 @@
 package br.com.twolions.core;
 
 import android.os.AsyncTask;
-import br.com.core.ActivityCircle;
 import br.com.twolions.R;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.transaction.TransactionTask;
-import br.com.utils.AndroidUtils;
+import br.com.twolions.util.AndroidUtils;
 
 public class FuelActivity extends ActivityCircle {
 	private TransactionTask task;
