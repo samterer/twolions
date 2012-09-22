@@ -2,6 +2,7 @@ package br.com.twolions.object;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,98 +14,85 @@ import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.util.Constants;
 
 public class ListItemAdapter extends BaseAdapter {
-	private Context context;
-	private List<ItemLog> lista;
+	private Activity context;
+	private LayoutInflater inflater;
+	private List<ItemLog> itens;
 
-	public ListItemAdapter(Context context, List<ItemLog> lista) {
+	public ListItemAdapter(Activity context, List<ItemLog> itens) {
 		this.context = context;
-		this.lista = lista;
+		this.itens = itens;
+		this.inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		// Recupera o objeto global da aplicação
+		// FuelApplication application = (FuelApplication)
+		// context.getApplication();
 	}
 
 	public int getCount() {
-		return lista.size();
+		return itens != null ? itens.size() : 0;
 	}
 
 	public Object getItem(int position) {
-		return lista.get(position);
+		return itens != null ? itens.get(position) : null;
 	}
 
 	public long getItemId(int position) {
 		return position;
 	}
 
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// Recupera o Carro da posição atual
-		ItemLog item = lista.get(position);
+	public View getView(int position, View view, ViewGroup parent) {
+		ViewHolder holder = null;
+		if (view == null) {
+			// Nao existe a View no cache para esta linha então cria um novo
+			holder = new ViewHolder();
+			// Busca o layout para cada carro com a foto
+			int layout = R.layout.item_log;
+			view = inflater.inflate(layout, null);
+			view.setTag(holder);
+			holder.value_u = (TextView) view.findViewById(R.id.textRightDown);
+			holder.value_p = (TextView) view.findViewById(R.id.textRightUp);
+			holder.date = (TextView) view.findViewById(R.id.date);
+			holder.subject = (TextView) view.findViewById(R.id.textLeftDown);
+			holder.text = (TextView) view.findViewById(R.id.textLeftDown);
+		} else {
 
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = inflater.inflate(R.layout.item_log, null);
+			holder = (ViewHolder) view.getTag();
 
-		// date
-		TextView date = (TextView) view.findViewById(R.id.date);
-		date.setText(String.valueOf(item.getDate()));
-
-		// icone
-
+		}
+		ItemLog item = itens.get(position);
 		// TODO
 		String moeda = "$";
 		String medida = "/L";
-
 		// value u
 		if (item.getValue_u() > 0) {
-			TextView value_u = (TextView) view.findViewById(R.id.textRightDown);
-			value_u.setText(moeda + String.valueOf(item.getValue_u()));
+			holder.value_u.setText(moeda + String.valueOf(item.getValue_u()));
 		}
-
 		// value p
 		if (item.getValue_p() > 0) {
-
-			TextView value_p = (TextView) view.findViewById(R.id.textRightUp);
-			value_p.setText(moeda + String.valueOf(item.getValue_p()));
-
+			holder.value_p.setText(moeda + String.valueOf(item.getValue_p()));
 		}
+		// date
+		holder.date.setText(String.valueOf(item.getDate()));
 		// subject
 		if (item.getSubject() != "") {
-			TextView subject = (TextView) view.findViewById(R.id.textLeftDown);
-			subject.setText(String.valueOf(item.getSubject()));
-
+			holder.subject.setText(String.valueOf(item.getSubject()));
 		}
 
 		// stocked
 		if (item.getType() == Constants.FUEL) {
-			// value total abastecido
-			TextView value_t = (TextView) view.findViewById(R.id.textLeftDown);
 			// calcula qtd de litro abastecido
 			Double total = Math.floor(item.getValue_p() / item.getValue_u());
-			value_t.setText(String.valueOf(total.intValue()) + medida);
+			holder.text.setText(String.valueOf(total.intValue()) + medida);
 		}
 
-		/*
-		 * // fuel if (item.getType() == 0 || ) { // value p TextView value_p =
-		 * (TextView) view.findViewById(R.id.textRightUp);
-		 * value_p.setText(String.valueOf(item.getValue_p())); // value u
-		 * TextView value_u = (TextView) view.findViewById(R.id.textRightDown);
-		 * value_u.setText(String.valueOf(item.getValue_u())); // value total
-		 * abastecido TextView value_t = (TextView)
-		 * view.findViewById(R.id.textLeftDown); // calcula qtd de litro
-		 * abastecido Double total = Math.floor(item.getValue_p() /
-		 * item.getValue_u()); value_t.setText(String.valueOf(total)); } //
-		 * expense if (item.getType() == 1) { // value p TextView value_p =
-		 * (TextView) view.findViewById(R.id.textRightUp);
-		 * value_p.setText(String.valueOf(item.getValue_p())); // subject
-		 * TextView subject = (TextView) view.findViewById(R.id.textLeftDown);
-		 * subject.setText(String.valueOf(item.getSubject())); } // note if
-		 * (item.getType() == 2) { // text // subject TextView subject =
-		 * (TextView) view.findViewById(R.id.textLeftDown);
-		 * subject.setText(String.valueOf(item.getSubject())); } // repair if
-		 * (item.getType() == 3) { // value p TextView value_p = (TextView)
-		 * view.findViewById(R.id.textRightUp);
-		 * value_p.setText(String.valueOf(item.getValue_p())); // subject
-		 * TextView subject = (TextView) view.findViewById(R.id.textLeftDown);
-		 * subject.setText(String.valueOf(item.getSubject())); }
-		 */
-
 		return view;
+	}
+	// Design Patter "ViewHolder" para Android
+	class ViewHolder {
+		TextView value_u;
+		TextView value_p;
+		TextView date;
+		TextView subject;
+		TextView text;
 	}
 }

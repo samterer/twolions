@@ -1,9 +1,11 @@
 package br.com.twolions.daoobjects;
 
+import java.io.Serializable;
+
 import android.provider.BaseColumns;
 import br.com.twolions.util.Constants;
 
-public class ItemLog implements BaseColumns {
+public class ItemLog implements BaseColumns, Serializable {
 
 	public static String[] colunas = new String[]{ItemLog._ID, ItemLog.ID_CAR,
 			ItemLog.DATE, ItemLog.TYPE, ItemLog.SUBJECT, ItemLog.VALUE_P,
@@ -29,6 +31,9 @@ public class ItemLog implements BaseColumns {
 	private double value_u;
 	private long odometer;
 	private String text;
+
+	private static final long serialVersionUID = 6601006766832473959L;
+	public static final String KEY = "itemlog";
 
 	public long getId() {
 		return id;

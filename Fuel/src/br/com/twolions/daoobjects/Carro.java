@@ -1,5 +1,7 @@
 package br.com.twolions.daoobjects;
 
+import java.io.Serializable;
+
 import android.provider.BaseColumns;
 import br.com.twolions.util.Constants;
 
@@ -8,7 +10,7 @@ import br.com.twolions.util.Constants;
  * 
  * 
  */
-public class Carro implements BaseColumns {
+public class Carro implements BaseColumns, Serializable {
 
 	public static String[] colunas = new String[]{Carro._ID, Carro.NOME,
 			Carro.PLACA, Carro.TIPO};
@@ -22,6 +24,9 @@ public class Carro implements BaseColumns {
 	private String nome;
 	private String placa;
 	private String tipo;
+
+	private static final long serialVersionUID = 6601006766832473959L;
+	public static final String KEY = "carro";
 
 	public long getId() {
 		return id;
