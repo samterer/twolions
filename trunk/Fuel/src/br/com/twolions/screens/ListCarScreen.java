@@ -51,28 +51,13 @@ public class ListCarScreen extends FuelActivity
 	private static final int DELETE = 1;
 
 	@SuppressWarnings("unchecked")
-	/*
-	 * public void onCreate(final Bundle icicle) { super.onCreate(icicle);
-	 * 
-	 * if (repositorio == null) { repositorio = new SqlScript(this); }
-	 * 
-	 * atualizarLista();
-	 * 
-	 * }
-	 */
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
 		repositorio = new SqlScript(this);
 
 		montaTela(icicle);
-
-		if (carros != null) {
-			// Atualiza o ListView diretamente
-			listview_car.setAdapter(new CarListAdapter(this, carros));
-		} else {
-			startTransaction(this);
-		}
+		organizeBt();
 
 	}
 	@SuppressWarnings("unchecked")
@@ -83,8 +68,14 @@ public class ListCarScreen extends FuelActivity
 		listview_car.setOnItemClickListener(this);
 		carros = (List<Carro>) getLastNonConfigurationInstance();
 
+		carros = (List<Carro>) getLastNonConfigurationInstance();
+
+		LayoutAnimationController controller = AnimationUtils
+				.loadLayoutAnimation(this, R.anim.layout_controller);
+		listview_car.setLayoutAnimation(controller);
+
 		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
-		if (carros == null && icicle != null) {
+		if (icicle != null) {
 			// Recuperamos a lista de carros salva pelo
 			// onSaveInstanceState(bundle)
 			ListCarros lista = (ListCarros) icicle
@@ -93,15 +84,20 @@ public class ListCarScreen extends FuelActivity
 			this.carros = lista.carros;
 		}
 
+		if (carros != null) {
+			// Atualiza o ListView diretamente
+			listview_car.setAdapter(new CarListAdapter(this, carros));
+		} else {
+			startTransaction(this);
+		}
+
 	}
 
-	@Override
 	public Object onRetainNonConfigurationInstance() {
 		Log.i(TAG, "Salvando Estado: onRetainNonConfigurationInstance()");
 		return carros;
 	}
 
-	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		Log.i(TAG, "Salvando Estado: onSaveInstanceState(bundle)");
@@ -110,21 +106,14 @@ public class ListCarScreen extends FuelActivity
 	}
 
 	public void execute() throws Exception {
-		// Busca os carros em uma thread
-		carros = repositorio.listarCarros();
+		this.carros = repositorio.listarCarros();
 	}
 
-	public void atualizarView() {
-		// Atualiza os carros na thread principal
-		if (carros != null) {
-			listview_car.setAdapter(new CarListAdapter(this, carros));
-		}
-	}
-
-	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
+
 		setContentView(R.layout.list_car);
+
 		listview_car = (ListView) findViewById(R.id.listview_car);
 		listview_car.setOnItemClickListener(this);
 		if (carros != null) {
@@ -134,20 +123,20 @@ public class ListCarScreen extends FuelActivity
 
 	public void updateList() {
 		// Pega a lista de carros e exibe na tela
-		carros = repositorio.listarCarros();
+		// carros = repositorio.listarCarros();
+		//
+		// setContentView(R.layout.transaction);
 
-		setContentView(R.layout.transaction);
-
-		listview_car = (ListView) findViewById(R.id.listview_car);
+		// listview_car = (ListView) findViewById(R.id.listview_car);
 		listview_car.setAdapter(new CarListAdapter(this, carros));
-		listview_car.setOnItemClickListener(this);
+		// listview_car.setOnItemClickListener(this);
 
-		LayoutAnimationController controller = AnimationUtils
-				.loadLayoutAnimation(this, R.anim.layout_controller);
-		listview_car.setLayoutAnimation(controller);
+		// LayoutAnimationController controller =
+		// AnimationUtils.loadLayoutAnimation(this, R.anim.layout_controller);
+		// listview_car.setLayoutAnimation(controller);
 
 		// organize bts
-		organizeBt();
+		// organizeBt();
 
 	}
 

@@ -50,7 +50,6 @@ public class ListLogScreen extends FuelActivity
 	private static final int EDITAR = 0;
 	private static final int DELETE = 1;
 
-	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
@@ -62,15 +61,9 @@ public class ListLogScreen extends FuelActivity
 			id_car = extras.getLong(Carro._ID);
 			if (id_car != null) {
 				montaTela(icicle);
+				organizeBt();
 			}
 		}
-
-		/*
-		 * if (itens != null) { // Atualiza o ListView diretamente
-		 * listview_log.setAdapter(new ListItemAdapter(this, itens)); } else {
-		 */
-		// startTransaction(this);
-		// }
 
 	}
 
@@ -105,13 +98,12 @@ public class ListLogScreen extends FuelActivity
 		}
 
 	}
-	@Override
+
 	public Object onRetainNonConfigurationInstance() {
 		Log.i(TAG, "Salvando Estado: onRetainNonConfigurationInstance()");
 		return itens;
 	}
 
-	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		Log.i(TAG, "Salvando Estado: onSaveInstanceState(bundle)");
@@ -120,8 +112,6 @@ public class ListLogScreen extends FuelActivity
 	}
 
 	public void execute() throws Exception {
-		Log.i(TAG, ">> execute()");
-		// Busca os carros em uma thread
 		this.itens = getItens();
 	}
 	/*
@@ -130,7 +120,6 @@ public class ListLogScreen extends FuelActivity
 	 * itens)); } }
 	 */
 
-	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 
@@ -158,7 +147,7 @@ public class ListLogScreen extends FuelActivity
 		// listview_log.setLayoutAnimation(controller);
 
 		// organize bts
-		organizeBt();
+		// organizeBt();
 
 	}
 

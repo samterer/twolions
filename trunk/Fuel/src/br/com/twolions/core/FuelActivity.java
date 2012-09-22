@@ -3,7 +3,6 @@ package br.com.twolions.core;
 import android.os.AsyncTask;
 import br.com.core.ActivityCircle;
 import br.com.twolions.R;
-import br.com.twolions.R.string;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.transaction.TransactionTask;
 import br.com.utils.AndroidUtils;
