@@ -16,15 +16,15 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import br.com.twolions.FuelActivity;
 import br.com.twolions.R;
-import br.com.twolions.Transaction;
+import br.com.twolions.core.FuelActivity;
 import br.com.twolions.dao.ItemLogDAO;
 import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.daoobjects.ListItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.object.ListItemAdapter;
+import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
 public class ListItemLogScreen extends FuelActivity

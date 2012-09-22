@@ -1,4 +1,4 @@
-package br.com.twolions;
+package br.com.twolions.transaction;
 
 public interface Transaction {
 	// Executar a transação em uma thread separada

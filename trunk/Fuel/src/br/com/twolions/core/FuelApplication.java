@@ -1,4 +1,4 @@
-package br.com.twolions;
+package br.com.twolions.core;
 
 import android.app.Application;
 import android.util.Log;
