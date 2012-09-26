@@ -21,12 +21,10 @@ public class DBConnection {
 
 		// Abre o banco de dados já existente
 		try {
-			if (db == null) {
-				Log.i(CATEGORIA, "Abrindo conexão com o db.");
-				db = ctx.openOrCreateDatabase(base_name, Context.MODE_PRIVATE,
-						null);
-				// db = dbHelper.getWritableDatabase();
-			}
+			// if (db == null) {
+			Log.i(CATEGORIA, "Abrindo conexão com o db.");
+			db = ctx.openOrCreateDatabase(base_name, Context.MODE_PRIVATE, null);
+			// }
 		} catch (final SQLException e) {
 
 			Log.i(CATEGORIA, "Utilizando a conexão já aberta.");

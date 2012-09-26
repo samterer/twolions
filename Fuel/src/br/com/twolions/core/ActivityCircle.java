@@ -117,4 +117,5 @@ public class ActivityCircle extends Activity {
 
 	// progress
 	protected static ProgressDialog dialog;
+
 }

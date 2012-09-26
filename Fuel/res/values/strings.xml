@@ -12,6 +12,6 @@
     <string name="tb_carro">Carro</string>
     
     <!-- Error msg user -->
-    <string name="erro_conexao_db_indisponivel">Não há conexão com a base de dados, por favor, tenter abrir novamente.</string>
+    <string name="erro_conexao_db_indisponivel">Bad, bad app! No donut for you. Please, re-start.</string>
     
 </resources>

@@ -2,12 +2,16 @@ package br.com.twolions.core;
 
 import android.os.AsyncTask;
 import br.com.twolions.R;
+import br.com.twolions.sql.SqlScript;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.transaction.TransactionTask;
 import br.com.twolions.util.AndroidUtils;
 
 public class FuelActivity extends ActivityCircle {
+
 	private TransactionTask task;
+
+	public static SqlScript repositorio;
 
 	protected void alert(int menssage) {
 		AndroidUtils.alertDialog(this, menssage);
@@ -17,6 +21,10 @@ public class FuelActivity extends ActivityCircle {
 	public void startTransaction(Transaction transaction) {
 		boolean dbOk = AndroidUtils.isConnectionDB(this);
 		if (dbOk) {
+
+			// abre base
+			repositorio = new SqlScript(this);
+
 			// Inicia a transção
 			task = new TransactionTask(this, transaction, R.string.aguarde);
 			task.execute();
@@ -34,6 +42,7 @@ public class FuelActivity extends ActivityCircle {
 			boolean executando = task.getStatus().equals(
 					AsyncTask.Status.RUNNING);
 			if (executando) {
+				executando = false;
 				task.cancel(true);
 				task.closedProgress();
 			}
