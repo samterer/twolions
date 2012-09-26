@@ -11,13 +11,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import br.com.twolions.R;
+import br.com.twolions.core.ActivityCircle;
 
-public class AndroidUtils {
+public class AndroidUtils extends ActivityCircle {
 	protected static final String TAG = "appLog";
 
 	public static boolean isNetworkAvailable(Context context) {
 		ConnectivityManager connectivity = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
 		if (connectivity == null) {
 			return false;
 		} else {
@@ -49,7 +51,8 @@ public class AndroidUtils {
 			dialog.setIcon(R.drawable.iconerror);
 			dialog.setButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-
+					// dialog.dismiss();
+					// fechar o app
 					return;
 				}
 			});

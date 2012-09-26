@@ -176,17 +176,17 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 
 	// Buscar o carro pelo id
 	protected Carro buscarCarro(final long id) {
-		return ListCarScreen.repositorio.buscarCarro(id);
+		return ListCarScreen.dao.buscarCarro(id);
 	}
 
 	// Salvar o carro
 	protected void salvarCarro(final Carro carro) {
-		ListCarScreen.repositorio.salvar(carro);
+		ListCarScreen.dao.salvar(carro);
 	}
 
 	// Excluir o carro
 	protected void excluirCarro(final long id) {
-		ListCarScreen.repositorio.deletar(id);
+		ListCarScreen.dao.deletar(id);
 	}
 
 	public void organizeBt() {

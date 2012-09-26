@@ -1,16 +1,15 @@
 package br.com.twolions.sql;
 
 import android.content.Context;
-import br.com.twolions.dao.CarroDAO;
 import br.com.twolions.util.Constants;
 
-public class SqlScript extends CarroDAO {
+public class SqlScript extends DBConnection {
 
 	// Nome do banco
 	private static final String BASE_NAME = Constants.DB_NAME;
 
 	// Controle de versão
-	private static final int VERSAO_BANCO = 2;
+	private static final int VERSAO_BANCO = 4;
 
 	// Classe utilitária para abrir, criar, e atualizar o banco de dados
 	// private final SQLiteHelper dbHelper;
@@ -34,7 +33,25 @@ public class SqlScript extends CarroDAO {
 					+ " ( _id integer primary key autoincrement, nome text not null,placa text not null,tipo text not null);",
 
 			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Fiesta','JUH-8266','carro');"};
+					+ "(nome,placa,tipo) values('Fiesta','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Monza','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Eco','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Ferrari','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Hornet','JUH-8266','moto');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Belina','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('RR','JUH-8266','moto');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('YBR','JUH-8266','moto');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Hornet','JUH-8266','moto');"};
 
 	// ///////////////
 	// TABLE ITEM LOG
@@ -142,13 +159,22 @@ public class SqlScript extends CarroDAO {
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(final Context ctx) {
-		super(ctx);
+		super(ctx, BASE_NAME);
 
 		// create
 		final String[] script_tables_create = {
 				// create table car and 1 register
 				SqlScript.SCRIPT_CREATE_TB_CAR[0],
 				SqlScript.SCRIPT_CREATE_TB_CAR[1],
+				SqlScript.SCRIPT_CREATE_TB_CAR[2],
+				SqlScript.SCRIPT_CREATE_TB_CAR[3],
+				SqlScript.SCRIPT_CREATE_TB_CAR[4],
+				SqlScript.SCRIPT_CREATE_TB_CAR[5],
+				SqlScript.SCRIPT_CREATE_TB_CAR[6],
+				SqlScript.SCRIPT_CREATE_TB_CAR[7],
+				SqlScript.SCRIPT_CREATE_TB_CAR[8],
+				SqlScript.SCRIPT_CREATE_TB_CAR[9],
+				SqlScript.SCRIPT_CREATE_TB_CAR[10],
 
 				// create fuel car and 1 register
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[0],
@@ -187,13 +213,15 @@ public class SqlScript extends CarroDAO {
 
 		// abre o banco no modo escrita para poder alterar também
 		db = dbHelper.getWritableDatabase();
+
 	}
 	// Fecha o banco
-	@Override
 	public void fechar() {
-		super.fechar();
+		// super.fechar();
+
 		if (dbHelper != null) {
 			dbHelper.close();
 		}
+
 	}
 }

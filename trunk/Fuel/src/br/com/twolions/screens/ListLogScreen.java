@@ -2,6 +2,8 @@ package br.com.twolions.screens;
 
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -134,34 +136,17 @@ public class ListLogScreen extends FuelActivity
 
 	public void updateList() {
 		// Pega a lista de carros e exibe na tela
-		// itens = getItens();
+		itens = getItens();
 
-		// setContentView(R.layout.transaction);
-
-		// listview_log = (ListView) findViewById(R.id.listview_log);
 		listview_log.setAdapter(new ListItemAdapter(this, itens));
-		// listview_log.setOnItemClickListener(this);
-
-		// LayoutAnimationController controller =
-		// AnimationUtils.loadLayoutAnimation(this, R.anim.layout_controller);
-		// listview_log.setLayoutAnimation(controller);
-
-		// organize bts
-		// organizeBt();
 
 	}
 
 	private List<ItemLog> getItens() {
-		Log.i(TAG, "Atualizando lista de itens...");
-		Log.i(TAG, "getItens() id[" + id_car + "]");
+		// Log.i(TAG, "Atualizando lista de itens...");
+		// Log.i(TAG, "getItens() id[" + id_car + "]");
 
 		List<ItemLog> list = repositorio.listarItemLogs(id_car);
-
-		// for (int i = 0; i < list.size(); i++) {
-		// ItemLog item = list.get(i);
-		// Log.i(TAG, "Item type[" + item.getType() + "]");
-		// Log.i(TAG, "Item id[" + item.getId() + "]");
-		// }
 
 		return list;
 	}
@@ -198,12 +183,34 @@ public class ListLogScreen extends FuelActivity
 				editItem();
 				break;
 			case DELETE :
-				deleteItemLog();
+				// deleteItem();
+				deleteConConfirm();
 				break;
 			default :
 				return false;
 		}
 		return true;
+	}
+
+	public void deleteConConfirm() {
+
+		AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+		alerta.setIcon(R.drawable.iconerror);
+		alerta.setMessage("Are you sure you want to delete this item?");
+		// Método executado se escolher Sim
+		alerta.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				deleteItem();
+			}
+		});
+		// Método executado se escolher Não
+		alerta.setNegativeButton("Not", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				//
+			}
+		});
+		// Exibe o alerta de confirmação
+		alerta.show();
 	}
 
 	// Recupera o id do carro, e abre a tela de edição
@@ -221,17 +228,18 @@ public class ListLogScreen extends FuelActivity
 		startActivityForResult(it, INSERIR_EDITAR);
 	}
 	// delete car
-	public void deleteItemLog() {
+	public void deleteItem() {
 		if (id_item != null) {
 			excluirItem(id_item);
+
+			// OK
+			setResult(RESULT_OK);
+
+			// atualiza a lista na tela
+			// atualizarLista();
+			updateList();
 		}
 
-		// OK
-		setResult(RESULT_OK);
-
-		// atualiza a lista na tela
-		// atualizarLista();
-		updateList();
 	}
 	// Excluir o carro
 	protected void excluirItem(long id) {
