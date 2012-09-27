@@ -3,6 +3,7 @@ package br.com.twolions.screens;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,14 +14,14 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import br.com.twolions.R;
 import br.com.twolions.adapters.CarListAdapter;
-import br.com.twolions.core.FuelActivity;
 import br.com.twolions.dao.CarroDAO;
 import br.com.twolions.dao.ItemLogDAO;
 import br.com.twolions.daoobjects.Carro;
@@ -30,13 +31,15 @@ import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
-public class ListCarScreen extends FuelActivity
+public class ListCar_v2 extends ListActivity
 		implements
 			OnItemClickListener,
 			InterfaceBar,
 			Transaction {
 
 	private final String TAG = Constants.LOG_APP;
+
+	protected static ProgressDialog dialog;
 
 	protected static final int INSERIR_EDITAR = 1;
 
@@ -78,10 +81,10 @@ public class ListCarScreen extends FuelActivity
 
 		carros = (List<Carro>) getLastNonConfigurationInstance();
 
-		// LayoutAnimationController controller =
-		// AnimationUtils.loadLayoutAnimation(this, R.anim.layout_controller);
+		LayoutAnimationController controller = AnimationUtils
+				.loadLayoutAnimation(this, R.anim.layout_controller);
 
-		// listview_car.setLayoutAnimation(controller);
+		listview_car.setLayoutAnimation(controller);
 
 		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
 		if (icicle != null) {
@@ -96,18 +99,24 @@ public class ListCarScreen extends FuelActivity
 		if (carros != null) {
 			// Atualiza o ListView diretamente
 			listview_car.setAdapter(new CarListAdapter(this, carros));
+
+			listview_car.setOnItemClickListener(this);
+
 		} else {
-			startTransaction(this);
+			// FuelActivity fa = new FuelActivity();
+			// fa.startTransaction(this);
+			// startTransaction(this);
+			try {
+				execute();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		// habilita o click nos items da list
 		// onClickInList();
 
-	}
-
-	private void onClickInList() {
-		// habilita o click nos items da list
-		listview_car.setOnItemClickListener(this);
 	}
 
 	public Object onRetainNonConfigurationInstance() {
@@ -145,52 +154,30 @@ public class ListCarScreen extends FuelActivity
 		listview_car.setAdapter(new CarListAdapter(this, carros));
 
 	}
-
 	private List<Carro> getCars() {
 		// Log.i(TAG, "Atualizando lista de itens...");
 		// Log.i(TAG, "getItens() id[" + id_car + "]");
 
 		List<Carro> list = dao.listarCarros();
 
-		onClickInList();
-
 		return list;
 	}
 
-	String getSelectedItemOfList;
-	public void onItemClick(final AdapterView<?> parent, View view,
-			final int pos, final long id) {
+	public void onItemClick(final AdapterView<?> parent, final View view,
+			final int posicao, final long id) {
 
-		getSelectedItemOfList = (parent.getItemAtPosition(pos)).toString();
-
-		Log.i(TAG, "getSelectedItemOfList [" + getSelectedItemOfList + "]");
+		Log.i(TAG, "Click! Click! Click! Click! Click!Click!Click!Click!");
 
 		// get the row the clicked button is in
-		final Carro c = carros.get(pos);
+		final Carro c = carros.get(posicao);
 		name_car = c.getNome();
 		id_car = c.getId();
 
 		// long click
-		// registerForContextMenu(view);
+		registerForContextMenu(view);
+		view.setClickable(false);
 
-		// TextView nome = (TextView) view.findViewById(R.id.nome);
-		// nome.setVisibility(View.INVISIBLE);
-		// TextView placa = (TextView) view.findViewById(R.id.placa);
-		// placa.setVisibility(View.INVISIBLE);
-		// ImageView tipo = (ImageView) view.findViewById(R.id.tipo);
-		// tipo.setVisibility(View.INVISIBLE);
-
-		ImageView seta = (ImageView) view.findViewById(R.id.seta);
-		seta.setVisibility(View.GONE);
-
-		LinearLayout item = (LinearLayout) view.findViewById(R.id.item);
-		item.setVisibility(View.GONE);
-
-		LinearLayout tb_edicao = (LinearLayout) view
-				.findViewById(R.id.tb_edicao);
-		tb_edicao.setVisibility(View.VISIBLE);
-
-		// view.setBackgroundDrawable(getResources().getDrawable(R.drawable.fundo_carro_item_s));
+		Log.i(TAG, "click");
 
 		// open list item log
 		openScreenListItemLog(c);
@@ -201,10 +188,10 @@ public class ListCarScreen extends FuelActivity
 	 */
 	private void openScreenListItemLog(Carro c) {
 
-		dialog = ProgressDialog.show(this, "Pesquisando itens", "Loading...",
-				true);
-
 		if (verificaItensPorCarro()) {
+
+			dialog = ProgressDialog.show(this, "Pesquisando itens",
+					"Loading...", true);
 
 			Log.i(TAG, "OPEN LIST CAR [" + id_car + "]");
 
@@ -216,12 +203,7 @@ public class ListCarScreen extends FuelActivity
 
 			// Abre a tela de edição
 			startActivityForResult(it, INSERIR_EDITAR);
-		} else {
-			dialog.setMessage("Nenhum item encontrado para " + c.getNome());
-			dialog.setIcon(R.drawable.iconerror);
-			dialog.dismiss();
 		}
-
 	}
 
 	/*
@@ -267,7 +249,7 @@ public class ListCarScreen extends FuelActivity
 	}
 
 	// Recupera o id do carro, e abre a tela de edição
-	private void editCar() {
+	protected void editCar() {
 		// Cria a intent para abrir a tela de editar
 		final Intent it = new Intent(this, FormCarScreen.class);
 
@@ -277,11 +259,8 @@ public class ListCarScreen extends FuelActivity
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
 	}
-	public void editCar(View v) {
-		editCar();
-	}
 
-	private void deleteConConfirm() {
+	public void deleteConConfirm() {
 
 		AlertDialog.Builder alerta = new AlertDialog.Builder(this);
 		alerta.setIcon(R.drawable.iconerror);
@@ -301,9 +280,6 @@ public class ListCarScreen extends FuelActivity
 		// Exibe o alerta de confirmação
 		alerta.show();
 	}
-	public void deleteConConfirm(View v) {
-		deleteConConfirm();
-	}
 
 	// delete car
 	public void deleteCar() {
@@ -317,7 +293,6 @@ public class ListCarScreen extends FuelActivity
 			updateList();
 		}
 	}
-
 	// Excluir o carro
 	protected void excluirCarro(final long id) {
 		dao.deletar(id);
@@ -362,6 +337,8 @@ public class ListCarScreen extends FuelActivity
 
 	public void btBarRight(final View v) {
 
+		Log.i(TAG, "FILHO DA PUUUUUUUUUUUUUUUUUUUUUUUTA!");
+
 		startActivityForResult(new Intent(this, FormCarScreen.class),
 				INSERIR_EDITAR);
 
@@ -379,6 +356,12 @@ public class ListCarScreen extends FuelActivity
 		final ImageView title = (ImageView) findViewById(R.id.title);
 		title.setImageResource(R.drawable.t_select_vehicle);
 
+	}
+	public ListView getListview_car() {
+		return listview_car;
+	}
+	public void setListview_car(ListView listview_car) {
+		this.listview_car = listview_car;
 	}
 
 }
