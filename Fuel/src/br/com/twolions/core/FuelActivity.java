@@ -11,7 +11,7 @@ public class FuelActivity extends ActivityCircle {
 
 	private TransactionTask task;
 
-	public static SqlScript repositorio;
+	public static SqlScript sqlScript;
 
 	protected void alert(int menssage) {
 		AndroidUtils.alertDialog(this, menssage);
@@ -23,7 +23,7 @@ public class FuelActivity extends ActivityCircle {
 		if (dbOk) {
 
 			// abre base
-			repositorio = new SqlScript(this);
+			sqlScript = new SqlScript(this);
 
 			// Inicia a transção
 			task = new TransactionTask(this, transaction, R.string.aguarde);
@@ -35,7 +35,6 @@ public class FuelActivity extends ActivityCircle {
 		}
 	}
 
-	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		if (task != null) {
@@ -48,4 +47,5 @@ public class FuelActivity extends ActivityCircle {
 			}
 		}
 	}
+
 }
