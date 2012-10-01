@@ -260,7 +260,10 @@ public class ListLogScreen extends FuelActivity
 	}
 
 	public void btBarLeft(View v) {
-		setResult(RESULT_CANCELED);
+
+		// startActivityForResult(new Intent(this,
+		// FormCarScreen.class),INSERIR_EDITAR);
+
 		// go next screen
 		finish();
 

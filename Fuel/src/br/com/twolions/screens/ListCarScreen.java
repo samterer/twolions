@@ -3,21 +3,19 @@ package br.com.twolions.screens;
 import java.util.List;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.adapters.CarListAdapter;
 import br.com.twolions.core.FuelActivity;
@@ -46,20 +44,19 @@ public class ListCarScreen extends FuelActivity
 
 	ListView listview_car;
 
-	private String name_car;
-	private Long id_car;
+	// private String name_car;
+	// private Long id_car;
 
 	private static final int EDITAR = 0;
 	private static final int DELETE = 1;
 
+	String getSelectedItemOfList;
+
+	Carro carro = null;
+
 	@SuppressWarnings("unchecked")
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-
-		// if (dao == null) {
-		// Log.i(TAG, "dao null, opening");
-		// dao = new SqlScript(this);
-		// }
 
 		dao = new CarroDAO(this);
 
@@ -68,6 +65,11 @@ public class ListCarScreen extends FuelActivity
 		organizeBt();
 
 	}
+
+	/******************************************************************************
+	 * ESTADOS
+	 ******************************************************************************/
+
 	@SuppressWarnings("unchecked")
 	public void montaTela(Bundle icicle) {
 		setContentView(R.layout.list_car);
@@ -77,11 +79,6 @@ public class ListCarScreen extends FuelActivity
 		carros = (List<Carro>) getLastNonConfigurationInstance();
 
 		carros = (List<Carro>) getLastNonConfigurationInstance();
-
-		// LayoutAnimationController controller =
-		// AnimationUtils.loadLayoutAnimation(this, R.anim.layout_controller);
-
-		// listview_car.setLayoutAnimation(controller);
 
 		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
 		if (icicle != null) {
@@ -100,24 +97,20 @@ public class ListCarScreen extends FuelActivity
 			startTransaction(this);
 		}
 
-		// habilita o click nos items da list
-		// onClickInList();
-
-	}
-
-	private void onClickInList() {
-		// habilita o click nos items da list
-		listview_car.setOnItemClickListener(this);
 	}
 
 	public Object onRetainNonConfigurationInstance() {
+
 		Log.i(TAG, "Salvando Estado: onRetainNonConfigurationInstance()");
+
 		return carros;
 	}
 
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+
 		Log.i(TAG, "Salvando Estado: onSaveInstanceState(bundle)");
+
 		// Salvar o estado da tela
 		outState.putSerializable(ListCarros.KEY, new ListCarros(carros));
 	}
@@ -133,6 +126,7 @@ public class ListCarScreen extends FuelActivity
 
 		listview_car = (ListView) findViewById(R.id.listview_car);
 		listview_car.setOnItemClickListener(this);
+
 		if (carros != null) {
 			listview_car.setAdapter(new CarListAdapter(this, carros));
 		}
@@ -143,84 +137,100 @@ public class ListCarScreen extends FuelActivity
 		carros = getCars();
 
 		listview_car.setAdapter(new CarListAdapter(this, carros));
+		listview_car.setOnItemClickListener(this);
 
 	}
 
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+
+		if (dialog != null) {
+			dialog.dismiss();
+		}
+	}
+	protected void onDestroy() {
+		super.onDestroy();
+
+		// Fecha o banco
+		dao.fechar();
+
+		finish();
+	}
+
+	public void organizeBt() {
+		// bt left
+		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
+		bt_left.setImageResource(R.drawable.bt_cancel_long);
+
+		// bt rigt
+		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
+		bt_right.setImageResource(R.drawable.bt_add);
+
+		final ImageView title = (ImageView) findViewById(R.id.title);
+		title.setImageResource(R.drawable.t_select_vehicle);
+
+	}
+
+	/******************************************************************************
+	 * SERVICES
+	 ******************************************************************************/
+
 	private List<Carro> getCars() {
-		// Log.i(TAG, "Atualizando lista de itens...");
-		// Log.i(TAG, "getItens() id[" + id_car + "]");
+		List<Carro> list = null;
 
-		List<Carro> list = dao.listarCarros();
-
-		onClickInList();
+		try {
+			list = dao.listarCarros();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 
 		return list;
 	}
 
-	String getSelectedItemOfList;
-	public void onItemClick(final AdapterView<?> parent, View view,
-			final int pos, final long id) {
+	public void showBtsEditDelete(View view, boolean exibe) {
 
-		getSelectedItemOfList = (parent.getItemAtPosition(pos)).toString();
+		if (exibe) {
+			Toast.makeText(this, "exibindo...", Toast.LENGTH_SHORT).show();
 
-		Log.i(TAG, "getSelectedItemOfList [" + getSelectedItemOfList + "]");
+			ImageView seta = (ImageView) view.findViewById(R.id.seta);
+			seta.setVisibility(View.GONE);
 
-		// get the row the clicked button is in
-		final Carro c = carros.get(pos);
-		name_car = c.getNome();
-		id_car = c.getId();
+			LinearLayout item = (LinearLayout) view.findViewById(R.id.item);
+			item.setVisibility(View.GONE);
 
-		// long click
-		// registerForContextMenu(view);
+			LinearLayout tb_edicao = (LinearLayout) view
+					.findViewById(R.id.tb_edicao);
+			tb_edicao.setVisibility(View.VISIBLE);
+		} else {
+			Toast.makeText(this, "apagando...", Toast.LENGTH_SHORT).show();
 
-		// TextView nome = (TextView) view.findViewById(R.id.nome);
-		// nome.setVisibility(View.INVISIBLE);
-		// TextView placa = (TextView) view.findViewById(R.id.placa);
-		// placa.setVisibility(View.INVISIBLE);
-		// ImageView tipo = (ImageView) view.findViewById(R.id.tipo);
-		// tipo.setVisibility(View.INVISIBLE);
+			ImageView seta = (ImageView) view.findViewById(R.id.seta);
+			seta.setVisibility(View.VISIBLE);
 
-		ImageView seta = (ImageView) view.findViewById(R.id.seta);
-		seta.setVisibility(View.GONE);
+			LinearLayout item = (LinearLayout) view.findViewById(R.id.item);
+			item.setVisibility(View.VISIBLE);
 
-		LinearLayout item = (LinearLayout) view.findViewById(R.id.item);
-		item.setVisibility(View.GONE);
+			LinearLayout tb_edicao = (LinearLayout) view
+					.findViewById(R.id.tb_edicao);
+			tb_edicao.setVisibility(View.GONE);
+		}
 
-		LinearLayout tb_edicao = (LinearLayout) view
-				.findViewById(R.id.tb_edicao);
-		tb_edicao.setVisibility(View.VISIBLE);
-
-		// view.setBackgroundDrawable(getResources().getDrawable(R.drawable.fundo_carro_item_s));
-
-		// open list item log
-		openScreenListItemLog(c);
 	}
 
 	/*
 	 * Abre lista de itens
 	 */
-	private void openScreenListItemLog(Carro c) {
+	private void openScreenListItemLog() {
 
-		dialog = ProgressDialog.show(this, "Pesquisando itens", "Loading...",
-				true);
+		Log.i(TAG, "OPEN LIST CAR [" + carro.getId() + "]");
 
-		if (verificaItensPorCarro()) {
-
-			Log.i(TAG, "OPEN LIST CAR [" + id_car + "]");
-
-			// abre lista de logs do carro
-			final Intent it = new Intent(this, ListLogScreen.class);
-
-			// Passa o id do carro como parâmetro
-			it.putExtra(Carro._ID, id_car);
-
-			// Abre a tela de edição
-			startActivityForResult(it, INSERIR_EDITAR);
-		} else {
-			dialog.setMessage("Nenhum item encontrado para " + c.getNome());
-			dialog.setIcon(R.drawable.iconerror);
-			dialog.dismiss();
-		}
+		// abre lista de logs do carro
+		final Intent it = new Intent(this, ListLogScreen.class);
+		// Passa o id do carro como parâmetro
+		it.putExtra(Carro._ID, carro.getId());
+		// Abre a tela de edição
+		startActivityForResult(it, INSERIR_EDITAR);
 
 	}
 
@@ -231,7 +241,7 @@ public class ListCarScreen extends FuelActivity
 		boolean result = false;
 
 		ItemLogDAO itemDAO = new ItemLogDAO(this);
-		List<ItemLog> list = itemDAO.listarItemLogs(id_car);
+		List<ItemLog> list = itemDAO.listarItemLogs(carro.getId());
 
 		if (list.size() > 0) {
 			result = true;
@@ -240,43 +250,18 @@ public class ListCarScreen extends FuelActivity
 		return result;
 	}
 
-	// sub menu
-	public void onCreateContextMenu(final ContextMenu menu, final View v,
-			final ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		menu.setHeaderTitle(name_car);
-		menu.add(0, EDITAR, 0, "Edit");
-		menu.add(0, DELETE, 0, "Delete");
-		menu.add(0, v.getId(), 0, "Cancel");
-	}
-	// click in item of sub menu
-	@Override
-	public boolean onContextItemSelected(final MenuItem item) {
-		switch (item.getItemId()) {
-			case EDITAR :
-				editCar();
-				break;
-			case DELETE :
-				// deleteCar();
-				deleteConConfirm();
-				break;
-			default :
-				return false;
-		}
-		return true;
-	}
-
 	// Recupera o id do carro, e abre a tela de edição
 	private void editCar() {
 		// Cria a intent para abrir a tela de editar
 		final Intent it = new Intent(this, FormCarScreen.class);
 
 		// Passa o id do carro como parâmetro
-		it.putExtra(Carro._ID, id_car);
+		it.putExtra(Carro._ID, carro.getId());
 
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
 	}
+
 	public void editCar(View v) {
 		editCar();
 	}
@@ -301,14 +286,15 @@ public class ListCarScreen extends FuelActivity
 		// Exibe o alerta de confirmação
 		alerta.show();
 	}
+
 	public void deleteConConfirm(View v) {
 		deleteConConfirm();
 	}
 
 	// delete car
 	public void deleteCar() {
-		if (id_car != null) {
-			excluirCarro(id_car);
+		if (carro != null) {
+			excluirCarro(carro.getId());
 
 			// OK
 			setResult(RESULT_OK);
@@ -323,7 +309,6 @@ public class ListCarScreen extends FuelActivity
 		dao.deletar(id);
 	}
 
-	@Override
 	protected void onActivityResult(final int codigo, final int codigoRetorno,
 			final Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
@@ -336,48 +321,100 @@ public class ListCarScreen extends FuelActivity
 		}
 	}
 
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
+	/******************************************************************************
+	 * CLICK\TOUCH
+	 ******************************************************************************/
+	String oldPosition = null;
+	public void onItemClick(final AdapterView<?> parent, View view,
+			final int pos, final long id) {
 
-		if (dialog != null) {
-			dialog.dismiss();
-		}
+		getSelectedItemOfList = (parent.getItemAtPosition(pos)).toString();
+
+		Log.i(TAG, "getSelectedItemOfList [" + getSelectedItemOfList + "]");
+
+		// get the row the clicked button is in
+		carro = carros.get(pos);
+
+		// long click
+		// registerForContextMenu(view);
+
+		// exibe edit
+		listview_car.setOnItemLongClickListener(new OnItemLongClickListener() {
+			public boolean onItemLongClick(AdapterView<?> parent, View v,
+					int position, long id) {
+
+				boolean exibe = false;
+
+				if (oldPosition != null) {
+					// desaparece com edit
+					v = listview_car.getAdapter()
+							.getView(Integer.valueOf(oldPosition).intValue(),
+									null, null);
+
+					exibe = false;
+					// showBtsEditDelete(v, false);
+
+					oldPosition = null;
+				} else {
+					// exibe edit
+
+					exibe = true;
+					// showBtsEditDelete(v, true);
+
+					oldPosition = "" + pos;
+				}
+
+				showBtsEditDelete(v, exibe);
+
+				return true;
+			}
+
+		});
+
+		// open list item log
+		openScreenListItemLog();
+
+		// view.setOnLongClickListener(new myLongListener());
+
+		// open list item log
+		// openScreenListItemLog(carro);
+		// Toast.makeText(this, "Click!", Toast.LENGTH_SHORT).show();
 	}
-	protected void onDestroy() {
-		super.onDestroy();
 
-		// Fecha o banco
-		dao.fechar();
+	// sub menu
+	// public void onCreateContextMenu(final ContextMenu menu, final View v,
+	// final ContextMenuInfo menuInfo) {
+	// super.onCreateContextMenu(menu, v, menuInfo);
+	// Toast.makeText(this, "looong click!", Toast.LENGTH_SHORT).show();
+	//
+	// showBtsEditDelete(v);
+	// // menu.setHeaderTitle(name_car);
+	// // menu.add(0, EDITAR, 0, "Edit");
+	// // menu.add(0, DELETE, 0, "Delete");
+	// // menu.add(0, v.getId(), 0, "Cancel");
+	// }
 
-		finish();
-	}
+	// click in item of sub menu
+	// public boolean onContextItemSelected(final MenuItem item) {
+	// switch (item.getItemId()) {
+	// case EDITAR :
+	// editCar();
+	// break;
+	// case DELETE : // deleteCar(); deleteConConfirm(); break; default :
+	// return false;
+	// }
+	// return true;
+	// }
 
 	public void btBarLeft(final View v) {
 		// Fecha a tela
 		finish();
 
 	}
-
 	public void btBarRight(final View v) {
 
 		startActivityForResult(new Intent(this, FormCarScreen.class),
 				INSERIR_EDITAR);
-
-	}
-
-	public void organizeBt() {
-		// bt left
-		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		bt_left.setImageResource(R.drawable.bt_cancel_long);
-
-		// bt rigt
-		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
-		bt_right.setImageResource(R.drawable.bt_add);
-
-		final ImageView title = (ImageView) findViewById(R.id.title);
-		title.setImageResource(R.drawable.t_select_vehicle);
 
 	}
 

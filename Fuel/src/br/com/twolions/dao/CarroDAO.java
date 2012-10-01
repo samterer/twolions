@@ -208,9 +208,9 @@ public class CarroDAO extends DBConnection {
 	// public Cursor query(SQLiteQueryBuilder queryBuilder, String[] projection,
 	// String selection, String[] selectionArgs, String groupBy,
 	// String having, String orderBy) {
-	// Cursor c = queryBuilder.query(db, projection, selection, selectionArgs,
+	// Cursor carro = queryBuilder.query(db, projection, selection, selectionArgs,
 	// groupBy, having, orderBy);
-	// return c;
+	// return carro;
 	// }
 
 	// Fecha o banco
