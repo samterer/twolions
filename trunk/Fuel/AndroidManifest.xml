@@ -38,12 +38,6 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
-        <activity
-            android:name=".screens.ListCar_v2"
-            android:label="ListCar_v2"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
-        </activity>
     </application>
 
 </manifest>
