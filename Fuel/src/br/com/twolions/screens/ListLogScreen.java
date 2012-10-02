@@ -8,16 +8,16 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FuelActivity;
 import br.com.twolions.dao.ItemLogDAO;
@@ -42,7 +42,7 @@ public class ListLogScreen extends FuelActivity
 
 	private List<ItemLog> itens;
 
-	ListView listview_log;
+	private ListView listview_log;
 
 	private Long id_item;
 	private Long id_car;
@@ -69,6 +69,9 @@ public class ListLogScreen extends FuelActivity
 
 	}
 
+	/******************************************************************************
+	 * ESTADOS
+	 ******************************************************************************/
 	@SuppressWarnings("unchecked")
 	public void montaTela(Bundle icicle) {
 		setContentView(R.layout.list_log);
@@ -116,11 +119,6 @@ public class ListLogScreen extends FuelActivity
 	public void execute() throws Exception {
 		this.itens = getItens();
 	}
-	/*
-	 * public void atualizarView() { // Atualiza os carros na thread principal
-	 * if (itens != null) { listview_log.setAdapter(new ListItemAdapter(this,
-	 * itens)); } }
-	 */
 
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
@@ -129,71 +127,76 @@ public class ListLogScreen extends FuelActivity
 
 		listview_log = (ListView) findViewById(R.id.listview_log);
 		listview_log.setOnItemClickListener(this);
-		if (itens != null) {
-			listview_log.setAdapter(new ListItemAdapter(this, itens));
-		}
+		listview_log
+				.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+					public boolean onItemLongClick(AdapterView<?> av, View v,
+							int pos, long id) {
+
+						showBtsEditDelete(v, true);
+
+						return true;
+					}
+				});
 	}
+
+	/******************************************************************************
+	 * SERVICES
+	 ******************************************************************************/
 
 	public void updateList() {
 		// Pega a lista de carros e exibe na tela
 		itens = getItens();
 
 		listview_log.setAdapter(new ListItemAdapter(this, itens));
+		listview_log.setOnItemClickListener(this);
+		listview_log
+				.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+					public boolean onItemLongClick(AdapterView<?> av, View v,
+							int pos, long id) {
 
+						showBtsEditDelete(v, true);
+
+						return true;
+					}
+				});
 	}
 
 	private List<ItemLog> getItens() {
-		// Log.i(TAG, "Atualizando lista de itens...");
-		// Log.i(TAG, "getItens() id[" + id_car + "]");
+		List<ItemLog> list = null;
 
-		List<ItemLog> list = repositorio.listarItemLogs(id_car);
+		try {
+			list = repositorio.listarItemLogs(id_car);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 
 		return list;
 	}
 
-	public void onItemClick(AdapterView<?> parent, View view, int posicao,
-			long id) {
-		final ItemLog i = itens.get(posicao);
-		id_item = i.getId();
-		type = i.getType();
+	public void showBtsEditDelete(View view, boolean exibe) {
+		if (exibe) {
+			Toast.makeText(this, "exibindo...", Toast.LENGTH_SHORT).show();
 
-		// Log.i(TAG, "Open edit... id [" + id_item + "]");
-		// Log.i(TAG, i.toString());
+			RelativeLayout item = (RelativeLayout) view
+					.findViewById(R.id.item_log);
+			item.setVisibility(View.GONE);
 
-		registerForContextMenu(view);
-		view.setLongClickable(true); // undo setting of this flag in
-										// registerForContextMenu
-		this.openContextMenu(view);
+			LinearLayout tb_edicao = (LinearLayout) view
+					.findViewById(R.id.tb_edicao);
+			tb_edicao.setVisibility(View.VISIBLE);
+		} else {
+			Toast.makeText(this, "apagando...", Toast.LENGTH_SHORT).show();
 
-	}
-	// sub menu
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		// menu.setHeaderTitle(name_car);
-		menu.add(0, EDITAR, 0, "Edit");
-		menu.add(0, DELETE, 0, "Delete");
-		menu.add(0, v.getId(), 0, "Cancel");
-	}
+			LinearLayout item = (LinearLayout) view.findViewById(R.id.item_log);
+			item.setVisibility(View.VISIBLE);
 
-	// click in item of sub menu
-	public boolean onContextItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case EDITAR :
-				editItem();
-				break;
-			case DELETE :
-				// deleteItem();
-				deleteConConfirm();
-				break;
-			default :
-				return false;
+			LinearLayout tb_edicao = (LinearLayout) view
+					.findViewById(R.id.tb_edicao);
+			tb_edicao.setVisibility(View.GONE);
 		}
-		return true;
 	}
 
 	public void deleteConConfirm() {
-
 		AlertDialog.Builder alerta = new AlertDialog.Builder(this);
 		alerta.setIcon(R.drawable.iconerror);
 		alerta.setMessage("Are you sure you want to delete this item?");
@@ -227,6 +230,7 @@ public class ListLogScreen extends FuelActivity
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
 	}
+
 	// delete car
 	public void deleteItem() {
 		if (id_item != null) {
@@ -236,11 +240,15 @@ public class ListLogScreen extends FuelActivity
 			setResult(RESULT_OK);
 
 			// atualiza a lista na tela
-			// atualizarLista();
 			updateList();
 		}
 
 	}
+
+	public void deleteConConfirm(View v) {
+		deleteConConfirm();
+	}
+
 	// Excluir o carro
 	protected void excluirItem(long id) {
 		repositorio.deletar(id);
@@ -257,6 +265,52 @@ public class ListLogScreen extends FuelActivity
 			// atualizarLista();
 			updateList();
 		}
+	}
+
+	/******************************************************************************
+	 * CLICK\TOUCH
+	 ******************************************************************************/
+	private String oldPosition = null;
+	private String getSelectedItemOfList;
+	public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+
+		getSelectedItemOfList = (parent.getItemAtPosition(pos)).toString();
+
+		Log.i(TAG, "getSelectedItemOfList [" + getSelectedItemOfList + "]");
+
+		// get the row the clicked button is in
+		id_car = itens.get(pos).getId_car();
+		id_item = itens.get(pos).getId();
+
+	}
+
+	public boolean onItemLongClick(AdapterView<?> arg0, View view, int pos,
+			long id) {
+
+		Log.i(TAG, "onItemLongClick...");
+
+		boolean exibe = false;
+
+		if (oldPosition != null) { // desaparece com edit
+
+			view = listview_log.getAdapter().getView(
+					Integer.valueOf(oldPosition).intValue(), null, null);
+
+			exibe = false;
+			// showBtsEditDelete(v, false);
+
+			oldPosition = null;
+		} else { // exibe edit
+
+			exibe = true;
+			// showBtsEditDelete(v, true);
+
+			oldPosition = "" + pos;
+		}
+
+		showBtsEditDelete(view, exibe);
+
+		return false;
 	}
 
 	public void btBarLeft(View v) {
@@ -278,7 +332,7 @@ public class ListLogScreen extends FuelActivity
 	public void organizeBt() {
 		// bt left
 		ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		bt_left.setImageResource(R.drawable.bt_cancel_long);
+		bt_left.setImageResource(R.drawable.bt_cancel);
 
 		// bt rigt
 		ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
@@ -291,7 +345,7 @@ public class ListLogScreen extends FuelActivity
 	public void onBackPressed() { // call my backbutton pressed method when
 									// boolean==true
 
-		Log.i(TAG, "Clicked");
+		Log.i(TAG, "Clicked back");
 
 	}
 

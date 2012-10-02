@@ -192,7 +192,7 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 	public void organizeBt() {
 		// bt left
 		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		bt_left.setImageResource(R.drawable.bt_cancel_long);
+		bt_left.setImageResource(R.drawable.bt_cancel);
 
 		// bt rigt
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
