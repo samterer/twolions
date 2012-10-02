@@ -105,34 +105,4 @@
             android:drawableTop="@drawable/bt_moto" />
     </TableRow>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center" >
-
-        <!--
-             <ImageButton
-            android:id="@+id/btCancelar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/cancelar"
-            android:text="Cancelar" />
-
-        <ImageButton
-            android:id="@+id/btSalvar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/salvar"
-            android:text=" Salvar " />
-        -->
-
-        <ImageView
-            android:id="@+id/btExcluir"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bt_delete"
-            android:visibility="gone" />
-    </LinearLayout>
-
 </TableLayout>
