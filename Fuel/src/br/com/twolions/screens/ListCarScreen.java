@@ -165,6 +165,7 @@ public class ListCarScreen extends FuelActivity
 		carros = getCars();
 
 		listview_car.setAdapter(new CarListAdapter(this, carros));
+
 		listview_car.setOnItemClickListener(this);
 		listview_car
 				.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -199,7 +200,7 @@ public class ListCarScreen extends FuelActivity
 			ImageView seta = (ImageView) view.findViewById(R.id.seta);
 			seta.setVisibility(View.GONE);
 
-			LinearLayout item = (LinearLayout) view.findViewById(R.id.item_log);
+			LinearLayout item = (LinearLayout) view.findViewById(R.id.item_car);
 			item.setVisibility(View.GONE);
 
 			LinearLayout tb_edicao = (LinearLayout) view
@@ -211,7 +212,7 @@ public class ListCarScreen extends FuelActivity
 			ImageView seta = (ImageView) view.findViewById(R.id.seta);
 			seta.setVisibility(View.VISIBLE);
 
-			LinearLayout item = (LinearLayout) view.findViewById(R.id.item_log);
+			LinearLayout item = (LinearLayout) view.findViewById(R.id.item_car);
 			item.setVisibility(View.VISIBLE);
 
 			LinearLayout tb_edicao = (LinearLayout) view
@@ -349,26 +350,24 @@ public class ListCarScreen extends FuelActivity
 
 		Log.i(TAG, "onItemLongClick...");
 
-		boolean exibe = false;
+		/*
+		 * boolean exibe = false;
+		 * 
+		 * if (oldPosition != null) { // desaparece com edit
+		 * 
+		 * View v = listview_car.getAdapter().getView(
+		 * Integer.valueOf(oldPosition).intValue(), null, null);
+		 * 
+		 * exibe = false; // showBtsEditDelete(v, false);
+		 * 
+		 * oldPosition = null; } else { // exibe edit
+		 * 
+		 * exibe = true; // showBtsEditDelete(v, true);
+		 * 
+		 * oldPosition = "" + pos; }
+		 */
 
-		if (oldPosition != null) { // desaparece com edit
-
-			View v = listview_car.getAdapter().getView(
-					Integer.valueOf(oldPosition).intValue(), null, null);
-
-			exibe = false;
-			// showBtsEditDelete(v, false);
-
-			oldPosition = null;
-		} else { // exibe edit
-
-			exibe = true;
-			// showBtsEditDelete(v, true);
-
-			oldPosition = "" + pos;
-		}
-
-		showBtsEditDelete(view, exibe);
+		showBtsEditDelete(view, true);
 
 		return false;
 	}
