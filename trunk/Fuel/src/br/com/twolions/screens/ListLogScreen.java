@@ -122,21 +122,16 @@ public class ListLogScreen extends FuelActivity
 
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
+		Log.i(TAG,
+				"O Estado da Tela foi Mudado: onConfigurationChanged(newConfig)");
 
-		setContentView(R.layout.list_log);
+		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			// abre lista de logs do carro
+			final Intent it = new Intent(this, ViewGraphicScreen.class);
+			// Abre a tela de edição
+			startActivity(it);
+		}
 
-		listview_log = (ListView) findViewById(R.id.listview_log);
-		listview_log.setOnItemClickListener(this);
-		listview_log
-				.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-					public boolean onItemLongClick(AdapterView<?> av, View v,
-							int pos, long id) {
-
-						showBtsEditDelete(v, true);
-
-						return true;
-					}
-				});
 	}
 
 	/******************************************************************************
@@ -281,6 +276,23 @@ public class ListLogScreen extends FuelActivity
 		// get the row the clicked button is in
 		id_car = itens.get(pos).getId_car();
 		id_item = itens.get(pos).getId();
+
+		// open list item log
+		openViewItem();
+
+	}
+
+	/*
+	 * Abre lista de itens
+	 */
+	private void openViewItem() {
+
+		Log.i(TAG, "OPEN LIST CAR [" + id_car + "]");
+
+		// abre lista de logs do carro
+		final Intent it = new Intent(this, ViewItemScreen.class);
+		// Abre a tela de edição
+		startActivity(it);
 
 	}
 
