@@ -9,8 +9,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -82,9 +80,9 @@ public class ListLogScreen extends FuelActivity
 
 		itens = (List<ItemLog>) getLastNonConfigurationInstance();
 
-		LayoutAnimationController controller = AnimationUtils
-				.loadLayoutAnimation(this, R.anim.layout_controller);
-		listview_log.setLayoutAnimation(controller);
+		// LayoutAnimationController controller = AnimationUtils
+		// .loadLayoutAnimation(this, R.anim.layout_controller);
+		// listview_log.setLayoutAnimation(controller);
 
 		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
 		if (icicle != null) {
@@ -344,11 +342,11 @@ public class ListLogScreen extends FuelActivity
 	public void organizeBt() {
 		// bt left
 		ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		bt_left.setImageResource(R.drawable.bt_cancel_new);
+		bt_left.setImageResource(R.drawable.bt_cancel);
 
 		// bt rigt
 		ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
-		bt_right.setImageResource(R.drawable.bt_add_new);
+		bt_right.setImageResource(R.drawable.bt_add);
 
 		// ImageView title = (ImageView) findViewById(R.id.title);
 		// title.setImageResource(R.drawable.t_select_vehicle);
