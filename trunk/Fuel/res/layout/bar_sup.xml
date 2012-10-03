@@ -2,7 +2,7 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="50dp"
-    android:background="@drawable/i_menu_sup"
+    android:background="#3470c4"
     android:orientation="vertical"
     android:shrinkColumns="3" >
 
@@ -20,12 +20,19 @@
 
         <!-- title -->
 
-        <ImageView
-            android:id="@+id/title"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1" />
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/branco"
+                android:textSize="20dp" />
+        </LinearLayout>
 
         <!-- buttons in right -->
 

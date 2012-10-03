@@ -344,11 +344,11 @@ public class ListLogScreen extends FuelActivity
 	public void organizeBt() {
 		// bt left
 		ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		bt_left.setImageResource(R.drawable.bt_cancel);
+		bt_left.setImageResource(R.drawable.bt_cancel_new);
 
 		// bt rigt
 		ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
-		bt_right.setImageResource(R.drawable.bt_add);
+		bt_right.setImageResource(R.drawable.bt_add_new);
 
 		// ImageView title = (ImageView) findViewById(R.id.title);
 		// title.setImageResource(R.drawable.t_select_vehicle);

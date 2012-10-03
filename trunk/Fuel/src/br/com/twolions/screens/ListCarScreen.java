@@ -387,14 +387,14 @@ public class ListCarScreen extends FuelActivity
 	public void organizeBt() {
 		// bt left
 		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		bt_left.setImageResource(R.drawable.bt_cancel);
+		bt_left.setImageResource(R.drawable.bt_menu_new);
 
 		// bt rigt
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
-		bt_right.setImageResource(R.drawable.bt_add);
+		bt_right.setImageResource(R.drawable.bt_add_new);
 
-		final ImageView title = (ImageView) findViewById(R.id.title);
-		title.setImageResource(R.drawable.t_select_vehicle);
+		// final TextView title = (TextView) findViewById(R.id.title);
+		// title.setText("VEHICLE");
 
 	}
 
