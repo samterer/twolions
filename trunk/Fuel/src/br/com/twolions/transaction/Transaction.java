@@ -5,5 +5,5 @@ public interface Transaction {
 	public void execute() throws Exception;
 
 	// Atualizar a view sincronizado com a thread principal
-	public void updateList();
+	public void update();
 }

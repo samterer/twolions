@@ -94,6 +94,7 @@ public class ManagerDAO {
 			if (db != null) {
 				db.close();
 				db = null;
+				getCursor().close();
 			}
 		}
 	}

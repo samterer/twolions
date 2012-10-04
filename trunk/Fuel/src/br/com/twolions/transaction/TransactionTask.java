@@ -59,7 +59,7 @@ public class TransactionTask extends AsyncTask<Void, Void, Boolean> {
 	protected void onPostExecute(Boolean ok) {
 		if (ok) {
 			// Transação executou com sucesso
-			transaction.updateList();
+			transaction.update();
 		} else {
 			// Erro
 			AndroidUtils.alertDialog(context,

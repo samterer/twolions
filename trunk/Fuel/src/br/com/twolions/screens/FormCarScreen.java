@@ -128,15 +128,14 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 
 	}
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-		// Cancela para não ficar nada na tela pendente
-		setResult(RESULT_CANCELED);
-
-		// Fecha a tela
-		finish();
-	}
+	// public void onPause() {
+	// super.onPause();
+	// // Cancela para não ficar nada na tela pendente
+	// // setResult(RESULT_CANCELED);
+	//
+	// // Fecha a tela
+	// finish();
+	// }
 
 	public void salvar() {
 
@@ -199,8 +198,8 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 		bt_right.setImageResource(R.drawable.bt_save);
 
 		// title
-		final ImageView title = (ImageView) findViewById(R.id.title);
-		title.setVisibility(View.INVISIBLE);
+		// final ImageView title = (ImageView) findViewById(R.id.title);
+		// title.setVisibility(View.INVISIBLE);
 	}
 
 	public void btBarLeft(final View v) {

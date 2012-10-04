@@ -84,11 +84,11 @@
         android:visibility="gone" >
 
         <ImageView
-            android:id="@+id/bt_delete"
+            android:id="@+id/bt_edit"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:onClick="editCar"
+            android:onClick="editItem"
             android:src="@drawable/bt_edit" />
 
         <ImageView
