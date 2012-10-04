@@ -5,7 +5,6 @@ import java.util.Calendar;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +15,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import br.com.twolions.R;
-import br.com.twolions.core.ActivityCircle;
+import br.com.twolions.core.FormItemActivity;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.util.Constants;
@@ -27,7 +26,7 @@ import br.com.twolions.util.Constants;
  * @author rlecheta
  * 
  */
-public class FormItemScreen extends ActivityCircle implements InterfaceBar {
+public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	private final String CATEGORIA = Constants.LOG_APP;
 
@@ -39,9 +38,9 @@ public class FormItemScreen extends ActivityCircle implements InterfaceBar {
 	private EditText subject;
 	private EditText text;
 
-	private Long id_item;
-	private Long id_car;
-	private int type;
+	private static Long id_item;
+	private static Long id_car;
+	private static int type;
 	private static final int FUEL = Constants.FUEL;
 	private static final int EXPENSE = Constants.EXPENSE;
 	private static final int NOTE = Constants.NOTE;
@@ -52,7 +51,6 @@ public class FormItemScreen extends ActivityCircle implements InterfaceBar {
 
 		init();
 
-		// organize bt
 		organizeBt();
 
 		actionBt(this);
@@ -60,13 +58,17 @@ public class FormItemScreen extends ActivityCircle implements InterfaceBar {
 		addListenerOnButton();
 	}
 
+	/******************************************************************************
+	 * ESTADOS
+	 ******************************************************************************/
+
 	private void init() {
 
 		final Bundle extras = getIntent().getExtras();
 		// Se for para Editar, recuperar os valores ...
 		if (extras != null) {
 			id_item = extras.getLong(ItemLog._ID);
-			// Log.i(CATEGORIA, "searching item [" + id_item + "]");
+			Log.i(CATEGORIA, "searching item [" + id_item + "]");
 			// id_car = extras.getLong(Carro._ID);
 			type = extras.getInt(ItemLog.TYPE);
 			// Log.i(CATEGORIA, "searching type [" + type + "]");
@@ -148,6 +150,7 @@ public class FormItemScreen extends ActivityCircle implements InterfaceBar {
 		if (i == null) {
 			Toast.makeText(this, "Dados do item não encontrados na base.",
 					Toast.LENGTH_SHORT).show();
+			onPause(); // fecha o form
 			return;
 		} else {
 			// get id car
@@ -194,19 +197,20 @@ public class FormItemScreen extends ActivityCircle implements InterfaceBar {
 		}
 
 	}
-	public void actionBt(final Context context) {
 
-	}
+	/******************************************************************************
+	 * SERVICES
+	 ******************************************************************************/
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-		// Cancela para não ficar nada na tela pendente
-		setResult(RESULT_CANCELED);
-
-		// Fecha a tela
-		finish();
-	}
+	// @Override
+	// protected void onPause() {
+	// super.onPause();
+	// // Cancela para não ficar nada na tela pendente
+	// setResult(RESULT_CANCELED);
+	//
+	// // Fecha a tela
+	// finish();
+	// }
 
 	public void salvar() {
 
@@ -259,37 +263,73 @@ public class FormItemScreen extends ActivityCircle implements InterfaceBar {
 		salvarItemLog(itemLog);
 
 		// OK
-		setResult(RESULT_OK, new Intent());
+		// setResult(RESULT_OK, new Intent());
 
 		// Fecha a tela
 		finish();
 	}
 
-	public void excluir() {
-		if (id_item != null) {
-			excluirItemLog(id_item);
-		}
-
-		// OK
-		setResult(RESULT_OK, new Intent());
-
-		// Fecha a tela
-		finish();
-	}
+	// public void excluir() {
+	// if (id_item != null) {
+	// excluirItemLog(id_item);
+	// }
+	//
+	// // OK
+	// // setResult(RESULT_OK, new Intent());
+	//
+	// // Fecha a tela
+	// finish();
+	// }
 
 	// Buscar o itemLog pelo id_item
 	protected ItemLog buscarItemLog(final long id) {
-		return ListLogScreen.repositorio.buscarItemLog(id);
+		return ListLogScreen.dao.buscarItemLog(id);
 	}
 
 	// Salvar o itemLog
 	protected void salvarItemLog(final ItemLog itemLog) {
-		ListLogScreen.repositorio.salvar(itemLog);
+		ListLogScreen.dao.salvar(itemLog);
 	}
 
 	// Excluir o itemLog
 	protected void excluirItemLog(final long id) {
-		ListLogScreen.repositorio.deletar(id);
+		ListLogScreen.dao.deletar(id);
+	}
+
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+			case TIME_DIALOG_ID :
+				// set time picker as current time
+				return new TimePickerDialog(this, timePickerListener, hour,
+						minute, false);
+		}
+		return null;
+	}
+	private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
+		public void onTimeSet(TimePicker view, int selectedHour,
+				int selectedMinute) {
+			hour = selectedHour;
+			minute = selectedMinute;
+
+			// set current time into textview
+			date.setText(new StringBuilder().append(pad(hour)).append(":")
+					.append(pad(minute)));
+
+		}
+	};
+	private static String pad(int c) {
+		if (c >= 10)
+			return String.valueOf(c);
+		else
+			return "0" + String.valueOf(c);
+	}
+
+	/******************************************************************************
+	 * CLICK\TOUCH
+	 ******************************************************************************/
+
+	public void actionBt(final Context context) {
+
 	}
 
 	public void organizeBt() {
@@ -302,8 +342,8 @@ public class FormItemScreen extends ActivityCircle implements InterfaceBar {
 		bt_right.setImageResource(R.drawable.bt_save);
 
 		// title
-		final ImageView title = (ImageView) findViewById(R.id.title);
-		title.setVisibility(View.INVISIBLE);
+		// final ImageView title = (ImageView) findViewById(R.id.title);
+		// title.setVisibility(View.INVISIBLE);
 	}
 
 	public void btBarLeft(final View v) {
@@ -339,34 +379,6 @@ public class FormItemScreen extends ActivityCircle implements InterfaceBar {
 
 		});
 
-	}
-
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-			case TIME_DIALOG_ID :
-				// set time picker as current time
-				return new TimePickerDialog(this, timePickerListener, hour,
-						minute, false);
-		}
-		return null;
-	}
-	private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
-		public void onTimeSet(TimePicker view, int selectedHour,
-				int selectedMinute) {
-			hour = selectedHour;
-			minute = selectedMinute;
-
-			// set current time into textview
-			date.setText(new StringBuilder().append(pad(hour)).append(":")
-					.append(pad(minute)));
-
-		}
-	};
-	private static String pad(int c) {
-		if (c >= 10)
-			return String.valueOf(c);
-		else
-			return "0" + String.valueOf(c);
 	}
 
 }

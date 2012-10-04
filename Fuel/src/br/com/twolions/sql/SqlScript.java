@@ -217,11 +217,13 @@ public class SqlScript extends DBConnection {
 	}
 	// Fecha o banco
 	public void fechar() {
-		// super.fechar();
+
+		if (db != null) {
+			db.close();
+		}
 
 		if (dbHelper != null) {
 			dbHelper.close();
 		}
-
 	}
 }

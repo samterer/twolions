@@ -9,6 +9,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -36,7 +38,7 @@ public class ListLogScreen extends FuelActivity
 
 	private String TAG = Constants.LOG_APP;
 
-	public static ItemLogDAO repositorio;
+	public static ItemLogDAO dao;
 
 	private List<ItemLog> itens;
 
@@ -53,7 +55,7 @@ public class ListLogScreen extends FuelActivity
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		repositorio = new ItemLogDAO(this);
+		dao = new ItemLogDAO(this);
 
 		// id do carro da vez
 		Bundle extras = getIntent().getExtras();
@@ -80,9 +82,7 @@ public class ListLogScreen extends FuelActivity
 
 		itens = (List<ItemLog>) getLastNonConfigurationInstance();
 
-		// LayoutAnimationController controller = AnimationUtils
-		// .loadLayoutAnimation(this, R.anim.layout_controller);
-		// listview_log.setLayoutAnimation(controller);
+		effectAlpha(); // effect for opening
 
 		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
 		if (icicle != null) {
@@ -136,18 +136,31 @@ public class ListLogScreen extends FuelActivity
 	 * SERVICES
 	 ******************************************************************************/
 
-	public void updateList() {
+	public void effectAlpha() {
+		LayoutAnimationController controller = AnimationUtils
+				.loadLayoutAnimation(this, R.anim.layout_controller);
+		listview_log.setLayoutAnimation(controller);
+	}
+
+	public void update() {
 		// Pega a lista de carros e exibe na tela
 		itens = getItens();
 
 		listview_log.setAdapter(new ListItemAdapter(this, itens));
+
+		effectAlpha(); // efeito alpha
+
+		confListForLongClick();
+	}
+
+	private void confListForLongClick() {
 		listview_log.setOnItemClickListener(this);
 		listview_log
 				.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 					public boolean onItemLongClick(AdapterView<?> av, View v,
 							int pos, long id) {
 
-						showBtsEditDelete(v, true);
+						ListLogScreen.this.onItemLongClick(av, v, pos, id);
 
 						return true;
 					}
@@ -158,7 +171,7 @@ public class ListLogScreen extends FuelActivity
 		List<ItemLog> list = null;
 
 		try {
-			list = repositorio.listarItemLogs(id_car);
+			list = dao.listarItemLogs(id_car);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
@@ -168,7 +181,7 @@ public class ListLogScreen extends FuelActivity
 
 	public void showBtsEditDelete(View view, boolean exibe) {
 		if (exibe) {
-			Toast.makeText(this, "exibindo...", Toast.LENGTH_SHORT).show();
+			// Toast.makeText(this, "exibindo...", Toast.LENGTH_SHORT).show();
 
 			RelativeLayout item = (RelativeLayout) view
 					.findViewById(R.id.item_log);
@@ -209,21 +222,6 @@ public class ListLogScreen extends FuelActivity
 		alerta.show();
 	}
 
-	// Recupera o id do carro, e abre a tela de edição
-	protected void editItem() {
-
-		// Cria a intent para abrir a tela de editar
-		Intent it = new Intent(this, FormItemScreen.class);
-
-		// id do item
-		it.putExtra(ItemLog._ID, id_item);
-		// passa o tipo do item
-		it.putExtra(ItemLog.TYPE, type);
-
-		// Abre a tela de edição
-		startActivityForResult(it, INSERIR_EDITAR);
-	}
-
 	// delete car
 	public void deleteItem() {
 		if (id_item != null) {
@@ -233,21 +231,20 @@ public class ListLogScreen extends FuelActivity
 			setResult(RESULT_OK);
 
 			// atualiza a lista na tela
-			updateList();
+			update();
 		}
 
 	}
 
-	public void deleteConConfirm(View v) {
-		deleteConConfirm();
-	}
-
-	// Excluir o carro
+	/**
+	 * Excluir o carro
+	 * 
+	 * @param id
+	 */
 	protected void excluirItem(long id) {
-		repositorio.deletar(id);
+		dao.deletar(id);
 	}
 
-	@Override
 	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
 
@@ -256,7 +253,7 @@ public class ListLogScreen extends FuelActivity
 		if (codigoRetorno == RESULT_OK) {
 			// atualiza a lista na tela
 			// atualizarLista();
-			updateList();
+			update();
 		}
 	}
 
@@ -280,7 +277,7 @@ public class ListLogScreen extends FuelActivity
 
 	}
 
-	/*
+	/**
 	 * Abre lista de itens
 	 */
 	private void openViewItem() {
@@ -294,39 +291,40 @@ public class ListLogScreen extends FuelActivity
 
 	}
 
-	public boolean onItemLongClick(AdapterView<?> arg0, View view, int pos,
-			long id) {
+	public void onItemLongClick(AdapterView<?> arg0, View view, int pos, long id) {
 
-		Log.i(TAG, "onItemLongClick...");
+		ItemLog item = itens.get(pos);
+		id_item = item.getId();
+		id_car = item.getId_car();
 
-		boolean exibe = false;
+		showBtsEditDelete(view, true);
 
-		if (oldPosition != null) { // desaparece com edit
+	}
 
-			view = listview_log.getAdapter().getView(
-					Integer.valueOf(oldPosition).intValue(), null, null);
+	public void deleteConConfirm(View v) {
+		deleteConConfirm();
+	}
 
-			exibe = false;
-			// showBtsEditDelete(v, false);
+	/**
+	 * Recupera o id do carro, e abre a tela de edição
+	 * 
+	 * @param v
+	 */
+	public void editItem(View v) {
 
-			oldPosition = null;
-		} else { // exibe edit
+		// Cria a intent para abrir a tela de editar
+		Intent it = new Intent(this, FormItemScreen.class);
 
-			exibe = true;
-			// showBtsEditDelete(v, true);
+		// id do item
+		it.putExtra(ItemLog._ID, id_item);
+		// passa o tipo do item
+		it.putExtra(ItemLog.TYPE, type);
 
-			oldPosition = "" + pos;
-		}
-
-		showBtsEditDelete(view, exibe);
-
-		return false;
+		// Abre a tela de edição
+		startActivityForResult(it, INSERIR_EDITAR);
 	}
 
 	public void btBarLeft(View v) {
-
-		// startActivityForResult(new Intent(this,
-		// FormCarScreen.class),INSERIR_EDITAR);
 
 		// go next screen
 		finish();
