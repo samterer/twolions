@@ -1,5 +1,6 @@
 package br.com.twolions.core;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import br.com.twolions.R;
@@ -55,7 +56,9 @@ public class FuelActivity extends ActivityCircle {
 
 		// fecha conexao
 		if (sqlScript != null) {
+			
 			Log.i("base", "fechando conexão com o db...");
+		
 			sqlScript.fechar();
 		}
 	}
@@ -64,12 +67,20 @@ public class FuelActivity extends ActivityCircle {
 	protected void onResume() {
 		super.onResume();
 
-		// if (sqlScript == null) {
 		Log.i("base", "criando nova conexão com o db...");
+		
 		// abre base
 		sqlScript = new SqlScript(this);
-		// }
 
+	}
+	
+	
+	protected void onActivityResult(final int codigo, final int codigoRetorno,
+			final Intent it) {
+		super.onActivityResult(codigo, codigoRetorno, it);
+		
+		sqlScript = new SqlScript(this);
+		
 	}
 
 }

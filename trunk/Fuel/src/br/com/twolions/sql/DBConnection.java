@@ -33,6 +33,8 @@ public class DBConnection {
 					}
 				} else {
 					Log.i(CATEGORIA, "O db esta fechado.");
+					db = ctx.openOrCreateDatabase(base_name, Context.MODE_PRIVATE,null);
+					Log.i(CATEGORIA, "Pronto! Db aberto.");
 				}
 			} else {
 				Log.i(CATEGORIA, "Abrindo conexão com o db.");
