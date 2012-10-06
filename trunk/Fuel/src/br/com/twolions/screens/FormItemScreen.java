@@ -220,6 +220,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			// É uma atualização
 			itemLog.setId(id_item);
 			itemLog.setId_car(id_car);
+			itemLog.setType(type);
 		}
 
 		// date
