@@ -9,7 +9,7 @@ public class SqlScript extends DBConnection {
 	private static final String BASE_NAME = Constants.DB_NAME;
 
 	// Controle de versão
-	private static final int VERSAO_BANCO = 3;
+	private static final int VERSAO_BANCO = 2;
 
 	// Classe utilitária para abrir, criar, e atualizar o banco de dados
 	// private final SQLiteHelper dbHelper;

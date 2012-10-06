@@ -66,7 +66,7 @@ public class ListItemAdapter extends BaseAdapter {
 		}
 		
 		// value p
-		if (item.getType() == Constants.EXPENSE || item.getType()  == Constants.REPAIR || item.getType() == Constants.NOTE || item.getType() == Constants.FUEL) {
+		if (item.getType() == Constants.EXPENSE || item.getType()  == Constants.REPAIR || item.getType() == Constants.FUEL) {
 			holder.value_p.setText(moeda + String.valueOf(item.getValue_p()));
 			holder.value_p.setVisibility(View.VISIBLE);
 		}
