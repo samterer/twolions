@@ -5,12 +5,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
@@ -32,11 +35,8 @@ import br.com.twolions.object.ListItemAdapter;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
-public class ListLogScreen extends FuelActivity
-		implements
-			OnItemClickListener,
-			InterfaceBar,
-			Transaction {
+public class ListLogScreen extends FuelActivity implements OnItemClickListener,
+		InterfaceBar, Transaction {
 	protected static final int INSERIR_EDITAR = 1;
 
 	private String TAG = Constants.LOG_APP;
@@ -125,12 +125,13 @@ public class ListLogScreen extends FuelActivity
 		super.onConfigurationChanged(newConfig);
 		Log.i(TAG,
 				"O Estado da Tela foi Mudado: onConfigurationChanged(newConfig)");
-
-		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			// abre lista de logs do carro
-			final Intent it = new Intent(this, ViewGraphicScreen.class);
-			// Abre a tela de edição
-			startActivity(it);
+		if (!isMenuVisible) {
+			if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+				// abre lista de logs do carro
+				final Intent it = new Intent(this, ViewGraphicScreen.class);
+				// Abre a tela de edição
+				startActivity(it);
+			}
 		}
 
 	}
@@ -145,16 +146,17 @@ public class ListLogScreen extends FuelActivity
 			update();
 		}
 	}
+
 	/******************************************************************************
 	 * SERVICES
 	 ******************************************************************************/
 
 	public void effectAlpha() {
-		
+
 		LayoutAnimationController controller = AnimationUtils
 				.loadLayoutAnimation(this, R.anim.layout_controller);
 		listview_log.setLayoutAnimation(controller);
-	
+
 	}
 
 	public void update() {
@@ -195,28 +197,27 @@ public class ListLogScreen extends FuelActivity
 	}
 
 	public void showBtsEditDelete(final View view, boolean exibe) {
-		
-		
+
 		LayoutAnimationController controller = AnimationUtils
 				.loadLayoutAnimation(this, R.anim.layout_controller);
-		
+
 		if (exibe) {
 			// Toast.makeText(this, "exibindo...", Toast.LENGTH_SHORT).show();
 
 			RelativeLayout item = (RelativeLayout) view
 					.findViewById(R.id.r_item_log);
-			
-		//	item.setLayoutAnimation(controller);
+
+			// item.setLayoutAnimation(controller);
 			item.setVisibility(View.GONE);
 
 			LinearLayout tb_edicao = (LinearLayout) view
 					.findViewById(R.id.tb_edicao);
-			
-		//	tb_edicao.setLayoutAnimation(controller);
+
+			// tb_edicao.setLayoutAnimation(controller);
 			tb_edicao.setVisibility(View.VISIBLE);
 		} else {
 			Toast.makeText(this, "apagando...", Toast.LENGTH_SHORT).show();
-			
+
 			RelativeLayout item = (RelativeLayout) view
 					.findViewById(R.id.r_item_log);
 			item.setVisibility(View.VISIBLE);
@@ -225,24 +226,24 @@ public class ListLogScreen extends FuelActivity
 					.findViewById(R.id.tb_edicao);
 			tb_edicao.setVisibility(View.GONE);
 		}
-		
-		   final Handler handler = new Handler(); 
-	        Timer t = new Timer(); 
-	        t.schedule(new TimerTask() { 
-	                public void run() { 
-	                        handler.post(new Runnable() { 
-	                                public void run() { 
-	                                	RelativeLayout item = (RelativeLayout) view
-	                        					.findViewById(R.id.r_item_log);
-	                        			item.setVisibility(View.VISIBLE);
 
-	                        			LinearLayout tb_edicao = (LinearLayout) view
-	                        					.findViewById(R.id.tb_edicao);
-	                        			tb_edicao.setVisibility(View.GONE);
-	                                } 
-	                        }); 
-	                } 
-	        }, 3000); 
+		final Handler handler = new Handler();
+		Timer t = new Timer();
+		t.schedule(new TimerTask() {
+			public void run() {
+				handler.post(new Runnable() {
+					public void run() {
+						RelativeLayout item = (RelativeLayout) view
+								.findViewById(R.id.r_item_log);
+						item.setVisibility(View.VISIBLE);
+
+						LinearLayout tb_edicao = (LinearLayout) view
+								.findViewById(R.id.tb_edicao);
+						tb_edicao.setVisibility(View.GONE);
+					}
+				});
+			}
+		}, 3000);
 	}
 
 	public void deleteConConfirm() {
@@ -288,12 +289,28 @@ public class ListLogScreen extends FuelActivity
 		dao.deletar(id);
 	}
 
+	private void createItem(int type) {
+		
+
+		// Cria a intent para abrir a tela de editar
+		Intent it = new Intent(this, FormItemScreen.class);
+
+		// Passa o id do carro como parâmetro
+		it.putExtra(ItemLog.TYPE, type);
+
+		// Passa o id do carro como parâmetro
+		it.putExtra(Carro._ID, id_car);
+
+		// Abre a tela de edição
+		startActivityForResult(it, INSERIR_EDITAR);
+	}
 
 	/******************************************************************************
 	 * CLICK\TOUCH
 	 ******************************************************************************/
 	private String oldPosition = null;
 	private String getSelectedItemOfList;
+
 	public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 
 		getSelectedItemOfList = (parent.getItemAtPosition(pos)).toString();
@@ -363,12 +380,6 @@ public class ListLogScreen extends FuelActivity
 		finish();
 
 	}
-	public void btBarRight(View v) {
-
-		startActivityForResult(new Intent(this, FormCarScreen.class),
-				INSERIR_EDITAR);
-
-	}
 
 	public void organizeBt() {
 		// bt left
@@ -381,8 +392,33 @@ public class ListLogScreen extends FuelActivity
 
 		// ImageView title = (ImageView) findViewById(R.id.title);
 		// title.setImageResource(R.drawable.t_select_vehicle);
+		// menu
 
 	}
+//	
+//	public void createFuel(View v) {
+//
+//		createItem(Constants.FUEL);
+//
+//	}
+//
+//	public void createExpense(View v) {
+//
+//		createItem(Constants.EXPENSE);
+//
+//	}
+//
+//	public void createNote(View v) {
+//
+//		createItem(Constants.NOTE);
+//	}
+//
+//	public void createRepair(View v) {
+//
+//		createItem(Constants.REPAIR);
+//
+//	}
+
 	public void onBackPressed() { // call my backbutton pressed method when
 									// boolean==true
 
@@ -390,4 +426,66 @@ public class ListLogScreen extends FuelActivity
 
 	}
 
+	MenuDialog customMenuDialog;
+	boolean isMenuVisible = false;
+
+	public void btBarRight(View v) {
+
+		if (customMenuDialog == null) {
+			customMenuDialog = new MenuDialog(this);
+
+			isMenuVisible = true;
+
+			customMenuDialog.show();
+		} else {
+			customMenuDialog.dismiss();
+
+			isMenuVisible = false;
+		}
+
+	}
+
+	private class MenuDialog extends AlertDialog {
+		public MenuDialog(Context context) {
+			super(context);
+
+			View cus_menu = getLayoutInflater().inflate(R.layout.custom_menu,
+					null);
+			
+			cus_menu.setClickable(true);
+
+			setView(cus_menu);
+			
+
+		}
+
+		public boolean onTouchEvent(MotionEvent event) {
+			// I only care if the event is an UP action
+			if (event.getAction() == MotionEvent.ACTION_UP) {
+				// create a rect for storing the window rect
+				Rect r = new Rect(0, 0, 0, 0);
+				// retrieve the windows rect
+				this.getWindow().getDecorView().getHitRect(r);
+				// check if the event position is inside the window rect
+				boolean intersects = r.contains((int) event.getX(),
+						(int) event.getY());
+				// if the event is not inside then we can close the activity
+				if (!intersects) {
+					// close the activity
+					customMenuDialog.dismiss();
+					// notify that we consumed this event
+					return true;
+				}
+			}
+			// let the system handle the event
+			return super.onTouchEvent(event);
+		}
+		public void onBackPressed() { // call my backbutton pressed method when
+			// boolean==true
+
+			Log.i(TAG, "Clicked back");
+
+		}
+
+	}
 }

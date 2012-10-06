@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import br.com.twolions.R;
-import br.com.twolions.adapters.CarListAdapter;
+import br.com.twolions.adapters.ListCarAdapter;
 import br.com.twolions.core.FuelActivity;
 import br.com.twolions.dao.CarroDAO;
 import br.com.twolions.dao.ItemLogDAO;
@@ -26,7 +26,6 @@ import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.daoobjects.ListCarros;
 import br.com.twolions.interfaces.InterfaceBar;
-import br.com.twolions.sql.SqlScript;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
@@ -91,7 +90,7 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 
 		if (carros != null) {
 			// Atualiza o ListView diretamente
-			listview_car.setAdapter(new CarListAdapter(this, carros));
+			listview_car.setAdapter(new ListCarAdapter(this, carros));
 		} else {
 			startTransaction(this);
 		}
@@ -126,7 +125,7 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 		listview_car = (ListView) findViewById(R.id.listview_car);
 
 		if (carros != null) {
-			listview_car.setAdapter(new CarListAdapter(this, carros));
+			listview_car.setAdapter(new ListCarAdapter(this, carros));
 		}
 
 		confListForLongClick();
@@ -177,7 +176,7 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 		// Pega a lista de carros e exibe na tela
 		carros = getCars();
 
-		listview_car.setAdapter(new CarListAdapter(this, carros));
+		listview_car.setAdapter(new ListCarAdapter(this, carros));
 
 		effect(); // efeito alpha
 

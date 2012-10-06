@@ -7,7 +7,7 @@
     android:background="@drawable/item_log" >
 
     <RelativeLayout
-        android:id="@+id/item_log"
+        android:id="@+id/r_item_log"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
@@ -21,7 +21,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/imgLeftCenter"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
@@ -38,9 +38,9 @@
              android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/imageView1"
+            android:layout_toRightOf="@+id/imgLeftCenter"
             style="@style/texto14cinza"
-            android:text="" />
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/textRightUp"
@@ -51,7 +51,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             style="@style/texto14cinza"
-            android:text="" />
+             android:visibility="invisible" />
 
         <TextView
             android:id="@+id/textRightDown"
@@ -62,7 +62,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginRight="10dp"
             style="@style/texto14cinza"
-            android:text="" />
+             android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/date"
@@ -71,8 +71,7 @@
             android:layout_alignBaseline="@+id/textRightUp"
             android:layout_alignBottom="@+id/textRightUp"
             android:layout_alignLeft="@+id/textLeftDown"
-            style="@style/texto16cinzaDarkNegrito"
-            android:text="" />
+            style="@style/texto16cinzaDarkNegrito" />
     </RelativeLayout>
     
       <LinearLayout
