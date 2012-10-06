@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.twolions.R;
 import br.com.twolions.daoobjects.ItemLog;
@@ -50,6 +51,7 @@ public class ListItemAdapter extends BaseAdapter {
 			holder.date = (TextView) view.findViewById(R.id.date);
 			holder.subject = (TextView) view.findViewById(R.id.textLeftDown);
 			holder.text = (TextView) view.findViewById(R.id.textLeftDown);
+			holder.icone = (ImageView) view.findViewById(R.id.imgLeftCenter);
 		} else {
 			holder = (ViewHolder) view.getTag();
 		}
@@ -88,32 +90,22 @@ public class ListItemAdapter extends BaseAdapter {
 			holder.text.setVisibility(View.VISIBLE);
 		}
 		
-		
+		// icon
+		switch (item.getType()) {
+		case Constants.FUEL:
+			holder.icone.setImageResource(R.drawable.fuel);
+			break;
 
-//		// subject
-//		if (item.getType() == Constants.EXPENSE || item.getType() == Constants.REPAIR  || item.getType() == Constants.NOTE) {
-//			subject = (EditText) findViewById(R.id.subject);
-//		}
-//
-//		// value u
-//		if (item.getType() == Constants.FUEL) {
-//			value_u = (TextView) findViewById(R.id.value_u);
-//		}
-//
-//		// value p
-//		if (item.getType() == Constants.EXPENSE || item.getType()  == Constants.REPAIR || item.getType() == Constants.NOTE || item.getType() == Constants.FUEL) {
-//			value_p = (TextView) findViewById(R.id.value_p);
-//		}
-//
-//		// text
-//		if (item.getType() == Constants.NOTE) {
-//			text = (EditText) findViewById(R.id.text);
-//		}
-//
-//		// odemeter
-//		if (item.getType() == Constants.FUEL) {
-//			odometer = (TextView) findViewById(R.id.odometer);
-//		}	
+		case Constants.EXPENSE:
+			holder.icone.setImageResource(R.drawable.expense);
+			break;
+		case Constants.NOTE:
+			holder.icone.setImageResource(R.drawable.note);
+			break;
+		case Constants.REPAIR:
+			holder.icone.setImageResource(R.drawable.repair);
+			break;
+		}
 
 		return view;
 	}
@@ -124,5 +116,6 @@ public class ListItemAdapter extends BaseAdapter {
 		TextView date;
 		TextView subject;
 		TextView text;
+		ImageView icone;
 	}
 }

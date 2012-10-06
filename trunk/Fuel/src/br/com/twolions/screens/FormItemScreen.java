@@ -17,6 +17,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FormItemActivity;
+import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.util.Constants;
@@ -69,8 +70,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// Se for para Editar, recuperar os valores ...
 		if (extras != null) {
 			id_item = extras.getLong(ItemLog._ID);
-			Log.i(CATEGORIA, "searching item [" + id_item + "]");
-			// id_car = extras.getLong(Carro._ID);
+			//Log.i(CATEGORIA, "searching item [" + id_item + "]");
+			id_car = extras.getLong(Carro._ID);
+			// Log.i(CATEGORIA, "searching type [" + id_car + "]");
 			type = extras.getInt(ItemLog.TYPE);
 			// Log.i(CATEGORIA, "searching type [" + type + "]");
 		}
@@ -136,7 +138,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// edit ?
 		if (id_item != null) {
+			Log.i(CATEGORIA, "Edição de item...");
 			loadingEdit();
+		} else {
+			Log.i(CATEGORIA, "Criação de item...");
 		}
 
 	}

@@ -13,12 +13,12 @@ import android.widget.TextView;
 import br.com.twolions.R;
 import br.com.twolions.daoobjects.Carro;
 
-public class CarListAdapter extends BaseAdapter {
+public class ListCarAdapter extends BaseAdapter {
 	protected static final String TAG = "appLog";
 	private LayoutInflater inflater;
 	private final List<Carro> carros;
 
-	public CarListAdapter(Activity context, List<Carro> carros) {
+	public ListCarAdapter(Activity context, List<Carro> carros) {
 		this.carros = carros;
 		this.inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
