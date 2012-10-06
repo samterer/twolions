@@ -29,11 +29,8 @@ import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
-public class ListCarScreen extends FuelActivity
-		implements
-			OnItemClickListener,
-			InterfaceBar,
-			Transaction {
+public class ListCarScreen extends FuelActivity implements OnItemClickListener,
+		InterfaceBar, Transaction {
 
 	private final String TAG = Constants.LOG_APP;
 
@@ -99,6 +96,7 @@ public class ListCarScreen extends FuelActivity
 		}
 
 	}
+
 	public Object onRetainNonConfigurationInstance() {
 
 		Log.i(TAG, "Salvando Estado: onRetainNonConfigurationInstance()");
@@ -231,6 +229,7 @@ public class ListCarScreen extends FuelActivity
 		}
 
 	}
+
 	/*
 	 * Abre lista de itens
 	 */
@@ -372,6 +371,7 @@ public class ListCarScreen extends FuelActivity
 		finish();
 
 	}
+
 	public void btBarRight(final View v) {
 
 		startActivityForResult(new Intent(this, FormCarScreen.class),
