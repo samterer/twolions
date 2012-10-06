@@ -1,12 +1,15 @@
 package br.com.twolions.screens;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -132,14 +135,26 @@ public class ListLogScreen extends FuelActivity
 
 	}
 
+	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
+		super.onActivityResult(codigo, codigoRetorno, it);
+
+		// Quando a activity EditarCarro retornar, seja se foi para adicionar
+		// vamos atualizar a lista
+		if (codigoRetorno == RESULT_OK) {
+			// atualiza a lista na tela
+			update();
+		}
+	}
 	/******************************************************************************
 	 * SERVICES
 	 ******************************************************************************/
 
 	public void effectAlpha() {
+		
 		LayoutAnimationController controller = AnimationUtils
 				.loadLayoutAnimation(this, R.anim.layout_controller);
 		listview_log.setLayoutAnimation(controller);
+	
 	}
 
 	public void update() {
@@ -179,27 +194,55 @@ public class ListLogScreen extends FuelActivity
 		return list;
 	}
 
-	public void showBtsEditDelete(View view, boolean exibe) {
+	public void showBtsEditDelete(final View view, boolean exibe) {
+		
+		
+		LayoutAnimationController controller = AnimationUtils
+				.loadLayoutAnimation(this, R.anim.layout_controller);
+		
 		if (exibe) {
 			// Toast.makeText(this, "exibindo...", Toast.LENGTH_SHORT).show();
 
 			RelativeLayout item = (RelativeLayout) view
-					.findViewById(R.id.item_log);
+					.findViewById(R.id.r_item_log);
+			
+		//	item.setLayoutAnimation(controller);
 			item.setVisibility(View.GONE);
 
 			LinearLayout tb_edicao = (LinearLayout) view
 					.findViewById(R.id.tb_edicao);
+			
+		//	tb_edicao.setLayoutAnimation(controller);
 			tb_edicao.setVisibility(View.VISIBLE);
 		} else {
 			Toast.makeText(this, "apagando...", Toast.LENGTH_SHORT).show();
-
-			LinearLayout item = (LinearLayout) view.findViewById(R.id.item_log);
+			
+			RelativeLayout item = (RelativeLayout) view
+					.findViewById(R.id.r_item_log);
 			item.setVisibility(View.VISIBLE);
 
 			LinearLayout tb_edicao = (LinearLayout) view
 					.findViewById(R.id.tb_edicao);
 			tb_edicao.setVisibility(View.GONE);
 		}
+		
+		   final Handler handler = new Handler(); 
+	        Timer t = new Timer(); 
+	        t.schedule(new TimerTask() { 
+	                public void run() { 
+	                        handler.post(new Runnable() { 
+	                                public void run() { 
+	                                	RelativeLayout item = (RelativeLayout) view
+	                        					.findViewById(R.id.r_item_log);
+	                        			item.setVisibility(View.VISIBLE);
+
+	                        			LinearLayout tb_edicao = (LinearLayout) view
+	                        					.findViewById(R.id.tb_edicao);
+	                        			tb_edicao.setVisibility(View.GONE);
+	                                } 
+	                        }); 
+	                } 
+	        }, 3000); 
 	}
 
 	public void deleteConConfirm() {
@@ -245,17 +288,6 @@ public class ListLogScreen extends FuelActivity
 		dao.deletar(id);
 	}
 
-	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
-		super.onActivityResult(codigo, codigoRetorno, it);
-
-		// Quando a activity EditarCarro retornar, seja se foi para adicionar
-		// vamos atualizar a lista
-		if (codigoRetorno == RESULT_OK) {
-			// atualiza a lista na tela
-			// atualizarLista();
-			update();
-		}
-	}
 
 	/******************************************************************************
 	 * CLICK\TOUCH
@@ -296,6 +328,7 @@ public class ListLogScreen extends FuelActivity
 		ItemLog item = itens.get(pos);
 		id_item = item.getId();
 		id_car = item.getId_car();
+		type = item.getType();
 
 		showBtsEditDelete(view, true);
 

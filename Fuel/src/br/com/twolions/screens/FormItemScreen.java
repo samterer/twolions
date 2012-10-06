@@ -5,6 +5,7 @@ import java.util.Calendar;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -214,7 +215,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	public void salvar() {
 
-		final ItemLog itemLog = new ItemLog();
+		ItemLog itemLog = new ItemLog();
 		if (id_item != null) {
 			// É uma atualização
 			itemLog.setId(id_item);
@@ -227,59 +228,37 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// subject
 		if (type == EXPENSE || type == REPAIR || type == NOTE) {
 			itemLog.setSubject(subject.getText().toString());
-		} else {
-			itemLog.setSubject("");
 		}
 
 		// value u
 		if (type == FUEL) {
 			itemLog.setValue_u(Double.valueOf(value_u.getText().toString()));
-		} else {
-			itemLog.setValue_u(0.0);
 		}
 
 		// value p
 		if (type == EXPENSE || type == REPAIR || type == FUEL) {
 			itemLog.setValue_p(Double.valueOf(value_p.getText().toString()));
-		} else {
-			itemLog.setValue_p(0.0);
 		}
-
+		
 		// text
 		if (type == NOTE) {
 			itemLog.setText(text.getText().toString());
-		} else {
-			itemLog.setText("");
 		}
 
 		// odemeter
 		if (type == FUEL) {
 			itemLog.setOdometer(Long.valueOf(odometer.getText().toString()));
-		} else {
-			itemLog.setOdometer(0L);
 		}
 
 		// Salvar
 		salvarItemLog(itemLog);
 
 		// OK
-		// setResult(RESULT_OK, new Intent());
+		setResult(RESULT_OK, new Intent());
 
 		// Fecha a tela
 		finish();
 	}
-
-	// public void excluir() {
-	// if (id_item != null) {
-	// excluirItemLog(id_item);
-	// }
-	//
-	// // OK
-	// // setResult(RESULT_OK, new Intent());
-	//
-	// // Fecha a tela
-	// finish();
-	// }
 
 	// Buscar o itemLog pelo id_item
 	protected ItemLog buscarItemLog(final long id) {

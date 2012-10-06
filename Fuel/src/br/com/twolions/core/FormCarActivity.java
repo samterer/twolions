@@ -1,5 +1,6 @@
 package br.com.twolions.core;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import br.com.twolions.sql.SqlScript;
@@ -31,12 +32,10 @@ public class FormCarActivity extends ActivityCircle {
 	protected void onResume() {
 		super.onResume();
 
-		if (sqlScript == null) {
 			Log.i("base", "criando nova conexão com o db...");
 			// abre base
 			sqlScript = new SqlScript(this);
-		}
-
 	}
+
 
 }

@@ -58,19 +58,26 @@ public class ListItemAdapter extends BaseAdapter {
 		// TODO
 		String moeda = "$";
 		String medida = "/L";
+		
 		// value u
-		if (item.getValue_u() > 0) {
+		if (item.getType() == Constants.FUEL) {
 			holder.value_u.setText(moeda + String.valueOf(item.getValue_u()));
+			holder.value_u.setVisibility(View.VISIBLE);
 		}
+		
 		// value p
-		if (item.getValue_p() > 0) {
+		if (item.getType() == Constants.EXPENSE || item.getType()  == Constants.REPAIR || item.getType() == Constants.NOTE || item.getType() == Constants.FUEL) {
 			holder.value_p.setText(moeda + String.valueOf(item.getValue_p()));
+			holder.value_p.setVisibility(View.VISIBLE);
 		}
+		
 		// date
 		holder.date.setText(String.valueOf(item.getDate()));
+		
 		// subject
-		if (item.getSubject() != "") {
+		if (item.getType() == Constants.EXPENSE || item.getType() == Constants.REPAIR  || item.getType() == Constants.NOTE) {
 			holder.subject.setText(String.valueOf(item.getSubject()));
+			holder.subject.setVisibility(View.VISIBLE);
 		}
 
 		// stocked
@@ -78,7 +85,35 @@ public class ListItemAdapter extends BaseAdapter {
 			// calcula qtd de litro abastecido
 			Double total = Math.floor(item.getValue_p() / item.getValue_u());
 			holder.text.setText(String.valueOf(total.intValue()) + medida);
+			holder.text.setVisibility(View.VISIBLE);
 		}
+		
+		
+
+//		// subject
+//		if (item.getType() == Constants.EXPENSE || item.getType() == Constants.REPAIR  || item.getType() == Constants.NOTE) {
+//			subject = (EditText) findViewById(R.id.subject);
+//		}
+//
+//		// value u
+//		if (item.getType() == Constants.FUEL) {
+//			value_u = (TextView) findViewById(R.id.value_u);
+//		}
+//
+//		// value p
+//		if (item.getType() == Constants.EXPENSE || item.getType()  == Constants.REPAIR || item.getType() == Constants.NOTE || item.getType() == Constants.FUEL) {
+//			value_p = (TextView) findViewById(R.id.value_p);
+//		}
+//
+//		// text
+//		if (item.getType() == Constants.NOTE) {
+//			text = (EditText) findViewById(R.id.text);
+//		}
+//
+//		// odemeter
+//		if (item.getType() == Constants.FUEL) {
+//			odometer = (TextView) findViewById(R.id.odometer);
+//		}	
 
 		return view;
 	}

@@ -53,6 +53,8 @@ public class ItemLogDAO extends DBConnection {
 		values.put(ItemLog.VALUE_U, itemLog.getValue_u());
 		values.put(ItemLog.ODOMETER, itemLog.getOdometer());
 		values.put(ItemLog.TEXT, itemLog.getText());
+		
+		Log.i(CATEGORIA, "Inserindo o itemLog: " + buscarItemLog(itemLog.getId()).toString());
 
 		final long id = inserir(values, table_name);
 		return id;
@@ -69,8 +71,10 @@ public class ItemLogDAO extends DBConnection {
 		values.put(ItemLog.ODOMETER, itemLog.getOdometer());
 		values.put(ItemLog.TEXT, itemLog.getText());
 
-		final String _id = String.valueOf(itemLog.getId_car());
+		final String _id = String.valueOf(itemLog.getId());
 
+		Log.i(CATEGORIA, "Atualizando o itemLog: " + buscarItemLog(itemLog.getId()).toString());
+		
 		final String where = ItemLog._ID + "=?";
 		final String[] whereArgs = new String[]{_id};
 
@@ -84,6 +88,8 @@ public class ItemLogDAO extends DBConnection {
 
 		final String _id = String.valueOf(id);
 		final String[] whereArgs = new String[]{_id};
+		
+		Log.i(CATEGORIA, "Deletando o itemLog: " + buscarItemLog(id).toString());
 
 		final int count = deletar(where, whereArgs, table_name);
 

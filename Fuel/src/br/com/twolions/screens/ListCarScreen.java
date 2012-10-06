@@ -26,6 +26,7 @@ import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.daoobjects.ListCarros;
 import br.com.twolions.interfaces.InterfaceBar;
+import br.com.twolions.sql.SqlScript;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
@@ -148,6 +149,19 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 	//
 	// finish();
 	// }
+	
+
+	protected void onActivityResult(final int codigo, final int codigoRetorno,
+			final Intent it) {
+		super.onActivityResult(codigo, codigoRetorno, it);
+
+		// Quando a activity EditarCarro retornar, seja se foi para adicionar
+		// vamos atualizar a lista
+		if (codigoRetorno == RESULT_OK) {
+			// atualiza a lista na tela
+			update();
+		}
+	}
 
 	/******************************************************************************
 	 * SERVICES
@@ -323,17 +337,6 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 		dao.deletar(id);
 	}
 
-	protected void onActivityResult(final int codigo, final int codigoRetorno,
-			final Intent it) {
-		super.onActivityResult(codigo, codigoRetorno, it);
-
-		// Quando a activity EditarCarro retornar, seja se foi para adicionar
-		// vamos atualizar a lista
-		if (codigoRetorno == RESULT_OK) {
-			// atualiza a lista na tela
-			update();
-		}
-	}
 
 	/******************************************************************************
 	 * CLICK\TOUCH
