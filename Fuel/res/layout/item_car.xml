@@ -9,7 +9,7 @@
     <!-- Layout com Imagem do Carro, Nome e Descrição -->
 
     <LinearLayout
-        android:id="@+id/item_car"
+        android:id="@+id/l_item_car"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -66,20 +66,20 @@
     <!-- Seta na Direita -->
 
     <LinearLayout
+        android:id="@+id/seta"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical"
         android:gravity="right|center_vertical" >
 
         <ImageView
-            android:id="@+id/seta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:layout_marginRight="10dp"
             android:gravity="right|center_vertical"
             android:src="@drawable/seta_direita"
-            android:visibility="gone" />
+            android:visibility="visible" />
     </LinearLayout>
 
     <LinearLayout
