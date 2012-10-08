@@ -81,4 +81,12 @@ public class SplashScreen extends ActivityCircle {
 		startActivity(tInicial);
 	}
 
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+
+		handler.removeMessages(0);
+	}
+
 }
