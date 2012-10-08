@@ -1,12 +1,15 @@
 package br.com.twolions.screens;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -16,7 +19,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.adapters.ListCarAdapter;
 import br.com.twolions.core.FuelActivity;
@@ -148,7 +150,6 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 	//
 	// finish();
 	// }
-	
 
 	protected void onActivityResult(final int codigo, final int codigoRetorno,
 			final Intent it) {
@@ -210,36 +211,69 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 		return list;
 	}
 
-	public void showBtsEditDelete(View view, boolean exibe) {
+	View view_itens;
+
+	public void showBtsEditDelete(final View view, boolean exibe) {
+
+		view_itens = view;
 
 		if (exibe) {
-			Toast.makeText(this, "exibindo...[" + id_car + "]",
-					Toast.LENGTH_SHORT).show();
+			// Toast.makeText(this, "exibindo...[" + id_car + "]",
+			// Toast.LENGTH_SHORT).show();
 
-			ImageView seta = (ImageView) view.findViewById(R.id.seta);
+			LinearLayout seta = (LinearLayout) view.findViewById(R.id.seta);
 			seta.setVisibility(View.GONE);
 
-			LinearLayout item = (LinearLayout) view.findViewById(R.id.item_car);
+			LinearLayout item = (LinearLayout) view
+					.findViewById(R.id.l_item_car);
 			item.setVisibility(View.GONE);
 
 			LinearLayout tb_edicao = (LinearLayout) view
 					.findViewById(R.id.tb_edicao);
+
+			LayoutAnimationController controller = AnimationUtils
+					.loadLayoutAnimation(this, R.anim.layout_controller);
+			tb_edicao.setLayoutAnimation(controller);
+
 			tb_edicao.setVisibility(View.VISIBLE);
 
 		} else {
-			Toast.makeText(this, "apagando...[" + id_car + "]",
-					Toast.LENGTH_SHORT).show();
+			// Toast.makeText(this, "apagando...[" + id_car +
+			// "]",Toast.LENGTH_SHORT).show();
 
 			ImageView seta = (ImageView) view.findViewById(R.id.seta);
 			seta.setVisibility(View.VISIBLE);
 
-			LinearLayout item = (LinearLayout) view.findViewById(R.id.item_car);
+			LinearLayout item = (LinearLayout) view
+					.findViewById(R.id.l_item_car);
 			item.setVisibility(View.VISIBLE);
 
 			LinearLayout tb_edicao = (LinearLayout) view
 					.findViewById(R.id.tb_edicao);
 			tb_edicao.setVisibility(View.GONE);
 		}
+
+		final Handler handler = new Handler();
+		Timer t = new Timer();
+		t.schedule(new TimerTask() {
+			public void run() {
+				handler.post(new Runnable() {
+					public void run() {
+						LinearLayout seta = (LinearLayout) view
+								.findViewById(R.id.seta);
+						seta.setVisibility(View.VISIBLE);
+
+						LinearLayout item = (LinearLayout) view
+								.findViewById(R.id.l_item_car);
+						item.setVisibility(View.VISIBLE);
+
+						LinearLayout tb_edicao = (LinearLayout) view
+								.findViewById(R.id.tb_edicao);
+						tb_edicao.setVisibility(View.GONE);
+					}
+				});
+			}
+		}, 3000);
 
 	}
 
@@ -335,7 +369,6 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 	protected void excluirCarro(final long id) {
 		dao.deletar(id);
 	}
-
 
 	/******************************************************************************
 	 * CLICK\TOUCH

@@ -23,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FuelActivity;
 import br.com.twolions.dao.ItemLogDAO;
@@ -213,10 +212,10 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 			LinearLayout tb_edicao = (LinearLayout) view
 					.findViewById(R.id.tb_edicao);
 
-			// tb_edicao.setLayoutAnimation(controller);
+			tb_edicao.setLayoutAnimation(controller);
 			tb_edicao.setVisibility(View.VISIBLE);
 		} else {
-			Toast.makeText(this, "apagando...", Toast.LENGTH_SHORT).show();
+			// Toast.makeText(this, "apagando...", Toast.LENGTH_SHORT).show();
 
 			RelativeLayout item = (RelativeLayout) view
 					.findViewById(R.id.r_item_log);
@@ -290,7 +289,6 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 	}
 
 	private void createItem(int type) {
-		
 
 		// Cria a intent para abrir a tela de editar
 		Intent it = new Intent(this, FormItemScreen.class);
@@ -395,29 +393,30 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 		// menu
 
 	}
-//	
-//	public void createFuel(View v) {
-//
-//		createItem(Constants.FUEL);
-//
-//	}
-//
-//	public void createExpense(View v) {
-//
-//		createItem(Constants.EXPENSE);
-//
-//	}
-//
-//	public void createNote(View v) {
-//
-//		createItem(Constants.NOTE);
-//	}
-//
-//	public void createRepair(View v) {
-//
-//		createItem(Constants.REPAIR);
-//
-//	}
+
+	//
+	// public void createFuel(View v) {
+	//
+	// createItem(Constants.FUEL);
+	//
+	// }
+	//
+	// public void createExpense(View v) {
+	//
+	// createItem(Constants.EXPENSE);
+	//
+	// }
+	//
+	// public void createNote(View v) {
+	//
+	// createItem(Constants.NOTE);
+	// }
+	//
+	// public void createRepair(View v) {
+	//
+	// createItem(Constants.REPAIR);
+	//
+	// }
 
 	public void onBackPressed() { // call my backbutton pressed method when
 									// boolean==true
@@ -451,11 +450,10 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 
 			View cus_menu = getLayoutInflater().inflate(R.layout.custom_menu,
 					null);
-			
+
 			cus_menu.setClickable(true);
 
 			setView(cus_menu);
-			
 
 		}
 
@@ -480,6 +478,7 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 			// let the system handle the event
 			return super.onTouchEvent(event);
 		}
+
 		public void onBackPressed() { // call my backbutton pressed method when
 			// boolean==true
 
