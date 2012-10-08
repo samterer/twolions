@@ -11,7 +11,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name=".screens.ListCarScreen"
+            android:name=".screens.SplashScreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
@@ -20,6 +20,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".screens.ListCarScreen"
+            android:label="ListCarScreen"
+             android:configChanges="orientation"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
             android:name=".screens.FormCarScreen"
