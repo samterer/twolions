@@ -289,16 +289,12 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 	}
 
 	private void createItem(int type) {
-
 		// Cria a intent para abrir a tela de editar
 		Intent it = new Intent(this, FormItemScreen.class);
-
 		// Passa o id do carro como parâmetro
 		it.putExtra(ItemLog.TYPE, type);
-
 		// Passa o id do carro como parâmetro
 		it.putExtra(Carro._ID, id_car);
-
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
 	}
@@ -451,9 +447,56 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 			View cus_menu = getLayoutInflater().inflate(R.layout.custom_menu,
 					null);
 
-			cus_menu.setClickable(true);
-
 			setView(cus_menu);
+
+		}
+
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+
+			ImageView btFuel = (ImageView) findViewById(R.id.btFuel);
+			btFuel.setOnClickListener(new View.OnClickListener() {
+
+				public void onClick(View v) {
+
+					createItem(Constants.FUEL);
+
+				}
+
+			});
+
+			ImageView btExpense = (ImageView) findViewById(R.id.btExpense);
+			btExpense.setOnClickListener(new View.OnClickListener() {
+
+				public void onClick(View v) {
+
+					createItem(Constants.EXPENSE);
+
+				}
+
+			});
+
+			ImageView btNote = (ImageView) findViewById(R.id.btNote);
+			btNote.setOnClickListener(new View.OnClickListener() {
+
+				public void onClick(View v) {
+
+					createItem(Constants.NOTE);
+
+				}
+
+			});
+
+			ImageView btRepair = (ImageView) findViewById(R.id.btRepair);
+			btRepair.setOnClickListener(new View.OnClickListener() {
+
+				public void onClick(View v) {
+
+					createItem(Constants.REPAIR);
+
+				}
+
+			});
 
 		}
 
