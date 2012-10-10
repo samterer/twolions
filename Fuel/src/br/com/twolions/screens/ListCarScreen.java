@@ -73,7 +73,6 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 		setContentView(R.layout.list_car);
 
 		listview_car = (ListView) findViewById(R.id.listview_car);
-		// listview_car.setSelector(R.drawable.bt_item_car);
 
 		carros = (List<Carro>) getLastNonConfigurationInstance();
 
@@ -375,9 +374,10 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 	/******************************************************************************
 	 * CLICK\TOUCH
 	 ******************************************************************************/
-	// String oldPosition = null;
 	public void onItemClick(final AdapterView<?> parent, View view,
 			final int pos, final long id) {
+
+		view.setTag(pos);
 
 		// getSelectedItemOfList = (parent.getItemAtPosition(pos)).toString();
 		// Log.i(TAG, "getSelectedItemOfList [" + getSelectedItemOfList + "]");
