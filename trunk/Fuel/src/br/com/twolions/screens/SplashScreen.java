@@ -17,6 +17,8 @@ public class SplashScreen extends ActivityCircle {
 
 	boolean isFinishSplash = false;
 
+	CountDownTimer timer;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -28,8 +30,8 @@ public class SplashScreen extends ActivityCircle {
 
 		setContentView(R.layout.splashscreen);
 
-		CountDownTimer timer = new CountDownTimer(10000, 1000) // 10seceonds
-																// Timer
+		timer = new CountDownTimer(10000, 1000) // 10seceonds
+												// Timer
 		{
 			@Override
 			public void onTick(long millisUntilFinished) {
@@ -66,6 +68,8 @@ public class SplashScreen extends ActivityCircle {
 
 			// handler.removeMessages(what);
 			isFinishSplash = true;
+
+			timer = null;
 
 			startMaboo();
 
