@@ -169,7 +169,8 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 
 	public void effect() {
 		LayoutAnimationController controller = AnimationUtils
-				.loadLayoutAnimation(this, R.anim.layout_controller);
+				.loadLayoutAnimation(this, R.anim.anime_slide_to_right);
+
 		listview_car.setLayoutAnimation(controller);
 	}
 
@@ -211,15 +212,13 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 		return list;
 	}
 
-	View view_itens;
-
 	public void showBtsEditDelete(final View view, boolean exibe) {
 
-		view_itens = view;
+		// prepara animação (left to right)
+		LayoutAnimationController controller = AnimationUtils
+				.loadLayoutAnimation(this, R.anim.anime_slide_to_right);
 
 		if (exibe) {
-			// Toast.makeText(this, "exibindo...[" + id_car + "]",
-			// Toast.LENGTH_SHORT).show();
 
 			LinearLayout seta = (LinearLayout) view.findViewById(R.id.seta);
 			seta.setVisibility(View.GONE);
@@ -230,16 +229,16 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 
 			LinearLayout tb_edicao = (LinearLayout) view
 					.findViewById(R.id.tb_edicao);
-
-			LayoutAnimationController controller = AnimationUtils
-					.loadLayoutAnimation(this, R.anim.layout_controller);
 			tb_edicao.setLayoutAnimation(controller);
-
 			tb_edicao.setVisibility(View.VISIBLE);
 
+			// prepara animação (right to left)
+			controller = AnimationUtils.loadLayoutAnimation(this,
+					R.anim.anime_slide_to_left);
+
+			item.setLayoutAnimation(controller);
+
 		} else {
-			// Toast.makeText(this, "apagando...[" + id_car +
-			// "]",Toast.LENGTH_SHORT).show();
 
 			ImageView seta = (ImageView) view.findViewById(R.id.seta);
 			seta.setVisibility(View.VISIBLE);
@@ -269,6 +268,7 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 
 						LinearLayout tb_edicao = (LinearLayout) view
 								.findViewById(R.id.tb_edicao);
+
 						tb_edicao.setVisibility(View.GONE);
 					}
 				});
@@ -286,8 +286,10 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 
 		// abre lista de logs do carro
 		final Intent it = new Intent(this, ListLogScreen.class);
+
 		// Passa o id do carro como parâmetro
 		it.putExtra(Carro._ID, id_car);
+
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
 
@@ -378,7 +380,6 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 			final int pos, final long id) {
 
 		// getSelectedItemOfList = (parent.getItemAtPosition(pos)).toString();
-
 		// Log.i(TAG, "getSelectedItemOfList [" + getSelectedItemOfList + "]");
 
 		// get the row the clicked button is in
@@ -402,6 +403,7 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 	}
 
 	public void btBarLeft(final View v) {
+
 		// Fecha a tela
 		finish();
 
@@ -422,9 +424,6 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 		// bt rigt
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
 		bt_right.setImageResource(R.drawable.bt_add);
-
-		// final TextView title = (TextView) findViewById(R.id.title);
-		// title.setText("VEHICLE");
 
 	}
 

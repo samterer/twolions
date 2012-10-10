@@ -84,7 +84,7 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 
 		itens = (List<ItemLog>) getLastNonConfigurationInstance();
 
-		effectAlpha(); // effect for opening
+		effect(); // effect for opening
 
 		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
 		if (icicle != null) {
@@ -150,10 +150,10 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 	 * SERVICES
 	 ******************************************************************************/
 
-	public void effectAlpha() {
+	public void effect() {
 
 		LayoutAnimationController controller = AnimationUtils
-				.loadLayoutAnimation(this, R.anim.layout_controller);
+				.loadLayoutAnimation(this, R.anim.anime_slide_to_right);
 		listview_log.setLayoutAnimation(controller);
 
 	}
@@ -164,7 +164,7 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 
 		listview_log.setAdapter(new ListItemAdapter(this, itens));
 
-		effectAlpha(); // efeito alpha
+		effect(); // efeito alpha
 
 		confListForLongClick();
 	}
@@ -197,8 +197,9 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 
 	public void showBtsEditDelete(final View view, boolean exibe) {
 
+		// prepara animação (left to right)
 		LayoutAnimationController controller = AnimationUtils
-				.loadLayoutAnimation(this, R.anim.layout_controller);
+				.loadLayoutAnimation(this, R.anim.anime_slide_to_right);
 
 		if (exibe) {
 			// Toast.makeText(this, "exibindo...", Toast.LENGTH_SHORT).show();
@@ -214,6 +215,12 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 
 			tb_edicao.setLayoutAnimation(controller);
 			tb_edicao.setVisibility(View.VISIBLE);
+
+			// prepara animação (right to left)
+			controller = AnimationUtils.loadLayoutAnimation(this,
+					R.anim.anime_slide_to_left);
+
+			item.setLayoutAnimation(controller);
 		} else {
 			// Toast.makeText(this, "apagando...", Toast.LENGTH_SHORT).show();
 
@@ -289,14 +296,19 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 	}
 
 	private void createItem(int type) {
+
 		// Cria a intent para abrir a tela de editar
 		Intent it = new Intent(this, FormItemScreen.class);
+
 		// Passa o id do carro como parâmetro
 		it.putExtra(ItemLog.TYPE, type);
+
 		// Passa o id do carro como parâmetro
 		it.putExtra(Carro._ID, id_car);
+
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
+
 	}
 
 	/******************************************************************************
@@ -309,7 +321,7 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 
 		getSelectedItemOfList = (parent.getItemAtPosition(pos)).toString();
 
-		Log.i(TAG, "getSelectedItemOfList [" + getSelectedItemOfList + "]");
+		// Log.i(TAG, "getSelectedItemOfList [" + getSelectedItemOfList + "]");
 
 		// get the row the clicked button is in
 		id_car = itens.get(pos).getId_car();
@@ -325,10 +337,11 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 	 */
 	private void openViewItem() {
 
-		Log.i(TAG, "OPEN LIST CAR [" + id_car + "]");
+		// Log.i(TAG, "OPEN LIST CAR [" + id_car + "]");
 
 		// abre lista de logs do carro
 		final Intent it = new Intent(this, ViewItemScreen.class);
+
 		// Abre a tela de edição
 		startActivity(it);
 
@@ -384,39 +397,10 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 		ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
 		bt_right.setImageResource(R.drawable.bt_add);
 
-		// ImageView title = (ImageView) findViewById(R.id.title);
-		// title.setImageResource(R.drawable.t_select_vehicle);
-		// menu
-
 	}
-
-	//
-	// public void createFuel(View v) {
-	//
-	// createItem(Constants.FUEL);
-	//
-	// }
-	//
-	// public void createExpense(View v) {
-	//
-	// createItem(Constants.EXPENSE);
-	//
-	// }
-	//
-	// public void createNote(View v) {
-	//
-	// createItem(Constants.NOTE);
-	// }
-	//
-	// public void createRepair(View v) {
-	//
-	// createItem(Constants.REPAIR);
-	//
-	// }
 
 	public void onBackPressed() { // call my backbutton pressed method when
 									// boolean==true
-
 		Log.i(TAG, "Clicked back");
 
 	}
