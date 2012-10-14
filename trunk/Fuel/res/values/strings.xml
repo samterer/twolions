@@ -27,16 +27,16 @@
     
     
     <!-- msg code -->
-    <string name="fecha_db">"fechando conexão com o db..."</string>
-    <string name="criando_db">"criando nova conexão com o db..."</string>
+    <string name="a_f_db">"fechando conexão com o db..."</string>
+    <string name="a_c_db">"criando nova conexão com o db..."</string>
     
     
     <!-- alertas -->
-    <string name="alert_dt_car">"Are you sure you want to delete this car?"</string>
-    <string name="alert_dt_item">"Are you sure you want to delete this item?"</string>
+    <string name="a_dt_car">"Are you sure you want to delete this car?"</string>
+    <string name="a_dt_item">"Are you sure you want to delete this item?"</string>
     
     <!-- Positivo e negativo -->
-    <string name="alert_not">"Not"</string>
-    <string name="alert_yes">"Yes"</string>
+    <string name="a_n">"Not"</string>
+    <string name="a_y">"Yes"</string>
     
 </resources>

@@ -330,17 +330,17 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 
 		AlertDialog.Builder alerta = new AlertDialog.Builder(this);
 		alerta.setIcon(R.drawable.iconerror);
-		alerta.setMessage("Are you sure you want to delete this car?");
+		alerta.setMessage(R.string.a_dt_car);
 
 		// Método executado se escolher Sim
-		alerta.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		alerta.setPositiveButton(R.string.a_y, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				deleteCar();
 			}
 		});
 
 		// Método executado se escolher Não
-		alerta.setNegativeButton("Not", new DialogInterface.OnClickListener() {
+		alerta.setNegativeButton(R.string.a_n, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				//
 			}
