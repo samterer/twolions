@@ -43,7 +43,7 @@
             android:id="@+id/t_value_u"
             style="@style/texto12Negrito"
             android:gravity="center"
-            android:text="GALLON PRICE"
+            android:text="@string/tv_gp"
             android:textStyle="bold"
             android:typeface="monospace" />
     </TableRow>
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:scaleType="centerInside"
-            android:text="XXXXXXX"
+            android:text=""
             android:textColor="@color/preto"
             android:textSize="60dp"
             android:textStyle="bold"
@@ -83,7 +83,7 @@
             android:id="@+id/t_value_p"
             style="@style/texto12Negrito"
             android:gravity="center"
-            android:text="AMOUNT PAID"
+            android:text="@string/tv_ap"
             android:textStyle="bold"
             android:typeface="monospace" />
     </TableRow>
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:scaleType="centerInside"
-            android:text="XXXXXXX"
+            android:text=""
             android:textColor="@color/preto"
             android:textSize="60dp"
             android:textStyle="bold"
@@ -123,7 +123,7 @@
             android:id="@+id/t_odometer"
             style="@style/texto12Negrito"
             android:gravity="center"
-            android:text="ODOMETER"
+            android:text="@string/tv_o"
             android:textStyle="bold"
             android:typeface="monospace" />
     </TableRow>
@@ -140,7 +140,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:scaleType="centerInside"
-            android:text="XXXXXXX"
+            android:text=""
             android:textColor="@color/preto"
             android:textSize="60dp"
             android:textStyle="bold"

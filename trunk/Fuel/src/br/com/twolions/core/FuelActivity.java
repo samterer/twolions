@@ -57,7 +57,7 @@ public class FuelActivity extends ActivityCircle {
 		// fecha conexao
 		if (sqlScript != null) {
 			
-			Log.i("base", "fechando conexão com o db...");
+			Log.i("base", ""+R.string.fecha_db);
 		
 			sqlScript.fechar();
 		}
@@ -67,7 +67,7 @@ public class FuelActivity extends ActivityCircle {
 	protected void onResume() {
 		super.onResume();
 
-		Log.i("base", "criando nova conexão com o db...");
+		Log.i("base", ""+R.string.criando_db);
 		
 		// abre base
 		sqlScript = new SqlScript(this);

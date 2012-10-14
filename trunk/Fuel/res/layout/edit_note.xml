@@ -47,7 +47,7 @@
             android:id="@+id/t_subject"
             style="@style/texto12Negrito"
             android:gravity="center"
-            android:text="SUBJECT"
+            android:text="@string/tv_s"
             android:textStyle="bold"
             android:typeface="monospace" />
     </TableRow>
@@ -81,7 +81,7 @@
             android:id="@+id/t_text"
             style="@style/texto12Negrito"
             android:gravity="center"
-            android:text="NOTE"
+            android:text="@string/tv_n"
             android:textStyle="bold"
             android:typeface="monospace" />
     </TableRow>
