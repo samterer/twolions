@@ -50,7 +50,7 @@
             android:id="@+id/t_subject"
             style="@style/texto12Negrito"
             android:gravity="center"
-            android:text="SUBJECT"
+            android:text="@string/tv_s"
             android:textStyle="bold"
             android:typeface="monospace" />
     </TableRow>
@@ -84,7 +84,7 @@
             android:id="@+id/t_value_p"
             style="@style/texto12Negrito"
             android:gravity="center"
-            android:text="VALUE"
+            android:text="@string/tv_v"
             android:textStyle="bold"
             android:typeface="monospace" />
     </TableRow>
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:scaleType="centerInside"
-            android:text="XXXXXXX"
+            android:text=""
             android:textColor="@color/preto"
             android:textSize="60dp"
             android:textStyle="bold"

@@ -14,4 +14,29 @@
     <!-- Error msg user -->
     <string name="erro_conexao_db_indisponivel">Bad, bad app! No donut for you. Please, re-start.</string>
     
+    <!-- titulo de campos -->
+    <string name="tv_vr">"VEHICLE REGISTRATION"</string>
+    <string name="tv_pr">"PLATE REGISTRATION"</string>
+    <string name="tv_tv">"TYPE VEHICLE"</string>
+    <string name="tv_s">"SUBJECT"</string>
+    <string name="tv_v">"VALUE"</string>
+    <string name="tv_gp">"GALLON PRICE"</string>
+    <string name="tv_ap">"AMOUNT PAID"</string>
+    <string name="tv_o">"ODOMETER"</string>
+    <string name="tv_n">"NOTE"</string>
+    
+    
+    <!-- msg code -->
+    <string name="fecha_db">"fechando conexão com o db..."</string>
+    <string name="criando_db">"criando nova conexão com o db..."</string>
+    
+    
+    <!-- alertas -->
+    <string name="alert_dt_car">"Are you sure you want to delete this car?"</string>
+    <string name="alert_dt_item">"Are you sure you want to delete this item?"</string>
+    
+    <!-- Positivo e negativo -->
+    <string name="alert_not">"Not"</string>
+    <string name="alert_yes">"Yes"</string>
+    
 </resources>

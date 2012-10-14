@@ -17,7 +17,7 @@
             android:id="@+id/text1"
             style="@style/texto12Negrito"
             android:gravity="center"
-            android:text="VEHICLE REGISTRATION"
+            android:text="@string/tv_vr"
             android:textStyle="bold"
             android:typeface="monospace" />
     </TableRow>
@@ -46,7 +46,7 @@
             android:id="@+id/text2"
             style="@style/texto12Negrito"
             android:gravity="center"
-            android:text="PLATE REGISTRATION"
+            android:text="@string/tv_pr"
             android:textStyle="bold"
             android:typeface="monospace" />
     </TableRow>
@@ -76,7 +76,7 @@
             android:id="@+id/text3"
             style="@style/texto12Negrito"
             android:gravity="center"
-            android:text="TYPE VEHICLE"
+            android:text="@string/tv_tv"
             android:textStyle="bold"
             android:typeface="monospace" />
     </TableRow>
