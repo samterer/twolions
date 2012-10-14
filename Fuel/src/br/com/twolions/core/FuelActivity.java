@@ -57,7 +57,7 @@ public class FuelActivity extends ActivityCircle {
 		// fecha conexao
 		if (sqlScript != null) {
 			
-			Log.i("base", ""+R.string.fecha_db);
+			Log.i("base", ""+R.string.a_f_db);
 		
 			sqlScript.fechar();
 		}
@@ -67,7 +67,7 @@ public class FuelActivity extends ActivityCircle {
 	protected void onResume() {
 		super.onResume();
 
-		Log.i("base", ""+R.string.criando_db);
+		Log.i("base", ""+R.string.a_c_db);
 		
 		// abre base
 		sqlScript = new SqlScript(this);

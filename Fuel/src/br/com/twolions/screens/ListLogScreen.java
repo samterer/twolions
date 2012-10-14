@@ -255,15 +255,15 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 	public void deleteConConfirm() {
 		AlertDialog.Builder alerta = new AlertDialog.Builder(this);
 		alerta.setIcon(R.drawable.iconerror);
-		alerta.setMessage("Are you sure you want to delete this item?");
+		alerta.setMessage(R.string.a_dt_item);
 		// Método executado se escolher Sim
-		alerta.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		alerta.setPositiveButton(R.string.a_y, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				deleteItem();
 			}
 		});
 		// Método executado se escolher Não
-		alerta.setNegativeButton("Not", new DialogInterface.OnClickListener() {
+		alerta.setNegativeButton(R.string.a_n, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				//
 			}
