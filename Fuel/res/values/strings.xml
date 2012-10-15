@@ -39,4 +39,9 @@
     <string name="a_n">"Not"</string>
     <string name="a_y">"Yes"</string>
     
+    <!-- fonts -->
+    <string name="font_default">"fonts/DroidSansFallback.ttf"</string>
+    
+    
+    
 </resources>

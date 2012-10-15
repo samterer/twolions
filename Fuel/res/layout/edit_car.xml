@@ -15,11 +15,9 @@
 
         <TextView
             android:id="@+id/text1"
-            style="@style/texto12Negrito"
+            style="@style/texto16cinzaDark"
             android:gravity="center"
-            android:text="@string/tv_vr"
-            android:textStyle="bold"
-            android:typeface="monospace" />
+            android:text="@string/tv_vr" />
     </TableRow>
     <!-- EDIT VEHICLE -->
 
@@ -44,11 +42,9 @@
 
         <TextView
             android:id="@+id/text2"
-            style="@style/texto12Negrito"
+            style="@style/texto16cinzaDark"
             android:gravity="center"
-            android:text="@string/tv_pr"
-            android:textStyle="bold"
-            android:typeface="monospace" />
+            android:text="@string/tv_pr" />
     </TableRow>
     <!-- EDIT PLATE -->
 
@@ -74,11 +70,9 @@
 
         <TextView
             android:id="@+id/text3"
-            style="@style/texto12Negrito"
+            style="@style/texto16cinzaDark"
             android:gravity="center"
-            android:text="@string/tv_tv"
-            android:textStyle="bold"
-            android:typeface="monospace" />
+            android:text="@string/tv_tv" />
     </TableRow>
 
     <TableRow

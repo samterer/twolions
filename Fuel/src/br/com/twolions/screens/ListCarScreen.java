@@ -240,7 +240,7 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 		} else {
 
 			ImageView seta = (ImageView) view.findViewById(R.id.seta);
-			seta.setVisibility(View.VISIBLE);
+			seta.setVisibility(View.GONE);
 
 			LinearLayout item = (LinearLayout) view
 					.findViewById(R.id.l_item_car);
@@ -259,7 +259,7 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 					public void run() {
 						LinearLayout seta = (LinearLayout) view
 								.findViewById(R.id.seta);
-						seta.setVisibility(View.VISIBLE);
+						seta.setVisibility(View.GONE);
 
 						LinearLayout item = (LinearLayout) view
 								.findViewById(R.id.l_item_car);
@@ -333,18 +333,20 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 		alerta.setMessage(R.string.a_dt_car);
 
 		// Método executado se escolher Sim
-		alerta.setPositiveButton(R.string.a_y, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				deleteCar();
-			}
-		});
+		alerta.setPositiveButton(R.string.a_y,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						deleteCar();
+					}
+				});
 
 		// Método executado se escolher Não
-		alerta.setNegativeButton(R.string.a_n, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				//
-			}
-		});
+		alerta.setNegativeButton(R.string.a_n,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						//
+					}
+				});
 		// Exibe o alerta de confirmação
 		alerta.show();
 	}
