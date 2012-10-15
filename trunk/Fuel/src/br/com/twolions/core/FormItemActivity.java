@@ -2,6 +2,7 @@ package br.com.twolions.core;
 
 import android.os.Bundle;
 import android.util.Log;
+import br.com.twolions.R;
 import br.com.twolions.sql.SqlScript;
 
 public class FormItemActivity extends ActivityCircle {
@@ -22,7 +23,7 @@ public class FormItemActivity extends ActivityCircle {
 
 		// fecha conexao
 		if (sqlScript != null) {
-			Log.i("base", "fechando conexão com o db...");
+			Log.i("base", "" + R.string.a_f_db);
 			sqlScript.fechar();
 		}
 	}
@@ -32,7 +33,7 @@ public class FormItemActivity extends ActivityCircle {
 		super.onResume();
 
 		if (sqlScript == null) {
-			Log.i("base", "criando nova conexão com o db...");
+			Log.i("base", "" + R.string.a_c_db);
 			// abre base
 			sqlScript = new SqlScript(this);
 		}

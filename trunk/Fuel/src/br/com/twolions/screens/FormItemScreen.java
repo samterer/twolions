@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -70,7 +71,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// Se for para Editar, recuperar os valores ...
 		if (extras != null) {
 			id_item = extras.getLong(ItemLog._ID);
-			//Log.i(CATEGORIA, "searching item [" + id_item + "]");
+			// Log.i(CATEGORIA, "searching item [" + id_item + "]");
 			id_car = extras.getLong(Carro._ID);
 			// Log.i(CATEGORIA, "searching type [" + id_car + "]");
 			type = extras.getInt(ItemLog.TYPE);
@@ -79,19 +80,22 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// instance itens of xml
 		switch (type) {
-			case FUEL :
-				setContentView(R.layout.form_fuel);
-				break;
-			case EXPENSE :
-				setContentView(R.layout.form_expense);
-				break;
-			case NOTE :
-				setContentView(R.layout.form_note);
-				break;
-			case REPAIR :
-				setContentView(R.layout.form_repair);
-				break;
+		case FUEL:
+			setContentView(R.layout.form_fuel);
+			break;
+		case EXPENSE:
+			setContentView(R.layout.form_expense);
+			break;
+		case NOTE:
+			setContentView(R.layout.form_note);
+			break;
+		case REPAIR:
+			setContentView(R.layout.form_repair);
+			break;
 		}
+
+		Typeface tf = Typeface.createFromAsset(getAssets(),
+				"fonts/DroidSansFallback.ttf"); // modifica as fontes
 
 		// create Date object
 		// Date dateCurrent = new Date();
@@ -113,26 +117,46 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// subject
 		if (type == EXPENSE || type == REPAIR || type == NOTE) {
+
+			TextView tv = (TextView) findViewById(R.id.t_subject);
+			tv.setTypeface(tf);
+
 			subject = (EditText) findViewById(R.id.subject);
 		}
 
 		// value u
 		if (type == FUEL) {
+
+			TextView tv = (TextView) findViewById(R.id.t_value_u);
+			tv.setTypeface(tf);
+
 			value_u = (TextView) findViewById(R.id.value_u);
 		}
 
 		// value p
-		if (type == EXPENSE || type == REPAIR || type == NOTE || type == FUEL) {
+		if (type == EXPENSE || type == REPAIR || type == FUEL) {
+
+			TextView tv = (TextView) findViewById(R.id.t_value_p);
+			tv.setTypeface(tf);
+
 			value_p = (TextView) findViewById(R.id.value_p);
 		}
 
 		// text
 		if (type == NOTE) {
+
+			TextView tv = (TextView) findViewById(R.id.t_text);
+			tv.setTypeface(tf);
+
 			text = (EditText) findViewById(R.id.text);
 		}
 
 		// odemeter
 		if (type == FUEL) {
+
+			TextView tv = (TextView) findViewById(R.id.t_odometer);
+			tv.setTypeface(tf);
+
 			odometer = (TextView) findViewById(R.id.odometer);
 		}
 
@@ -245,7 +269,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		if (type == EXPENSE || type == REPAIR || type == FUEL) {
 			itemLog.setValue_p(Double.valueOf(value_p.getText().toString()));
 		}
-		
+
 		// text
 		if (type == NOTE) {
 			itemLog.setText(text.getText().toString());
@@ -283,13 +307,14 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
-			case TIME_DIALOG_ID :
-				// set time picker as current time
-				return new TimePickerDialog(this, timePickerListener, hour,
-						minute, false);
+		case TIME_DIALOG_ID:
+			// set time picker as current time
+			return new TimePickerDialog(this, timePickerListener, hour, minute,
+					false);
 		}
 		return null;
 	}
+
 	private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
 		public void onTimeSet(TimePicker view, int selectedHour,
 				int selectedMinute) {
@@ -302,6 +327,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		}
 	};
+
 	private static String pad(int c) {
 		if (c >= 10)
 			return String.valueOf(c);

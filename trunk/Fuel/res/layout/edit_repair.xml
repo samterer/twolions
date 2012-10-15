@@ -19,12 +19,12 @@
                 android:layout_height="53dp"
                 android:background="@drawable/f_time"
                 android:gravity="center"
+                android:onClick="showTimePickerDialog"
                 android:scaleType="centerInside"
                 android:text="22 40"
                 android:textColor="@color/preto"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                 android:onClick="showTimePickerDialog"
                 android:typeface="monospace" />
         </LinearLayout>
 
@@ -34,8 +34,7 @@
             android:layout_width="120dp"
             android:layout_height="63dp"
             android:layout_gravity="center"
-            android:src="@drawable/f_time" />
-
+            android:src="@drawable/f_time" />
         -->
     </TableRow>
 
@@ -49,11 +48,9 @@
 
         <TextView
             android:id="@+id/t_subject"
-            style="@style/texto12Negrito"
+            style="@style/texto16cinzaDark"
             android:gravity="center"
-            android:text="@string/tv_s"
-            android:textStyle="bold"
-            android:typeface="monospace" />
+            android:text="@string/tv_s" />
     </TableRow>
 
     <TableRow
@@ -83,11 +80,9 @@
 
         <TextView
             android:id="@+id/t_value_p"
-            style="@style/texto12Negrito"
+            style="@style/texto16cinzaDark"
             android:gravity="center"
-            android:text="@string/tv_v"
-            android:textStyle="bold"
-            android:typeface="monospace" />
+            android:text="@string/tv_v" />
     </TableRow>
 
     <TableRow

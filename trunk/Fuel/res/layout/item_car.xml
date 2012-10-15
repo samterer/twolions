@@ -45,21 +45,17 @@
 
             <TextView
                 android:id="@+id/nome"
-                style="@style/texto28"
+                style="@style/texto28Negrito"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/preto"
-                android:textStyle="bold"
-                android:typeface="monospace" />
+                android:layout_height="wrap_content" />
+
             <!-- Descrição -->
 
             <TextView
                 android:id="@+id/placa"
-                style="@style/texto12"
+                style="@style/texto12cinza"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/preto"
-                android:typeface="monospace" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 
@@ -79,7 +75,7 @@
             android:layout_marginRight="10dp"
             android:gravity="right|center_vertical"
             android:src="@drawable/seta_direita"
-            android:visibility="visible" />
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout

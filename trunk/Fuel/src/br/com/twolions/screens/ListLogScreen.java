@@ -257,17 +257,19 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 		alerta.setIcon(R.drawable.iconerror);
 		alerta.setMessage(R.string.a_dt_item);
 		// Método executado se escolher Sim
-		alerta.setPositiveButton(R.string.a_y, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				deleteItem();
-			}
-		});
+		alerta.setPositiveButton(R.string.a_y,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						deleteItem();
+					}
+				});
 		// Método executado se escolher Não
-		alerta.setNegativeButton(R.string.a_n, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				//
-			}
-		});
+		alerta.setNegativeButton(R.string.a_n,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						//
+					}
+				});
 		// Exibe o alerta de confirmação
 		alerta.show();
 	}

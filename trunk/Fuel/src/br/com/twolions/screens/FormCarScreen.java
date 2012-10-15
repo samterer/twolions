@@ -2,6 +2,7 @@ package br.com.twolions.screens;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import br.com.twolions.R;
 import br.com.twolions.core.FormCarActivity;
 import br.com.twolions.daoobjects.Carro;
@@ -38,8 +40,9 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 
 		setContentView(R.layout.form_car);
 
-		// organize bt
-		organizeBt();
+		changeFont(); // modifica as fontes
+
+		organizeBt(); // listener dos bts da barra sup
 
 		init();
 
@@ -47,6 +50,7 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 	}
 
 	private void init() {
+
 		campoNome = (EditText) findViewById(R.id.campoNome);
 		campoPlaca = (EditText) findViewById(R.id.campoPlaca);
 		campoTipoCar = (Button) findViewById(R.id.campoTipoCar);
@@ -76,6 +80,21 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 				}
 			}
 		}
+	}
+
+	private void changeFont() {
+
+		Typeface tf = Typeface.createFromAsset(getAssets(),
+				"fonts/DroidSansFallback.ttf");
+
+		TextView tv1 = (TextView) findViewById(R.id.text1);
+		tv1.setTypeface(tf);
+
+		TextView tv2 = (TextView) findViewById(R.id.text2);
+		tv2.setTypeface(tf);
+
+		TextView tv3 = (TextView) findViewById(R.id.text3);
+		tv3.setTypeface(tf);
 	}
 
 	public void actionBt(final Context context) {

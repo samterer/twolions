@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +15,25 @@ import br.com.twolions.R;
 import br.com.twolions.daoobjects.Carro;
 
 public class ListCarAdapter extends BaseAdapter {
+
 	protected static final String TAG = "appLog";
+
 	private LayoutInflater inflater;
+
 	private final List<Carro> carros;
 
+	Typeface tf; // font
+
 	public ListCarAdapter(Activity context, List<Carro> carros) {
+
 		this.carros = carros;
+
 		this.inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+		tf = Typeface.createFromAsset(context.getAssets(),
+				"fonts/DroidSansFallback.ttf"); // font
+
 	}
 
 	public int getCount() {
@@ -37,6 +49,7 @@ public class ListCarAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View view, ViewGroup parent) {
+
 		ViewHolder holder = null;
 		if (view == null) {
 			// Nao existe a View no cache para esta linha então cria um novo
@@ -47,11 +60,18 @@ public class ListCarAdapter extends BaseAdapter {
 			view.setTag(holder);
 			holder.date = (TextView) view.findViewById(R.id.date);
 			holder.nome = (TextView) view.findViewById(R.id.nome);
+			holder.nome.setTypeface(tf);
 			holder.placa = (TextView) view.findViewById(R.id.placa);
+			holder.placa.setTypeface(tf);
 			holder.tipo = (ImageView) view.findViewById(R.id.tipo);
 		} else {
 			// Ja existe no cache, bingo entao pega!
-			holder = (ViewHolder) view.getTag();
+			try {
+				holder = (ViewHolder) view.getTag();
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
+
 		}
 
 		Carro c = carros.get(position);

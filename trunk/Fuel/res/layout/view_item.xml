@@ -22,6 +22,16 @@
             android:gravity="center_vertical|center_horizontal"
             style="@style/texto34Negrito"
             android:text="Hi, i'm a test." />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:onClick="openAlert"
+            android:text="CLick!" />
+
     </RelativeLayout>
 
 </LinearLayout>
