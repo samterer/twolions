@@ -9,12 +9,12 @@ public class SqlScript extends DBConnection {
 	private static final String BASE_NAME = Constants.DB_NAME;
 
 	// Controle de versão
-	private static final int VERSAO_BANCO = 2;
+	private static final int VERSAO_BANCO = Constants.DB_VERSION;
 
 	// Classe utilitária para abrir, criar, e atualizar o banco de dados
 	// private final SQLiteHelper dbHelper;
 
-	private static String[] sqlScript = {"create table", "insert into"};
+	private static String[] sqlScript = { "create table", "insert into" };
 
 	// ///////////////
 	// TABLE CAR
@@ -26,7 +26,7 @@ public class SqlScript extends DBConnection {
 			+ TB_CARRO;
 
 	// Cria a tabela com o "_id" sequencial
-	private static final String[] SCRIPT_CREATE_TB_CAR = new String[]{
+	private static final String[] SCRIPT_CREATE_TB_CAR = new String[] {
 			sqlScript[0]
 					+ " "
 					+ TB_CARRO
@@ -35,7 +35,7 @@ public class SqlScript extends DBConnection {
 			sqlScript[1] + " " + TB_CARRO
 					+ "(nome,placa,tipo) values('Fiesta','JUH-8266','carro');",
 			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');"};
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');" };
 
 	// ///////////////
 	// TABLE ITEM LOG
@@ -52,7 +52,7 @@ public class SqlScript extends DBConnection {
 	// - expense - 1
 	// - note - 2
 	// - repair - 3
-	private static final String[] SCRIPT_CREATE_TB_ITEM_LOG = new String[]{
+	private static final String[] SCRIPT_CREATE_TB_ITEM_LOG = new String[] {
 			sqlScript[0]
 					+ " "
 					+ TB_ITEM_LOG
@@ -73,7 +73,7 @@ public class SqlScript extends DBConnection {
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,value_p) values('2','2:30','3','Troca de pneu','677.00');"};
+					+ "(id_car,date,type,subject,value_p) values('2','2:30','3','Troca de pneu','677.00');" };
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(final Context ctx) {
@@ -91,14 +91,14 @@ public class SqlScript extends DBConnection {
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[1],
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[2],
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[3],
-				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[4]};
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[4] };
 		// delete
 		final String[] script_tables_delete = {
 				// delete table car
 				SqlScript.SCRIPT_DELETE_TB_CAR,
 
 				// delete table fuel
-				SqlScript.SCRIPT_DELETE_TB_ITEM_LOG};
+				SqlScript.SCRIPT_DELETE_TB_ITEM_LOG };
 
 		// Criar utilizando um script SQL
 		dbHelper = new SQLiteHelper(ctx, SqlScript.BASE_NAME,
@@ -109,6 +109,7 @@ public class SqlScript extends DBConnection {
 		db = dbHelper.getWritableDatabase();
 
 	}
+
 	// Fecha o banco
 	public void fechar() {
 

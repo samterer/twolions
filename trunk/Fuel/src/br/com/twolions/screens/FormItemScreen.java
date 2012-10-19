@@ -18,7 +18,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FormItemActivity;
-import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.util.Constants;
@@ -49,6 +48,14 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private static final int NOTE = Constants.NOTE;
 	private static final int REPAIR = Constants.REPAIR;
 
+	// item na tela
+	private ItemLog item;
+
+	// date
+	static final int TIME_DIALOG_ID = 999;
+	private int hour;
+	private int minute;
+
 	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
 
@@ -71,10 +78,16 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// Se for para Editar, recuperar os valores ...
 		if (extras != null) {
 			id_item = extras.getLong(ItemLog._ID);
+			Log.i(CATEGORIA, "searching item [" + id_item + "]");
+			if (id_item != null) { // searching item
+				Log.i(CATEGORIA, "searching item [" + id_item + "]");
+				item = buscarItemLog(id_item);
+			}
+
 			// Log.i(CATEGORIA, "searching item [" + id_item + "]");
-			id_car = extras.getLong(Carro._ID);
+			id_car = item.getId_car();// extras.getLong(Carro._ID);
 			// Log.i(CATEGORIA, "searching type [" + id_car + "]");
-			type = extras.getInt(ItemLog.TYPE);
+			type = item.getType();// extras.getInt(ItemLog.TYPE);
 			// Log.i(CATEGORIA, "searching type [" + type + "]");
 		}
 
@@ -161,7 +174,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		}
 
 		// edit ?
-		if (id_item != null) {
+		if (item != null) {
 			Log.i(CATEGORIA, "Edição de item...");
 			loadingEdit();
 		} else {
@@ -175,55 +188,55 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// searching item
 		Log.i(CATEGORIA, "searching item [" + id_item + "]");
-		final ItemLog i = buscarItemLog(id_item);
+		// final ItemLog i = buscarItemLog(id_item);
 
-		if (i == null) {
+		if (item == null) { // retirar depois, dupla verificação
 			Toast.makeText(this, "Dados do item não encontrados na base.",
 					Toast.LENGTH_SHORT).show();
 			onPause(); // fecha o form
 			return;
 		} else {
 			// get id car
-			id_car = i.getId_car();
+			// id_car = item.getId_car();
 			Log.i(CATEGORIA, "Data for edit");
-			Log.i(CATEGORIA, i.toString());
+			Log.i(CATEGORIA, item.toString());
 		}
 
 		try {
 
 			// date
 
-			date.setText(String.valueOf((i.getDate())));
+			date.setText(String.valueOf((item.getDate())));
 
 			// subject
 			if (type == EXPENSE || type == REPAIR || type == NOTE) {
-				subject.setText(String.valueOf((i.getSubject())));
+				subject.setText(String.valueOf((item.getSubject())));
 			}
 
 			// value u
 			if (type == FUEL) {
-				value_u.setText(String.valueOf((i.getValue_u())));
+				value_u.setText(String.valueOf((item.getValue_u())));
 			}
 
 			// value p
 			if (type == EXPENSE || type == REPAIR || type == FUEL) {
-				value_p.setText(String.valueOf((i.getValue_p())));
+				value_p.setText(String.valueOf((item.getValue_p())));
 			}
 
 			// text
 			if (type == NOTE) {
-				text.setText(String.valueOf((i.getText())));
+				text.setText(String.valueOf((item.getText())));
 			}
 
 			// odemeter
 			if (type == FUEL) {
-				odometer.setText(String.valueOf((i.getOdometer())));
+				odometer.setText(String.valueOf((item.getOdometer())));
 			}
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 
-			Log.e(CATEGORIA, i.toString());
+			Log.e(CATEGORIA, item.toString());
 		}
 
 	}
@@ -305,29 +318,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		ListLogScreen.dao.deletar(id);
 	}
 
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-		case TIME_DIALOG_ID:
-			// set time picker as current time
-			return new TimePickerDialog(this, timePickerListener, hour, minute,
-					false);
-		}
-		return null;
-	}
-
-	private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
-		public void onTimeSet(TimePicker view, int selectedHour,
-				int selectedMinute) {
-			hour = selectedHour;
-			minute = selectedMinute;
-
-			// set current time into textview
-			date.setText(new StringBuilder().append(pad(hour)).append(":")
-					.append(pad(minute)));
-
-		}
-	};
-
 	private static String pad(int c) {
 		if (c >= 10)
 			return String.valueOf(c);
@@ -368,11 +358,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		salvar();
 	}
 
-	// date
-	static final int TIME_DIALOG_ID = 999;
-	private int hour;
-	private int minute;
-
 	// public void showTimePickerDialog(final View v) {
 	// Log.i(CATEGORIA, "open time picker");
 	// showDialog(TIME_DIALOG_ID);
@@ -391,5 +376,29 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		});
 
 	}
+
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case TIME_DIALOG_ID:
+			// set time picker as current time
+			return new TimePickerDialog(this, timePickerListener, hour, minute,
+					false);
+
+		}
+		return null;
+	}
+
+	private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
+		public void onTimeSet(TimePicker view, int selectedHour,
+				int selectedMinute) {
+			hour = selectedHour;
+			minute = selectedMinute;
+
+			// set current time into textview
+			date.setText(new StringBuilder().append(pad(hour)).append(":")
+					.append(pad(minute)));
+
+		}
+	};
 
 }
