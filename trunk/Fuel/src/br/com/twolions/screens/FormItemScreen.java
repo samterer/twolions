@@ -15,9 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FormItemActivity;
+import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.util.Constants;
@@ -74,21 +74,30 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	private void init() {
 
+		TextView tv;
+
 		final Bundle extras = getIntent().getExtras();
-		// Se for para Editar, recuperar os valores ...
-		if (extras != null) {
-			id_item = extras.getLong(ItemLog._ID);
-			Log.i(CATEGORIA, "searching item [" + id_item + "]");
-			if (id_item != null) { // searching item
+
+		if (extras != null) { // Se for para Editar, recuperar os valores ...
+
+			String task = extras.getString("task");
+
+			if (task.equals("create")) { // cria novo item
+				id_car = extras.getLong(Carro._ID);
+				Log.i(CATEGORIA, "searching type [" + id_car + "]");
+
+				type = extras.getInt(ItemLog.TYPE);
+				Log.i(CATEGORIA, "searching type [" + type + "]");
+			} else if (task.equals("edit")) { // edit item
+				id_item = extras.getLong(ItemLog._ID);
+
 				Log.i(CATEGORIA, "searching item [" + id_item + "]");
 				item = buscarItemLog(id_item);
+
+				id_car = item.getId_car();
+				type = item.getType();
 			}
 
-			// Log.i(CATEGORIA, "searching item [" + id_item + "]");
-			id_car = item.getId_car();// extras.getLong(Carro._ID);
-			// Log.i(CATEGORIA, "searching type [" + id_car + "]");
-			type = item.getType();// extras.getInt(ItemLog.TYPE);
-			// Log.i(CATEGORIA, "searching type [" + type + "]");
 		}
 
 		// instance itens of xml
@@ -131,46 +140,65 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// subject
 		if (type == EXPENSE || type == REPAIR || type == NOTE) {
 
-			TextView tv = (TextView) findViewById(R.id.t_subject);
+			tv = (TextView) findViewById(R.id.t_subject);
 			tv.setTypeface(tf);
 
 			subject = (EditText) findViewById(R.id.subject);
+			subject.setTypeface(tf);
+			// implement hint
+			subject.setHint("insert a subject here");
 		}
 
 		// value u
 		if (type == FUEL) {
 
-			TextView tv = (TextView) findViewById(R.id.t_value_u);
+			tv = (TextView) findViewById(R.id.t_value_u);
 			tv.setTypeface(tf);
 
 			value_u = (TextView) findViewById(R.id.value_u);
+			value_u.setTypeface(tf);
+			// implement hint
+			value_u.setHint("click here");
 		}
 
 		// value p
 		if (type == EXPENSE || type == REPAIR || type == FUEL) {
 
-			TextView tv = (TextView) findViewById(R.id.t_value_p);
+			tv = (TextView) findViewById(R.id.t_value_p);
 			tv.setTypeface(tf);
 
 			value_p = (TextView) findViewById(R.id.value_p);
+			value_p.setTypeface(tf);
+			// implement hint
+			value_p.setHint("click here");
 		}
 
 		// text
 		if (type == NOTE) {
 
-			TextView tv = (TextView) findViewById(R.id.t_text);
+			tv = (TextView) findViewById(R.id.t_text);
 			tv.setTypeface(tf);
 
 			text = (EditText) findViewById(R.id.text);
+			text.setTypeface(tf);
+			// implement hint
+			text.setHint("insert a little text here");
 		}
 
 		// odemeter
 		if (type == FUEL) {
 
-			TextView tv = (TextView) findViewById(R.id.t_odometer);
+			tv = (TextView) findViewById(R.id.t_odometer);
 			tv.setTypeface(tf);
 
 			odometer = (TextView) findViewById(R.id.odometer);
+			odometer.setTypeface(tf);
+			// implement hint
+			odometer.setHint("click here");
+		}
+
+		if (type == FUEL) { // format font
+
 		}
 
 		// edit ?
@@ -187,20 +215,20 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	public void loadingEdit() {
 
 		// searching item
-		Log.i(CATEGORIA, "searching item [" + id_item + "]");
+		// Log.i(CATEGORIA, "searching item [" + id_item + "]");
 		// final ItemLog i = buscarItemLog(id_item);
 
-		if (item == null) { // retirar depois, dupla verificação
-			Toast.makeText(this, "Dados do item não encontrados na base.",
-					Toast.LENGTH_SHORT).show();
-			onPause(); // fecha o form
-			return;
-		} else {
-			// get id car
-			// id_car = item.getId_car();
-			Log.i(CATEGORIA, "Data for edit");
-			Log.i(CATEGORIA, item.toString());
-		}
+		// if (item == null) { // retirar depois, dupla verificação
+		// Toast.makeText(this, "Dados do item não encontrados na base.",
+		// Toast.LENGTH_SHORT).show();
+		// onPause(); // fecha o form
+		// return;
+		// } else {
+		// get id car
+		// id_car = item.getId_car();
+		Log.i(CATEGORIA, "Data for edit");
+		Log.i(CATEGORIA, item.toString());
+		// }
 
 		try {
 

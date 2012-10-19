@@ -54,6 +54,8 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 	private static final int EDITAR = 0;
 	private static final int DELETE = 1;
 
+	private MenuDialog customMenuDialog;
+
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
@@ -124,7 +126,7 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 		super.onConfigurationChanged(newConfig);
 		Log.i(TAG,
 				"O Estado da Tela foi Mudado: onConfigurationChanged(newConfig)");
-		if (!isMenuVisible) {
+		if (!customMenuDialog.isShowing()) {
 			if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 				// abre lista de logs do carro
 				final Intent it = new Intent(this, ViewGraphicScreen.class);
@@ -299,8 +301,14 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 
 	private void createItem(int type) {
 
+		// closed menu for select item
+		customMenuDialog.dismiss();
+
 		// Cria a intent para abrir a tela de editar
 		Intent it = new Intent(this, FormItemScreen.class);
+
+		// tipo de tarefa
+		it.putExtra("task", "create");
 
 		// Passa o id do carro como parâmetro
 		it.putExtra(ItemLog.TYPE, type);
@@ -310,6 +318,43 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
+
+	}
+
+	/**
+	 * Recupera o id do carro, e abre a tela de edição
+	 * 
+	 * @param v
+	 */
+	public void editItem(View v) {
+
+		// Cria a intent para abrir a tela de editar
+		Intent it = new Intent(this, FormItemScreen.class);
+
+		it.putExtra("task", "edit");
+
+		// id do item
+		it.putExtra(ItemLog._ID, id_item);
+
+		// Abre a tela de edição
+		startActivityForResult(it, INSERIR_EDITAR);
+	}
+
+	/**
+	 * Abre a tela apenas de visualizaçãod o item
+	 */
+	private void openViewItem() {
+
+		// Cria a intent para abrir a tela de editar
+		Intent it = new Intent(this, ViewItemScreen.class);
+
+		// id do item
+		it.putExtra(ItemLog._ID, id_item);
+		// passa o tipo do item
+		// it.putExtra(ItemLog.TYPE, type);
+
+		// Abre a tela de edição
+		startActivity(it);
 
 	}
 
@@ -334,24 +379,6 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 
 	}
 
-	/**
-	 * Abre a tela apenas de visualizaçãod o item
-	 */
-	private void openViewItem() {
-
-		// Cria a intent para abrir a tela de editar
-		Intent it = new Intent(this, ViewItemScreen.class);
-
-		// id do item
-		it.putExtra(ItemLog._ID, id_item);
-		// passa o tipo do item
-		// it.putExtra(ItemLog.TYPE, type);
-
-		// Abre a tela de edição
-		startActivity(it);
-
-	}
-
 	public void onItemLongClick(AdapterView<?> arg0, View view, int pos, long id) {
 
 		ItemLog item = itens.get(pos);
@@ -365,27 +392,6 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 
 	public void deleteConConfirm(View v) {
 		deleteConConfirm();
-	}
-
-	/**
-	 * Recupera o id do carro, e abre a tela de edição
-	 * 
-	 * @param v
-	 */
-	public void editItem(View v) {
-
-		// Cria a intent para abrir a tela de editar
-		Intent it = new Intent(this, FormItemScreen.class);
-
-		// id do item
-		it.putExtra(ItemLog._ID, id_item);
-		// passa o tipo do item
-		// it.putExtra(ItemLog.TYPE, type);
-		// passa o id do carro do item
-		// it.putExtra(Carro._ID, id_car);
-
-		// Abre a tela de edição
-		startActivityForResult(it, INSERIR_EDITAR);
 	}
 
 	public void btBarLeft(View v) {
@@ -412,21 +418,16 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 
 	}
 
-	MenuDialog customMenuDialog;
-	boolean isMenuVisible = false;
-
 	public void btBarRight(View v) {
 
-		if (customMenuDialog == null) {
+		if (customMenuDialog == null) { // instancia o menu apenas uma vez
+
 			customMenuDialog = new MenuDialog(this);
 
-			isMenuVisible = true;
+		}
 
+		if (!customMenuDialog.isShowing()) {
 			customMenuDialog.show();
-		} else {
-			customMenuDialog.dismiss();
-
-			isMenuVisible = false;
 		}
 
 	}
@@ -491,9 +492,15 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 
 		}
 
+		/**
+		 * Verifica onde foi o clique do usuario, se foi no menu de item (ok),
+		 * se não (fecha o menu)
+		 */
 		public boolean onTouchEvent(MotionEvent event) {
+
 			// I only care if the event is an UP action
 			if (event.getAction() == MotionEvent.ACTION_UP) {
+
 				// create a rect for storing the window rect
 				Rect r = new Rect(0, 0, 0, 0);
 				// retrieve the windows rect
@@ -501,10 +508,13 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 				// check if the event position is inside the window rect
 				boolean intersects = r.contains((int) event.getX(),
 						(int) event.getY());
+
 				// if the event is not inside then we can close the activity
 				if (!intersects) {
+
 					// close the activity
 					customMenuDialog.dismiss();
+
 					// notify that we consumed this event
 					return true;
 				}
