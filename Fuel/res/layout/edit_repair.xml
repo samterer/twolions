@@ -21,7 +21,6 @@
                 android:gravity="center"
                 android:onClick="showTimePickerDialog"
                 android:scaleType="centerInside"
-                android:text="22 40"
                 android:textColor="@color/preto"
                 android:textSize="20dp"
                 android:textStyle="bold"
@@ -34,7 +33,7 @@
             android:layout_width="120dp"
             android:layout_height="63dp"
             android:layout_gravity="center"
-            android:src="@drawable/f_time" />
+            android:src="@drawable/f_time" />
         -->
     </TableRow>
 
@@ -93,15 +92,11 @@
 
         <TextView
             android:id="@+id/value_p"
+            style="@style/texto55Negrito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:scaleType="centerInside"
-            android:text=""
-            android:textColor="@color/preto"
-            android:textSize="60dp"
-            android:textStyle="bold"
-            android:typeface="monospace" />
+            android:scaleType="centerInside" />
     </TableRow>
 
 </TableLayout>

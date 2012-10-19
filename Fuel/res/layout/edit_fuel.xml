@@ -17,17 +17,13 @@
 
             <TextView
                 android:id="@+id/date"
+                style="@style/texto20pretoNegrito"
                 android:layout_width="80dp"
                 android:layout_height="53dp"
                 android:background="@drawable/f_time"
                 android:gravity="center"
                 android:onClick="showTimePickerDialog"
-                android:scaleType="centerInside"
-                android:text="22 40"
-                android:textColor="@color/preto"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:typeface="monospace" />
+                android:scaleType="centerInside" />
         </LinearLayout>
     </TableRow>
 
@@ -54,15 +50,11 @@
 
         <TextView
             android:id="@+id/value_u"
+            style="@style/texto55Negrito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:scaleType="centerInside"
-            android:text=""
-            android:textColor="@color/preto"
-            android:textSize="60dp"
-            android:textStyle="bold"
-            android:typeface="monospace" />
+            android:scaleType="centerInside" />
     </TableRow>
 
     <View
@@ -92,15 +84,11 @@
 
         <TextView
             android:id="@+id/value_p"
+            style="@style/texto55Negrito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:scaleType="centerInside"
-            android:text=""
-            android:textColor="@color/preto"
-            android:textSize="60dp"
-            android:textStyle="bold"
-            android:typeface="monospace" />
+            android:scaleType="centerInside" />
     </TableRow>
 
     <View
@@ -130,15 +118,11 @@
 
         <TextView
             android:id="@+id/odometer"
+            style="@style/texto55Negrito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:scaleType="centerInside"
-            android:text=""
-            android:textColor="@color/preto"
-            android:textSize="60dp"
-            android:textStyle="bold"
-            android:typeface="monospace" />
+            android:scaleType="centerInside" />
     </TableRow>
 
 </TableLayout>
