@@ -21,7 +21,6 @@
                 android:gravity="center"
                 android:onClick="showTimePickerDialog"
                 android:scaleType="centerInside"
-                android:text="22 40"
                 android:textColor="@color/preto"
                 android:textSize="20dp"
                 android:textStyle="bold"
@@ -97,11 +96,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:scaleType="centerInside"
-            android:text=""
-            android:textColor="@color/preto"
-            android:textSize="60dp"
-            android:textStyle="bold"
-            android:typeface="monospace" />
+            style="@style/texto55Negrito"/>
     </TableRow>
 
 </TableLayout>
