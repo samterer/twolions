@@ -335,14 +335,17 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 	}
 
 	/**
-	 * Abre lista de itens
+	 * Abre a tela apenas de visualizaçãod o item
 	 */
 	private void openViewItem() {
 
-		// Log.i(TAG, "OPEN LIST CAR [" + id_car + "]");
+		// Cria a intent para abrir a tela de editar
+		Intent it = new Intent(this, ViewItemScreen.class);
 
-		// abre lista de logs do carro
-		final Intent it = new Intent(this, ViewItemScreen.class);
+		// id do item
+		it.putExtra(ItemLog._ID, id_item);
+		// passa o tipo do item
+		// it.putExtra(ItemLog.TYPE, type);
 
 		// Abre a tela de edição
 		startActivity(it);
@@ -377,7 +380,9 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 		// id do item
 		it.putExtra(ItemLog._ID, id_item);
 		// passa o tipo do item
-		it.putExtra(ItemLog.TYPE, type);
+		// it.putExtra(ItemLog.TYPE, type);
+		// passa o id do carro do item
+		// it.putExtra(Carro._ID, id_car);
 
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
