@@ -67,6 +67,8 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 	private void init() {
 
+		TextView tv;
+
 		final Bundle extras = getIntent().getExtras();
 
 		if (extras != null) { // Se for para visualizar, recuperar os valores
@@ -80,10 +82,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 				finish();
 			}
 			type = item.getType();
-			// id_car = extras.getLong(Carro._ID);
-			// Log.i(CATEGORIA, "searching type [" + id_car + "]");
-			// type = extras.getInt(ItemLog.TYPE);
-			// Log.i(CATEGORIA, "searching type [" + type + "]");
+			id_car = item.getId_car();
 		}
 
 		// instance itens of xml
@@ -117,46 +116,51 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		// subject
 		if (type == EXPENSE || type == REPAIR || type == NOTE) {
 
-			TextView tv = (TextView) findViewById(R.id.t_subject);
+			tv = (TextView) findViewById(R.id.t_subject);
 			tv.setTypeface(tf);
 
 			subject = (EditText) findViewById(R.id.subject);
+			subject.setTypeface(tf);
 		}
 
 		// value u
 		if (type == FUEL) {
 
-			TextView tv = (TextView) findViewById(R.id.t_value_u);
+			tv = (TextView) findViewById(R.id.t_value_u);
 			tv.setTypeface(tf);
 
 			value_u = (TextView) findViewById(R.id.value_u);
+			value_u.setTypeface(tf);
 		}
 
 		// value p
 		if (type == EXPENSE || type == REPAIR || type == FUEL) {
 
-			TextView tv = (TextView) findViewById(R.id.t_value_p);
+			tv = (TextView) findViewById(R.id.t_value_p);
 			tv.setTypeface(tf);
 
 			value_p = (TextView) findViewById(R.id.value_p);
+			value_p.setTypeface(tf);
 		}
 
 		// text
 		if (type == NOTE) {
 
-			TextView tv = (TextView) findViewById(R.id.t_text);
+			tv = (TextView) findViewById(R.id.t_text);
 			tv.setTypeface(tf);
 
 			text = (EditText) findViewById(R.id.text);
+			text.setTypeface(tf);
 		}
 
 		// odemeter
 		if (type == FUEL) {
 
-			TextView tv = (TextView) findViewById(R.id.t_odometer);
+			tv = (TextView) findViewById(R.id.t_odometer);
 			tv.setTypeface(tf);
 
 			odometer = (TextView) findViewById(R.id.odometer);
+			odometer.setTypeface(tf);
 		}
 
 		// edit ?
@@ -188,26 +192,31 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			// subject
 			if (type == EXPENSE || type == REPAIR || type == NOTE) {
 				subject.setText(String.valueOf((item.getSubject())));
+				subject.setFocusable(false);
 			}
 
 			// value u
 			if (type == FUEL) {
 				value_u.setText(String.valueOf((item.getValue_u())));
+				value_u.setFocusable(false);
 			}
 
 			// value p
 			if (type == EXPENSE || type == REPAIR || type == FUEL) {
 				value_p.setText(String.valueOf((item.getValue_p())));
+				value_p.setFocusable(false);
 			}
 
 			// text
 			if (type == NOTE) {
 				text.setText(String.valueOf((item.getText())));
+				text.setFocusable(false);
 			}
 
 			// odemeter
 			if (type == FUEL) {
 				odometer.setText(String.valueOf((item.getOdometer())));
+				odometer.setFocusable(false);
 			}
 
 		} catch (NullPointerException e) {

@@ -40,11 +40,11 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 
 		setContentView(R.layout.form_car);
 
-		changeFont(); // modifica as fontes
-
 		organizeBt(); // listener dos bts da barra sup
 
 		init();
+
+		changeFont(); // modifica as fontes
 
 		actionBt(this);
 	}
@@ -87,6 +87,13 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				"fonts/DroidSansFallback.ttf");
 
+		campoNome.setTypeface(tf);
+		// implement hint
+		campoNome.setHint("insert a name");
+
+		campoPlaca.setTypeface(tf);
+		campoPlaca.setHint("insert a place");
+
 		TextView tv1 = (TextView) findViewById(R.id.text1);
 		tv1.setTypeface(tf);
 
@@ -95,6 +102,7 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 
 		TextView tv3 = (TextView) findViewById(R.id.text3);
 		tv3.setTypeface(tf);
+
 	}
 
 	public void actionBt(final Context context) {
