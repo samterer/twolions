@@ -54,7 +54,7 @@ public class ItemLogDAO extends DBConnection {
 		values.put(ItemLog.ODOMETER, itemLog.getOdometer());
 		values.put(ItemLog.TEXT, itemLog.getText());
 		
-		Log.i(CATEGORIA, "Inserindo o itemLog: " + buscarItemLog(itemLog.getId()).toString());
+		//Log.i(CATEGORIA, "Inserindo o itemLog: " + buscarItemLog(itemLog.getId()).toString());
 
 		final long id = inserir(values, table_name);
 		return id;

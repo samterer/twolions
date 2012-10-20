@@ -1,6 +1,7 @@
 package br.com.twolions.screens;
 
 import java.util.Calendar;
+import java.util.Vector;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -15,12 +16,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FormItemActivity;
 import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.util.Constants;
+import br.com.twolions.util.EditTextTools;
 
 /**
  * Activity que utiliza o TableLayout para editar o itemLog
@@ -55,6 +58,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	static final int TIME_DIALOG_ID = 999;
 	private int hour;
 	private int minute;
+	
+	Vector<EditText> vEditText; //vetor de editText
 
 	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
@@ -73,8 +78,12 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	 ******************************************************************************/
 
 	private void init() {
+		
+		vEditText = new Vector<EditText>();
 
 		TextView tv;
+
+		id_car = 0L; // sempre tenho um id de carro
 
 		final Bundle extras = getIntent().getExtras();
 
@@ -83,19 +92,23 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			String task = extras.getString("task");
 
 			if (task.equals("create")) { // cria novo item
+
 				id_car = extras.getLong(Carro._ID);
 				Log.i(CATEGORIA, "searching type [" + id_car + "]");
 
 				type = extras.getInt(ItemLog.TYPE);
 				Log.i(CATEGORIA, "searching type [" + type + "]");
+
 			} else if (task.equals("edit")) { // edit item
+
 				id_item = extras.getLong(ItemLog._ID);
 
 				Log.i(CATEGORIA, "searching item [" + id_item + "]");
-				item = buscarItemLog(id_item);
+				item = buscarItemLog(id_item); // busca informações do item
 
 				id_car = item.getId_car();
 				type = item.getType();
+
 			}
 
 		}
@@ -145,8 +158,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			subject = (EditText) findViewById(R.id.subject);
 			subject.setTypeface(tf);
-			// implement hint
-			subject.setHint("insert a subject here");
+
+			subject.setHint("insert a subject here");// implement hint
+			
+			vEditText.add(subject);
 		}
 
 		// value u
@@ -157,8 +172,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			value_u = (TextView) findViewById(R.id.value_u);
 			value_u.setTypeface(tf);
-			// implement hint
-			value_u.setHint("click here");
+
+			value_u.setHint("click here");// implement hint
 		}
 
 		// value p
@@ -169,8 +184,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			value_p = (TextView) findViewById(R.id.value_p);
 			value_p.setTypeface(tf);
-			// implement hint
-			value_p.setHint("click here");
+
+			value_p.setHint("click here");// implement hint
 		}
 
 		// text
@@ -181,8 +196,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			text = (EditText) findViewById(R.id.text);
 			text.setTypeface(tf);
-			// implement hint
-			text.setHint("insert a little text here");
+
+			text.setHint("insert a little text here");// implement hint
+			vEditText.add(text);
 		}
 
 		// odemeter
@@ -193,12 +209,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			odometer = (TextView) findViewById(R.id.odometer);
 			odometer.setTypeface(tf);
-			// implement hint
-			odometer.setHint("click here");
-		}
 
-		if (type == FUEL) { // format font
-
+			odometer.setHint("click here");// implement hint
 		}
 
 		// edit ?
@@ -284,14 +296,23 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	// }
 
 	public void salvar() {
+		
+		if(EditTextTools.isEmptyEdit(vEditText,this)) {
+			
+			return;
+		}
 
 		ItemLog itemLog = new ItemLog();
 		if (id_item != null) {
 			// É uma atualização
 			itemLog.setId(id_item);
-			itemLog.setId_car(id_car);
-			itemLog.setType(type);
 		}
+
+		// id_car
+		itemLog.setId_car(id_car);
+
+		// type of item
+		itemLog.setType(type);
 
 		// date
 		itemLog.setDate(date.getText().toString());

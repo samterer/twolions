@@ -43,10 +43,10 @@ public class AndroidUtils extends ActivityCircle {
 		return result;
 	}
 
-	public static void alertDialog(final Context context, final int mensagem) {
+	public static void alertDialog(final Context context, final int mensagem, final String title) {
 		try {
 			AlertDialog dialog = new AlertDialog.Builder(context)
-					.setTitle(context.getString(R.string.app_name))
+					.setTitle(title)
 					.setMessage(mensagem).create();
 			dialog.setIcon(R.drawable.iconerror);
 			dialog.setButton("OK", new DialogInterface.OnClickListener() {

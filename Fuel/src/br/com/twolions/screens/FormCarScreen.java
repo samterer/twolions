@@ -1,5 +1,7 @@
 package br.com.twolions.screens;
 
+import java.util.Vector;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -11,10 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FormCarActivity;
 import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.interfaces.InterfaceBar;
+import br.com.twolions.util.EditTextTools;
 
 /**
  * Activity que utiliza o TableLayout para editar o carro
@@ -33,6 +37,8 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 	private Button campoTipoCar;
 	private String tipo = "carro";
 	private Long id;
+	
+	Vector<EditText> vEditText; //vetor de editText
 
 	@Override
 	public void onCreate(final Bundle icicle) {
@@ -48,11 +54,19 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 
 		actionBt(this);
 	}
-
+	
+	/******************************************************************************
+	 * ESTADOS
+	 ******************************************************************************/
 	private void init() {
+		
+		
+		vEditText = new Vector<EditText>();
 
 		campoNome = (EditText) findViewById(R.id.campoNome);
+		vEditText.add(campoNome);
 		campoPlaca = (EditText) findViewById(R.id.campoPlaca);
+		vEditText.add(campoPlaca);
 		campoTipoCar = (Button) findViewById(R.id.campoTipoCar);
 		campoTipoMoto = (Button) findViewById(R.id.campoTipoMoto);
 
@@ -81,18 +95,17 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 			}
 		}
 	}
-
+	
 	private void changeFont() {
 
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				"fonts/DroidSansFallback.ttf");
 
 		campoNome.setTypeface(tf);
-		// implement hint
-		campoNome.setHint("insert a name");
+		campoNome.setHint("insert a name"); 		// implement hint
 
 		campoPlaca.setTypeface(tf);
-		campoPlaca.setHint("insert a place");
+		campoPlaca.setHint("insert a place"); 		// implement hint
 
 		TextView tv1 = (TextView) findViewById(R.id.text1);
 		tv1.setTypeface(tf);
@@ -104,6 +117,87 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 		tv3.setTypeface(tf);
 
 	}
+
+	
+
+	// public void onPause() {
+	// super.onPause();
+	// // Cancela para não ficar nada na tela pendente
+	// // setResult(RESULT_CANCELED);
+	//
+	// // Fecha a tela
+	// finish();
+	// }
+	
+	/******************************************************************************
+	 * SERVICES
+	 ******************************************************************************/
+
+
+	public void salvar() {
+
+		
+		if(EditTextTools.isEmptyEdit(vEditText,this)) {
+
+			return;
+		}
+
+		final Carro carro = new Carro();
+		if (id != null) {
+			// É uma atualização
+			carro.setId(id);
+		}
+		
+		carro.setNome(campoNome.getText().toString());
+		
+		carro.setPlaca(campoPlaca.getText().toString());
+		
+		if (tipo.equals("")) {
+			tipo = "carro";
+		}
+		carro.setTipo(tipo.trim());
+
+		// Salvar
+		salvarCarro(carro);
+
+		// OK
+		setResult(RESULT_OK, new Intent());
+
+		// Fecha a tela
+		finish();
+	}
+
+
+	public void excluir() {
+		if (id != null) {
+			excluirCarro(id);
+		}
+
+		// OK
+		setResult(RESULT_OK, new Intent());
+
+		// Fecha a tela
+		finish();
+	}
+
+	// Buscar o carro pelo id
+	protected Carro buscarCarro(final long id) {
+		return ListCarScreen.dao.buscarCarro(id);
+	}
+
+	// Salvar o carro
+	protected void salvarCarro(final Carro carro) {
+		ListCarScreen.dao.salvar(carro);
+	}
+
+	// Excluir o carro
+	protected void excluirCarro(final long id) {
+		ListCarScreen.dao.deletar(id);
+	}
+	
+	/******************************************************************************
+	 * CLICK\TOUCH
+	 ******************************************************************************/
 
 	public void actionBt(final Context context) {
 
@@ -154,67 +248,7 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 		});
 
 	}
-
-	// public void onPause() {
-	// super.onPause();
-	// // Cancela para não ficar nada na tela pendente
-	// // setResult(RESULT_CANCELED);
-	//
-	// // Fecha a tela
-	// finish();
-	// }
-
-	public void salvar() {
-
-		final Carro carro = new Carro();
-		if (id != null) {
-			// É uma atualização
-			carro.setId(id);
-		}
-		carro.setNome(campoNome.getText().toString());
-		carro.setPlaca(campoPlaca.getText().toString());
-		if (tipo.equals("")) {
-			tipo = "carro";
-		}
-		carro.setTipo(tipo.trim());
-
-		// Salvar
-		salvarCarro(carro);
-
-		// OK
-		setResult(RESULT_OK, new Intent());
-
-		// Fecha a tela
-		finish();
-	}
-
-	public void excluir() {
-		if (id != null) {
-			excluirCarro(id);
-		}
-
-		// OK
-		setResult(RESULT_OK, new Intent());
-
-		// Fecha a tela
-		finish();
-	}
-
-	// Buscar o carro pelo id
-	protected Carro buscarCarro(final long id) {
-		return ListCarScreen.dao.buscarCarro(id);
-	}
-
-	// Salvar o carro
-	protected void salvarCarro(final Carro carro) {
-		ListCarScreen.dao.salvar(carro);
-	}
-
-	// Excluir o carro
-	protected void excluirCarro(final long id) {
-		ListCarScreen.dao.deletar(id);
-	}
-
+	
 	public void organizeBt() {
 		// bt left
 		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
