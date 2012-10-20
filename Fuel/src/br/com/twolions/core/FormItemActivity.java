@@ -24,18 +24,19 @@ public class FormItemActivity extends ActivityCircle {
 		// fecha conexao
 		if (sqlScript != null) {
 			Log.i("base", this.getString(R.string.a_f_db));
-			sqlScript.fechar();
+
+			sqlScript.fechar(); // fecha a base
 		}
 	}
 
-	@Override
 	protected void onResume() {
 		super.onResume();
 
 		if (sqlScript == null) {
+
 			Log.i("base", this.getString(R.string.a_c_db));
-			// abre base
-			sqlScript = new SqlScript(this);
+
+			sqlScript = new SqlScript(this); // abre a base
 		}
 	}
 

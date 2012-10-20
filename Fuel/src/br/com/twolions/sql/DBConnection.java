@@ -26,20 +26,31 @@ public class DBConnection {
 			if (db != null) {
 				if (db.isOpen()) {
 					if (dbHelper != null) {
+					
 						Log.i(CATEGORIA, "Abrindo o db para edição.");
+						
 						db = dbHelper.getReadableDatabase();
+					
 					} else {
+					
 						Log.i(CATEGORIA, "o dbHelper é nulo.");
+
 					}
 				} else {
+				
 					Log.i(CATEGORIA, "O db esta fechado.");
+					
 					db = ctx.openOrCreateDatabase(base_name, Context.MODE_PRIVATE,null);
+					
 					Log.i(CATEGORIA, "Pronto! Db aberto.");
 				}
 			} else {
+			
 				Log.i(CATEGORIA, "Abrindo conexão com o db.");
+				
 				db = ctx.openOrCreateDatabase(base_name, Context.MODE_PRIVATE,
 						null);
+			
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

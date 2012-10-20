@@ -30,14 +30,21 @@
         <EditText
             android:id="@+id/campoNome"
             android:maxLength="20"
+            android:tag="campoNome"
             android:width="240px" />
     </TableRow>
+
+    <include
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
+        layout="@layout/line" />
+
     <!-- TITULO PLATE -->
 
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center" >
 
         <TextView
@@ -46,6 +53,7 @@
             android:gravity="center"
             android:text="@string/tv_pr" />
     </TableRow>
+
     <!-- EDIT PLATE -->
 
     <TableRow
@@ -57,15 +65,21 @@
         <EditText
             android:id="@+id/campoPlaca"
             android:maxLength="20"
+            android:tag="campoPlate"
             android:width="240px" />
     </TableRow>
+
+    <include
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
+        layout="@layout/line" />
 
     <!-- TITULO SELECET TYPE VEHICLE -->
 
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center" >
 
         <TextView

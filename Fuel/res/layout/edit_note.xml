@@ -8,32 +8,26 @@
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:gravity="center" >
 
         <LinearLayout android:gravity="center" >
 
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="80dp"
-                android:layout_height="53dp"
-                android:background="@drawable/f_time"
-                android:gravity="center"
-                android:onClick="showTimePickerDialog"
-                android:scaleType="centerInside"
-                android:textColor="@color/preto"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:typeface="monospace" />
+        <include layout="@layout/date"/>
+            
         </LinearLayout>
     </TableRow>
 
+    <include
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
+        layout="@layout/line" />
     <!-- subject -->
 
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:gravity="center" >
 
         <TextView
@@ -53,19 +47,21 @@
             android:id="@+id/subject"
             android:height="5dp"
             android:maxLength="20"
+            android:tag="subject"
             android:width="240dp" />
     </TableRow>
 
-    <View
-        android:layout_height="2dip"
-        android:layout_marginTop="5dp"
-        android:background="#FF909090" />
-    <!-- TITULO PLATE -->
+     <include
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
+        layout="@layout/line" />
+     
+    <!-- TEXT -->
 
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center" >
 
         <TextView
@@ -85,6 +81,7 @@
             android:id="@+id/text"
             android:height="200dp"
             android:maxLength="20"
+            android:tag="text"
             android:width="200dp" />
     </TableRow>
 

@@ -81,7 +81,10 @@ public class SplashScreen extends ActivityCircle {
 
 	private void startMaboo() {
 		Log.i("appLog", "init maboo()");
+		
 		startActivity(tInicial);
+		
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
 
 	@Override

@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FormItemActivity;
 import br.com.twolions.daoobjects.Carro;
@@ -37,7 +37,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	// Campos texto
 	private TextView value_u;
-	private TextView value_p;
+	private EditText value_p;
 	private TextView odometer;
 	private TextView date;
 	private EditText subject;
@@ -55,9 +55,12 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private ItemLog item;
 
 	// date
-	static final int TIME_DIALOG_ID = 999;
+	private static final int TIME_DIALOG_ID = 999;
 	private int hour;
 	private int minute;
+	
+	// spinner value
+	private static final int NUMER_VP_DIALOG_ID = 111;
 	
 	Vector<EditText> vEditText; //vetor de editText
 
@@ -182,7 +185,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			tv = (TextView) findViewById(R.id.t_value_p);
 			tv.setTypeface(tf);
 
-			value_p = (TextView) findViewById(R.id.value_p);
+			value_p = (EditText) findViewById(R.id.value_p);
 			value_p.setTypeface(tf);
 
 			value_p.setHint("click here");// implement hint
@@ -297,9 +300,12 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	public void salvar() {
 		
-		if(EditTextTools.isEmptyEdit(vEditText,this)) {
-			
-			return;
+		if (type == EXPENSE || type == REPAIR || type == NOTE) {
+			if (EditTextTools.isEmptyEdit(vEditText, this)) {
+				return;
+			}
+		} else {
+			// verify campos do fuel
 		}
 
 		ItemLog itemLog = new ItemLog();
@@ -346,7 +352,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		salvarItemLog(itemLog);
 
 		// OK
-		setResult(RESULT_OK, new Intent());
+		setResult(RESULT_OK,new Intent());
 
 		// Fecha a tela
 		finish();
@@ -354,17 +360,17 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	// Buscar o itemLog pelo id_item
 	protected ItemLog buscarItemLog(final long id) {
-		return ListLogScreen.dao.buscarItemLog(id);
+		return ListItemScreen.dao.buscarItemLog(id);
 	}
 
 	// Salvar o itemLog
 	protected void salvarItemLog(final ItemLog itemLog) {
-		ListLogScreen.dao.salvar(itemLog);
+		ListItemScreen.dao.salvar(itemLog);
 	}
 
 	// Excluir o itemLog
 	protected void excluirItemLog(final long id) {
-		ListLogScreen.dao.deletar(id);
+		ListItemScreen.dao.deletar(id);
 	}
 
 	private static String pad(int c) {
@@ -391,13 +397,12 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
 		bt_right.setImageResource(R.drawable.bt_save);
 
-		// title
-		// final ImageView title = (ImageView) findViewById(R.id.title);
-		// title.setVisibility(View.INVISIBLE);
 	}
 
 	public void btBarLeft(final View v) {
+		
 		setResult(RESULT_CANCELED);
+		
 		// Fecha a tela
 		finish();
 
@@ -411,7 +416,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	// Log.i(CATEGORIA, "open time picker");
 	// showDialog(TIME_DIALOG_ID);
 	// }
-
+	Spinner size_spinner;
 	public void addListenerOnButton() {
 
 		date.setOnClickListener(new OnClickListener() {
@@ -424,6 +429,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		});
 
+
 	}
 
 	protected Dialog onCreateDialog(int id) {
@@ -432,9 +438,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			// set time picker as current time
 			return new TimePickerDialog(this, timePickerListener, hour, minute,
 					false);
-
 		}
+
 		return null;
+
 	}
 
 	private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {

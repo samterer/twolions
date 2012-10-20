@@ -26,6 +26,7 @@ public class ItemLogDAO extends DBConnection {
 		super(ctx, base_name);
 
 		Log.i(CATEGORIA, "ItemLogDAO...");
+		
 
 	}
 

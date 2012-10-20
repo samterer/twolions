@@ -24,7 +24,7 @@ public class ItemViewScreen extends FormItemActivity implements InterfaceBar {
 
 	// Campos texto
 	private TextView value_u;
-	private TextView value_p;
+	private EditText value_p;
 	private TextView odometer;
 	private TextView date;
 	private EditText subject;
@@ -68,20 +68,41 @@ public class ItemViewScreen extends FormItemActivity implements InterfaceBar {
 
 		TextView tv;
 
-		final Bundle extras = getIntent().getExtras();
-
-		if (extras != null) { // Se for para visualizar, recuperar os valores
-								// ...
-			id_item = extras.getLong(ItemLog._ID);
+		if (id_item != null) { // retorno da tela de edit de item
+			
 			Log.i(CATEGORIA, "searching item [" + id_item + "]");
-			if (id_item != null) { // searching item
-				Log.i(CATEGORIA, "searching item [" + id_item + "]");
-				item = buscarItemLog(id_item);
-			} else {
-				finish();
-			}
+			item = buscarItemLog(id_item);
+			
 			type = item.getType();
+
 			id_car = item.getId_car();
+
+		} else { // lista > view item
+
+			final Bundle extras = getIntent().getExtras();
+
+			if (extras != null) { // Se for para visualizar, recuperar os
+									// valores
+									// ...
+				id_item = extras.getLong(ItemLog._ID);
+				// Log.i(CATEGORIA, "searching item [" + id_item + "]");
+
+				if (id_item != null) { // searching item
+
+					Log.i(CATEGORIA, "searching item [" + id_item + "]");
+					item = buscarItemLog(id_item);
+
+				} else {
+
+					finish();
+
+				}
+
+				type = item.getType();
+
+				id_car = item.getId_car();
+			}
+
 		}
 
 		// instance itens of xml
@@ -138,7 +159,7 @@ public class ItemViewScreen extends FormItemActivity implements InterfaceBar {
 			tv = (TextView) findViewById(R.id.t_value_p);
 			tv.setTypeface(tf);
 
-			value_p = (TextView) findViewById(R.id.value_p);
+			value_p = (EditText) findViewById(R.id.value_p);
 			value_p.setTypeface(tf);
 		}
 
@@ -166,6 +187,17 @@ public class ItemViewScreen extends FormItemActivity implements InterfaceBar {
 		Log.i(CATEGORIA, "Visualização de item...");
 		loadingDataItem();
 
+	}
+
+	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
+		super.onActivityResult(codigo, codigoRetorno, it);
+
+		// Quando a activity EditarCarro retornar, seja se foi para adicionar
+		// vamos atualizar a lista
+		if (codigoRetorno == RESULT_OK) {
+			// atualiza a lista na tela
+		//	init();
+		}
 	}
 
 	// open screen with datas of object
@@ -232,7 +264,7 @@ public class ItemViewScreen extends FormItemActivity implements InterfaceBar {
 
 	// Buscar o itemLog pelo id_item
 	protected ItemLog buscarItemLog(final long id) {
-		return ListLogScreen.dao.buscarItemLog(id);
+		return ListItemScreen.dao.buscarItemLog(id);
 	}
 
 	private static String pad(int c) {
@@ -263,7 +295,7 @@ public class ItemViewScreen extends FormItemActivity implements InterfaceBar {
 
 	public void btBarLeft(final View v) {
 
-		setResult(RESULT_CANCELED);
+		setResult(RESULT_OK);
 
 		// Fecha a tela
 		finish();
@@ -279,9 +311,18 @@ public class ItemViewScreen extends FormItemActivity implements InterfaceBar {
 
 		// id do item
 		it.putExtra(ItemLog._ID, id_item);
-		
+
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
+
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+
+	}
+	
+	public void onBackPressed() { // call my backbutton pressed method when
+
+		Log.i("appLog", "Clicked back");
+
 	}
 
 }

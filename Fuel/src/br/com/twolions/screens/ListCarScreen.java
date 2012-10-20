@@ -284,7 +284,7 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 		Log.i(TAG, "OPEN LIST CAR [" + id_car + "]");
 
 		// abre lista de logs do carro
-		final Intent it = new Intent(this, ListLogScreen.class);
+		final Intent it = new Intent(this, ListItemScreen.class);
 
 		// Passa o id do carro como parâmetro
 		it.putExtra(Carro._ID, id_car);
