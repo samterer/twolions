@@ -294,21 +294,6 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 
 	}
 
-	/*
-	 * Verifica se o carro selecionado possui itens
-	 */
-	private boolean verificaItensPorCarro() {
-		boolean result = false;
-
-		ItemLogDAO itemDAO = new ItemLogDAO(this);
-		List<ItemLog> list = itemDAO.listarItemLogs(id_car);
-
-		if (list.size() > 0) {
-			result = true;
-		}
-
-		return result;
-	}
 
 	// Recupera o id do carro, e abre a tela de edição
 	private void editCar() {

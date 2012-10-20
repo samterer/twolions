@@ -5,43 +5,42 @@
     <string name="app_name">Maboo</string>
     <string name="name">Name Car</string>
     <string name="aguarde">Por favor, aguarde um momento.</string>
-	
+
     <!-- BASE -->
     <string name="dbname">bd_itsmycar</string>
     <string name="tb_itemlog">ItemLog</string>
     <string name="tb_carro">Carro</string>
-    
+
     <!-- Error msg user -->
     <string name="erro_conexao_db_indisponivel">Bad, bad app! No donut for you. Please, re-start.</string>
-    
+    <string name="t_e_c">Connection</string>
+
     <!-- titulo de campos -->
-    <string name="tv_vr">"VEHICLE REGISTRATION"</string>
-    <string name="tv_pr">"PLATE REGISTRATION"</string>
-    <string name="tv_tv">"TYPE VEHICLE"</string>
-    <string name="tv_s">"SUBJECT"</string>
-    <string name="tv_v">"VALUE"</string>
-    <string name="tv_gp">"GALLON PRICE"</string>
-    <string name="tv_ap">"AMOUNT PAID"</string>
-    <string name="tv_o">"ODOMETER"</string>
-    <string name="tv_n">"NOTE"</string>
-    
-    
+    <string name="tv_vr">VEHICLE REGISTRATION</string>
+    <string name="tv_pr">PLATE REGISTRATION</string>
+    <string name="tv_tv">TYPE VEHICLE</string>
+    <string name="tv_s">SUBJECT</string>
+    <string name="tv_v">VALUE</string>
+    <string name="tv_gp">GALLON PRICE</string>
+    <string name="tv_ap">AMOUNT PAID</string>
+    <string name="tv_o">ODOMETER</string>
+    <string name="tv_n">NOTE</string>
+
     <!-- msg code -->
-    <string name="a_f_db">"fechando conexão com o db..."</string>
-    <string name="a_c_db">"criando nova conexão com o db..."</string>
-    
-    
+    <string name="a_f_db">fechando conexão com o db...</string>
+    <string name="a_c_db">criando nova conexão com o db...</string>
+
     <!-- alertas -->
-    <string name="a_dt_car">"Are you sure you want to delete this car?"</string>
-    <string name="a_dt_item">"Are you sure you want to delete this item?"</string>
-    
+    <string name="a_dt_car">Are you sure you want to delete this car?</string>
+    <string name="a_dt_item">Are you sure you want to delete this item?</string>
+    <string name="a_f_item"> Please, fill in all fields with red color.</string>
+    <string name="t_f_item">Empty fields</string>
+
     <!-- Positivo e negativo -->
-    <string name="a_n">"Not"</string>
-    <string name="a_y">"Yes"</string>
-    
+    <string name="a_n">Not</string>
+    <string name="a_y">Yes</string>
+
     <!-- fonts -->
     <string name="font_default">"fonts/DroidSansFallback.ttf"</string>
-    
-    
-    
+
 </resources>

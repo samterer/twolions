@@ -16,7 +16,8 @@ public class FuelActivity extends ActivityCircle {
 	public static SqlScript sqlScript;
 
 	protected void alert(int menssage) {
-		AndroidUtils.alertDialog(this, menssage);
+		AndroidUtils.alertDialog(this, menssage,
+				this.getString(R.string.app_name));
 	}
 
 	// Inicia a thread
@@ -33,7 +34,7 @@ public class FuelActivity extends ActivityCircle {
 		} else {
 			// Não existe conexão
 			AndroidUtils.alertDialog(this,
-					R.string.erro_conexao_db_indisponivel);
+					R.string.erro_conexao_db_indisponivel, "" + R.string.t_e_c);
 		}
 	}
 
@@ -56,9 +57,9 @@ public class FuelActivity extends ActivityCircle {
 
 		// fecha conexao
 		if (sqlScript != null) {
-			
-			Log.i("base", ""+R.string.a_f_db);
-		
+
+			Log.i("base", "" + R.string.a_f_db);
+
 			sqlScript.fechar();
 		}
 	}
@@ -67,20 +68,19 @@ public class FuelActivity extends ActivityCircle {
 	protected void onResume() {
 		super.onResume();
 
-		Log.i("base", ""+R.string.a_c_db);
-		
+		Log.i("base", "" + R.string.a_c_db);
+
 		// abre base
 		sqlScript = new SqlScript(this);
 
 	}
-	
-	
+
 	protected void onActivityResult(final int codigo, final int codigoRetorno,
 			final Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
-		
+
 		sqlScript = new SqlScript(this);
-		
+
 	}
 
 }
