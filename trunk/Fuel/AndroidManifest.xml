@@ -40,13 +40,13 @@
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
-            android:name=".screens.ListLogScreen"
+            android:name=".screens.ListItemScreen"
             android:label="ListLogScreen"
             android:configChanges="orientation"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
-            android:name=".screens.ViewItemScreen"
+            android:name=".screens.ItemViewScreen"
             android:label="ViewItemScreen"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >

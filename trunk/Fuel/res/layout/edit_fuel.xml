@@ -15,24 +15,22 @@
 
         <LinearLayout android:gravity="center" >
 
-            <TextView
-                android:id="@+id/date"
-                style="@style/texto20pretoNegrito"
-                android:layout_width="80dp"
-                android:layout_height="53dp"
-                android:background="@drawable/f_time"
-                android:gravity="center"
-                android:onClick="showTimePickerDialog"
-                android:scaleType="centerInside" />
+        <include layout="@layout/date"/>
+            
         </LinearLayout>
     </TableRow>
+
+    <include
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
+        layout="@layout/line" />
 
     <!-- VALUE U -->
 
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:gravity="center" >
 
         <TextView
@@ -54,19 +52,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:tag="value_u"
             android:scaleType="centerInside" />
     </TableRow>
 
-    <View
-        android:layout_height="2dip"
-        android:background="#FF909090" />
+    <include
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
+        layout="@layout/line" />
 
     <!-- VALUE P -->
 
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:gravity="center" >
 
         <TextView
@@ -88,19 +88,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:tag="value_p"
             android:scaleType="centerInside" />
     </TableRow>
 
-    <View
-        android:layout_height="2dip"
-        android:background="#FF909090" />
-
+    <include
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
+        layout="@layout/line" />
     <!-- ODOMETER -->
 
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:gravity="center" >
 
         <TextView
@@ -122,6 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:tag="odometer"
             android:scaleType="centerInside" />
     </TableRow>
 

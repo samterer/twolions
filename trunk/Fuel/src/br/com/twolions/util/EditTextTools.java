@@ -3,6 +3,7 @@ package br.com.twolions.util;
 import java.util.Vector;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.EditText;
 import br.com.twolions.R;
 
@@ -26,6 +27,8 @@ public class EditTextTools {
 
 			if (et.getText().equals("") || et.length() < 1) {
 				cont--;// campo vazio
+				
+				Log.i("appLog","Field ["+et.getTag()+"] empty.");
 
 				et.setHintTextColor(context.getResources().getColor(
 						R.color.vermelho));
