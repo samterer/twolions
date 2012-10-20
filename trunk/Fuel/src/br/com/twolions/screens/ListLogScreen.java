@@ -346,12 +346,10 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 	private void openViewItem() {
 
 		// Cria a intent para abrir a tela de editar
-		Intent it = new Intent(this, ViewItemScreen.class);
+		Intent it = new Intent(this, ItemViewScreen.class);
 
 		// id do item
 		it.putExtra(ItemLog._ID, id_item);
-		// passa o tipo do item
-		// it.putExtra(ItemLog.TYPE, type);
 
 		// Abre a tela de edição
 		startActivity(it);
@@ -404,7 +402,7 @@ public class ListLogScreen extends FuelActivity implements OnItemClickListener,
 	public void organizeBt() {
 		// bt left
 		ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		bt_left.setImageResource(R.drawable.bt_cancel);
+		bt_left.setImageResource(R.drawable.bt_back);
 
 		// bt rigt
 		ImageView bt_right = (ImageView) findViewById(R.id.bt_right);

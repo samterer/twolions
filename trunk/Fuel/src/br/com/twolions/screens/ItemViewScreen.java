@@ -14,12 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FormItemActivity;
-import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.util.Constants;
 
-public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
+public class ItemViewScreen extends FormItemActivity implements InterfaceBar {
 
 	private final String CATEGORIA = Constants.LOG_APP;
 
@@ -254,15 +253,12 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	public void organizeBt() {
 		// bt left
 		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		bt_left.setImageResource(R.drawable.bt_cancel);
+		bt_left.setImageResource(R.drawable.bt_back);
 
 		// bt rigt
-		// final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
-		// bt_right.setImageResource(R.drawable.bt_menu);
+		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
+		bt_right.setImageResource(R.drawable.bt_bar_edit);
 
-		// title
-		// final ImageView title = (ImageView) findViewById(R.id.title);
-		// title.setVisibility(View.INVISIBLE);
 	}
 
 	public void btBarLeft(final View v) {
@@ -275,16 +271,15 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	}
 
 	public void btBarRight(final View v) {
+
 		// Cria a intent para abrir a tela de editar
 		Intent it = new Intent(this, FormItemScreen.class);
 
+		it.putExtra("task", "edit");
+
 		// id do item
 		it.putExtra(ItemLog._ID, id_item);
-		// passa o tipo do item
-		it.putExtra(ItemLog.TYPE, type);
-		// passa o id do carro do item
-		it.putExtra(Carro._ID, id_car);
-
+		
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
 	}
