@@ -364,6 +364,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// Fecha a tela
 		finish();
+
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
 
 	// Buscar o itemLog pelo id_item
@@ -413,6 +415,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// Fecha a tela
 		finish();
+
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 
 	}
 

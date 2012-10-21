@@ -65,22 +65,14 @@
             android:gravity="center"
             android:text="@string/tv_n" />
     </TableRow>
-    
-     <!-- EDIT TEXT -->
-    
+
+    <!-- EDIT TEXT -->
 
     <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:gravity="center" >
 
-        <EditText
-            android:id="@+id/text"
-            android:height="200dp"
-            android:maxLength="20"
-            android:tag="text"
-            android:width="200dp" />
+        <include layout="@layout/note" />
     </TableRow>
 
 </TableLayout>
