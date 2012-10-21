@@ -18,14 +18,14 @@ import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.util.Constants;
 
-public class ItemViewScreen extends FormItemActivity implements InterfaceBar {
+public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 	private final String CATEGORIA = Constants.LOG_APP;
 
 	// Campos texto
-	private TextView value_u;
+	private EditText value_u;
 	private EditText value_p;
-	private TextView odometer;
+	private EditText odometer;
 	private TextView date;
 	private EditText subject;
 	private EditText text;
@@ -69,10 +69,10 @@ public class ItemViewScreen extends FormItemActivity implements InterfaceBar {
 		TextView tv;
 
 		if (id_item != null) { // retorno da tela de edit de item
-			
+
 			Log.i(CATEGORIA, "searching item [" + id_item + "]");
 			item = buscarItemLog(id_item);
-			
+
 			type = item.getType();
 
 			id_car = item.getId_car();
@@ -149,7 +149,7 @@ public class ItemViewScreen extends FormItemActivity implements InterfaceBar {
 			tv = (TextView) findViewById(R.id.t_value_u);
 			tv.setTypeface(tf);
 
-			value_u = (TextView) findViewById(R.id.value_u);
+			value_u = (EditText) findViewById(R.id.value_u);
 			value_u.setTypeface(tf);
 		}
 
@@ -179,7 +179,7 @@ public class ItemViewScreen extends FormItemActivity implements InterfaceBar {
 			tv = (TextView) findViewById(R.id.t_odometer);
 			tv.setTypeface(tf);
 
-			odometer = (TextView) findViewById(R.id.odometer);
+			odometer = (EditText) findViewById(R.id.odometer);
 			odometer.setTypeface(tf);
 		}
 
@@ -196,7 +196,7 @@ public class ItemViewScreen extends FormItemActivity implements InterfaceBar {
 		// vamos atualizar a lista
 		if (codigoRetorno == RESULT_OK) {
 			// atualiza a lista na tela
-		//	init();
+			// init();
 		}
 	}
 
@@ -318,7 +318,7 @@ public class ItemViewScreen extends FormItemActivity implements InterfaceBar {
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 
 	}
-	
+
 	public void onBackPressed() { // call my backbutton pressed method when
 
 		Log.i("appLog", "Clicked back");

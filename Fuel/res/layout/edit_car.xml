@@ -5,7 +5,7 @@
     android:background="@drawable/bg"
     android:orientation="vertical" >
 
-    <!-- TITULO VEHICLE -->
+    <!-- NAME VEHICLE -->
 
     <TableRow
         android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
             android:gravity="center"
             android:text="@string/tv_vr" />
     </TableRow>
-    <!-- EDIT VEHICLE -->
+    <!-- EDIT NAME VEHICLE -->
 
     <TableRow
         android:layout_width="wrap_content"
@@ -29,6 +29,7 @@
 
         <EditText
             android:id="@+id/campoNome"
+            android:hint="@string/h_n_vehicle"
             android:maxLength="20"
             android:tag="campoNome"
             android:width="240px" />
@@ -40,7 +41,7 @@
         android:layout_marginTop="15dp"
         layout="@layout/line" />
 
-    <!-- TITULO PLATE -->
+    <!-- PLATE -->
 
     <TableRow
         android:layout_width="wrap_content"
@@ -64,6 +65,7 @@
 
         <EditText
             android:id="@+id/campoPlaca"
+            android:hint="@string/h_p_vehicle"
             android:maxLength="20"
             android:tag="campoPlate"
             android:width="240px" />
