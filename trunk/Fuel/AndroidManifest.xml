@@ -46,7 +46,7 @@
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
-            android:name=".screens.ItemViewScreen"
+            android:name=".screens.ViewItemScreen"
             android:label="ViewItemScreen"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >

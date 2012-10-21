@@ -349,7 +349,7 @@ public class ListItemScreen extends FuelActivity implements OnItemClickListener,
 	private void openViewItem() {
 
 		// Cria a intent para abrir a tela de editar
-		Intent it = new Intent(this, ItemViewScreen.class);
+		Intent it = new Intent(this, ViewItemScreen.class);
 
 		// id do item
 		it.putExtra(ItemLog._ID, id_item);

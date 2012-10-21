@@ -36,7 +36,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private final String CATEGORIA = Constants.LOG_APP;
 
 	// Campos texto
-	private TextView value_u;
+	private EditText value_u;
 	private EditText value_p;
 	private TextView odometer;
 	private TextView date;
@@ -58,11 +58,11 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private static final int TIME_DIALOG_ID = 999;
 	private int hour;
 	private int minute;
-	
+
 	// spinner value
 	private static final int NUMER_VP_DIALOG_ID = 111;
-	
-	Vector<EditText> vEditText; //vetor de editText
+
+	Vector<EditText> vEditText; // vetor de editText
 
 	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
@@ -81,7 +81,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	 ******************************************************************************/
 
 	private void init() {
-		
+
 		vEditText = new Vector<EditText>();
 
 		TextView tv;
@@ -162,8 +162,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			subject = (EditText) findViewById(R.id.subject);
 			subject.setTypeface(tf);
 
-			subject.setHint("insert a subject here");// implement hint
-			
 			vEditText.add(subject);
 		}
 
@@ -173,10 +171,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			tv = (TextView) findViewById(R.id.t_value_u);
 			tv.setTypeface(tf);
 
-			value_u = (TextView) findViewById(R.id.value_u);
+			value_u = (EditText) findViewById(R.id.value_u);
 			value_u.setTypeface(tf);
 
-			value_u.setHint("click here");// implement hint
+			vEditText.add(value_u);
 		}
 
 		// value p
@@ -188,7 +186,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			value_p = (EditText) findViewById(R.id.value_p);
 			value_p.setTypeface(tf);
 
-			value_p.setHint("click here");// implement hint
+			vEditText.add(value_p);
 		}
 
 		// text
@@ -200,7 +198,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			text = (EditText) findViewById(R.id.text);
 			text.setTypeface(tf);
 
-			text.setHint("insert a little text here");// implement hint
 			vEditText.add(text);
 		}
 
@@ -213,15 +210,18 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			odometer = (TextView) findViewById(R.id.odometer);
 			odometer.setTypeface(tf);
 
-			odometer.setHint("click here");// implement hint
 		}
 
-		// edit ?
-		if (item != null) {
+		if (item != null) { // edit item?
+
 			Log.i(CATEGORIA, "Edição de item...");
+
 			loadingEdit();
-		} else {
+
+		} else {// create a new item?
+
 			Log.i(CATEGORIA, "Criação de item...");
+
 		}
 
 	}
@@ -299,14 +299,14 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	// }
 
 	public void salvar() {
-		
-		if (type == EXPENSE || type == REPAIR || type == NOTE) {
-			if (EditTextTools.isEmptyEdit(vEditText, this)) {
-				return;
-			}
-		} else {
-			// verify campos do fuel
+
+		// if (type == EXPENSE || type == REPAIR || type == NOTE) {
+		if (EditTextTools.isEmptyEdit(vEditText, this)) {
+			return;
 		}
+		// } else {
+		// // verify campos do fuel
+		// }
 
 		ItemLog itemLog = new ItemLog();
 		if (id_item != null) {
@@ -352,7 +352,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		salvarItemLog(itemLog);
 
 		// OK
-		setResult(RESULT_OK,new Intent());
+		setResult(RESULT_OK, new Intent());
 
 		// Fecha a tela
 		finish();
@@ -400,9 +400,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	}
 
 	public void btBarLeft(final View v) {
-		
+
 		setResult(RESULT_CANCELED);
-		
+
 		// Fecha a tela
 		finish();
 
@@ -417,6 +417,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	// showDialog(TIME_DIALOG_ID);
 	// }
 	Spinner size_spinner;
+
 	public void addListenerOnButton() {
 
 		date.setOnClickListener(new OnClickListener() {
@@ -428,7 +429,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			}
 
 		});
-
 
 	}
 

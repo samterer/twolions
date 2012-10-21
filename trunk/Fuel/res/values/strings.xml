@@ -43,4 +43,11 @@
     <!-- fonts -->
     <string name="font_default">"fonts/DroidSansFallback.ttf"</string>
 
+    <!-- hint -->
+    <string name="h_subject">"insert a subject here"</string>
+    <string name="h_text">"insert a little text here"</string>
+    <string name="h_click">"click here"</string>
+    <string name="h_n_vehicle">"insert a name"</string>
+    <string name="h_p_vehicle">"insert a place"</string>
+
 </resources>

@@ -8,15 +8,12 @@
     <!-- Date -->
 
     <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center" >
 
         <LinearLayout android:gravity="center" >
 
-        <include layout="@layout/date"/>
-            
+            <include layout="@layout/date" />
         </LinearLayout>
     </TableRow>
 
@@ -40,20 +37,13 @@
             android:text="@string/tv_gp" />
     </TableRow>
 
+    <!-- EDIT VALUE U -->
+
     <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:gravity="center" >
 
-        <TextView
-            android:id="@+id/value_u"
-            style="@style/texto55Negrito"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:tag="value_u"
-            android:scaleType="centerInside" />
+        <include layout="@layout/value_u" />
     </TableRow>
 
     <include
@@ -76,20 +66,13 @@
             android:text="@string/tv_ap" />
     </TableRow>
 
+    <!-- EDIT VALUE P -->
+
     <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:gravity="center" >
 
-        <TextView
-            android:id="@+id/value_p"
-            style="@style/texto55Negrito"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:tag="value_p"
-            android:scaleType="centerInside" />
+        <include layout="@layout/value_p" />
     </TableRow>
 
     <include
@@ -97,6 +80,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="15dp"
         layout="@layout/line" />
+
     <!-- ODOMETER -->
 
     <TableRow
@@ -111,20 +95,13 @@
             android:text="@string/tv_o" />
     </TableRow>
 
+    <!-- EDIT ODOMETER -->
+
     <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:gravity="center" >
 
-        <TextView
-            android:id="@+id/odometer"
-            style="@style/texto55Negrito"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:tag="odometer"
-            android:scaleType="centerInside" />
+        <include layout="@layout/odometer" />
     </TableRow>
 
 </TableLayout>

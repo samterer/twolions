@@ -5,9 +5,9 @@
     android:background="@drawable/bg"
     android:orientation="vertical" >
 
+    <!-- DATE -->
+
     <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center" >
 
@@ -37,18 +37,13 @@
             android:text="@string/tv_s" />
     </TableRow>
 
+    <!-- EDIT SUBJECT -->
+
     <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:gravity="center" >
 
-        <EditText
-            android:id="@+id/subject"
-            android:height="5dp"
-            android:maxLength="20"
-            android:tag="subject"
-            android:width="240dp" />
+        <include layout="@layout/subject" />
     </TableRow>
 
     <include
@@ -56,6 +51,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="15dp"
         layout="@layout/line" />
+
     <!-- VALUE P -->
 
     <TableRow
@@ -70,22 +66,13 @@
             android:text="@string/tv_v" />
     </TableRow>
 
+    <!-- EDIT VALUE P -->
+
     <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:gravity="center" >
 
-        <EditText
-            android:id="@+id/value_p"
-            style="@style/texto55Negrito"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/transparente"
-            android:gravity="center"
-            android:inputType="number"
-            android:scaleType="centerInside"
-            android:tag="value_p" />
+        <include layout="@layout/value_p" />
     </TableRow>
 
 </TableLayout>
