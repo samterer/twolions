@@ -24,6 +24,7 @@ import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.util.Constants;
 import br.com.twolions.util.EditTextTools;
+import br.com.twolions.util.TextViewTools;
 
 /**
  * Activity que utiliza o TableLayout para editar o itemLog
@@ -63,6 +64,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private static final int NUMER_VP_DIALOG_ID = 111;
 
 	Vector<EditText> vEditText; // vetor de editText
+	Vector<TextView> vTextView; // vetor de TextViews
 
 	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
@@ -83,6 +85,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private void init() {
 
 		vEditText = new Vector<EditText>();
+		vTextView = new Vector<TextView>();
 
 		TextView tv;
 
@@ -157,7 +160,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		if (type == EXPENSE || type == REPAIR || type == NOTE) {
 
 			tv = (TextView) findViewById(R.id.t_subject);
-			tv.setTypeface(tf);
+			vTextView.add(tv);
 
 			subject = (EditText) findViewById(R.id.subject);
 			subject.setTypeface(tf);
@@ -169,7 +172,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		if (type == FUEL) {
 
 			tv = (TextView) findViewById(R.id.t_value_u);
-			tv.setTypeface(tf);
+			vTextView.add(tv);
 
 			value_u = (EditText) findViewById(R.id.value_u);
 			value_u.setTypeface(tf);
@@ -181,7 +184,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		if (type == EXPENSE || type == REPAIR || type == FUEL) {
 
 			tv = (TextView) findViewById(R.id.t_value_p);
-			tv.setTypeface(tf);
+			vTextView.add(tv);
 
 			value_p = (EditText) findViewById(R.id.value_p);
 			value_p.setTypeface(tf);
@@ -193,7 +196,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		if (type == NOTE) {
 
 			tv = (TextView) findViewById(R.id.t_text);
-			tv.setTypeface(tf);
+			vTextView.add(tv);
 
 			text = (EditText) findViewById(R.id.text);
 			text.setTypeface(tf);
@@ -205,12 +208,17 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		if (type == FUEL) {
 
 			tv = (TextView) findViewById(R.id.t_odometer);
-			tv.setTypeface(tf);
+			vTextView.add(tv);
 
 			odometer = (TextView) findViewById(R.id.odometer);
 			odometer.setTypeface(tf);
 
 		}
+
+		EditTextTools.insertFontInAllFields(vEditText, tf); // change font
+															// editText
+		TextViewTools.insertFontInAllFields(vTextView, tf); // change font
+															// textView
 
 		if (item != null) { // edit item?
 

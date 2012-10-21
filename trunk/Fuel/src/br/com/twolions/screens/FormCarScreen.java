@@ -13,12 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FormCarActivity;
 import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.util.EditTextTools;
+import br.com.twolions.util.TextViewTools;
 
 /**
  * Activity que utiliza o TableLayout para editar o carro
@@ -37,8 +37,9 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 	private Button campoTipoCar;
 	private String tipo = "carro";
 	private Long id;
-	
-	Vector<EditText> vEditText; //vetor de editText
+
+	Vector<EditText> vEditText; // vetor de editText
+	Vector<TextView> vTextView; // vetor de TextViews
 
 	@Override
 	public void onCreate(final Bundle icicle) {
@@ -54,19 +55,21 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 
 		actionBt(this);
 	}
-	
+
 	/******************************************************************************
 	 * ESTADOS
 	 ******************************************************************************/
 	private void init() {
-		
-		
+
 		vEditText = new Vector<EditText>();
+		vTextView = new Vector<TextView>();
 
 		campoNome = (EditText) findViewById(R.id.campoNome);
 		vEditText.add(campoNome);
+
 		campoPlaca = (EditText) findViewById(R.id.campoPlaca);
 		vEditText.add(campoPlaca);
+
 		campoTipoCar = (Button) findViewById(R.id.campoTipoCar);
 		campoTipoMoto = (Button) findViewById(R.id.campoTipoMoto);
 
@@ -95,30 +98,27 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 			}
 		}
 	}
-	
+
 	private void changeFont() {
 
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				"fonts/DroidSansFallback.ttf");
 
-		campoNome.setTypeface(tf);
-		campoNome.setHint("insert a name"); 		// implement hint
-
-		campoPlaca.setTypeface(tf);
-		campoPlaca.setHint("insert a place"); 		// implement hint
-
 		TextView tv1 = (TextView) findViewById(R.id.text1);
-		tv1.setTypeface(tf);
+		vTextView.add(tv1);
 
 		TextView tv2 = (TextView) findViewById(R.id.text2);
-		tv2.setTypeface(tf);
+		vTextView.add(tv2);
 
 		TextView tv3 = (TextView) findViewById(R.id.text3);
-		tv3.setTypeface(tf);
+		vTextView.add(tv3);
+
+		EditTextTools.insertFontInAllFields(vEditText, tf); // change font
+															// editText
+		TextViewTools.insertFontInAllFields(vTextView, tf); // change font
+															// textView
 
 	}
-
-	
 
 	// public void onPause() {
 	// super.onPause();
@@ -128,16 +128,14 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 	// // Fecha a tela
 	// finish();
 	// }
-	
+
 	/******************************************************************************
 	 * SERVICES
 	 ******************************************************************************/
 
-
 	public void salvar() {
 
-		
-		if(EditTextTools.isEmptyEdit(vEditText,this)) {
+		if (EditTextTools.isEmptyEdit(vEditText, this)) {
 
 			return;
 		}
@@ -147,11 +145,11 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 			// É uma atualização
 			carro.setId(id);
 		}
-		
+
 		carro.setNome(campoNome.getText().toString());
-		
+
 		carro.setPlaca(campoPlaca.getText().toString());
-		
+
 		if (tipo.equals("")) {
 			tipo = "carro";
 		}
@@ -166,7 +164,6 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 		// Fecha a tela
 		finish();
 	}
-
 
 	public void excluir() {
 		if (id != null) {
@@ -194,7 +191,7 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 	protected void excluirCarro(final long id) {
 		ListCarScreen.dao.deletar(id);
 	}
-	
+
 	/******************************************************************************
 	 * CLICK\TOUCH
 	 ******************************************************************************/
@@ -248,7 +245,7 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 		});
 
 	}
-	
+
 	public void organizeBt() {
 		// bt left
 		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
