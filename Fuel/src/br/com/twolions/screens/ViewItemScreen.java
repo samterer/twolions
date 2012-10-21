@@ -77,42 +77,45 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		TextView tv;
 
-		if (id_item != null) { // retorno da tela de edit de item
+		// if (id_item != null) { // retorno da tela de edit de item
+		//
+		// Log.i(CATEGORIA, "return of edit screen");
+		//
+		// Log.i(CATEGORIA, "searching item [" + id_item + "]");
+		// item = buscarItemLog(id_item);
+		//
+		// type = item.getType();
+		//
+		// id_car = item.getId_car();
+		//
+		// } else { // lista > view item
 
-			Log.i(CATEGORIA, "searching item [" + id_item + "]");
-			item = buscarItemLog(id_item);
+		Log.i(CATEGORIA, "view item screen");
+
+		final Bundle extras = getIntent().getExtras();
+
+		if (extras != null) {
+
+			id_item = extras.getLong(ItemLog._ID);
+
+			if (id_item != null) { // searching item
+
+				Log.i(CATEGORIA, "searching item [" + id_item + "]");
+
+				item = buscarItemLog(id_item);
+
+			} else {
+
+				finish();
+
+			}
 
 			type = item.getType();
 
 			id_car = item.getId_car();
-
-		} else { // lista > view item
-
-			final Bundle extras = getIntent().getExtras();
-
-			if (extras != null) { // Se for para visualizar, recuperar os
-									// valores
-									// ...
-				id_item = extras.getLong(ItemLog._ID);
-				// Log.i(CATEGORIA, "searching item [" + id_item + "]");
-
-				if (id_item != null) { // searching item
-
-					Log.i(CATEGORIA, "searching item [" + id_item + "]");
-					item = buscarItemLog(id_item);
-
-				} else {
-
-					finish();
-
-				}
-
-				type = item.getType();
-
-				id_car = item.getId_car();
-			}
-
 		}
+
+		// }
 
 		// instance itens of xml
 		switch (type) {
@@ -149,7 +152,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			vTextView.add(tv);
 
 			subject = (EditText) findViewById(R.id.subject);
-			subject.setTypeface(tf);
+			subject.setBackgroundColor(R.color.transparente);
 
 			vEditText.add(subject);
 		}
@@ -161,7 +164,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			vTextView.add(tv);
 
 			value_u = (EditText) findViewById(R.id.value_u);
-			value_u.setTypeface(tf);
 
 			vEditText.add(value_u);
 		}
@@ -173,7 +175,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			vTextView.add(tv);
 
 			value_p = (EditText) findViewById(R.id.value_p);
-			value_p.setTypeface(tf);
 
 			vEditText.add(value_p);
 		}
@@ -185,7 +186,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			vTextView.add(tv);
 
 			text = (EditText) findViewById(R.id.text);
-			text.setTypeface(tf);
 
 			vEditText.add(text);
 		}
@@ -197,7 +197,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			vTextView.add(tv);
 
 			odometer = (EditText) findViewById(R.id.odometer);
-			odometer.setTypeface(tf);
 
 			vEditText.add(odometer);
 		}
@@ -231,13 +230,9 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		if (item == null) {
 			Toast.makeText(this, "Dados do item não encontrados na base.",
 					Toast.LENGTH_SHORT).show();
+
 			finish(); // fecha a view em caso de erro
 
-		} else {
-			// get id car
-			// id_car = i.getId_car();
-			Log.i(CATEGORIA, "Data for edit");
-			Log.i(CATEGORIA, item.toString());
 		}
 
 		try {

@@ -163,6 +163,8 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 
 		// Fecha a tela
 		finish();
+
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
 
 	public void excluir() {
@@ -262,8 +264,11 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 
 	public void btBarLeft(final View v) {
 		setResult(RESULT_CANCELED);
+
 		// Fecha a tela
 		finish();
+
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 
 	}
 

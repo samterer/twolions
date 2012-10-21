@@ -34,8 +34,8 @@ import br.com.twolions.object.ListItemAdapter;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
-public class ListItemScreen extends FuelActivity implements OnItemClickListener,
-		InterfaceBar, Transaction {
+public class ListItemScreen extends FuelActivity implements
+		OnItemClickListener, InterfaceBar, Transaction {
 	protected static final int INSERIR_EDITAR = 1;
 
 	private String TAG = Constants.LOG_APP;
@@ -161,9 +161,9 @@ public class ListItemScreen extends FuelActivity implements OnItemClickListener,
 	}
 
 	public void update() {
-		
+
 		Log.i(TAG, "Update in list items.");
-		
+
 		// Pega a lista de carros e exibe na tela
 		itens = getItens();
 
@@ -392,13 +392,14 @@ public class ListItemScreen extends FuelActivity implements OnItemClickListener,
 	}
 
 	public void deleteConConfirm(View v) {
+
 		deleteConConfirm();
+
 	}
 
 	public void btBarLeft(View v) {
 
-		// go next screen
-		finish();
+		finish(); // go next screen
 
 	}
 
@@ -415,7 +416,7 @@ public class ListItemScreen extends FuelActivity implements OnItemClickListener,
 
 	public void onBackPressed() { // call my backbutton pressed method when
 									// boolean==true
-		Log.i(TAG, "Clicked back");
+		Log.i(TAG, "block clicked back!");
 
 	}
 
@@ -523,7 +524,6 @@ public class ListItemScreen extends FuelActivity implements OnItemClickListener,
 			// let the system handle the event
 			return super.onTouchEvent(event);
 		}
-
 
 	}
 }
