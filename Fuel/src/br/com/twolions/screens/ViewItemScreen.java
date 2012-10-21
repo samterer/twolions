@@ -1,6 +1,7 @@
 package br.com.twolions.screens;
 
 import java.util.Calendar;
+import java.util.Vector;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,8 @@ import br.com.twolions.core.FormItemActivity;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.util.Constants;
+import br.com.twolions.util.EditTextTools;
+import br.com.twolions.util.TextViewTools;
 
 public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
@@ -48,6 +51,9 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	private int hour;
 	private int minute;
 
+	Vector<EditText> vEditText; // vetor de editText
+	Vector<TextView> vTextView; // vetor de TextViews
+
 	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
 
@@ -65,6 +71,9 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	 ******************************************************************************/
 
 	private void init() {
+
+		vEditText = new Vector<EditText>();
+		vTextView = new Vector<TextView>();
 
 		TextView tv;
 
@@ -137,51 +146,67 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		if (type == EXPENSE || type == REPAIR || type == NOTE) {
 
 			tv = (TextView) findViewById(R.id.t_subject);
-			tv.setTypeface(tf);
+			vTextView.add(tv);
 
 			subject = (EditText) findViewById(R.id.subject);
 			subject.setTypeface(tf);
+
+			vEditText.add(subject);
 		}
 
 		// value u
 		if (type == FUEL) {
 
 			tv = (TextView) findViewById(R.id.t_value_u);
-			tv.setTypeface(tf);
+			vTextView.add(tv);
 
 			value_u = (EditText) findViewById(R.id.value_u);
 			value_u.setTypeface(tf);
+
+			vEditText.add(value_u);
 		}
 
 		// value p
 		if (type == EXPENSE || type == REPAIR || type == FUEL) {
 
 			tv = (TextView) findViewById(R.id.t_value_p);
-			tv.setTypeface(tf);
+			vTextView.add(tv);
 
 			value_p = (EditText) findViewById(R.id.value_p);
 			value_p.setTypeface(tf);
+
+			vEditText.add(value_p);
 		}
 
 		// text
 		if (type == NOTE) {
 
 			tv = (TextView) findViewById(R.id.t_text);
-			tv.setTypeface(tf);
+			vTextView.add(tv);
 
 			text = (EditText) findViewById(R.id.text);
 			text.setTypeface(tf);
+
+			vEditText.add(text);
 		}
 
 		// odemeter
 		if (type == FUEL) {
 
 			tv = (TextView) findViewById(R.id.t_odometer);
-			tv.setTypeface(tf);
+			vTextView.add(tv);
 
 			odometer = (EditText) findViewById(R.id.odometer);
 			odometer.setTypeface(tf);
+
+			vEditText.add(odometer);
 		}
+
+		EditTextTools.insertFontInAllFields(vEditText, tf); // change font
+															// editText
+
+		TextViewTools.insertFontInAllFields(vTextView, tf); // change font
+															// textView
 
 		// edit ?
 		Log.i(CATEGORIA, "Visualização de item...");

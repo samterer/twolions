@@ -19,6 +19,7 @@
             android:gravity="center"
             android:text="@string/tv_vr" />
     </TableRow>
+
     <!-- EDIT NAME VEHICLE -->
 
     <TableRow
@@ -92,7 +93,7 @@
     </TableRow>
 
     <TableRow
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center" >
@@ -109,8 +110,7 @@
             android:id="@+id/campoTipoMoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="15dp"
             android:background="@null"
             android:drawableTop="@drawable/bt_moto" />
     </TableRow>
