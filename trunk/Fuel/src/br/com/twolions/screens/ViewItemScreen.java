@@ -152,7 +152,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			vTextView.add(tv);
 
 			subject = (EditText) findViewById(R.id.subject);
-			subject.setBackgroundColor(R.color.transparente);
 
 			vEditText.add(subject);
 		}
@@ -207,9 +206,24 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		TextViewTools.insertFontInAllFields(vTextView, tf); // change font
 															// textView
 
+		changeFormatEditText(); // aplica o formato para apenas visualização
+
 		// edit ?
-		Log.i(CATEGORIA, "Visualização de item...");
+		Log.i(CATEGORIA, "Recupera os dados para a visualização do item...");
 		loadingDataItem();
+
+	}
+
+	/**
+	 * Mantem todos os cursores false e muda o fundo para transparente
+	 */
+	private void changeFormatEditText() {
+		for (int i = 0; i < vEditText.size(); i++) {
+			EditText et = (EditText) vEditText.elementAt(i);
+
+			et.setBackgroundColor(0x00000000);
+			et.setCursorVisible(false);
+		}
 
 	}
 
