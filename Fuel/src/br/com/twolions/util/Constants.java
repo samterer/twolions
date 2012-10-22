@@ -6,7 +6,7 @@ public class Constants {
 	public static final String AUTHORITY = "br.com.twolions";
 
 	// version of current data base
-	public static final int DB_VERSION = 1;
+	public static final int DB_VERSION = 2;
 
 	// db
 	public static final String DB_NAME = "bd_itsmycar";

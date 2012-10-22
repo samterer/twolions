@@ -9,7 +9,6 @@
         style="@style/texto55Negrito"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:background="@color/transparente"
         android:gravity="center_vertical|center_horizontal"
         android:hint="@string/h_click"
         android:scaleType="centerInside"

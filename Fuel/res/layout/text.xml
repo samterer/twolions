@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@color/transparente"
         android:gravity="top|center_horizontal"
         android:height="200dp"
         android:hint="@string/h_text"
