@@ -6,12 +6,14 @@
 
     <EditText
         android:id="@+id/odometer"
-        style="@style/texto55Negrito"
+        style="@style/texto40Negrito"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical|center_horizontal"
         android:hint="@string/h_click"
         android:scaleType="centerInside"
-        android:tag="odometer" />
+        android:maxLength="7"
+        android:tag="odometer" 
+        android:inputType="number"/>
 
 </LinearLayout>

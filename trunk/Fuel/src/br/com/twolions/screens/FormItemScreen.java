@@ -10,18 +10,22 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FormItemActivity;
 import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
+import br.com.twolions.rules.ItemRules;
 import br.com.twolions.util.Constants;
 import br.com.twolions.util.EditTextTools;
 import br.com.twolions.util.TextViewTools;
@@ -153,7 +157,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		hour = c.get(Calendar.HOUR_OF_DAY);
 		minute = c.get(Calendar.MINUTE);
 
-		date.setText(new StringBuilder().append(pad(hour)).append("")
+		date.setText(new StringBuilder().append(pad(hour)).append(":")
 				.append(pad(minute)));
 
 		// subject
@@ -312,9 +316,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		if (EditTextTools.isEmptyEdit(vEditText, this)) {
 			return;
 		}
-		// } else {
-		// // verify campos do fuel
-		// }
 
 		ItemLog itemLog = new ItemLog();
 		if (id_item != null) {
@@ -356,8 +357,22 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			itemLog.setOdometer(Long.valueOf(odometer.getText().toString()));
 		}
 
-		// Salvar
-		salvarItemLog(itemLog);
+		// regra de negocio
+		if (type == FUEL) {
+			if (ItemRules.ruleManager(item, this)) {
+
+				// Salvar
+				salvarItemLog(itemLog);
+
+			} else {
+				return;
+			}
+		} else {
+
+			// Salvar
+			salvarItemLog(itemLog);
+
+		}
 
 		// OK
 		setResult(RESULT_OK, new Intent());
@@ -438,6 +453,22 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				showDialog(TIME_DIALOG_ID);
 
+			}
+
+		});
+
+		// values
+
+		value_p.setOnEditorActionListener(new OnEditorActionListener() {
+
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+
+				Toast.makeText(FormItemScreen.this,
+						"value current[" + v.getText() + "]",
+						Toast.LENGTH_SHORT).show();
+
+				return false;
 			}
 
 		});

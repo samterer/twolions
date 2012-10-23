@@ -14,6 +14,7 @@
         <item name="android:textColor">@color/cinza_default</item>
         <item name="android:textSize">12sp</item>
     </style>
+
     <!-- Texto com Fonte 14 -->
     <style name="texto14">
         <item name="android:textColor">@color/preto</item>
@@ -33,6 +34,7 @@
         <item name="android:textColor">@color/cinza_default</item>
         <item name="android:textSize">14sp</item>
     </style>
+
     <!-- Texto com Fonte 16 -->
     <style name="texto16cinzaDark">
         <item name="android:textColor">@color/cinza_dark</item>
@@ -42,6 +44,7 @@
     <style name="texto16cinzaDarkNegrito" parent="texto16cinzaDark">
         <item name="android:textStyle">bold</item>
     </style>
+
     <!-- Texto com Fonte 20 -->
     <style name="texto20">
         <item name="android:textColor">@color/preto</item>
@@ -51,6 +54,7 @@
     <style name="texto20pretoNegrito" parent="texto20">
         <item name="android:textStyle">bold</item>
     </style>
+
     <!-- Texto com Fonte 28 -->
     <style name="texto28">
         <item name="android:textColor">@color/preto</item>
@@ -60,6 +64,7 @@
     <style name="texto28Negrito" parent="texto28">
         <item name="android:textStyle">bold</item>
     </style>
+
     <!-- Texto com Fonte 34 -->
     <style name="texto34">
         <item name="android:textColor">@color/preto</item>
@@ -69,6 +74,17 @@
     <style name="texto34Negrito" parent="texto34">
         <item name="android:textStyle">bold</item>
     </style>
+    
+    <!-- Texto com Fonte 40 -->
+    <style name="texto40">
+        <item name="android:textColor">@color/preto</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <style name="texto40Negrito" parent="texto40">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- Texto com Fonte 45 -->
     <style name="texto45">
         <item name="android:textColor">@color/preto</item>
@@ -78,6 +94,17 @@
     <style name="texto45Negrito" parent="texto45">
         <item name="android:textStyle">bold</item>
     </style>
+
+    <!-- Texto com Fonte 50 -->
+    <style name="texto50">
+        <item name="android:textColor">@color/preto</item>
+        <item name="android:textSize">50sp</item>
+    </style>
+
+    <style name="texto50Negrito" parent="texto50">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- Texto com Fonte 55 -->
     <style name="texto55">
         <item name="android:textColor">@color/preto</item>
