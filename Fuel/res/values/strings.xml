@@ -33,8 +33,11 @@
     <!-- alertas -->
     <string name="a_dt_car">Are you sure you want to delete this car?</string>
     <string name="a_dt_item">Are you sure you want to delete this item?</string>
-    <string name="a_f_item"> Please, fill in all fields with red color.</string>
     <string name="t_f_item">Empty fields</string>
+    <string name="a_f_item"> Please, fill in all fields with red color.</string>
+    <string name="t_r_t_1">Invalid number</string>
+    <string name="t_r_1">The amount payable shall be at least twice the value of the unit.</string>
+    
 
     <!-- Positivo e negativo -->
     <string name="a_n">Not</string>

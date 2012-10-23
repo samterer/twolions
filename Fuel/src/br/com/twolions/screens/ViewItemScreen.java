@@ -17,6 +17,7 @@ import br.com.twolions.R;
 import br.com.twolions.core.FormItemActivity;
 import br.com.twolions.daoobjects.ItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
+import br.com.twolions.settings.Settings;
 import br.com.twolions.util.Constants;
 import br.com.twolions.util.EditTextTools;
 import br.com.twolions.util.TextViewTools;
@@ -221,8 +222,8 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		for (int i = 0; i < vEditText.size(); i++) {
 			EditText et = (EditText) vEditText.elementAt(i);
 
-			et.setBackgroundColor(0x00000000);
-			et.setCursorVisible(false);
+			et.setBackgroundColor(0x00000000); // set ao background transparente
+			et.setCursorVisible(false); // torna invisivel o cursor
 		}
 
 	}
@@ -242,6 +243,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	public void loadingDataItem() {
 
 		if (item == null) {
+
 			Toast.makeText(this, "Dados do item não encontrados na base.",
 					Toast.LENGTH_SHORT).show();
 
@@ -262,13 +264,15 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 			// value u
 			if (type == FUEL) {
-				value_u.setText(String.valueOf((item.getValue_u())));
+				value_u.setText(Settings.moeda
+						+ String.valueOf((item.getValue_u())));
 				value_u.setFocusable(false);
 			}
 
 			// value p
 			if (type == EXPENSE || type == REPAIR || type == FUEL) {
-				value_p.setText(String.valueOf((item.getValue_p())));
+				value_p.setText(Settings.moeda
+						+ String.valueOf((item.getValue_p())));
 				value_p.setFocusable(false);
 			}
 

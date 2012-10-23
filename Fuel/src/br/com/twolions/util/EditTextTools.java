@@ -42,11 +42,14 @@ public class EditTextTools {
 
 		}
 		if (cont == 2) {
+
 			result = false; // todos os campos foram preenchidos
+
 		} else {
+
 			result = true; // ainda existem campos não preenchidos
 
-			// Não existe conexão
+			// ainda existem campos não preenchidos
 			AndroidUtils.alertDialog(context, R.string.a_f_item,
 					context.getString(R.string.t_f_item));
 

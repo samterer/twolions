@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.twolions.R;
 import br.com.twolions.daoobjects.ItemLog;
+import br.com.twolions.settings.Settings;
 import br.com.twolions.util.Constants;
 
 public class ListItemAdapter extends BaseAdapter {
@@ -92,13 +94,13 @@ public class ListItemAdapter extends BaseAdapter {
 			}
 		}
 
-		// TODO
-		String moeda = "$";
-		String medida = "/L";
-
+		Log.i(TAG, "************************************************");
+		Log.i(TAG, "type [" + item.getType() + "]");
 		// value u
 		if (item.getType() == Constants.FUEL) {
-			holder.textRightDown.setText(moeda
+			Log.i(TAG, "valor getValue_u[" + item.getValue_u() + "]");
+
+			holder.textRightDown.setText(Settings.moeda
 					+ String.valueOf(item.getValue_u()));
 			holder.textRightDown.setVisibility(View.VISIBLE);
 		}
@@ -107,7 +109,9 @@ public class ListItemAdapter extends BaseAdapter {
 		if (item.getType() == Constants.EXPENSE
 				|| item.getType() == Constants.REPAIR
 				|| item.getType() == Constants.FUEL) {
-			holder.textRightUp.setText(moeda
+			Log.i(TAG, "valor getValue_p[" + item.getValue_p() + "]");
+
+			holder.textRightUp.setText(Settings.moeda
 					+ String.valueOf(item.getValue_p()));
 			holder.textRightUp.setVisibility(View.VISIBLE);
 		}
@@ -119,18 +123,27 @@ public class ListItemAdapter extends BaseAdapter {
 		if (item.getType() == Constants.EXPENSE
 				|| item.getType() == Constants.REPAIR
 				|| item.getType() == Constants.NOTE) {
+			Log.i(TAG, "valor getSubject[" + item.getSubject() + "]");
+
 			holder.textLeftDown.setText(String.valueOf(item.getSubject()));
 			holder.textLeftDown.setVisibility(View.VISIBLE);
 		}
 
 		// stocked
 		if (item.getType() == Constants.FUEL) {
+
 			// calcula qtd de litro abastecido
 			Double total = Math.floor(item.getValue_p() / item.getValue_u());
+
+			Log.i(TAG,
+					"valor total.intValue()["
+							+ String.valueOf(total.intValue()) + "]");
+
 			holder.textLeftDown.setText(String.valueOf(total.intValue())
-					+ medida);
+					+ Settings.medida);
 			holder.textLeftDown.setVisibility(View.VISIBLE);
 		}
+		Log.i(TAG, "************************************************");
 
 		// icon
 		switch (item.getType()) {
