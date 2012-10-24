@@ -68,4 +68,62 @@ public class EditTextTools {
 
 	}
 
+	/**
+	 * Convert numero para decimal
+	 * 
+	 * @author michel
+	 * */
+	public static String formatDecimal(String numAdd, double numValorProduto) {
+
+		/*
+		 * Pode ser adicionado até 100.000,00
+		 */
+		if (numValorProduto < 10000000 || numAdd.equals("")) {
+
+			// se for vazio, então é para decrementar o número.
+			if (numAdd.equals("")) {
+				// apaga um número
+				if (numValorProduto > 0) {
+					numValorProduto = numValorProduto / 10;
+				}
+			} else if (numAdd.equals("00")) {
+
+				numValorProduto = numValorProduto * 100; // adiciona dois zeros
+
+			} else {
+
+				int numInt = Integer.parseInt(numAdd); // número normal.
+
+				numValorProduto = (numValorProduto * 10) + numInt;
+
+			}
+
+			String strNum = String.valueOf(numValorProduto);
+
+			if (strNum.length() == 1) {
+				strNum = "00" + strNum;
+			} else if (strNum.length() == 2) {
+				strNum = "0" + strNum;
+			}
+
+			StringBuilder strBuilder = new StringBuilder(strNum);
+			// strBuilder.insert(strNum.length() - 2, ",");
+
+			int length = strBuilder.length();
+
+			// adiciona o ponto do milhar.
+			if (length >= 7) {
+				strBuilder.insert(length - 6, ".");
+				// adiciona o ponto.
+				if (length >= 10) {
+					strBuilder.insert(length - 9, ".");
+				}
+			}
+
+			return strBuilder.toString();
+		}
+
+		return "";
+	}
+
 }

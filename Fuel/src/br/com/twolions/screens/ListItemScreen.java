@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
@@ -24,7 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import br.com.twolions.R;
-import br.com.twolions.core.FuelActivity;
+import br.com.twolions.core.MabooActivity;
 import br.com.twolions.dao.ItemLogDAO;
 import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.daoobjects.ItemLog;
@@ -34,8 +35,8 @@ import br.com.twolions.object.ListItemAdapter;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
-public class ListItemScreen extends FuelActivity implements
-		OnItemClickListener, InterfaceBar, Transaction {
+public class ListItemScreen extends MabooActivity implements
+		OnItemClickListener, InterfaceBar, Transaction, OnTouchListener {
 	protected static final int INSERIR_EDITAR = 1;
 
 	private String TAG = Constants.LOG_APP;
@@ -78,42 +79,56 @@ public class ListItemScreen extends FuelActivity implements
 	 ******************************************************************************/
 	@SuppressWarnings("unchecked")
 	public void montaTela(Bundle icicle) {
+
 		setContentView(R.layout.list_log);
 
 		listview_log = (ListView) findViewById(R.id.listview_log);
 		listview_log.setAdapter(new ListItemAdapter(this, itens));
 		listview_log.setOnItemClickListener(this);
+		listview_log.setOnTouchListener(this);
 
 		itens = (List<ItemLog>) getLastNonConfigurationInstance();
 
 		effect(); // effect for opening
 
 		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
+
 		if (icicle != null) {
+
 			// Recuperamos a lista de carros salva pelo
 			// onSaveInstanceState(bundle)
 			ListItemLog lista = (ListItemLog) icicle
 					.getSerializable(ListItemLog.KEY);
+
 			Log.i(TAG, "Lendo estado: savedInstanceState(carros)");
+
 			this.itens = lista.itens;
+
 		}
 
 		if (itens != null) { // Atualiza o ListView diretamente
+
 			listview_log.setAdapter(new ListItemAdapter(this, itens));
+
 		} else {
+
 			startTransaction(this);
+
 		}
 
 	}
 
 	public Object onRetainNonConfigurationInstance() {
 		Log.i(TAG, "Salvando Estado: onRetainNonConfigurationInstance()");
+
 		return itens;
 	}
 
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+
 		Log.i(TAG, "Salvando Estado: onSaveInstanceState(bundle)");
+
 		// Salvar o estado da tela
 		outState.putSerializable(ListItemLog.KEY, new ListItemLog(itens));
 	}
@@ -124,8 +139,10 @@ public class ListItemScreen extends FuelActivity implements
 
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
+
 		Log.i(TAG,
 				"O Estado da Tela foi Mudado: onConfigurationChanged(newConfig)");
+
 		if (!customMenuDialog.isShowing()) {
 			if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 				// abre lista de logs do carro
@@ -146,6 +163,7 @@ public class ListItemScreen extends FuelActivity implements
 			// atualiza a lista na tela
 			update();
 		}
+
 	}
 
 	/******************************************************************************
@@ -176,6 +194,8 @@ public class ListItemScreen extends FuelActivity implements
 
 	private void confListForLongClick() {
 		listview_log.setOnItemClickListener(this);
+		listview_log.setOnTouchListener(this);
+
 		listview_log
 				.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 					public boolean onItemLongClick(AdapterView<?> av, View v,
@@ -226,6 +246,7 @@ public class ListItemScreen extends FuelActivity implements
 					R.anim.anime_slide_to_left);
 
 			item.setLayoutAnimation(controller);
+
 		} else {
 			// Toast.makeText(this, "apagando...", Toast.LENGTH_SHORT).show();
 
@@ -236,6 +257,7 @@ public class ListItemScreen extends FuelActivity implements
 			LinearLayout tb_edicao = (LinearLayout) view
 					.findViewById(R.id.tb_edicao);
 			tb_edicao.setVisibility(View.GONE);
+
 		}
 
 		final Handler handler = new Handler();
@@ -322,6 +344,8 @@ public class ListItemScreen extends FuelActivity implements
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
 
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+
 	}
 
 	/**
@@ -365,29 +389,75 @@ public class ListItemScreen extends FuelActivity implements
 	private String oldPosition = null;
 	private String getSelectedItemOfList;
 
+	public boolean onTouch(View v, MotionEvent event) {
+
+		int pos = v.getId();
+
+		Log.i("touch", "touch in position [" + pos + "]");
+
+		float x1 = 0, x2 = 0;
+		String direction = "";
+
+		switch (event.getAction()) {
+		case (MotionEvent.ACTION_DOWN):
+			x1 = event.getX();
+			break;
+		case (MotionEvent.ACTION_UP):
+			x2 = event.getX();
+
+			float dx = x2 - x1;
+
+			// Use dx and dy to determine the direction
+			if (dx > 0) {
+				direction = "right";
+
+				// get the row the clicked button is in
+				// id_car = itens.get(pos).getId_car();
+				// id_item = itens.get(pos).getId();
+
+				// open list item log
+				// openViewItem();
+
+			} else {
+				direction = "left";
+
+				// ItemLog item = itens.get(pos);
+				// id_item = item.getId();
+				// id_car = item.getId_car();
+				// type = item.getType();
+
+				// showBtsEditDelete(v, true);
+
+			}
+			break;
+		}
+		Log.i("touch", "direction [" + direction + "]");
+
+		return false;
+	}
+
 	public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 
-		getSelectedItemOfList = (parent.getItemAtPosition(pos)).toString();
-
+		// getSelectedItemOfList = (parent.getItemAtPosition(pos)).toString();
 		// Log.i(TAG, "getSelectedItemOfList [" + getSelectedItemOfList + "]");
 
 		// get the row the clicked button is in
-		id_car = itens.get(pos).getId_car();
-		id_item = itens.get(pos).getId();
+		// id_car = itens.get(pos).getId_car();
+		// id_item = itens.get(pos).getId();
 
 		// open list item log
-		openViewItem();
+		// openViewItem();
 
 	}
 
 	public void onItemLongClick(AdapterView<?> arg0, View view, int pos, long id) {
 
-		ItemLog item = itens.get(pos);
-		id_item = item.getId();
-		id_car = item.getId_car();
-		type = item.getType();
+		// ItemLog item = itens.get(pos);
+		// id_item = item.getId();
+		// id_car = item.getId_car();
+		// type = item.getType();
 
-		showBtsEditDelete(view, true);
+		// showBtsEditDelete(view, true);
 
 	}
 

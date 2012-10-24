@@ -35,6 +35,32 @@ public class SqlScript extends DBConnection {
 			sqlScript[1] + " " + TB_CARRO
 					+ "(nome,placa,tipo) values('Fiesta','JUH-8266','carro');",
 			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
+					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
+			sqlScript[1] + " " + TB_CARRO
 					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');" };
 
 	// ///////////////
@@ -85,6 +111,19 @@ public class SqlScript extends DBConnection {
 				SqlScript.SCRIPT_CREATE_TB_CAR[0],
 				SqlScript.SCRIPT_CREATE_TB_CAR[1],
 				SqlScript.SCRIPT_CREATE_TB_CAR[2],
+				SqlScript.SCRIPT_CREATE_TB_CAR[3],
+				SqlScript.SCRIPT_CREATE_TB_CAR[4],
+				SqlScript.SCRIPT_CREATE_TB_CAR[5],
+				SqlScript.SCRIPT_CREATE_TB_CAR[6],
+				SqlScript.SCRIPT_CREATE_TB_CAR[7],
+				SqlScript.SCRIPT_CREATE_TB_CAR[8],
+				SqlScript.SCRIPT_CREATE_TB_CAR[9],
+				SqlScript.SCRIPT_CREATE_TB_CAR[10],
+				SqlScript.SCRIPT_CREATE_TB_CAR[11],
+				SqlScript.SCRIPT_CREATE_TB_CAR[12],
+				SqlScript.SCRIPT_CREATE_TB_CAR[13],
+				SqlScript.SCRIPT_CREATE_TB_CAR[14],
+				SqlScript.SCRIPT_CREATE_TB_CAR[15],
 
 				// create fuel car and 1 register
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[0],

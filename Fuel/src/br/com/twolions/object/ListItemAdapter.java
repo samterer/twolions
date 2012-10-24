@@ -53,25 +53,27 @@ public class ListItemAdapter extends BaseAdapter {
 	public View getView(int position, View view, ViewGroup parent) {
 		ViewHolder holder = null;
 
-		ItemLog item = itens.get(position);
+		ItemLog itemRequest = itens.get(position);
 
 		if (view == null) {
 			// Nao existe a View no cache para esta linha então cria um novo
 			holder = new ViewHolder();
+
 			// Busca o layout para cada carro com a foto
 			int layout = R.layout.item_log;
 			view = inflater.inflate(layout, null);
-			view.setTag(holder);
+			view.setTag(holder); // seta a tag
+			view.setId(position);
 
-			if (item.getType() == Constants.FUEL) {
+			if (itemRequest.getType() == Constants.FUEL) {
 				holder.textRightDown = (TextView) view
 						.findViewById(R.id.textRightDown);
 				holder.textRightDown.setTypeface(tf);
 			}
 
-			if (item.getType() == Constants.EXPENSE
-					|| item.getType() == Constants.REPAIR
-					|| item.getType() == Constants.FUEL) {
+			if (itemRequest.getType() == Constants.EXPENSE
+					|| itemRequest.getType() == Constants.REPAIR
+					|| itemRequest.getType() == Constants.FUEL) {
 				holder.textRightUp = (TextView) view
 						.findViewById(R.id.textRightUp);
 				holder.textRightUp.setTypeface(tf);
@@ -95,45 +97,47 @@ public class ListItemAdapter extends BaseAdapter {
 		}
 
 		Log.i(TAG, "************************************************");
-		Log.i(TAG, "type [" + item.getType() + "]");
+		Log.i(TAG, "type [" + itemRequest.getType() + "]");
 		// value u
-		if (item.getType() == Constants.FUEL) {
-			Log.i(TAG, "valor getValue_u[" + item.getValue_u() + "]");
+		if (itemRequest.getType() == Constants.FUEL) {
+			Log.i(TAG, "valor getValue_u[" + itemRequest.getValue_u() + "]");
 
 			holder.textRightDown.setText(Settings.moeda
-					+ String.valueOf(item.getValue_u()));
+					+ String.valueOf(itemRequest.getValue_u()));
 			holder.textRightDown.setVisibility(View.VISIBLE);
 		}
 
 		// value p
-		if (item.getType() == Constants.EXPENSE
-				|| item.getType() == Constants.REPAIR
-				|| item.getType() == Constants.FUEL) {
-			Log.i(TAG, "valor getValue_p[" + item.getValue_p() + "]");
+		if (itemRequest.getType() == Constants.EXPENSE
+				|| itemRequest.getType() == Constants.REPAIR
+				|| itemRequest.getType() == Constants.FUEL) {
+			Log.i(TAG, "valor getValue_p[" + itemRequest.getValue_p() + "]");
 
 			holder.textRightUp.setText(Settings.moeda
-					+ String.valueOf(item.getValue_p()));
+					+ String.valueOf(itemRequest.getValue_p()));
 			holder.textRightUp.setVisibility(View.VISIBLE);
 		}
 
 		// date
-		holder.date.setText(String.valueOf(item.getDate()));
+		holder.date.setText(String.valueOf(itemRequest.getDate()));
 
 		// subject
-		if (item.getType() == Constants.EXPENSE
-				|| item.getType() == Constants.REPAIR
-				|| item.getType() == Constants.NOTE) {
-			Log.i(TAG, "valor getSubject[" + item.getSubject() + "]");
+		if (itemRequest.getType() == Constants.EXPENSE
+				|| itemRequest.getType() == Constants.REPAIR
+				|| itemRequest.getType() == Constants.NOTE) {
+			Log.i(TAG, "valor getSubject[" + itemRequest.getSubject() + "]");
 
-			holder.textLeftDown.setText(String.valueOf(item.getSubject()));
+			holder.textLeftDown
+					.setText(String.valueOf(itemRequest.getSubject()));
 			holder.textLeftDown.setVisibility(View.VISIBLE);
 		}
 
 		// stocked
-		if (item.getType() == Constants.FUEL) {
+		if (itemRequest.getType() == Constants.FUEL) {
 
 			// calcula qtd de litro abastecido
-			Double total = Math.floor(item.getValue_p() / item.getValue_u());
+			Double total = Math.floor(itemRequest.getValue_p()
+					/ itemRequest.getValue_u());
 
 			Log.i(TAG,
 					"valor total.intValue()["
@@ -146,7 +150,7 @@ public class ListItemAdapter extends BaseAdapter {
 		Log.i(TAG, "************************************************");
 
 		// icon
-		switch (item.getType()) {
+		switch (itemRequest.getType()) {
 		case Constants.FUEL:
 			holder.icone.setImageResource(R.drawable.fuel);
 			break;

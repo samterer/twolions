@@ -4,7 +4,7 @@
     <string name="hello">Hello World, FuelActivity!</string>
     <string name="app_name">Maboo</string>
     <string name="name">Name Car</string>
-    <string name="aguarde">Por favor, aguarde um momento.</string>
+    <string name="aguarde">Loading...</string>
 
     <!-- BASE -->
     <string name="dbname">bd_itsmycar</string>
