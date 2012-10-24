@@ -9,17 +9,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.TimePicker;
-import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FormItemActivity;
 import br.com.twolions.daoobjects.Carro;
@@ -38,7 +36,7 @@ import br.com.twolions.util.TextViewTools;
  */
 public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
-	private final String CATEGORIA = Constants.LOG_APP;
+	private final String TAG = Constants.LOG_APP;
 
 	// Campos texto
 	private EditText value_u;
@@ -56,8 +54,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private static final int NOTE = Constants.NOTE;
 	private static final int REPAIR = Constants.REPAIR;
 
-	// item na tela
-	private ItemLog item;
+	// itemResquest na tela
+	private ItemLog itemResquest;
 
 	// date
 	private static final int TIME_DIALOG_ID = 999;
@@ -101,23 +99,24 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			String task = extras.getString("task");
 
-			if (task.equals("create")) { // cria novo item
+			if (task.equals("create")) { // cria novo itemResquest
 
 				id_car = extras.getLong(Carro._ID);
-				Log.i(CATEGORIA, "searching type [" + id_car + "]");
+				Log.i(TAG, "searching type [" + id_car + "]");
 
 				type = extras.getInt(ItemLog.TYPE);
-				Log.i(CATEGORIA, "searching type [" + type + "]");
+				Log.i(TAG, "searching type [" + type + "]");
 
-			} else if (task.equals("edit")) { // edit item
+			} else if (task.equals("edit")) { // edit itemResquest
 
 				id_item = extras.getLong(ItemLog._ID);
 
-				Log.i(CATEGORIA, "searching item [" + id_item + "]");
-				item = buscarItemLog(id_item); // busca informações do item
+				Log.i(TAG, "searching itemResquest [" + id_item + "]");
+				itemResquest = buscarItemLog(id_item); // busca informações do
+														// itemResquest
 
-				id_car = item.getId_car();
-				type = item.getType();
+				id_car = itemResquest.getId_car();
+				type = itemResquest.getType();
 
 			}
 
@@ -224,15 +223,15 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		TextViewTools.insertFontInAllFields(vTextView, tf); // change font
 															// textView
 
-		if (item != null) { // edit item?
+		if (itemResquest != null) { // edit itemResquest?
 
-			Log.i(CATEGORIA, "Edição de item...");
+			Log.i(TAG, "Edição de itemResquest...");
 
 			loadingEdit();
 
-		} else {// create a new item?
+		} else {// create a new itemResquest?
 
-			Log.i(CATEGORIA, "Criação de item...");
+			Log.i(TAG, "Criação de itemResquest...");
 
 		}
 
@@ -241,57 +240,47 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	// open screen with datas of object
 	public void loadingEdit() {
 
-		// searching item
-		// Log.i(CATEGORIA, "searching item [" + id_item + "]");
-		// final ItemLog i = buscarItemLog(id_item);
-
-		// if (item == null) { // retirar depois, dupla verificação
-		// Toast.makeText(this, "Dados do item não encontrados na base.",
-		// Toast.LENGTH_SHORT).show();
-		// onPause(); // fecha o form
-		// return;
-		// } else {
-		// get id car
-		// id_car = item.getId_car();
-		Log.i(CATEGORIA, "Data for edit");
-		Log.i(CATEGORIA, item.toString());
+		Log.i(TAG, "Data for edit");
+		Log.i(TAG, itemResquest.toString());
 		// }
 
 		try {
 
 			// date
-
-			date.setText(String.valueOf((item.getDate())));
+			date.setText(String.valueOf((itemResquest.getDate())));
 
 			// subject
 			if (type == EXPENSE || type == REPAIR || type == NOTE) {
-				subject.setText(String.valueOf((item.getSubject())));
+				subject.setText(String.valueOf((itemResquest.getSubject())));
 			}
 
 			// value u
 			if (type == FUEL) {
-				value_u.setText(String.valueOf((item.getValue_u())));
+				value_u.setText(String.valueOf((itemResquest.getValue_u())));
 			}
 
 			// value p
 			if (type == EXPENSE || type == REPAIR || type == FUEL) {
-				value_p.setText(String.valueOf((item.getValue_p())));
+				value_p.setText(String.valueOf((itemResquest.getValue_p())));
 			}
 
 			// text
 			if (type == NOTE) {
-				text.setText(String.valueOf((item.getText())));
+				text.setText(String.valueOf((itemResquest.getText())));
 			}
 
 			// odemeter
 			if (type == FUEL) {
-				odometer.setText(String.valueOf((item.getOdometer())));
+
+				// recupera ultimo valor registrado de odometer(por data) deste
+				// veiculo
+
+				odometer.setText(String.valueOf((itemResquest.getOdometer())));
 			}
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-
-			Log.e(CATEGORIA, item.toString());
+			Log.e(TAG, itemResquest.toString());
 		}
 
 	}
@@ -317,60 +306,70 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			return;
 		}
 
-		ItemLog itemLog = new ItemLog();
+		ItemLog itemLog4Save = new ItemLog();
 		if (id_item != null) {
 			// É uma atualização
-			itemLog.setId(id_item);
+			itemLog4Save.setId(id_item);
 		}
 
 		// id_car
-		itemLog.setId_car(id_car);
+		itemLog4Save.setId_car(id_car);
 
-		// type of item
-		itemLog.setType(type);
+		// type of itemResquest
+		itemLog4Save.setType(type);
 
 		// date
-		itemLog.setDate(date.getText().toString());
+		itemLog4Save.setDate(date.getText().toString());
 
 		// subject
 		if (type == EXPENSE || type == REPAIR || type == NOTE) {
-			itemLog.setSubject(subject.getText().toString());
+			itemLog4Save.setSubject(subject.getText().toString());
 		}
 
 		// value u
 		if (type == FUEL) {
-			itemLog.setValue_u(Double.valueOf(value_u.getText().toString()));
+			itemLog4Save.setValue_u(Double
+					.valueOf(value_u.getText().toString()));
 		}
 
 		// value p
 		if (type == EXPENSE || type == REPAIR || type == FUEL) {
-			itemLog.setValue_p(Double.valueOf(value_p.getText().toString()));
+			itemLog4Save.setValue_p(Double
+					.valueOf(value_p.getText().toString()));
 		}
 
 		// text
 		if (type == NOTE) {
-			itemLog.setText(text.getText().toString());
+			itemLog4Save.setText(text.getText().toString());
 		}
 
 		// odemeter
 		if (type == FUEL) {
-			itemLog.setOdometer(Long.valueOf(odometer.getText().toString()));
+			itemLog4Save.setOdometer(Long
+					.valueOf(odometer.getText().toString()));
 		}
 
 		// regra de negocio
-		if (type == FUEL) {
-			if (ItemRules.ruleManager(item, this)) {
+		if (type == FUEL) { // regras de fuel
+			if (ItemRules.ruleManager(itemLog4Save, this)) {
 
 				// Salvar
-				salvarItemLog(itemLog);
+				Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
+				salvarItemLog(itemLog4Save);
 
 			} else {
+
+				// pinta de vermelho os dados nos campos de value_p e value_u
+				value_p.setTextColor(R.color.vermelho);
+				value_u.setTextColor(R.color.vermelho);
+
 				return;
+
 			}
 		} else {
 
 			// Salvar
-			salvarItemLog(itemLog);
+			salvarItemLog(itemLog4Save);
 
 		}
 
@@ -439,11 +438,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		salvar();
 	}
 
-	// public void showTimePickerDialog(final View v) {
-	// Log.i(CATEGORIA, "open time picker");
-	// showDialog(TIME_DIALOG_ID);
-	// }
-	Spinner size_spinner;
+	String test;
 
 	public void addListenerOnButton() {
 
@@ -457,21 +452,50 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		});
 
-		// values
+		if (value_p != null) { // aplica regra de decimal
 
-		value_p.setOnEditorActionListener(new OnEditorActionListener() {
+			value_p.addTextChangedListener(new TextWatcher() {
 
-			public boolean onEditorAction(TextView v, int actionId,
-					KeyEvent event) {
+				public void onTextChanged(CharSequence s, int start,
+						int before, int count) {
 
-				Toast.makeText(FormItemScreen.this,
-						"value current[" + v.getText() + "]",
-						Toast.LENGTH_SHORT).show();
+				}
 
-				return false;
-			}
+				public void beforeTextChanged(CharSequence s, int start,
+						int count, int after) {
+					// TODO Auto-generated method stub
 
-		});
+				}
+
+				public void afterTextChanged(Editable s) {
+					// here, after we introduced something in the EditText we
+					// get the string from it
+
+					/*
+					 * String numAdd = s.toString();
+					 * 
+					 * Log.i(TAG, "operation [0] numAdd = " + numAdd);
+					 * 
+					 * String str = value_p.getText().toString();
+					 * 
+					 * Log.i(TAG, "operation [1] str = " + str);
+					 * 
+					 * double numValorProduto =
+					 * Double.valueOf(str).doubleValue();
+					 * 
+					 * Log.i(TAG, "operation [2] numValorProduto = " +
+					 * numValorProduto);
+					 * 
+					 * value_p.setText(EditTextTools.formatDecimal(numAdd,
+					 * numValorProduto));
+					 * 
+					 * Log.i(TAG, "operation [3] value_p.getText() = " +
+					 * value_p.getText());
+					 */
+
+				}
+			});
+		}
 
 	}
 

@@ -51,37 +51,56 @@ public class ListCarAdapter extends BaseAdapter {
 	public View getView(int position, View view, ViewGroup parent) {
 
 		ViewHolder holder = null;
+
 		if (view == null) {
+
 			// Nao existe a View no cache para esta linha então cria um novo
 			holder = new ViewHolder();
+
 			// Busca o layout para cada carro com a foto
 			int layout = R.layout.item_car;
 			view = inflater.inflate(layout, null);
 			view.setTag(holder);
+
 			holder.date = (TextView) view.findViewById(R.id.date);
 			holder.nome = (TextView) view.findViewById(R.id.nome);
 			holder.nome.setTypeface(tf);
 			holder.placa = (TextView) view.findViewById(R.id.placa);
 			holder.placa.setTypeface(tf);
 			holder.tipo = (ImageView) view.findViewById(R.id.tipo);
+
 		} else {
+
 			// Ja existe no cache, bingo entao pega!
 			try {
+
 				holder = (ViewHolder) view.getTag();
+
 			} catch (NullPointerException e) {
+
 				e.printStackTrace();
+
+			} catch (ClassCastException e) {
+
+				e.printStackTrace();
+
 			}
 
 		}
 
 		Carro c = carros.get(position);
-		holder.nome.setText(c.getNome());
-		holder.placa.setText(c.getPlaca());
+		try {
+			holder.nome.setText(c.getNome());
 
-		if (c.getTipo().equals("carro")) {
-			holder.tipo.setImageResource(R.drawable.type_car_on);
-		} else {
-			holder.tipo.setImageResource(R.drawable.type_moto_on);
+			holder.placa.setText(c.getPlaca());
+
+			if (c.getTipo().equals("carro")) {
+				holder.tipo.setImageResource(R.drawable.type_car_on);
+			} else {
+				holder.tipo.setImageResource(R.drawable.type_moto_on);
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
 		}
 
 		return view;

@@ -9,20 +9,24 @@ import br.com.twolions.transaction.Transaction;
 import br.com.twolions.transaction.TransactionTask;
 import br.com.twolions.util.AndroidUtils;
 
-public class FuelActivity extends ActivityCircle {
+public class MabooActivity extends ActivityCircle {
 
 	private TransactionTask task;
 
 	public static SqlScript sqlScript;
 
 	protected void alert(int menssage) {
+
 		AndroidUtils.alertDialog(this, menssage,
 				this.getString(R.string.app_name));
+
 	}
 
 	// Inicia a thread
 	public void startTransaction(Transaction transaction) {
+
 		boolean dbOk = AndroidUtils.isConnectionDB(this);
+
 		if (dbOk) {
 
 			// abre base
@@ -31,7 +35,9 @@ public class FuelActivity extends ActivityCircle {
 			// Inicia a transção
 			task = new TransactionTask(this, transaction, R.string.aguarde);
 			task.execute();
+
 		} else {
+
 			// Não existe conexão
 			AndroidUtils.alertDialog(this,
 					R.string.erro_conexao_db_indisponivel, "" + R.string.t_e_c);
@@ -40,13 +46,19 @@ public class FuelActivity extends ActivityCircle {
 
 	protected void onDestroy() {
 		super.onDestroy();
+
 		if (task != null) {
+
 			boolean executando = task.getStatus().equals(
 					AsyncTask.Status.RUNNING);
+
 			if (executando) {
+
 				executando = false;
+
 				task.cancel(true);
 				task.closedProgress();
+
 			}
 		}
 

@@ -22,15 +22,13 @@ public class SplashScreen extends ActivityCircle {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Log.i("appLog", "onCreate");
-
 		tInicial = new Intent(this, ListCarScreen.class);
 
 		handler = new Handler();
 
 		setContentView(R.layout.splashscreen);
 
-		timer = new CountDownTimer(3000, 1000) // 10seceonds
+		timer = new CountDownTimer(3000, 1000) // 3seceonds
 												// Timer
 		{
 			@Override
@@ -46,9 +44,11 @@ public class SplashScreen extends ActivityCircle {
 				handler.post(new Runnable() {
 					public void run() {
 						if (!isFinishSplash) {
+
 							startMaboo();
 
 							finish();
+
 						}
 					}
 				});
@@ -81,9 +81,9 @@ public class SplashScreen extends ActivityCircle {
 
 	private void startMaboo() {
 		Log.i("appLog", "init maboo()");
-		
+
 		startActivity(tInicial);
-		
+
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
 

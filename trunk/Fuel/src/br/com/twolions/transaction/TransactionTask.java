@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import br.com.twolions.R;
 import br.com.twolions.util.AndroidUtils;
 import br.com.twolions.util.Constants;
 
@@ -14,18 +15,28 @@ import br.com.twolions.util.Constants;
  * 
  */
 public class TransactionTask extends AsyncTask<Void, Void, Boolean> {
+
 	private static final String TAG = Constants.LOG_APP;
+
 	private final Context context;
+
 	private final Transaction transaction;
+
 	private ProgressDialog progress;
+
 	private Throwable exceptionError;
+
 	private int aguardeMsg;
 
 	public TransactionTask(Context context, Transaction transaction,
 			int aguardeMsg) {
+
 		this.context = context;
+
 		this.transaction = transaction;
+
 		this.aguardeMsg = aguardeMsg;
+
 	}
 
 	@Override
@@ -37,20 +48,30 @@ public class TransactionTask extends AsyncTask<Void, Void, Boolean> {
 
 	@Override
 	protected Boolean doInBackground(Void... params) {
+
 		try {
+
 			transaction.execute();
+
 		} catch (Throwable e) {
+
 			Log.e(TAG, e.getMessage(), e);
+
 			// Salva o erro e retorna false
 			this.exceptionError = e;
+
 			return false;
+
 		} finally {
+
 			try {
 				closedProgress();
 			} catch (Exception e) {
 				Log.e(TAG, e.getMessage(), e);
 			}
+
 		}
+
 		// OK
 		return true;
 	}
@@ -58,22 +79,31 @@ public class TransactionTask extends AsyncTask<Void, Void, Boolean> {
 	@Override
 	protected void onPostExecute(Boolean ok) {
 		if (ok) {
+
 			// Transação executou com sucesso
 			transaction.update();
+
 		} else {
+
 			// Erro
 			AndroidUtils.alertDialog(context,
-					"Erro: " + exceptionError.getMessage());
+					"Error: " + exceptionError.getMessage());
 		}
 	}
 
 	public void openProgress() {
+
 		try {
 			progress = ProgressDialog.show(context, "",
 					context.getString(aguardeMsg));
+
+			progress.getWindow().setBackgroundDrawableResource(
+					R.color.transparente);
+
 		} catch (Throwable e) {
 			Log.e(TAG, e.getMessage(), e);
 		}
+
 	}
 
 	public void closedProgress() {

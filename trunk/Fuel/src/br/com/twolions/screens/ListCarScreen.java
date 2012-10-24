@@ -21,7 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import br.com.twolions.R;
 import br.com.twolions.adapters.ListCarAdapter;
-import br.com.twolions.core.FuelActivity;
+import br.com.twolions.core.MabooActivity;
 import br.com.twolions.dao.CarroDAO;
 import br.com.twolions.dao.ItemLogDAO;
 import br.com.twolions.daoobjects.Carro;
@@ -31,8 +31,8 @@ import br.com.twolions.interfaces.InterfaceBar;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
-public class ListCarScreen extends FuelActivity implements OnItemClickListener,
-		InterfaceBar, Transaction {
+public class ListCarScreen extends MabooActivity implements
+		OnItemClickListener, InterfaceBar, Transaction {
 
 	private final String TAG = Constants.LOG_APP;
 
@@ -186,7 +186,9 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 	}
 
 	private void confListForLongClick() {
+
 		listview_car.setOnItemClickListener(this);
+
 		listview_car
 				.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 					public boolean onItemLongClick(AdapterView<?> av, View v,
@@ -197,15 +199,20 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 						return true;
 					}
 				});
+
 	}
 
 	private List<Carro> getCars() {
 		List<Carro> list = null;
 
 		try {
+
 			list = dao.listarCarros();
+
 		} catch (NullPointerException e) {
+
 			e.printStackTrace();
+
 		}
 
 		return list;
@@ -294,7 +301,6 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 
 	}
 
-
 	// Recupera o id do carro, e abre a tela de edição
 	private void editCar() {
 		// Cria a intent para abrir a tela de editar
@@ -343,7 +349,22 @@ public class ListCarScreen extends FuelActivity implements OnItemClickListener,
 	// delete car
 	public void deleteCar() {
 		if (id_car != null) {
+
 			excluirCarro(id_car);
+
+			// deleta todos os itens vinculados a este carro
+			ItemLogDAO daoItem = new ItemLogDAO(this);
+			List<ItemLog> list = daoItem.listarItemLogs(id_car);
+
+			if (list.size() > 0 && list != null) {
+
+				Log.i(TAG, "Este carro possui itens vinculados a ele.");
+
+				for (int i = 0; i < list.size(); i++) {
+					daoItem.deletar(list.get(i).getId());
+				}
+
+			}
 
 			// OK
 			setResult(RESULT_OK);
