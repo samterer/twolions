@@ -73,7 +73,7 @@ public class EditTextTools {
 	 * 
 	 * @author michel
 	 * */
-	public static String formatDecimal(String numAdd, double numValorProduto) {
+	public static String formatDecimal(String numAdd, int numValorProduto) {
 
 		/*
 		 * Pode ser adicionado até 100.000,00
