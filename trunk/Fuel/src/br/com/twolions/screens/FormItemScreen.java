@@ -328,14 +328,29 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// value u
 		if (type == FUEL) {
-			itemLog4Save.setValue_u(Double
-					.valueOf(value_u.getText().toString()));
+
+			StringBuffer sb = new StringBuffer(value_u.getText().length());
+
+			sb.append(value_u.getText().toString());
+
+			sb.deleteCharAt(0);
+
+			itemLog4Save
+					.setValue_u(Double.valueOf(sb.toString()).doubleValue());
 		}
 
 		// value p
 		if (type == EXPENSE || type == REPAIR || type == FUEL) {
-			itemLog4Save.setValue_p(Double
-					.valueOf(value_p.getText().toString()));
+			// format number
+
+			StringBuffer sb = new StringBuffer(value_p.getText().length());
+
+			sb.append(value_p.getText().toString());
+
+			sb.deleteCharAt(0);
+
+			itemLog4Save
+					.setValue_p(Double.valueOf(sb.toString()).doubleValue());
 		}
 
 		// text
@@ -438,7 +453,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		salvar();
 	}
 
-	String test;
+	// String test;
 
 	public void addListenerOnButton() {
 
@@ -468,30 +483,48 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				}
 
 				public void afterTextChanged(Editable s) {
-					// here, after we introduced something in the EditText we
-					// get the string from it
 
-					/*
-					 * String numAdd = s.toString();
-					 * 
-					 * Log.i(TAG, "operation [0] numAdd = " + numAdd);
-					 * 
-					 * String str = value_p.getText().toString();
-					 * 
-					 * Log.i(TAG, "operation [1] str = " + str);
-					 * 
-					 * double numValorProduto =
-					 * Double.valueOf(str).doubleValue();
-					 * 
-					 * Log.i(TAG, "operation [2] numValorProduto = " +
-					 * numValorProduto);
-					 * 
-					 * value_p.setText(EditTextTools.formatDecimal(numAdd,
-					 * numValorProduto));
-					 * 
-					 * Log.i(TAG, "operation [3] value_p.getText() = " +
-					 * value_p.getText());
-					 */
+					if (!s.toString().matches(
+							"^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$")) {
+
+						String userInput = ""
+								+ s.toString().replaceAll("[^\\d]", "");
+
+						Float in = Float.parseFloat(userInput);
+						float percen = in / 100;
+
+						value_p.setText("$" + percen);
+					}
+
+				}
+			});
+		}
+
+		if (value_u != null) { // aplica regra de decimal
+
+			value_u.addTextChangedListener(new TextWatcher() {
+
+				public void onTextChanged(CharSequence s, int start,
+						int before, int count) {
+				}
+
+				public void beforeTextChanged(CharSequence s, int start,
+						int count, int after) {
+				}
+
+				public void afterTextChanged(Editable s) {
+
+					if (!s.toString().matches(
+							"^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$")) {
+
+						String userInput = ""
+								+ s.toString().replaceAll("[^\\d]", "");
+
+						Float in = Float.parseFloat(userInput);
+						float percen = in / 100;
+
+						value_u.setText("$" + percen);
+					}
 
 				}
 			});

@@ -65,15 +65,13 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 
 		dao = new ItemLogDAO(this);
 
-		organizeBt();
-
 		// id do carro da vez
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			id_car = extras.getLong(Carro._ID);
 			if (id_car != null) {
 				montaTela(icicle);
-
+				organizeBt();
 				listeningGesture();
 			}
 		}
@@ -472,7 +470,9 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 	// it detects a tap-up event.
 	private void myOnItemClick(int position) {
 
-		// this.position = position;
+		// element = (View) listview_log.getItemAtPosition(position);
+
+		// Log.i(TAG, "element [" + element + "]");
 
 		// get the row the clicked button is in
 		id_car = itens.get(position).getId_car();
@@ -490,8 +490,7 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 		id_car = item.getId_car();
 		type = item.getType();
 
-		// View element = listview_log.getAdapter().getView(position, null,
-		// null);
+		element = listview_log.getAdapter().getView(position, null, null);
 
 		showBtsEditDelete(true);
 
