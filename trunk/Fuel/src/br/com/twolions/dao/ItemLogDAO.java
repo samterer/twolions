@@ -8,7 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.util.Log;
-import br.com.twolions.daoobjects.ItemLog;
+import br.com.twolions.model.ItemLog;
 import br.com.twolions.sql.DBConnection;
 import br.com.twolions.util.Constants;
 
