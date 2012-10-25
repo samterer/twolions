@@ -8,6 +8,7 @@ import br.com.twolions.sql.SqlScript;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.transaction.TransactionTask;
 import br.com.twolions.util.AndroidUtils;
+import br.com.twolions.util.Constants;
 
 public class MabooActivity extends ActivityCircle {
 
@@ -70,7 +71,7 @@ public class MabooActivity extends ActivityCircle {
 		// fecha conexao
 		if (sqlScript != null) {
 
-			Log.i("base", this.getString(R.string.a_f_db));
+			Log.i(Constants.LOG_BASE, this.getString(R.string.a_f_db));
 
 			sqlScript.fechar();
 		}
@@ -80,7 +81,7 @@ public class MabooActivity extends ActivityCircle {
 	protected void onResume() {
 		super.onResume();
 
-		Log.i("base", this.getString(R.string.a_c_db));
+		Log.i(Constants.LOG_BASE, this.getString(R.string.a_c_db));
 
 		// abre base
 		sqlScript = new SqlScript(this);

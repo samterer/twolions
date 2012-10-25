@@ -7,7 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
-import br.com.twolions.daoobjects.Carro;
+import br.com.twolions.model.Carro;
 
 public class ManagerDAO {
 

@@ -12,7 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.twolions.R;
-import br.com.twolions.daoobjects.Carro;
+import br.com.twolions.model.Carro;
 
 public class ListCarAdapter extends BaseAdapter {
 
