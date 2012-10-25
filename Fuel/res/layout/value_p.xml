@@ -14,6 +14,6 @@
         android:scaleType="centerInside"
         android:maxLength="7"
         android:tag="value_p" 
-        android:inputType="numberDecimal"/>
+        android:inputType="number"/>
 
 </LinearLayout>
