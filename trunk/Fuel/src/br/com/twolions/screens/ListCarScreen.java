@@ -24,10 +24,10 @@ import br.com.twolions.adapters.ListCarAdapter;
 import br.com.twolions.core.MabooActivity;
 import br.com.twolions.dao.CarroDAO;
 import br.com.twolions.dao.ItemLogDAO;
-import br.com.twolions.daoobjects.Carro;
-import br.com.twolions.daoobjects.ItemLog;
-import br.com.twolions.daoobjects.ListCarros;
 import br.com.twolions.interfaces.InterfaceBar;
+import br.com.twolions.model.Carro;
+import br.com.twolions.model.ItemLog;
+import br.com.twolions.model.ListCarros;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
@@ -52,7 +52,6 @@ public class ListCarScreen extends MabooActivity implements
 
 	private String getSelectedItemOfList;
 
-	@SuppressWarnings("unchecked")
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 

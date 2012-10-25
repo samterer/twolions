@@ -3,7 +3,7 @@ package br.com.twolions.rules;
 import android.content.Context;
 import android.util.Log;
 import br.com.twolions.R;
-import br.com.twolions.daoobjects.ItemLog;
+import br.com.twolions.model.ItemLog;
 import br.com.twolions.util.AndroidUtils;
 import br.com.twolions.util.Constants;
 

@@ -1,5 +1,6 @@
 package br.com.twolions.screens;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,31 +13,33 @@ import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import br.com.twolions.R;
+import br.com.twolions.adapters.ListItemAdapter;
 import br.com.twolions.core.MabooActivity;
 import br.com.twolions.dao.ItemLogDAO;
-import br.com.twolions.daoobjects.Carro;
-import br.com.twolions.daoobjects.ItemLog;
-import br.com.twolions.daoobjects.ListItemLog;
 import br.com.twolions.interfaces.InterfaceBar;
-import br.com.twolions.object.ListItemAdapter;
+import br.com.twolions.model.Carro;
+import br.com.twolions.model.ItemLog;
+import br.com.twolions.model.ListItemLog;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
-public class ListItemScreen extends MabooActivity implements
-		OnItemClickListener, InterfaceBar, Transaction, OnTouchListener {
+public class ListItemScreen extends MabooActivity implements InterfaceBar,
+		Transaction {
 	protected static final int INSERIR_EDITAR = 1;
 
 	private String TAG = Constants.LOG_APP;
@@ -62,13 +65,16 @@ public class ListItemScreen extends MabooActivity implements
 
 		dao = new ItemLogDAO(this);
 
+		organizeBt();
+
 		// id do carro da vez
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			id_car = extras.getLong(Carro._ID);
 			if (id_car != null) {
 				montaTela(icicle);
-				organizeBt();
+
+				listeningGesture();
 			}
 		}
 
@@ -84,8 +90,9 @@ public class ListItemScreen extends MabooActivity implements
 
 		listview_log = (ListView) findViewById(R.id.listview_log);
 		listview_log.setAdapter(new ListItemAdapter(this, itens));
-		listview_log.setOnItemClickListener(this);
-		listview_log.setOnTouchListener(this);
+
+		// listview_log.setOnItemClickListener(this);
+		listeningGesture();
 
 		itens = (List<ItemLog>) getLastNonConfigurationInstance();
 
@@ -174,6 +181,7 @@ public class ListItemScreen extends MabooActivity implements
 
 		LayoutAnimationController controller = AnimationUtils
 				.loadLayoutAnimation(this, R.anim.anime_slide_to_right);
+
 		listview_log.setLayoutAnimation(controller);
 
 	}
@@ -193,19 +201,11 @@ public class ListItemScreen extends MabooActivity implements
 	}
 
 	private void confListForLongClick() {
-		listview_log.setOnItemClickListener(this);
-		listview_log.setOnTouchListener(this);
 
-		listview_log
-				.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-					public boolean onItemLongClick(AdapterView<?> av, View v,
-							int pos, long id) {
+		// listview_log.setOnItemClickListener(this);
 
-						ListItemScreen.this.onItemLongClick(av, v, pos, id);
+		listeningGesture();
 
-						return true;
-					}
-				});
 	}
 
 	private List<ItemLog> getItens() {
@@ -220,7 +220,7 @@ public class ListItemScreen extends MabooActivity implements
 		return list;
 	}
 
-	public void showBtsEditDelete(final View view, boolean exibe) {
+	public void showBtsEditDelete(boolean exibe) {
 
 		// prepara animação (left to right)
 		LayoutAnimationController controller = AnimationUtils
@@ -229,13 +229,13 @@ public class ListItemScreen extends MabooActivity implements
 		if (exibe) {
 			// Toast.makeText(this, "exibindo...", Toast.LENGTH_SHORT).show();
 
-			RelativeLayout item = (RelativeLayout) view
+			RelativeLayout item = (RelativeLayout) element
 					.findViewById(R.id.r_item_log);
 
 			// item.setLayoutAnimation(controller);
 			item.setVisibility(View.GONE);
 
-			LinearLayout tb_edicao = (LinearLayout) view
+			LinearLayout tb_edicao = (LinearLayout) element
 					.findViewById(R.id.tb_edicao);
 
 			tb_edicao.setLayoutAnimation(controller);
@@ -250,11 +250,11 @@ public class ListItemScreen extends MabooActivity implements
 		} else {
 			// Toast.makeText(this, "apagando...", Toast.LENGTH_SHORT).show();
 
-			RelativeLayout item = (RelativeLayout) view
+			RelativeLayout item = (RelativeLayout) element
 					.findViewById(R.id.r_item_log);
 			item.setVisibility(View.VISIBLE);
 
-			LinearLayout tb_edicao = (LinearLayout) view
+			LinearLayout tb_edicao = (LinearLayout) element
 					.findViewById(R.id.tb_edicao);
 			tb_edicao.setVisibility(View.GONE);
 
@@ -266,17 +266,17 @@ public class ListItemScreen extends MabooActivity implements
 			public void run() {
 				handler.post(new Runnable() {
 					public void run() {
-						RelativeLayout item = (RelativeLayout) view
+						RelativeLayout item = (RelativeLayout) element
 								.findViewById(R.id.r_item_log);
 						item.setVisibility(View.VISIBLE);
 
-						LinearLayout tb_edicao = (LinearLayout) view
+						LinearLayout tb_edicao = (LinearLayout) element
 								.findViewById(R.id.tb_edicao);
 						tb_edicao.setVisibility(View.GONE);
 					}
 				});
 			}
-		}, 3000);
+		}, 10000);
 	}
 
 	public void deleteConConfirm() {
@@ -386,80 +386,9 @@ public class ListItemScreen extends MabooActivity implements
 	/******************************************************************************
 	 * CLICK\TOUCH
 	 ******************************************************************************/
-	private String oldPosition = null;
-	private String getSelectedItemOfList;
 
-	public boolean onTouch(View v, MotionEvent event) {
-
-		int pos = v.getId();
-
-		Log.i("touch", "touch in position [" + pos + "]");
-
-		float x1 = 0, x2 = 0;
-		String direction = "";
-
-		switch (event.getAction()) {
-		case (MotionEvent.ACTION_DOWN):
-			x1 = event.getX();
-			break;
-		case (MotionEvent.ACTION_UP):
-			x2 = event.getX();
-
-			float dx = x2 - x1;
-
-			// Use dx and dy to determine the direction
-			if (dx > 0) {
-				direction = "right";
-
-				// get the row the clicked button is in
-				// id_car = itens.get(pos).getId_car();
-				// id_item = itens.get(pos).getId();
-
-				// open list item log
-				// openViewItem();
-
-			} else {
-				direction = "left";
-
-				// ItemLog item = itens.get(pos);
-				// id_item = item.getId();
-				// id_car = item.getId_car();
-				// type = item.getType();
-
-				// showBtsEditDelete(v, true);
-
-			}
-			break;
-		}
-		Log.i("touch", "direction [" + direction + "]");
-
-		return false;
-	}
-
-	public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-
-		// getSelectedItemOfList = (parent.getItemAtPosition(pos)).toString();
-		// Log.i(TAG, "getSelectedItemOfList [" + getSelectedItemOfList + "]");
-
-		// get the row the clicked button is in
-		// id_car = itens.get(pos).getId_car();
-		// id_item = itens.get(pos).getId();
-
-		// open list item log
-		// openViewItem();
-
-	}
-
-	public void onItemLongClick(AdapterView<?> arg0, View view, int pos, long id) {
-
-		// ItemLog item = itens.get(pos);
-		// id_item = item.getId();
-		// id_car = item.getId_car();
-		// type = item.getType();
-
-		// showBtsEditDelete(view, true);
-
-	}
+	private int position = 0;
+	private View element;
 
 	public void deleteConConfirm(View v) {
 
@@ -489,6 +418,129 @@ public class ListItemScreen extends MabooActivity implements
 		Log.i(TAG, "block clicked back!");
 
 	}
+
+	/******************************************************************************
+	 * GESTURE
+	 ******************************************************************************/
+	private int REL_SWIPE_MIN_DISTANCE;
+	private int REL_SWIPE_MAX_OFF_PATH;
+	private int REL_SWIPE_THRESHOLD_VELOCITY;
+
+	private void listeningGesture() {
+
+		// As paiego pointed out, it's better to use density-aware measurements.
+		DisplayMetrics dm = getResources().getDisplayMetrics();
+		REL_SWIPE_MIN_DISTANCE = (int) (120.0f * dm.densityDpi / 160.0f + 0.5);
+		REL_SWIPE_MAX_OFF_PATH = (int) (250.0f * dm.densityDpi / 160.0f + 0.5);
+		REL_SWIPE_THRESHOLD_VELOCITY = (int) (200.0f * dm.densityDpi / 160.0f + 0.5);
+
+		final GestureDetector gestureDetector = new GestureDetector(
+				new MyGestureDetector());
+
+		View.OnTouchListener gestureListener = new View.OnTouchListener() {
+
+			public boolean onTouch(View v, MotionEvent event) {
+
+				return gestureDetector.onTouchEvent(event);
+
+			}
+
+		};
+
+		listview_log.setOnTouchListener(gestureListener);
+
+		// Long-click still works in the usual way.
+		listview_log
+				.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+					public boolean onItemLongClick(AdapterView<?> parent,
+							View view, int position, long id) {
+
+						String str = MessageFormat.format(
+								"Item long clicked = {0,number}", position);
+
+						Toast.makeText(ListItemScreen.this, str,
+								Toast.LENGTH_SHORT).show();
+
+						return true;
+					}
+				});
+	}
+
+	// Do not use LitView.setOnItemClickListener(). Instead, I override
+	// SimpleOnGestureListener.onSingleTapUp() method, and it will call to this
+	// method when
+	// it detects a tap-up event.
+	private void myOnItemClick(int position) {
+
+		// this.position = position;
+
+		// get the row the clicked button is in
+		id_car = itens.get(position).getId_car();
+		id_item = itens.get(position).getId();
+
+		// open list item log
+		openViewItem();
+	}
+
+	private void onLTRFling() {
+		Toast.makeText(this, "Left-to-right fling", Toast.LENGTH_SHORT).show();
+
+		ItemLog item = itens.get(position);
+		id_item = item.getId();
+		id_car = item.getId_car();
+		type = item.getType();
+
+		// View element = listview_log.getAdapter().getView(position, null,
+		// null);
+
+		showBtsEditDelete(true);
+
+	}
+
+	private void onRTLFling() {
+		Toast.makeText(this, "Right-to-left fling", Toast.LENGTH_SHORT).show();
+
+		// get the row the clicked button is in
+		id_car = itens.get(position).getId_car();
+		id_item = itens.get(position).getId();
+
+		// open list item log
+		openViewItem();
+
+	}
+
+	class MyGestureDetector extends SimpleOnGestureListener {
+
+		// Detect a single-click and call my own handler.
+		public boolean onSingleTapUp(MotionEvent e) {
+
+			ListView lv = listview_log;
+			int pos = lv.pointToPosition((int) e.getX(), (int) e.getY());
+
+			myOnItemClick(pos);
+
+			return false;
+		}
+
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+				float velocityY) {
+			if (Math.abs(e1.getY() - e2.getY()) > REL_SWIPE_MAX_OFF_PATH)
+				return false;
+			if (e1.getX() - e2.getX() > REL_SWIPE_MIN_DISTANCE
+					&& Math.abs(velocityX) > REL_SWIPE_THRESHOLD_VELOCITY) {
+				onRTLFling();
+			} else if (e2.getX() - e1.getX() > REL_SWIPE_MIN_DISTANCE
+					&& Math.abs(velocityX) > REL_SWIPE_THRESHOLD_VELOCITY) {
+				onLTRFling();
+			}
+			return false;
+		}
+
+	}
+
+	/******************************************************************************
+	 * BARRA DE ITENS
+	 ******************************************************************************/
 
 	public void btBarRight(View v) {
 
@@ -596,4 +648,5 @@ public class ListItemScreen extends MabooActivity implements
 		}
 
 	}
+
 }

@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.twolions.R;
 import br.com.twolions.core.FormCarActivity;
-import br.com.twolions.daoobjects.Carro;
 import br.com.twolions.interfaces.InterfaceBar;
+import br.com.twolions.model.Carro;
 import br.com.twolions.util.EditTextTools;
 import br.com.twolions.util.TextViewTools;
 
