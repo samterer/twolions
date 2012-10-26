@@ -35,32 +35,6 @@ public class SqlScript extends DBConnection {
 			sqlScript[1] + " " + TB_CARRO
 					+ "(nome,placa,tipo) values('Fiesta','JUH-8266','carro');",
 			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
-			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
-			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
-			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
-			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
-			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
-			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
-			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
-			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
-			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
-			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
-			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
-			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');",
-			sqlScript[1] + " " + TB_CARRO
 					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');" };
 
 	// ///////////////
@@ -87,19 +61,19 @@ public class SqlScript extends DBConnection {
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,value_p,value_u,odometer) values('1','20:30','0','60.00','2.39','81456');",
+					+ "(id_car,date,type,value_p,value_u,odometer) values('1','25/06/2012-20:30','0','60.00','2.39','81456');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,text) values('1','21:30','2','Pagar seguro','Não posso esquecer de pagar a merda do seguro. Valor R$178.');",
+					+ "(id_car,date,type,subject,text) values('1','25/06/2012-20:30','2','Pagar seguro','Não posso esquecer de pagar a merda do seguro. Valor R$178.');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,value_p) values('2','14:30','1','Troca de oleo','25.00');",
+					+ "(id_car,date,type,subject,value_p) values('2','25/06/2012-20:30','1','Troca de oleo','25.00');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,value_p) values('2','2:30','3','Troca de pneu','677.00');" };
+					+ "(id_car,date,type,subject,value_p) values('2','25/06/2012-20:30','3','Troca de pneu','677.00');" };
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(final Context ctx) {
@@ -111,19 +85,6 @@ public class SqlScript extends DBConnection {
 				SqlScript.SCRIPT_CREATE_TB_CAR[0],
 				SqlScript.SCRIPT_CREATE_TB_CAR[1],
 				SqlScript.SCRIPT_CREATE_TB_CAR[2],
-				SqlScript.SCRIPT_CREATE_TB_CAR[3],
-				SqlScript.SCRIPT_CREATE_TB_CAR[4],
-				SqlScript.SCRIPT_CREATE_TB_CAR[5],
-				SqlScript.SCRIPT_CREATE_TB_CAR[6],
-				SqlScript.SCRIPT_CREATE_TB_CAR[7],
-				SqlScript.SCRIPT_CREATE_TB_CAR[8],
-				SqlScript.SCRIPT_CREATE_TB_CAR[9],
-				SqlScript.SCRIPT_CREATE_TB_CAR[10],
-				SqlScript.SCRIPT_CREATE_TB_CAR[11],
-				SqlScript.SCRIPT_CREATE_TB_CAR[12],
-				SqlScript.SCRIPT_CREATE_TB_CAR[13],
-				SqlScript.SCRIPT_CREATE_TB_CAR[14],
-				SqlScript.SCRIPT_CREATE_TB_CAR[15],
 
 				// create fuel car and 1 register
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[0],

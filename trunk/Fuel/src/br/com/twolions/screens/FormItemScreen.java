@@ -3,6 +3,7 @@ package br.com.twolions.screens;
 import java.util.Calendar;
 import java.util.Vector;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,6 +45,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private EditText value_p;
 	private TextView odometer;
 	private TextView date;
+	private TextView hour;
 	private EditText subject;
 	private EditText text;
 
@@ -54,16 +57,20 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private static final int NOTE = Constants.NOTE;
 	private static final int REPAIR = Constants.REPAIR;
 
-	// itemResquest na tela
-	private ItemLog itemResquest;
+	// itemRequest na tela
+	private ItemLog itemRequest;
 
-	// date
+	// hour
 	private static final int TIME_DIALOG_ID = 999;
-	private int hour;
-	private int minute;
+	private int hour_time;
+	private int min_time;
+
+	private int day_time;
+	private int month_time;
+	private int year_time;
 
 	// spinner value
-	private static final int NUMER_VP_DIALOG_ID = 111;
+	private static final int DATE_DIALOG_ID = 998;
 
 	Vector<EditText> vEditText; // vetor de editText
 	Vector<TextView> vTextView; // vetor de TextViews
@@ -99,7 +106,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			String task = extras.getString("task");
 
-			if (task.equals("create")) { // cria novo itemResquest
+			if (task.equals("create")) { // cria novo itemRequest
 
 				id_car = extras.getLong(Carro._ID);
 				Log.i(TAG, "searching type [" + id_car + "]");
@@ -107,16 +114,16 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				type = extras.getInt(ItemLog.TYPE);
 				Log.i(TAG, "searching type [" + type + "]");
 
-			} else if (task.equals("edit")) { // edit itemResquest
+			} else if (task.equals("edit")) { // edit itemRequest
 
 				id_item = extras.getLong(ItemLog._ID);
 
-				Log.i(TAG, "searching itemResquest [" + id_item + "]");
-				itemResquest = buscarItemLog(id_item); // busca informações do
-														// itemResquest
+				Log.i(TAG, "searching itemRequest [" + id_item + "]");
+				itemRequest = buscarItemLog(id_item); // busca informações do
+														// itemRequest
 
-				id_car = itemResquest.getId_car();
-				type = itemResquest.getType();
+				id_car = itemRequest.getId_car();
+				type = itemRequest.getType();
 
 			}
 
@@ -141,23 +148,25 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				"fonts/DroidSansFallback.ttf"); // modifica as fontes
 
-		// create Date object
-		// Date dateCurrent = new Date();
-
-		// formatting hour in h (1-12 in AM/PM) format like 1, 2..12.
-		// String strDateFormat = "h";
-		// SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
-
-		// Log.i(CATEGORIA, "hour in h format : " + sdf.format(dateCurrent));
+		// calendar
+		final Calendar c = Calendar.getInstance();
 
 		// date
 		date = (TextView) findViewById(R.id.date);
-		final Calendar c = Calendar.getInstance();
-		hour = c.get(Calendar.HOUR_OF_DAY);
-		minute = c.get(Calendar.MINUTE);
+		day_time = c.get(Calendar.DAY_OF_MONTH);
+		month_time = c.get(Calendar.MONTH);
+		year_time = c.get(Calendar.YEAR);
 
-		date.setText(new StringBuilder().append(pad(hour)).append(":")
-				.append(pad(minute)));
+		date.setText(new StringBuilder().append(pad(day_time)).append("/")
+				.append(pad(month_time)).append("/").append(pad(year_time)));
+
+		// hour
+		hour = (TextView) findViewById(R.id.hour);
+		hour_time = c.get(Calendar.HOUR_OF_DAY);
+		min_time = c.get(Calendar.MINUTE);
+
+		hour.setText(new StringBuilder().append(pad(hour_time)).append(":")
+				.append(pad(min_time)));
 
 		// subject
 		if (type == EXPENSE || type == REPAIR || type == NOTE) {
@@ -223,15 +232,15 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		TextViewTools.insertFontInAllFields(vTextView, tf); // change font
 															// textView
 
-		if (itemResquest != null) { // edit itemResquest?
+		if (itemRequest != null) { // edit itemRequest?
 
-			Log.i(TAG, "Edição de itemResquest...");
+			Log.i(TAG, "Edição de itemRequest...");
 
 			loadingEdit();
 
-		} else {// create a new itemResquest?
+		} else {// create a new itemRequest?
 
-			Log.i(TAG, "Criação de itemResquest...");
+			Log.i(TAG, "Criação de itemRequest...");
 
 		}
 
@@ -241,32 +250,73 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	public void loadingEdit() {
 
 		Log.i(TAG, "Data for edit");
-		Log.i(TAG, itemResquest.toString());
+		Log.i(TAG, itemRequest.toString());
 		// }
 
 		try {
 
-			// date
-			date.setText(String.valueOf((itemResquest.getDate())));
+			// formata date
+			String dateFromBase = itemRequest.getDate();
+
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < dateFromBase.length(); i++) {
+
+				if (dateFromBase.charAt(i) == '-') { // insere valor da
+														// data
+
+					Log.i(TAG, "date [" + sb.toString() + "]");
+
+					date.setText(sb.toString());
+
+					// insere os valores nas variaveis de classe
+					day_time = Integer.valueOf(
+							String.valueOf(sb.toString().subSequence(0, 1)))
+							.intValue();
+
+					sb = new StringBuffer();
+
+					i++;
+
+				} else if (i == 15) { // insere
+										// valor
+										// da hora
+										// o numero dessa linha é comparado a
+										// 16, pois esse é o tamanho maximo
+										// correto de uma data, de acordo com a
+										// inserção dela 'dd/mm/aaaa - hh:mm'
+					sb.append(dateFromBase.charAt(i));
+
+					Log.i(TAG, "hour [" + sb.toString() + "]");
+
+					hour.setText(sb.toString()); // hora
+
+					break;
+
+				}
+
+				Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
+
+				sb.append(dateFromBase.charAt(i));
+			}
 
 			// subject
 			if (type == EXPENSE || type == REPAIR || type == NOTE) {
-				subject.setText(String.valueOf((itemResquest.getSubject())));
+				subject.setText(String.valueOf((itemRequest.getSubject())));
 			}
 
 			// value u
 			if (type == FUEL) {
-				value_u.setText(String.valueOf((itemResquest.getValue_u())));
+				value_u.setText(String.valueOf((itemRequest.getValue_u())));
 			}
 
 			// value p
 			if (type == EXPENSE || type == REPAIR || type == FUEL) {
-				value_p.setText(String.valueOf((itemResquest.getValue_p())));
+				value_p.setText(String.valueOf((itemRequest.getValue_p())));
 			}
 
 			// text
 			if (type == NOTE) {
-				text.setText(String.valueOf((itemResquest.getText())));
+				text.setText(String.valueOf((itemRequest.getText())));
 			}
 
 			// odemeter
@@ -275,12 +325,12 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				// recupera ultimo valor registrado de odometer(por data) deste
 				// veiculo
 
-				odometer.setText(String.valueOf((itemResquest.getOdometer())));
+				odometer.setText(String.valueOf((itemRequest.getOdometer())));
 			}
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			Log.e(TAG, itemResquest.toString());
+			Log.e(TAG, itemRequest.toString());
 		}
 
 	}
@@ -315,11 +365,15 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// id_car
 		itemLog4Save.setId_car(id_car);
 
-		// type of itemResquest
+		// type of itemRequest
 		itemLog4Save.setType(type);
 
-		// date
-		itemLog4Save.setDate(date.getText().toString());
+		// hour
+		// get date for save
+		StringBuffer sbDate = new StringBuffer();
+		sbDate.append(date.getText().toString() + "-" + hour.getText());
+
+		itemLog4Save.setDate(sbDate.toString());
 
 		// subject
 		if (type == EXPENSE || type == REPAIR || type == NOTE) {
@@ -457,11 +511,21 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	public void addListenerOnButton() {
 
-		date.setOnClickListener(new OnClickListener() {
+		hour.setOnClickListener(new OnClickListener() { // change hour
 
 			public void onClick(View v) {
 
 				showDialog(TIME_DIALOG_ID);
+
+			}
+
+		});
+
+		date.setOnClickListener(new OnClickListener() { // change date
+
+			public void onClick(View v) {
+
+				showDialog(DATE_DIALOG_ID);
 
 			}
 
@@ -494,6 +558,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 						float percen = in / 100;
 
 						value_p.setText("$" + percen);
+					} else {
+						// invalid number
+						return;
 					}
 
 				}
@@ -514,16 +581,25 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				public void afterTextChanged(Editable s) {
 
-					if (!s.toString().matches(
-							"^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$")) {
+					if (!value_p.getText().equals("")
+							|| value_p.getText().equals("$00,00")) {
 
-						String userInput = ""
-								+ s.toString().replaceAll("[^\\d]", "");
+						if (!s.toString()
+								.matches(
+										"^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$")) {
 
-						Float in = Float.parseFloat(userInput);
-						float percen = in / 100;
+							String userInput = ""
+									+ s.toString().replaceAll("[^\\d]", "");
 
-						value_u.setText("$" + percen);
+							Float in = Float.parseFloat(userInput);
+							float percen = in / 100;
+
+							value_u.setText("$" + percen);
+						} else {
+							// invalid number
+							return;
+						}
+
 					}
 
 				}
@@ -536,8 +612,11 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		switch (id) {
 		case TIME_DIALOG_ID:
 			// set time picker as current time
-			return new TimePickerDialog(this, timePickerListener, hour, minute,
-					false);
+			return new TimePickerDialog(this, timePickerListener, hour_time,
+					min_time, false);
+		case DATE_DIALOG_ID:
+			return new DatePickerDialog(this, myDateSetListener, year_time,
+					month_time, day_time);
 		}
 
 		return null;
@@ -547,12 +626,28 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
 		public void onTimeSet(TimePicker view, int selectedHour,
 				int selectedMinute) {
-			hour = selectedHour;
-			minute = selectedMinute;
+			hour_time = selectedHour;
+			min_time = selectedMinute;
 
 			// set current time into textview
-			date.setText(new StringBuilder().append(pad(hour)).append(":")
-					.append(pad(minute)));
+			hour.setText(new StringBuilder().append(pad(hour_time)).append(":")
+					.append(pad(min_time)));
+
+		}
+	};
+
+	private DatePickerDialog.OnDateSetListener myDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+		public void onDateSet(DatePicker view, int year, int monthOfYear,
+				int dayOfMonth) {
+
+			day_time = dayOfMonth;
+			month_time = monthOfYear;
+			year_time = year;
+
+			// set current time into textview
+			date.setText(new StringBuilder().append(pad(day_time)).append("/")
+					.append(pad(month_time)).append("/").append(pad(year_time)));
 
 		}
 	};
