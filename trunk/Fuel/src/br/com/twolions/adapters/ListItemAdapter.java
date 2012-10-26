@@ -118,8 +118,22 @@ public class ListItemAdapter extends BaseAdapter {
 			holder.textRightUp.setVisibility(View.VISIBLE);
 		}
 
-		// date
-		holder.date.setText(String.valueOf(itemRequest.getDate()));
+		// formata a data
+		StringBuffer sb = new StringBuffer(itemRequest.getDate().length());
+		for (int i = 0; i < itemRequest.getDate().length(); i++) {
+			if (itemRequest.getDate().charAt(i) == '-') {
+				sb.append(" ");
+			}
+			if (i > 0) {
+				if (itemRequest.getDate().charAt(i - 1) == '-') {
+					sb.append(" ");
+				}
+			}
+
+			sb.append(itemRequest.getDate().charAt(i));
+		}
+
+		holder.date.setText(String.valueOf(sb.toString()));
 
 		// subject
 		if (itemRequest.getType() == Constants.EXPENSE
