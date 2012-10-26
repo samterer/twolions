@@ -1,6 +1,5 @@
 package br.com.twolions.screens;
 
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -453,11 +452,12 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 					public boolean onItemLongClick(AdapterView<?> parent,
 							View view, int position, long id) {
 
-						String str = MessageFormat.format(
-								"Item long clicked = {0,number}", position);
+						ItemLog item = itens.get(position);
+						id_item = item.getId();
 
-						Toast.makeText(ListItemScreen.this, str,
-								Toast.LENGTH_SHORT).show();
+						element = view;
+
+						showBtsEditDelete(true);
 
 						return true;
 					}

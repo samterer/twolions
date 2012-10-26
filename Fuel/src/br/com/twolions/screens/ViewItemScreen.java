@@ -1,6 +1,5 @@
 package br.com.twolions.screens;
 
-import java.util.Calendar;
 import java.util.Vector;
 
 import android.content.Context;
@@ -24,13 +23,14 @@ import br.com.twolions.util.TextViewTools;
 
 public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
-	private final String CATEGORIA = Constants.LOG_APP;
+	private final String TAG = Constants.LOG_APP;
 
 	// Campos texto
 	private EditText value_u;
 	private EditText value_p;
 	private EditText odometer;
 	private TextView date;
+	private TextView hour;
 	private EditText subject;
 	private EditText text;
 
@@ -44,13 +44,8 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 	protected static final int INSERIR_EDITAR = 1;
 
-	// item na tela
-	private ItemLog item;
-
-	// date
-	static final int TIME_DIALOG_ID = 999;
-	private int hour;
-	private int minute;
+	// itemRequest na tela
+	private ItemLog itemRequest;
 
 	Vector<EditText> vEditText; // vetor de editText
 	Vector<TextView> vTextView; // vetor de TextViews
@@ -78,20 +73,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		TextView tv;
 
-		// if (id_item != null) { // retorno da tela de edit de item
-		//
-		// Log.i(CATEGORIA, "return of edit screen");
-		//
-		// Log.i(CATEGORIA, "searching item [" + id_item + "]");
-		// item = buscarItemLog(id_item);
-		//
-		// type = item.getType();
-		//
-		// id_car = item.getId_car();
-		//
-		// } else { // lista > view item
-
-		Log.i(CATEGORIA, "view item screen");
+		Log.i(TAG, "view itemRequest screen");
 
 		final Bundle extras = getIntent().getExtras();
 
@@ -99,11 +81,11 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 			id_item = extras.getLong(ItemLog._ID);
 
-			if (id_item != null) { // searching item
+			if (id_item != null) { // searching itemRequest
 
-				Log.i(CATEGORIA, "searching item [" + id_item + "]");
+				Log.i(TAG, "searching itemRequest [" + id_item + "]");
 
-				item = buscarItemLog(id_item);
+				itemRequest = buscarItemLog(id_item);
 
 			} else {
 
@@ -111,12 +93,10 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 			}
 
-			type = item.getType();
+			type = itemRequest.getType();
 
-			id_car = item.getId_car();
+			id_car = itemRequest.getId_car();
 		}
-
-		// }
 
 		// instance itens of xml
 		switch (type) {
@@ -139,12 +119,8 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// date
 		date = (TextView) findViewById(R.id.date);
-		final Calendar c = Calendar.getInstance();
-		hour = c.get(Calendar.HOUR_OF_DAY);
-		minute = c.get(Calendar.MINUTE);
-
-		date.setText(new StringBuilder().append(pad(hour)).append("")
-				.append(pad(minute)));
+		// hour
+		hour = (TextView) findViewById(R.id.hour);
 
 		// subject
 		if (type == EXPENSE || type == REPAIR || type == NOTE) {
@@ -210,7 +186,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		changeFormatEditText(); // aplica o formato para apenas visualização
 
 		// edit ?
-		Log.i(CATEGORIA, "Recupera os dados para a visualização do item...");
+		Log.i(TAG, "Recupera os dados para a visualização do itemRequest...");
 		loadingDataItem();
 
 	}
@@ -242,9 +218,10 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	// open screen with datas of object
 	public void loadingDataItem() {
 
-		if (item == null) {
+		if (itemRequest == null) {
 
-			Toast.makeText(this, "Dados do item não encontrados na base.",
+			Toast.makeText(this,
+					"Dados do itemRequest não encontrados na base.",
 					Toast.LENGTH_SHORT).show();
 
 			finish(); // fecha a view em caso de erro
@@ -253,45 +230,81 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		try {
 
-			// date
-			date.setText(String.valueOf((item.getDate())));
+			// formata date
+			String dateFromBase = itemRequest.getDate();
+
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < dateFromBase.length(); i++) {
+
+				if (dateFromBase.charAt(i) == '-') { // insere valor da
+														// data
+
+					Log.i(TAG, "date [" + sb.toString() + "]");
+
+					date.setText(sb.toString());
+
+					sb = new StringBuffer();
+
+					i++;
+
+				} else if (i == 15) { // insere
+										// valor
+										// da hora
+										// o numero dessa linha é comparado a
+										// 16, pois esse é o tamanho maximo
+										// correto de uma data, de acordo com a
+										// inserção dela 'dd/mm/aaaa - hh:mm'
+					sb.append(dateFromBase.charAt(i));
+
+					Log.i(TAG, "hour [" + sb.toString() + "]");
+
+					hour.setText(sb.toString()); // hora
+
+					break;
+
+				}
+
+				Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
+
+				sb.append(dateFromBase.charAt(i));
+			}
 
 			// subject
 			if (type == EXPENSE || type == REPAIR || type == NOTE) {
-				subject.setText(String.valueOf((item.getSubject())));
+				subject.setText(String.valueOf((itemRequest.getSubject())));
 				subject.setFocusable(false);
 			}
 
 			// value u
 			if (type == FUEL) {
 				value_u.setText(Settings.moeda
-						+ String.valueOf((item.getValue_u())));
+						+ String.valueOf((itemRequest.getValue_u())));
 				value_u.setFocusable(false);
 			}
 
 			// value p
 			if (type == EXPENSE || type == REPAIR || type == FUEL) {
 				value_p.setText(Settings.moeda
-						+ String.valueOf((item.getValue_p())));
+						+ String.valueOf((itemRequest.getValue_p())));
 				value_p.setFocusable(false);
 			}
 
 			// text
 			if (type == NOTE) {
-				text.setText(String.valueOf((item.getText())));
+				text.setText(String.valueOf((itemRequest.getText())));
 				text.setFocusable(false);
 			}
 
 			// odemeter
 			if (type == FUEL) {
-				odometer.setText(String.valueOf((item.getOdometer())));
+				odometer.setText(String.valueOf((itemRequest.getOdometer())));
 				odometer.setFocusable(false);
 			}
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 
-			Log.e(CATEGORIA, item.toString());
+			Log.e(TAG, itemRequest.toString());
 		}
 
 	}
@@ -347,7 +360,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		it.putExtra("task", "edit");
 
-		// id do item
+		// id do itemRequest
 		it.putExtra(ItemLog._ID, id_item);
 
 		// Abre a tela de edição
