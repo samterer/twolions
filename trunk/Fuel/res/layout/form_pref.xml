@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TableRow>
+
+        <TextView
+            style="@style/texto12cinza"
+            android:paddingRight="5dip"
+            android:text="Input Volume" >
+        </TextView>
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            style="@style/texto10Branco"
+            android:paddingRight="5dip"
+            android:text="Select units used to input fuel volume" />
+        <!-- Litre - US gallon - Imperial galoon -->
+
+    </TableRow>
+
+    <include
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
+        layout="@layout/line" />
+
+    <TableRow>
+
+        <TextView
+            style="@style/texto12cinza"
+            android:paddingRight="5dip"
+            android:text="Input Distance" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            style="@style/texto10Branco"
+            android:paddingRight="5dip"
+            android:text="Select units used to input odometer distance" />
+        <!-- Km - miles -->
+
+    </TableRow>
+
+    <include
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
+        layout="@layout/line" />
+
+    <TableRow>
+
+        <TextView
+            style="@style/texto12cinza"
+            android:paddingRight="5dip"
+            android:text="Currency" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            style="@style/texto10Branco"
+            android:paddingRight="5dip"
+            android:text="Select currency used to represent fuel coast" />
+        <!-- $ dollar - euro - pound - Yuan/yen - R$ real - HK$ hong kong dollar -->
+
+    </TableRow>
+
+</TableLayout>
