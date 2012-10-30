@@ -37,7 +37,6 @@
     <string name="a_f_item"> Please, fill in all fields with red color.</string>
     <string name="t_r_t_1">Invalid number</string>
     <string name="t_r_1">The amount payable shall be at least twice the value of the unit.</string>
-    
 
     <!-- Positivo e negativo -->
     <string name="a_n">Not</string>
@@ -52,5 +51,18 @@
     <string name="h_click">"click here"</string>
     <string name="h_n_vehicle">"insert a name"</string>
     <string name="h_p_vehicle">"insert a place"</string>
+
+    <!-- Menu -->
+    <string name="m_about">"About"</string>
+    <string name="m_set">"Settings"</string>
+    <string name="m_exit">"Exit"</string>
+
+    <!-- Settings -->
+    <string name="s_t_1">"Input Volume"</string>
+    <string name="s_d_1">"Select units used to input fuel volume"</string>
+    <string name="s_t_2">"Input Distance"</string>
+    <string name="s_d_2">"Select units used to input odometer distance"</string>
+    <string name="s_t_3">"Currency"</string>
+    <string name="s_d_3">"Select currency used to represent fuel coast"</string>
 
 </resources>
