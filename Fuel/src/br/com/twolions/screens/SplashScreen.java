@@ -28,7 +28,7 @@ public class SplashScreen extends ActivityCircle {
 
 		setContentView(R.layout.splashscreen);
 
-		timer = new CountDownTimer(3000, 1000) // 3seceonds
+		timer = new CountDownTimer(2000, 1000) // 3seceonds
 												// Timer
 		{
 			@Override
@@ -58,23 +58,18 @@ public class SplashScreen extends ActivityCircle {
 
 	public boolean onTouchEvent(MotionEvent event) {
 
-		switch (event.getAction()) {
-		// clicando na tela
-		case MotionEvent.ACTION_DOWN:
-			//
-			return true;
-		case MotionEvent.ACTION_UP:
-
-			// handler.removeMessages(what);
-			isFinishSplash = true;
-
-			timer = null;
-
-			startMaboo();
-
-			finish();
-		}
-
+		/*
+		 * switch (event.getAction()) { // clicando na tela case
+		 * MotionEvent.ACTION_DOWN: // return true; case MotionEvent.ACTION_UP:
+		 * 
+		 * // handler.removeMessages(what); isFinishSplash = true;
+		 * 
+		 * timer = null;
+		 * 
+		 * startMaboo();
+		 * 
+		 * finish(); }
+		 */
 		return true;
 
 	}

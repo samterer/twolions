@@ -400,6 +400,7 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 	}
 
 	public void organizeBt() {
+
 		// bt left
 		ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
 		bt_left.setImageResource(R.drawable.bt_back);
@@ -407,12 +408,6 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 		// bt rigt
 		ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
 		bt_right.setImageResource(R.drawable.bt_add);
-
-	}
-
-	public void onBackPressed() { // call my backbutton pressed method when
-									// boolean==true
-		Log.i(TAG, "block clicked back!");
 
 	}
 
