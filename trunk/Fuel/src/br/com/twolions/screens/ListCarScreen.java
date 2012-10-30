@@ -57,6 +57,9 @@ public class ListCarScreen extends MabooActivity implements
 
 		dao = new CarroDAO(this);
 
+		setContentView(R.layout.list_car); // instancia o layout
+		// insere uma imagem de loading
+
 		montaTela(icicle);
 
 		organizeBt();
@@ -69,7 +72,6 @@ public class ListCarScreen extends MabooActivity implements
 
 	@SuppressWarnings("unchecked")
 	public void montaTela(Bundle icicle) {
-		setContentView(R.layout.list_car);
 
 		listview_car = (ListView) findViewById(R.id.listview_car);
 
