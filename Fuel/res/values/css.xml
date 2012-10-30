@@ -1,5 +1,9 @@
 <resources>
-
+  	<!-- Texto com Fonte 10 -->
+    <style name="texto10Branco">
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:textSize">10sp</item>
+    </style>
     <!-- Texto com Fonte 12 -->
     <style name="texto12">
         <item name="android:textColor">@color/preto</item>
