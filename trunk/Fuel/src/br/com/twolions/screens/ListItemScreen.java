@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.adapters.ListItemAdapter;
@@ -219,6 +220,13 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 
 	public void showBtsEditDelete(boolean exibe) {
 
+		Log.i(TAG, "*********element: " + element.toString());
+		RelativeLayout item = (RelativeLayout) element
+				.findViewById(R.id.r_item_log);
+
+		TextView textoTeste = (TextView) item.findViewById(R.id.textLeftDown);
+		Log.i(TAG, "**********text item: " + textoTeste.getText().toString());
+
 		// prepara animação (left to right)
 		LayoutAnimationController controller = AnimationUtils
 				.loadLayoutAnimation(this, R.anim.anime_slide_to_right);
@@ -226,8 +234,10 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 		if (exibe) {
 			// Toast.makeText(this, "exibindo...", Toast.LENGTH_SHORT).show();
 
-			RelativeLayout item = (RelativeLayout) element
-					.findViewById(R.id.r_item_log);
+			/*
+			 * RelativeLayout item = (RelativeLayout) element
+			 * .findViewById(R.id.r_item_log);
+			 */
 
 			// item.setLayoutAnimation(controller);
 			item.setVisibility(View.GONE);
@@ -247,8 +257,8 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 		} else {
 			// Toast.makeText(this, "apagando...", Toast.LENGTH_SHORT).show();
 
-			RelativeLayout item = (RelativeLayout) element
-					.findViewById(R.id.r_item_log);
+			// RelativeLayout item = (RelativeLayout) element
+			// .findViewById(R.id.r_item_log);
 			item.setVisibility(View.VISIBLE);
 
 			LinearLayout tb_edicao = (LinearLayout) element
@@ -265,6 +275,7 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 					public void run() {
 						RelativeLayout item = (RelativeLayout) element
 								.findViewById(R.id.r_item_log);
+
 						item.setVisibility(View.VISIBLE);
 
 						LinearLayout tb_edicao = (LinearLayout) element
@@ -385,7 +396,7 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 	 ******************************************************************************/
 
 	private int position = 0;
-	private View element;
+	private static View element;
 
 	public void deleteConConfirm(View v) {
 
@@ -433,6 +444,8 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 
 			public boolean onTouch(View v, MotionEvent event) {
 
+				element = v;
+
 				return gestureDetector.onTouchEvent(event);
 
 			}
@@ -450,8 +463,6 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 						ItemLog item = itens.get(position);
 						id_item = item.getId();
 
-						element = view;
-
 						showBtsEditDelete(true);
 
 						return true;
@@ -465,10 +476,6 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 	// it detects a tap-up event.
 	private void myOnItemClick(int position) {
 
-		// element = (View) listview_log.getItemAtPosition(position);
-
-		// Log.i(TAG, "element [" + element + "]");
-
 		// get the row the clicked button is in
 		id_car = itens.get(position).getId_car();
 		id_item = itens.get(position).getId();
@@ -478,28 +485,37 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 	}
 
 	private void onLTRFling() {
-		Toast.makeText(this, "Left-to-right fling", Toast.LENGTH_SHORT).show();
+
+		Toast.makeText(this,
+				"Left-to-right fling in position[" + position + "]",
+				Toast.LENGTH_SHORT).show();
 
 		ItemLog item = itens.get(position);
+
 		id_item = item.getId();
 		id_car = item.getId_car();
 		type = item.getType();
 
-		element = listview_log.getAdapter().getView(position, null, null);
+		// element = listview_log.getAdapter().getView(position, null, null);
 
 		showBtsEditDelete(true);
 
 	}
 
 	private void onRTLFling() {
-		Toast.makeText(this, "Right-to-left fling", Toast.LENGTH_SHORT).show();
 
-		// get the row the clicked button is in
-		id_car = itens.get(position).getId_car();
-		id_item = itens.get(position).getId();
+		Toast.makeText(this,
+				"Right-to-left fling in position[" + position + "]",
+				Toast.LENGTH_SHORT).show();
 
-		// open list item log
-		openViewItem();
+		ItemLog item = itens.get(position);
+		id_item = item.getId();
+		id_car = item.getId_car();
+		type = item.getType();
+
+		// element = listview_log.getAdapter().getView(position, null, null);
+
+		showBtsEditDelete(true);
 
 	}
 
@@ -520,13 +536,18 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 				float velocityY) {
 			if (Math.abs(e1.getY() - e2.getY()) > REL_SWIPE_MAX_OFF_PATH)
 				return false;
+
 			if (e1.getX() - e2.getX() > REL_SWIPE_MIN_DISTANCE
 					&& Math.abs(velocityX) > REL_SWIPE_THRESHOLD_VELOCITY) {
+
 				onRTLFling();
+
 			} else if (e2.getX() - e1.getX() > REL_SWIPE_MIN_DISTANCE
 					&& Math.abs(velocityX) > REL_SWIPE_THRESHOLD_VELOCITY) {
+
 				onLTRFling();
 			}
+
 			return false;
 		}
 
