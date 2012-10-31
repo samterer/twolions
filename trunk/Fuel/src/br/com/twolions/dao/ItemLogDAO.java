@@ -8,7 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.util.Log;
-import br.com.twolions.model.ItemLog;
+import br.com.twolions.modelobj.ItemLog;
 import br.com.twolions.sql.DBConnection;
 import br.com.twolions.util.Constants;
 
@@ -231,7 +231,7 @@ public class ItemLogDAO extends DBConnection {
 	// - expense - 1
 	// - note - 2
 	// - repair - 3
-	public List<ItemLog> listarItemLogs(final String type_item) {
+	public List<ItemLog> listarItemLogsPorTipo(final String type_item) {
 		final Cursor c = db.query(table_name, ItemLog.colunas, ItemLog.TYPE
 				+ "='" + type_item + "'", null, null, null, null);
 

@@ -13,7 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.twolions.R;
-import br.com.twolions.model.ItemLog;
+import br.com.twolions.modelobj.ItemLog;
 import br.com.twolions.settings.Settings;
 import br.com.twolions.util.Constants;
 

@@ -23,8 +23,9 @@ import android.widget.TimePicker;
 import br.com.twolions.R;
 import br.com.twolions.core.FormItemActivity;
 import br.com.twolions.interfaces.InterfaceBar;
-import br.com.twolions.model.Carro;
-import br.com.twolions.model.ItemLog;
+import br.com.twolions.model.ItemModel;
+import br.com.twolions.modelobj.Carro;
+import br.com.twolions.modelobj.ItemLog;
 import br.com.twolions.rules.ItemRules;
 import br.com.twolions.util.Constants;
 import br.com.twolions.util.EditTextTools;
@@ -119,8 +120,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				id_item = extras.getLong(ItemLog._ID);
 
 				Log.i(TAG, "searching itemRequest [" + id_item + "]");
-				itemRequest = buscarItemLog(id_item); // busca informações do
-														// itemRequest
+				itemRequest = ItemModel.buscarItemLog(id_item); // busca
+																// informações
+																// do
+				// itemRequest
 
 				id_car = itemRequest.getId_car();
 				type = itemRequest.getType();
@@ -224,6 +227,11 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			odometer = (TextView) findViewById(R.id.odometer);
 			odometer.setTypeface(tf);
+
+			odometer.setText(String.valueOf(ItemModel
+					.buscarUltOdometroPorItem(id_car))); // recupera o ultimo
+															// odometer desse
+															// veiculo
 
 		}
 
@@ -414,6 +422,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// odemeter
 		if (type == FUEL) {
+
+			// get last odometer
+
 			itemLog4Save.setOdometer(Long
 					.valueOf(odometer.getText().toString()));
 		}
@@ -424,7 +435,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				// Salvar
 				Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
-				salvarItemLog(itemLog4Save);
+				ItemModel.salvarItemLog(itemLog4Save);
 
 			} else {
 
@@ -438,7 +449,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		} else {
 
 			// Salvar
-			salvarItemLog(itemLog4Save);
+			ItemModel.salvarItemLog(itemLog4Save);
 
 		}
 
@@ -451,20 +462,17 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
 
-	// Buscar o itemLog pelo id_item
-	protected ItemLog buscarItemLog(final long id) {
-		return ListItemScreen.dao.buscarItemLog(id);
-	}
-
-	// Salvar o itemLog
-	protected void salvarItemLog(final ItemLog itemLog) {
-		ListItemScreen.dao.salvar(itemLog);
-	}
-
-	// Excluir o itemLog
-	protected void excluirItemLog(final long id) {
-		ListItemScreen.dao.deletar(id);
-	}
+	// // Buscar o itemLog pelo id_item
+	//
+	// // Salvar o itemLog
+	// protected void salvarItemLog(final ItemLog itemLog) {
+	// ListItemScreen.dao.salvar(itemLog);
+	// }
+	//
+	// // Excluir o itemLog
+	// protected void excluirItemLog(final long id) {
+	// ListItemScreen.dao.deletar(id);
+	// }
 
 	private static String pad(int c) {
 		if (c >= 10)

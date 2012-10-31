@@ -25,9 +25,9 @@ import br.com.twolions.core.MabooActivity;
 import br.com.twolions.dao.CarroDAO;
 import br.com.twolions.dao.ItemLogDAO;
 import br.com.twolions.interfaces.InterfaceBar;
-import br.com.twolions.model.Carro;
-import br.com.twolions.model.ItemLog;
-import br.com.twolions.model.ListCarros;
+import br.com.twolions.modelobj.Carro;
+import br.com.twolions.modelobj.ItemLog;
+import br.com.twolions.modelobj.ListCarros;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
