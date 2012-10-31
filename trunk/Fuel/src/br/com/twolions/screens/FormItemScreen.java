@@ -547,20 +547,25 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				}
 
 				public void afterTextChanged(Editable s) {
+					try {
+						if (!s.toString()
+								.matches(
+										"^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$")) {
 
-					if (!s.toString().matches(
-							"^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$")) {
+							String userInput = ""
+									+ s.toString().replaceAll("[^\\d]", "");
 
-						String userInput = ""
-								+ s.toString().replaceAll("[^\\d]", "");
+							Float in = Float.parseFloat(userInput);
+							float percen = in / 100;
 
-						Float in = Float.parseFloat(userInput);
-						float percen = in / 100;
+							value_p.setText("$" + percen);
 
-						value_p.setText("$" + percen);
-					} else {
-						// invalid number
-						return;
+						} else {
+							// invalid number
+							return;
+						}
+					} catch (StackOverflowError e) {
+						e.printStackTrace();
 					}
 
 				}
@@ -580,26 +585,29 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				}
 
 				public void afterTextChanged(Editable s) {
+					try {
+						if (!value_p.getText().equals("")
+								|| value_p.getText().equals("$00,00")) {
 
-					if (!value_p.getText().equals("")
-							|| value_p.getText().equals("$00,00")) {
+							if (!s.toString()
+									.matches(
+											"^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$")) {
 
-						if (!s.toString()
-								.matches(
-										"^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$")) {
+								String userInput = ""
+										+ s.toString().replaceAll("[^\\d]", "");
 
-							String userInput = ""
-									+ s.toString().replaceAll("[^\\d]", "");
+								Float in = Float.parseFloat(userInput);
+								float percen = in / 100;
 
-							Float in = Float.parseFloat(userInput);
-							float percen = in / 100;
+								value_u.setText("$" + percen);
+							} else {
+								// invalid number
+								return;
+							}
 
-							value_u.setText("$" + percen);
-						} else {
-							// invalid number
-							return;
 						}
-
+					} catch (StackOverflowError e) {
+						e.printStackTrace();
 					}
 
 				}
