@@ -1,4 +1,4 @@
-package br.com.twolions.model;
+package br.com.twolions.modelobj;
 
 import android.provider.BaseColumns;
 
