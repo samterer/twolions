@@ -32,9 +32,9 @@ import br.com.twolions.adapters.ListItemAdapter;
 import br.com.twolions.core.MabooActivity;
 import br.com.twolions.dao.ItemLogDAO;
 import br.com.twolions.interfaces.InterfaceBar;
-import br.com.twolions.model.Carro;
-import br.com.twolions.model.ItemLog;
-import br.com.twolions.model.ListItemLog;
+import br.com.twolions.modelobj.Carro;
+import br.com.twolions.modelobj.ItemLog;
+import br.com.twolions.modelobj.ListItemLog;
 import br.com.twolions.transaction.Transaction;
 import br.com.twolions.util.Constants;
 
@@ -67,11 +67,15 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 
 		// id do carro da vez
 		Bundle extras = getIntent().getExtras();
+
 		if (extras != null) {
 			id_car = extras.getLong(Carro._ID);
 			if (id_car != null) {
+
 				montaTela(icicle);
+
 				organizeBt();
+
 				listeningGesture();
 			}
 		}

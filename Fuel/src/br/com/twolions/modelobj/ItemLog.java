@@ -7,9 +7,9 @@ import br.com.twolions.util.Constants;
 
 public class ItemLog implements BaseColumns, Serializable {
 
-	public static String[] colunas = new String[]{ItemLog._ID, ItemLog.ID_CAR,
-			ItemLog.DATE, ItemLog.TYPE, ItemLog.SUBJECT, ItemLog.VALUE_P,
-			ItemLog.VALUE_U, ItemLog.ODOMETER, Note.TEXT};
+	public static String[] colunas = new String[] { ItemLog._ID,
+			ItemLog.ID_CAR, ItemLog.DATE, ItemLog.TYPE, ItemLog.SUBJECT,
+			ItemLog.VALUE_P, ItemLog.VALUE_U, ItemLog.ODOMETER, Note.TEXT };
 
 	/**
 	 * Pacote do Content Provider. Precisa ser único.
@@ -18,6 +18,8 @@ public class ItemLog implements BaseColumns, Serializable {
 
 	private long id;
 	private long id_car;
+	// a date deve sempre estar no formato
+	// dd/mm/aaaa-hh:mm
 	private String date;
 	// type
 	// - fuel - 0
@@ -135,6 +137,7 @@ public class ItemLog implements BaseColumns, Serializable {
 		this.text = text;
 
 	}
+
 	public ItemLog(final long id, final long id_car, final String date,
 			final int type, final String subject, final double value_p,
 			final double value_u, final long odometer, final String text) {

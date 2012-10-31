@@ -3,7 +3,7 @@ package br.com.twolions.rules;
 import android.content.Context;
 import android.util.Log;
 import br.com.twolions.R;
-import br.com.twolions.model.ItemLog;
+import br.com.twolions.modelobj.ItemLog;
 import br.com.twolions.util.AndroidUtils;
 import br.com.twolions.util.Constants;
 
@@ -13,6 +13,8 @@ public class ItemRules {
 	private static Double value_p;
 	private static long odometer;
 	private static Context context;
+
+	private static String TAG = Constants.LOG_APP;
 
 	public ItemRules(ItemLog item) {
 
@@ -36,7 +38,10 @@ public class ItemRules {
 		if (item != null) {
 
 			value_p = item.getValue_p();
+			Log.i(TAG, "rule 'value_p [" + item.getValue_p() + "]'");
+
 			value_u = item.getValue_u();
+			Log.i(TAG, "rule 'value_p [" + item.getValue_u() + "]'");
 
 			odometer = item.getOdometer();
 

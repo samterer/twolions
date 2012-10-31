@@ -15,7 +15,7 @@ import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FormItemActivity;
 import br.com.twolions.interfaces.InterfaceBar;
-import br.com.twolions.model.ItemLog;
+import br.com.twolions.modelobj.ItemLog;
 import br.com.twolions.settings.Settings;
 import br.com.twolions.util.Constants;
 import br.com.twolions.util.EditTextTools;
