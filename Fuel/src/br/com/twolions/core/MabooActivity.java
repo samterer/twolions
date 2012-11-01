@@ -194,9 +194,4 @@ public class MabooActivity extends ActivityCircle {
 	 * CLICK\TOUCH
 	 ******************************************************************************/
 
-	public void onBackPressed() { // call my backbutton pressed method when
-									// boolean==true
-
-	}
-
 }
