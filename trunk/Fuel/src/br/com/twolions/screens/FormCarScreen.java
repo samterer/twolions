@@ -257,9 +257,6 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
 		bt_right.setImageResource(R.drawable.bt_save);
 
-		// title
-		// final ImageView title = (ImageView) findViewById(R.id.title);
-		// title.setVisibility(View.INVISIBLE);
 	}
 
 	public void btBarLeft(final View v) {
@@ -275,4 +272,9 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 	public void btBarRight(final View v) {
 		salvar();
 	}
+
+	public void onBackPressed() { // call my backbutton pressed method when
+
+	}
+
 }

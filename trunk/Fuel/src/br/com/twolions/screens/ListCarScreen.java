@@ -427,8 +427,8 @@ public class ListCarScreen extends MabooActivity implements
 
 	public void organizeBt() {
 		// bt left
-		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		bt_left.setImageResource(R.drawable.bt_menu);
+		// final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
+		// bt_left.setImageResource(R.drawable.bt_menu);
 
 		// bt rigt
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);

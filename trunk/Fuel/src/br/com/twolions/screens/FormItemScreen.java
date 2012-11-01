@@ -525,7 +525,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		salvar();
 	}
 
-	// String test;
+	public void onBackPressed() { // call my backbutton pressed method when
+		// boolean==true
+
+	}
 
 	public void addListenerOnButton() {
 

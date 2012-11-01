@@ -28,7 +28,7 @@ public class SettingsScreen extends ActivityCircle implements InterfaceBar {
 
 		// bt left
 		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		bt_left.setImageResource(R.drawable.bt_back);
+		bt_left.setImageResource(R.drawable.bt_cancel);
 
 		// bt rigt
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
@@ -47,6 +47,10 @@ public class SettingsScreen extends ActivityCircle implements InterfaceBar {
 
 	public void btBarRight(View v) {
 		// TODO Auto-generated method stub
+
+	}
+
+	public void onBackPressed() { // call my backbutton pressed method when
 
 	}
 
