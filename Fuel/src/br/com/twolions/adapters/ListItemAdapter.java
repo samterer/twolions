@@ -96,11 +96,11 @@ public class ListItemAdapter extends BaseAdapter {
 			}
 		}
 
-		Log.i(TAG, "************************************************");
-		Log.i(TAG, "type [" + itemRequest.getType() + "]");
+		// Log.i(TAG, "************************************************");
+		// Log.i(TAG, "type [" + itemRequest.getType() + "]");
 		// value u
 		if (itemRequest.getType() == Constants.FUEL) {
-			Log.i(TAG, "valor getValue_u[" + itemRequest.getValue_u() + "]");
+			// Log.i(TAG, "valor getValue_u[" + itemRequest.getValue_u() + "]");
 
 			holder.textRightDown.setText(Settings.moeda
 					+ String.valueOf(itemRequest.getValue_u()));
@@ -139,7 +139,7 @@ public class ListItemAdapter extends BaseAdapter {
 		if (itemRequest.getType() == Constants.EXPENSE
 				|| itemRequest.getType() == Constants.REPAIR
 				|| itemRequest.getType() == Constants.NOTE) {
-			Log.i(TAG, "valor getSubject[" + itemRequest.getSubject() + "]");
+			// Log.i(TAG, "valor getSubject[" + itemRequest.getSubject() + "]");
 
 			holder.textLeftDown
 					.setText(String.valueOf(itemRequest.getSubject()));
@@ -153,15 +153,14 @@ public class ListItemAdapter extends BaseAdapter {
 			Double total = Math.floor(itemRequest.getValue_p()
 					/ itemRequest.getValue_u());
 
-			Log.i(TAG,
-					"valor total.intValue()["
-							+ String.valueOf(total.intValue()) + "]");
+			// Log.i(TAG,"valor total.intValue()["+
+			// String.valueOf(total.intValue()) + "]");
 
 			holder.textLeftDown.setText(String.valueOf(total.intValue())
 					+ Settings.medida);
 			holder.textLeftDown.setVisibility(View.VISIBLE);
 		}
-		Log.i(TAG, "************************************************");
+		// Log.i(TAG, "************************************************");
 
 		// icon
 		switch (itemRequest.getType()) {
