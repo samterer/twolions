@@ -39,124 +39,45 @@ public class ItemModel {
 	}
 
 	/**
-	 * Recupera o odometro mais recente desse veiculo (no caso, com a data mais
-	 * proxima da atual)
+	 * Recupera o odometro mais recente desse veiculo (no caso, o maior)
 	 */
-	public static long buscarUltOdometroPorItem(final long id) {
+	public static long buscarUltOdometroPorItem(final long id_car) {
 		long result = 0L;
 
 		// percorre a lista de itens desse veiculo do tipo fuel
 		List<ItemLog> list = null;
 
 		try {
-			list = ListItemScreen.dao.listarItemLogsPorTipo(String
-					.valueOf(Constants.FUEL));
+			list = ListItemScreen.dao.listarItemLogsPorTipoECar(""
+					+ Constants.FUEL, "" + id_car);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
 
-		// TODO
+		if (list.size() == 0 || list == null) { // esse veiculo não possui itens
+												// do tipo fuel
+			return 0;
+		}
+
 		// RETORNA O MAIOR ODOMETER
+		int menor, maior;
+		menor = Integer.parseInt(String.valueOf(list.get(0).getOdometer()));
+		maior = Integer.parseInt(String.valueOf(list.get(0).getOdometer()));
+		for (int i = 0; i < list.size(); i++) {
 
-		// // recupera o que possui a ultima data
-		// Vector<String> vDatas = new Vector<String>();
-		// for (int i = 0; i < list.size(); i++) {
-		// // Log.i(TAG, "item [" + list.get(i).getDate() +
-		// // "] na lista por type");
-		//
-		// // formata date
-		// String dateFromBase = list.get(i).getDate();
-		//
-		// StringBuffer sb = new StringBuffer();
-		// for (int j = 0; j < dateFromBase.length(); j++) {
-		//
-		// if (dateFromBase.charAt(j) == '-') { // insere valor da
-		// // data
-		//
-		// // Log.i(TAG, "date [" + sb.toString() + "]");
-		//
-		// vDatas.add(sb.toString());
-		//
-		// sb = new StringBuffer();
-		//
-		// break;
-		//
-		// }
-		//
-		// Log.i(TAG, "insert [" + dateFromBase.charAt(j) + "]");
-		//
-		// sb.append(dateFromBase.charAt(j));
-		//
-		// }
-		// }
-		//
-		// // cria o array de inteiros
-		// int[] aDates = new int[vDatas.size()];
-		// int n = 0;
-		//
-		// for (int j = 0; j < vDatas.size(); j++) {
-		// String s = (String) vDatas.elementAt(j);
-		//
-		// Log.i(TAG, "s [" + s + "] na lista por type");
-		//
-		// for (int i = 0; i < s.length(); i++) {
-		//
-		// if (i > 0) {
-		//
-		// if (s.charAt(i - 1) != '/') {
-		//
-		// if (i - 1 == 3) {
-		// n += Integer.parseInt(String.valueOf(s
-		// .charAt(i - 1))) + 10;
-		// } else if (i - 1 == 6) {
-		// n += Integer.parseInt(String.valueOf(s
-		// .charAt(i - 1))) + 100;
-		// } else {
-		// n += Integer.parseInt(String.valueOf(s
-		// .charAt(i - 1)));
-		// }
-		//
-		// Log.i(TAG, "n [" + n + "] na lista por type");
-		//
-		// }
-		//
-		// }
-		//
-		// if (i >= s.length() - 1) {
-		//
-		// Log.i(TAG, "aDates[j] = n [" + n + "] na lista por type");
-		//
-		// aDates[j] = n;
-		//
-		// n = 0;
-		//
-		// break;
-		// }
-		//
-		// }
-		//
-		// }
-		//
-		// for (int i : aDates) {
-		// Log.i(TAG, "item [" + i + "] na lista por type");
-		// }
-		//
-		// int menor, maior;
-		// menor = aDates[0];
-		// maior = aDates[0];
-		// for (int valor : aDates) {
-		// if (valor < menor)
-		// menor = valor;
-		// if (valor > maior)
-		// maior = valor;
-		// }
-		//
-		// // recupera o odometer
-		// for (int i = 0; i < aDates.length; i++) {
-		//
-		// }
+			int valor = Integer.parseInt(String.valueOf(list.get(i)
+					.getOdometer()));
 
-		// att o valor do odometro ao result
+			if (valor < menor) {
+				menor = valor;
+			}
+
+			if (valor > maior) {
+				maior = valor;
+			}
+		}
+
+		result = maior;
 
 		return result;
 	}

@@ -26,7 +26,6 @@ public class ItemLogDAO extends DBConnection {
 		super(ctx, base_name);
 
 		Log.i(CATEGORIA, "ItemLogDAO...");
-		
 
 	}
 
@@ -54,8 +53,9 @@ public class ItemLogDAO extends DBConnection {
 		values.put(ItemLog.VALUE_U, itemLog.getValue_u());
 		values.put(ItemLog.ODOMETER, itemLog.getOdometer());
 		values.put(ItemLog.TEXT, itemLog.getText());
-		
-		//Log.i(CATEGORIA, "Inserindo o itemLog: " + buscarItemLog(itemLog.getId()).toString());
+
+		// Log.i(CATEGORIA, "Inserindo o itemLog: " +
+		// buscarItemLog(itemLog.getId()).toString());
 
 		final long id = inserir(values, table_name);
 		return id;
@@ -74,10 +74,12 @@ public class ItemLogDAO extends DBConnection {
 
 		final String _id = String.valueOf(itemLog.getId());
 
-		Log.i(CATEGORIA, "Atualizando o itemLog: " + buscarItemLog(itemLog.getId()).toString());
-		
+		Log.i(CATEGORIA,
+				"Atualizando o itemLog: "
+						+ buscarItemLog(itemLog.getId()).toString());
+
 		final String where = ItemLog._ID + "=?";
-		final String[] whereArgs = new String[]{_id};
+		final String[] whereArgs = new String[] { _id };
 
 		final int count = atualizar(values, where, whereArgs, table_name);
 
@@ -88,8 +90,8 @@ public class ItemLogDAO extends DBConnection {
 		final String where = ItemLog._ID + "=?";
 
 		final String _id = String.valueOf(id);
-		final String[] whereArgs = new String[]{_id};
-		
+		final String[] whereArgs = new String[] { _id };
+
 		Log.i(CATEGORIA, "Deletando o itemLog: " + buscarItemLog(id).toString());
 
 		final int count = deletar(where, whereArgs, table_name);
@@ -129,9 +131,9 @@ public class ItemLogDAO extends DBConnection {
 	}
 
 	// Retorna uma lista com todos os ItemLogs pelo id do carro
-	public List<ItemLog> listarItemLogs(final long id_Car) {
+	public List<ItemLog> listarItemLogs(final long id_car) {
 		final Cursor c = db.query(table_name, ItemLog.colunas, ItemLog.ID_CAR
-				+ "='" + id_Car + "'", null, null, null, null);
+				+ "='" + id_car + "'", null, null, null, null);
 
 		final List<ItemLog> itemLogs = new ArrayList<ItemLog>();
 
@@ -214,6 +216,7 @@ public class ItemLogDAO extends DBConnection {
 
 		return itemLogs;
 	}
+
 	// Retorna um cursor com todos os carros
 	public Cursor getCursor() {
 		try {
@@ -234,6 +237,60 @@ public class ItemLogDAO extends DBConnection {
 	public List<ItemLog> listarItemLogsPorTipo(final String type_item) {
 		final Cursor c = db.query(table_name, ItemLog.colunas, ItemLog.TYPE
 				+ "='" + type_item + "'", null, null, null, null);
+
+		final List<ItemLog> itemLogs = new ArrayList<ItemLog>();
+
+		if (c.moveToFirst()) {
+
+			// Recupera os índices das colunas
+			final int idxId = c.getColumnIndex(ItemLog._ID);
+			final int idxIdCar = c.getColumnIndex(ItemLog.ID_CAR);
+			final int idxIdDate = c.getColumnIndex(ItemLog.DATE);
+			final int idxIdType = c.getColumnIndex(ItemLog.TYPE);
+			final int idxIdSubject = c.getColumnIndex(ItemLog.SUBJECT);
+			final int idxIdValueP = c.getColumnIndex(ItemLog.VALUE_P);
+			final int idxIdValueU = c.getColumnIndex(ItemLog.VALUE_U);
+			final int idxIdOdometer = c.getColumnIndex(ItemLog.ODOMETER);
+			final int idxIdText = c.getColumnIndex(ItemLog.TEXT);
+
+			// Loop até o final
+			do {
+				final ItemLog itemLog = new ItemLog();
+				itemLogs.add(itemLog);
+
+				// recupera os atributos de carro
+				itemLog.setId(c.getLong(idxId));
+				itemLog.setId_car(c.getLong(idxIdCar));
+				itemLog.setDate(c.getString(idxIdDate));
+				itemLog.setType(c.getInt(idxIdType));
+				itemLog.setSubject(c.getString(idxIdSubject));
+				itemLog.setValue_p(c.getDouble(idxIdValueP));
+				itemLog.setValue_u(c.getDouble(idxIdValueU));
+				itemLog.setOdometer(c.getLong(idxIdOdometer));
+				itemLog.setText(c.getString(idxIdText));
+
+				Log.i(CATEGORIA, "ItemLog: " + itemLog.toString());
+
+			} while (c.moveToNext());
+		}
+
+		return itemLogs;
+	}
+
+	/**
+	 * Retorna uma lista de itens pelo tipo e pelo car
+	 * 
+	 * @param type_item
+	 * @return
+	 */
+	public List<ItemLog> listarItemLogsPorTipoECar(final String type_item,
+			final String id_car) {
+
+		String selection = ItemLog.TYPE + "='" + type_item + "'" + " and "
+				+ ItemLog.ID_CAR + "='" + id_car + "'";
+
+		final Cursor c = db.query(table_name, ItemLog.colunas, selection, null,
+				null, null, null);
 
 		final List<ItemLog> itemLogs = new ArrayList<ItemLog>();
 

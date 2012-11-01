@@ -51,7 +51,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private EditText text;
 
 	private static Long id_item;
-	private static Long id_car;
+	private static Long id_car = null;
 	private static int type;
 	private static final int FUEL = Constants.FUEL;
 	private static final int EXPENSE = Constants.EXPENSE;
@@ -98,8 +98,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		vTextView = new Vector<TextView>();
 
 		TextView tv;
-
-		id_car = 0L; // sempre tenho um id de carro
 
 		final Bundle extras = getIntent().getExtras();
 
@@ -228,10 +226,22 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			odometer = (TextView) findViewById(R.id.odometer);
 			odometer.setTypeface(tf);
 
-			odometer.setText(String.valueOf(ItemModel
-					.buscarUltOdometroPorItem(id_car))); // recupera o ultimo
-															// odometer desse
-															// veiculo
+			if (id_car != null) {
+
+				odometer.setText(String.valueOf(ItemModel
+						.buscarUltOdometroPorItem(id_car))); // recupera o
+																// ultimo
+																// odometer
+																// desse
+																// veiculo
+				if (odometer.getText() == "0") { // se o odometro for ficar com
+													// o
+													// valor zero, ele ira ficar
+													// vazio
+					odometer.setText("");
+				}
+
+			}
 
 		}
 
