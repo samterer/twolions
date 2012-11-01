@@ -426,6 +426,11 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 
 	}
 
+	public void onBackPressed() { // call my backbutton pressed method when
+		// boolean==true
+
+	}
+
 	/******************************************************************************
 	 * GESTURE
 	 ******************************************************************************/
