@@ -1,8 +1,6 @@
 package br.com.twolions.screens;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,7 +9,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -25,8 +22,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.adapters.ListItemAdapter;
 import br.com.twolions.core.MabooActivity;
@@ -204,8 +199,6 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 
 	private void confListForLongClick() {
 
-		// listview_log.setOnItemClickListener(this);
-
 		listeningGesture();
 
 	}
@@ -222,28 +215,25 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 		return list;
 	}
 
-	public void showBtsEditDelete(boolean exibe) {
+	public void showBtsEditDelete(boolean exibe) throws NullPointerException {
 
-		Log.i(TAG, "*********element: " + element.toString());
+		Log.i(TAG, "showBtsEditDelete > [ exibe:+" + exibe + "+] element: "
+				+ element.toString());
+
 		RelativeLayout item = (RelativeLayout) element
 				.findViewById(R.id.r_item_log);
-
-		TextView textoTeste = (TextView) item.findViewById(R.id.textLeftDown);
-		Log.i(TAG, "**********text item: " + textoTeste.getText().toString());
 
 		// prepara animação (left to right)
 		LayoutAnimationController controller = AnimationUtils
 				.loadLayoutAnimation(this, R.anim.anime_slide_to_right);
 
 		if (exibe) {
-			// Toast.makeText(this, "exibindo...", Toast.LENGTH_SHORT).show();
 
-			/*
-			 * RelativeLayout item = (RelativeLayout) element
-			 * .findViewById(R.id.r_item_log);
-			 */
+			if (item.getVisibility() == View.GONE) { // para que ele não
+														// repita a animação
+				return;
+			}
 
-			// item.setLayoutAnimation(controller);
 			item.setVisibility(View.GONE);
 
 			LinearLayout tb_edicao = (LinearLayout) element
@@ -259,10 +249,12 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 			item.setLayoutAnimation(controller);
 
 		} else {
-			// Toast.makeText(this, "apagando...", Toast.LENGTH_SHORT).show();
 
-			// RelativeLayout item = (RelativeLayout) element
-			// .findViewById(R.id.r_item_log);
+			if (item.getVisibility() == View.VISIBLE) { // para que ele não
+														// repita a animação
+				return;
+			}
+
 			item.setVisibility(View.VISIBLE);
 
 			LinearLayout tb_edicao = (LinearLayout) element
@@ -271,24 +263,6 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 
 		}
 
-		final Handler handler = new Handler();
-		Timer t = new Timer();
-		t.schedule(new TimerTask() {
-			public void run() {
-				handler.post(new Runnable() {
-					public void run() {
-						RelativeLayout item = (RelativeLayout) element
-								.findViewById(R.id.r_item_log);
-
-						item.setVisibility(View.VISIBLE);
-
-						LinearLayout tb_edicao = (LinearLayout) element
-								.findViewById(R.id.tb_edicao);
-						tb_edicao.setVisibility(View.GONE);
-					}
-				});
-			}
-		}, 10000);
 	}
 
 	public void deleteConConfirm() {
@@ -399,7 +373,7 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 	 * CLICK\TOUCH
 	 ******************************************************************************/
 
-	private int position = 0;
+	private static int position = 0;
 	private static View element;
 
 	public void deleteConConfirm(View v) {
@@ -451,11 +425,18 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 
 		View.OnTouchListener gestureListener = new View.OnTouchListener() {
 
-			public boolean onTouch(View v, MotionEvent event) {
+			public boolean onTouch(View v, MotionEvent e) {
+
+				Log.i(TAG, "onTouch > onTouch!");
+
+				position = listview_log.pointToPosition((int) e.getX(),
+						(int) e.getY());
+
+				Log.i(TAG, "onTouch > [position: " + position + "]");
 
 				element = v;
 
-				return gestureDetector.onTouchEvent(event);
+				return gestureDetector.onTouchEvent(e);
 
 			}
 
@@ -477,6 +458,23 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 						return true;
 					}
 				});
+
+		listview_log
+				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+					public void onItemClick(AdapterView<?> parent, View view,
+							int pos, long id) {
+
+						// Log.i(TAG, "onItemClick > onItemClick in position[" +
+						// pos + "]");
+
+						// element = null;
+
+						// element = view;
+
+						// position = pos;
+
+					}
+				});
 	}
 
 	// Do not use LitView.setOnItemClickListener(). Instead, I override
@@ -484,6 +482,8 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 	// method when
 	// it detects a tap-up event.
 	private void myOnItemClick(int position) {
+
+		Log.i(TAG, "myOnItemClick > [ position: " + position + "]");
 
 		// get the row the clicked button is in
 		id_car = itens.get(position).getId_car();
@@ -495,37 +495,50 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 
 	private void onLTRFling() {
 
-		Toast.makeText(this,
-				"Left-to-right fling in position[" + position + "]",
-				Toast.LENGTH_SHORT).show();
+		Log.i(TAG, "onLTRFling > Left-to-right fling in position[" + position
+				+ "]");
 
-		ItemLog item = itens.get(position);
+		try {
+			/*
+			 * Toast.makeText(this, "Left-to-right fling in position[" +
+			 * position + "]", Toast.LENGTH_SHORT).show();
+			 */
 
-		id_item = item.getId();
-		id_car = item.getId_car();
-		type = item.getType();
+			ItemLog item = itens.get(position);
 
-		// element = listview_log.getAdapter().getView(position, null, null);
+			id_item = item.getId();
+			id_car = item.getId_car();
+			type = item.getType();
 
-		showBtsEditDelete(true);
+			showBtsEditDelete(true);
+
+		} catch (Exception e) {
+			Log.i(TAG, "! element esta null");
+		}
 
 	}
 
 	private void onRTLFling() {
 
-		Toast.makeText(this,
-				"Right-to-left fling in position[" + position + "]",
-				Toast.LENGTH_SHORT).show();
+		Log.i(TAG, "onRTLFling > Right-to-left fling in position[" + position
+				+ "]");
 
-		ItemLog item = itens.get(position);
-		id_item = item.getId();
-		id_car = item.getId_car();
-		type = item.getType();
+		try {
+			/*
+			 * Toast.makeText(this, "Right-to-left fling in position[" +
+			 * position + "]", Toast.LENGTH_SHORT).show();
+			 */
 
-		// element = listview_log.getAdapter().getView(position, null, null);
+			ItemLog item = itens.get(position);
+			id_item = item.getId();
+			id_car = item.getId_car();
+			type = item.getType();
 
-		showBtsEditDelete(true);
+			showBtsEditDelete(false);
 
+		} catch (Exception e) {
+			Log.i(TAG, "! element esta null");
+		}
 	}
 
 	class MyGestureDetector extends SimpleOnGestureListener {
@@ -533,8 +546,14 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 		// Detect a single-click and call my own handler.
 		public boolean onSingleTapUp(MotionEvent e) {
 
-			ListView lv = listview_log;
-			int pos = lv.pointToPosition((int) e.getX(), (int) e.getY());
+			// ListView lv = listview_log;
+			int pos = listview_log.pointToPosition((int) e.getX(),
+					(int) e.getY());
+
+			if (pos < 0) { // as vezes a position na list retornava a mesma
+							// posição mas negativo
+				pos = pos * (-1);
+			}
 
 			myOnItemClick(pos);
 
@@ -651,8 +670,10 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 
 				// create a rect for storing the window rect
 				Rect r = new Rect(0, 0, 0, 0);
+
 				// retrieve the windows rect
 				this.getWindow().getDecorView().getHitRect(r);
+
 				// check if the event position is inside the window rect
 				boolean intersects = r.contains((int) event.getX(),
 						(int) event.getY());
