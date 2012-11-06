@@ -3,6 +3,7 @@ package br.com.twolions.screens;
 import java.util.Calendar;
 import java.util.Vector;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -325,6 +326,30 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			// value u
 			if (type == FUEL) {
 				value_u.setText(String.valueOf((itemRequest.getValue_u())));
+				
+				//get value
+				
+				//pego a moeda anterior
+				
+				//pego a moeda da vez
+				
+			//	4
+				
+			//	dollar
+				
+			//	dollar
+				
+			//	devolve o valor
+				
+			//	se nao
+				
+			//	real
+				
+			//	dolar
+				
+			//	= getDollarSobreReal(shared.moeda, shared.moedda, valor)
+				
+				
 			}
 
 			// value p
@@ -450,8 +475,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			} else {
 
 				// pinta de vermelho os dados nos campos de value_p e value_u
-				value_p.setTextColor(R.color.vermelho);
-				value_u.setTextColor(R.color.vermelho);
+				//value_p.setTextColor(R.color.vermelho);
+				//value_u.setTextColor(R.color.vermelho);
 
 				return;
 

@@ -1,57 +1,49 @@
 package br.com.twolions.screens;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.ImageView;
 import br.com.twolions.R;
-import br.com.twolions.core.ActivityCircle;
 import br.com.twolions.interfaces.InterfaceBar;
 
-public class SettingsScreen extends ActivityCircle implements InterfaceBar {
+public class SettingsScreen extends PreferenceActivity implements InterfaceBar {
 
-	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
+	//obter valores
+		//boolean vibrar = prefs.getBoolean(getString(key), true);
 
-		init();
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.edit_set);
+            
+    }
 
-		organizeBt();
-
-	}
-
-	private void init() {
-
-		setContentView(R.layout.form_set);
-
-	}
-
-	public void organizeBt() {
-
-		// bt left
-		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		bt_left.setImageResource(R.drawable.bt_cancel);
-
-		// bt rigt
-		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
-		bt_right.setImageResource(R.drawable.bt_save);
-
-	}
-
-	public void btBarLeft(View v) {
-
-		setResult(RESULT_CANCELED);
-
-		// Fecha a tela
-		finish();
-
-	}
 
 	public void btBarRight(View v) {
 		// TODO Auto-generated method stub
-
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences.Editor editor = prefs.edit();  
+		editor.commit();  
+		
+		//sai da tela de configurações.
+		finish();
 	}
 
 	public void onBackPressed() { // call my backbutton pressed method when
 
+	}
+	
+	public void organizeBt() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void btBarLeft(View v) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
