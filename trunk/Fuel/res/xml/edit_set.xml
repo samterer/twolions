@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+                <ListPreference
+                        android:title="Input Volume"
+                        android:key="pref_volume"
+                        android:entries="@array/volume_values"
+                        android:entryValues="@array/volume"
+                        android:summary="Select units used to input fuel volume"
+                        android:defaultValue="us_gallon"/>
+                
+                <ListPreference
+                        android:title="Input Distance"
+                        android:key="pref_distance"
+                        android:entries="@array/distance_values"
+                        android:entryValues="@array/distance"
+                        android:summary="Select units used to input odometer distance"
+                        android:defaultValue="miless"/>
+                
+                <ListPreference
+                        android:title="Currency"
+                        android:key="pref_currency"
+                        android:entries="@array/currency_values"
+                        android:entryValues="@array/currency"
+                        android:summary="Select currency used to represent fuel coast"
+                        android:defaultValue="dollar"/>
+</PreferenceScreen>

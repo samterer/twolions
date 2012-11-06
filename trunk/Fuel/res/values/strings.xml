@@ -64,5 +64,47 @@
     <string name="s_d_2">"Select units used to input odometer distance"</string>
     <string name="s_t_3">"Currency"</string>
     <string name="s_d_3">"Select currency used to represent fuel coast"</string>
+    
+    <!-- Edit Settings Inicio -->
+    <string-array name="volume">
+        <item>litre</item>
+        <item>us_gallon</item>
+        <item>imp_galon</item>
+    </string-array>
+    
+    <string-array name="volume_values">
+        <item>Litre</item>
+        <item>US Gallon</item>
+        <item>Imperial Galon</item>
+    </string-array>
+    
+    <string-array name="distance">
+        <item>km</item>
+        <item>miless</item>
+    </string-array>
+    
+    <string-array name="distance_values">
+        <item>Km</item>
+        <item>Miles</item>
+    </string-array>
+    
+    <string-array name="currency">
+        <item>dollar</item>
+        <item>euro</item>
+        <item>pound</item>
+        <item>yuan</item>
+        <item>real</item>
+        <item>hk</item>
+    </string-array>
+    
+    <string-array name="currency_values">
+        <item>Dollar</item>
+        <item>Euro</item>
+        <item>Pound</item>
+        <item>Yuan/yen</item>
+        <item>Real</item>
+        <item>HK$ Hong Kong Dollar</item>
+    </string-array>
+    <!-- Edit Settings FIM -->
 
 </resources>
