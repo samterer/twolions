@@ -1,131 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@color/cinza_coob_c" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
         <LinearLayout
-            android:id="@+id/l_sup_esq"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.50"
-            android:gravity="bottom"
-            android:orientation="vertical" >
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5" >
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/cinza_coob"
-                android:gravity="center|center_vertical"
-                android:paddingTop="3dp" >
+                android:id="@+id/l_sup_esq"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.50"
+                android:gravity="bottom"
+                android:orientation="vertical" >
 
-                <EditText
-                    android:id="@+id/ed_sup_esq"
-                    android:layout_width="120dp"
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_vertical"
-                    android:hint="hex value"
-                    android:tag="0" />
+                    android:gravity="center|center_vertical"
+                    android:paddingTop="3dp" >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/slot" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="46dp"
+                    android:gravity="center|center_vertical" >
+
+                    <EditText
+                        android:id="@+id/ed_sup_esq"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|center_vertical"
+                        android:background="@drawable/slot_edit"
+                        android:hint="hex value"
+                        android:maxLength="6"
+                        android:paddingLeft="15dp"
+                        android:tag="0" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:background="@color/cinza_coob" >
+            </View>
+
+            <LinearLayout
+                android:id="@+id/l_sup_dir"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.50"
+                android:gravity="bottom"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_vertical"
+                    android:paddingTop="3dp" >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/slot" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="46dp"
+                    android:gravity="center|center_vertical" >
+
+                    <EditText
+                        android:id="@+id/ed_sup_dir"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|center_vertical"
+                        android:background="@drawable/slot_edit"
+                        android:hint="hex value"
+                        android:maxLength="6"
+                        android:paddingLeft="15dp"
+                        android:tag="1" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="fill_parent"
-            android:background="@color/cinza_coob" >
-        </View>
-
         <LinearLayout
-            android:id="@+id/l_sup_dir"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.50"
-            android:gravity="bottom"
-            android:orientation="vertical" >
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5" >
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/cinza_coob"
-                android:gravity="center|center_vertical"
-                android:paddingTop="3dp" >
+                android:id="@+id/l_inf_esq"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.50"
+                android:gravity="bottom"
+                android:orientation="vertical" >
 
-                <EditText
-                    android:id="@+id/ed_sup_dir"
-                    android:layout_width="120dp"
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_vertical"
-                    android:hint="hex value"
-                    android:tag="1" />
+                    android:gravity="center|center_vertical"
+                    android:paddingTop="3dp" >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/slot" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="46dp"
+                    android:gravity="center|center_vertical" >
+
+                    <EditText
+                        android:id="@+id/ed_inf_esq"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|center_vertical"
+                        android:background="@drawable/slot_edit"
+                        android:hint="hex value"
+                        android:maxLength="6"
+                        android:paddingLeft="15dp"
+                        android:tag="2" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:background="@color/cinza_coob" >
+            </View>
+
+            <LinearLayout
+                android:id="@+id/l_inf_dir"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.50"
+                android:gravity="bottom"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_vertical"
+                    android:paddingTop="3dp" >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/slot" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="46dp"
+                    android:gravity="center|center_vertical" >
+
+                    <EditText
+                        android:id="@+id/ed_inf_dir"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|center_vertical"
+                        android:background="@drawable/slot_edit"
+                        android:hint="hex value"
+                        android:maxLength="6"
+                        android:paddingLeft="15dp"
+                        android:tag="3" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" >
-
-        <LinearLayout
-            android:id="@+id/l_inf_esq"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.50"
-            android:gravity="bottom"
-            android:orientation="vertical" >
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/cinza_coob"
-                android:gravity="center|center_vertical"
-                android:paddingTop="3dp" >
-
-                <EditText
-                    android:id="@+id/ed_inf_esq"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_vertical"
-                    android:hint="hex value"
-                    android:tag="2" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="fill_parent"
-            android:background="@color/cinza_coob" >
-        </View>
-
-        <LinearLayout
-            android:id="@+id/l_inf_dir"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.50"
-            android:gravity="bottom"
-            android:orientation="vertical" >
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/cinza_coob"
-                android:gravity="center|center_vertical"
-                android:paddingTop="3dp" >
-
-                <EditText
-                    android:id="@+id/ed_inf_dir"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_vertical"
-                    android:hint="hex value"
-                    android:tag="3" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-</LinearLayout>
+</FrameLayout>
