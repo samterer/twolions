@@ -66,6 +66,8 @@
     <string name="s_d_3">"Select currency used to represent fuel coast"</string>
     
     <!-- Edit Settings Inicio -->
+    <string name="settings">Settings</string>
+    <string name="units">Units</string>
     <string-array name="volume">
         <item>litre</item>
         <item>us_gallon</item>

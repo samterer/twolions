@@ -17,7 +17,7 @@ public class SettingsScreen extends PreferenceActivity implements InterfaceBar {
     protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.edit_set);
-            
+            //setContentView(R.layout.form_set);
     }
 
 
@@ -32,7 +32,7 @@ public class SettingsScreen extends PreferenceActivity implements InterfaceBar {
 	}
 
 	public void onBackPressed() { // call my backbutton pressed method when
-
+		super.onBackPressed();
 	}
 	
 	public void organizeBt() {
