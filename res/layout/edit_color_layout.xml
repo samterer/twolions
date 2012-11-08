@@ -37,7 +37,19 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="46dp"
-                    android:gravity="center|center_vertical" >
+                    android:layout_gravity="center|center_vertical"
+                    android:gravity="bottom|center|center_vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="bottom"
+                        android:background="@color/cinza_coob_c"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:text="#"
+                        android:textColor="@color/cinza_default"
+                        android:textSize="18dp" />
 
                     <EditText
                         android:id="@+id/ed_sup_esq"
@@ -47,7 +59,7 @@
                         android:background="@drawable/slot_edit"
                         android:hint="hex value"
                         android:maxLength="6"
-                        android:paddingLeft="15dp"
+                        android:paddingLeft="10dp"
                         android:tag="0" />
                 </LinearLayout>
             </LinearLayout>
@@ -82,6 +94,16 @@
                     android:layout_width="fill_parent"
                     android:layout_height="46dp"
                     android:gravity="center|center_vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                         android:gravity="center"
+                        android:background="@color/cinza_coob_c"
+                        android:paddingLeft="5dp"
+                        android:text="#"
+                        android:textColor="@color/cinza_default"
+                        android:textSize="18dp" />
 
                     <EditText
                         android:id="@+id/ed_sup_dir"
@@ -127,6 +149,16 @@
                     android:layout_height="46dp"
                     android:gravity="center|center_vertical" >
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:background="@color/cinza_coob_c"
+                        android:paddingLeft="5dp"
+                        android:text="#"
+                        android:textColor="@color/cinza_default"
+                        android:textSize="18dp" />
+
                     <EditText
                         android:id="@+id/ed_inf_esq"
                         android:layout_width="fill_parent"
@@ -170,6 +202,16 @@
                     android:layout_width="fill_parent"
                     android:layout_height="46dp"
                     android:gravity="center|center_vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:background="@color/cinza_coob_c"
+                        android:paddingLeft="5dp"
+                        android:text="#"
+                        android:textColor="@color/cinza_default"
+                        android:textSize="18dp" />
 
                     <EditText
                         android:id="@+id/ed_inf_dir"
