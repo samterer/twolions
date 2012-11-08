@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingTop="15dp"
-        android:text="2012-2012 TwoLions Inc."
+        android:text="2012-2012 NaoQuica Inc"
         android:textColor="#354714"
         android:textSize="14dp" />
 

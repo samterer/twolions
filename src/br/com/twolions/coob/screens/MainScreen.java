@@ -54,6 +54,9 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 		listenerText();
 
+		// inicia a tela de ajuda
+		initHelpView();
+
 	}
 
 	/****************************************************************
@@ -99,6 +102,10 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 		// TODO
 		// l_inf_dir.setBackgroundColor(Color.parseColor("FFFFFF"));
+
+	}
+
+	private void initHelpView() {
 
 	}
 
