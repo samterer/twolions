@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,9 +31,12 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 	private Vector<TextView> vTextView;
 
 	private int[] list_color;
+
 	private String[] list_hex;
 
 	HexValidator hex;
+
+	private boolean isHelpExibido = false;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,9 +47,9 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 		// cores default
 		for (int i = 0; i < list_color.length; i++) {
-			list_color[i] = Color.parseColor("#edf7d9");
+			list_color[i] = Color.parseColor("#cac8c8");
 			// Log.i(TAG, "list_color[i] = " + list_color[i]);
-			list_hex[i] = "#edf7d9";
+			list_hex[i] = "cac8c8";
 		}
 
 		init();
@@ -105,7 +109,16 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 	}
 
+	// exibe a tela de help sobre a tela do app
 	private void initHelpView() {
+
+		if (!isHelpExibido) {
+			isHelpExibido = true;
+
+			LinearLayout img = (LinearLayout) findViewById(R.id.help);
+			img.setVisibility(View.VISIBLE);
+
+		}
 
 	}
 
@@ -120,6 +133,9 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 		Log.i("main", "pintando background [" + index + "] com a cor [" + color
 				+ "]");
+
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		try {
 			ll.setBackgroundColor(Color.parseColor(color));
@@ -252,6 +268,11 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 	}
 
+	public void hideHelp(View v) {
+		LinearLayout img = (LinearLayout) findViewById(R.id.help);
+		img.setVisibility(View.INVISIBLE);
+	}
+
 	/****************************************************************
 	 * EDIT TEXT
 	 ****************************************************************/
@@ -270,15 +291,20 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 						public void onTextChanged(CharSequence s, int start,
 								int before, int count) {
 
-							if (s.length() > 0) { // insere o sharp caso ele não
-													// existe no campo
-								if (s.charAt(0) == '#') {
-									//
-								} else {
-									e.setText("#" + e.getText().toString());
-								}
-							}
-
+							// if (s.length() > 0) { // insere o sharp caso ele
+							// não
+							// // existe no campo
+							// if (s.charAt(0) == '#') {
+							// //
+							// } else {
+							//
+							// e.toString().replace('#', ' ');
+							//
+							// e.setText("#" + e.getText().toString());
+							//
+							// }
+							//
+							// }
 						}
 
 						public void beforeTextChanged(CharSequence s,
@@ -287,9 +313,22 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 						}
 
 						public void afterTextChanged(Editable s) {
+
+							StringBuffer text = new StringBuffer(s.length());
+							text.append(s.toString());
+
+							if (text.length() > 5) {
+								Log.i("main", "insert #");
+								// insere o #
+								text.insert(0, "#");
+								Log.i("main", "s [" + text.toString() + "]");
+							}
+
+							Log.i("main", "s [" + text.toString() + "]");
+
 							try {
 
-								if (hex.validate(s.toString())) {
+								if (hex.validate(text.toString())) {
 
 									Log.i("main",
 											"o text no item ["
@@ -303,7 +342,8 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 									setBackground(
 											Integer.valueOf(
 													e.getTag().toString())
-													.intValue(), s.toString());
+													.intValue(), text
+													.toString());
 
 									return;
 
