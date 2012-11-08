@@ -2,6 +2,7 @@ package br.com.twolions.coob.screens;
 
 import java.util.Vector;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -9,8 +10,9 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -133,9 +135,10 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 		Log.i("main", "pintando background [" + index + "] com a cor [" + color
 				+ "]");
-
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+		
+		EditText ed = (EditText) vEditText.elementAt(index);
+		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(ed.getWindowToken(), 0);
 
 		try {
 			ll.setBackgroundColor(Color.parseColor(color));
@@ -238,7 +241,7 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 			ll_horizon.setBackgroundColor(list_color[i]);
 
 			TextView t = (TextView) vTextView.elementAt(i);
-			t.setText('#'+list_hex[i]);
+			t.setText('#' + list_hex[i]);
 		}
 
 	}
@@ -246,6 +249,24 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 	/****************************************************************
 	 * TOUCH
 	 ****************************************************************/
+	
+	public boolean dispatchTouchEvent(MotionEvent event) {
+	    View v = getCurrentFocus();
+	    boolean ret = super.dispatchTouchEvent(event);
+	    View w = getCurrentFocus();
+	    int scrcoords[] = new int[2];
+	    w.getLocationOnScreen(scrcoords);
+	    float x = event.getRawX() + w.getLeft() - scrcoords[0];
+	    float y = event.getRawY() + w.getTop() - scrcoords[1];
+
+	    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+	    Log.d("Activity", "Touch event "+event.getRawX()+","+event.getRawY()+" "+x+","+y+" rect "+w.getLeft()+","+w.getTop()+","+w.getRight()+","+w.getBottom()+" coords "+scrcoords[0]+","+scrcoords[1]);
+	    if (event.getAction() == MotionEvent.ACTION_UP && (x < w.getLeft() || x >= w.getRight() || y < w.getTop() || y > w.getBottom()) ) { 
+	    	imm.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
+	    }
+	    return ret;
+
+	}
 
 	public void organizeBt() {
 
@@ -357,11 +378,6 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 																			.toString())
 															.intValue()
 													+ "] NÃO é hex.");
-									
-//									setBackground(
-//											Integer.valueOf(
-//													e.getTag().toString())
-//													.intValue(), "#cac8c8");
 
 									return;
 								}
