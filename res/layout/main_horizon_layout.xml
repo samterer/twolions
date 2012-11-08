@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/l_esq"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:tag="0" >
+
+        <TextView
+            android:id="@+id/t_esq"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+             android:gravity="center"
+            android:background="@color/preto"
+            android:text="#fffffff"
+            android:textColor="@color/branco" >
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/l_esq_2"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:tag="1" >
+
+        <TextView
+            android:id="@+id/t_esq_2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:background="@color/preto"
+            android:text="#fffffff"
+            android:textColor="@color/branco" >
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/l_dir"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:tag="2" >
+
+        <TextView
+            android:id="@+id/t_dir"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+             android:gravity="center"
+            android:background="@color/preto"
+            android:text="#fffffff"
+            android:textColor="@color/branco" >
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/l_dir_2"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:tag="3" >
+
+        <TextView
+            android:id="@+id/t_dir_2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+             android:gravity="center"
+            android:background="@color/preto"
+            android:text="#fffffff"
+            android:textColor="@color/branco" >
+        </TextView>
+    </LinearLayout>
+
+</LinearLayout>
