@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#3d3d3d"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:onClick="hideAbout">
 
     <LinearLayout
         android:layout_width="match_parent"
