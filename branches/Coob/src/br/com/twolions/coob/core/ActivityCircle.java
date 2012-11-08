@@ -20,15 +20,7 @@ public class ActivityCircle extends Activity {
 		} else {
 			Log.i("appLog", getClassName() + ".onCreate() chamado: " + icicle);
 		}
-		// monta tela
-		confTela();
-	}
 
-	private void confTela() {
-		// retira o titulo da tela
-		// requestWindowFeature(Window.FEATURE_NO_TITLE);
-		// making it full screen
-		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	}
 
 	protected void onStart() {
