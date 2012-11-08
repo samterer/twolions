@@ -125,7 +125,7 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 	// pint ao background q o usuario esta utilizando
 	private void setBackground(int index, String color) {
 
-		list_hex[index] = color;
+		list_hex[index] = color.replace('#', ' ');
 
 		list_color[index] = Color.parseColor(color);
 
@@ -135,7 +135,7 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 				+ "]");
 
 		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
 		try {
 			ll.setBackgroundColor(Color.parseColor(color));
@@ -238,7 +238,7 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 			ll_horizon.setBackgroundColor(list_color[i]);
 
 			TextView t = (TextView) vTextView.elementAt(i);
-			t.setText(list_hex[i]);
+			t.setText('#'+list_hex[i]);
 		}
 
 	}
@@ -357,6 +357,11 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 																			.toString())
 															.intValue()
 													+ "] NÃO é hex.");
+									
+//									setBackground(
+//											Integer.valueOf(
+//													e.getTag().toString())
+//													.intValue(), "#cac8c8");
 
 									return;
 								}

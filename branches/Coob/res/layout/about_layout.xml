@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/cinza_coob"
+    android:background="#3d3d3d"
     android:orientation="vertical" >
 
     <LinearLayout
