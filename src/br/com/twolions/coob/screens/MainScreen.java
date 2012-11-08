@@ -86,8 +86,8 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 		LinearLayout ll = (LinearLayout) vLinearLayout.elementAt(index);
 
-		Log.i("appLog", "pintando background [" + index + "] com a cor ["
-				+ color + "]");
+		Log.i("main", "pintando background [" + index + "] com a cor [" + color
+				+ "]");
 
 		try {
 			ll.setBackgroundColor(Color.parseColor(color));
@@ -133,10 +133,20 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 			if (e != null) { // aplica regra de decimal
 
 				if (e.isFocusable()) {
+
 					e.addTextChangedListener(new TextWatcher() {
 
 						public void onTextChanged(CharSequence s, int start,
 								int before, int count) {
+
+							if (s.length() > 0) { // insere o sharp caso ele não
+													// existe no campo
+								if (s.charAt(0) == '#') {
+									//
+								} else {
+									e.setText("#" + e.getText().toString());
+								}
+							}
 
 						}
 
@@ -150,7 +160,7 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 								if (hex.validate(s.toString())) {
 
-									Log.i("appLog",
+									Log.i("main",
 											"o text no item ["
 													+ Integer
 															.valueOf(
@@ -158,15 +168,6 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 																			.toString())
 															.intValue()
 													+ "] é hex.");
-
-									// aplica cor no respectivo background
-									StringBuffer sb = new StringBuffer(s
-											.toString().length());
-									sb.append(s.subSequence(1, (s.toString()
-											.length() - 1)));
-
-									int hexValue = Integer.parseInt(
-											sb.toString(), 16);
 
 									setBackground(
 											Integer.valueOf(
@@ -177,7 +178,7 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 								} else {
 
-									Log.i("appLog",
+									Log.i("main",
 											"o text no item ["
 													+ Integer
 															.valueOf(
