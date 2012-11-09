@@ -11,13 +11,13 @@ import br.com.twolions.coob.core.ActivityCircle;
 
 public class SplashScreen extends ActivityCircle {
 
-	Handler handler;
+	private Handler handler;
 
-	Intent tInicial;
+	private Intent tInicial;
 
-	boolean isFinishSplash = false;
+	private boolean isFinishSplash = false;
 
-	CountDownTimer timer;
+	private CountDownTimer timer;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,13 +33,12 @@ public class SplashScreen extends ActivityCircle {
 		{
 			@Override
 			public void onTick(long millisUntilFinished) {
-				Log.i("appLog", "seconds remaining: " + millisUntilFinished
-						/ 1000);
+				//Log.i("appLog", "seconds remaining: " + millisUntilFinished / 1000);
 			}
 
 			@Override
 			public void onFinish() {
-				Log.i("appLog", "done!");
+				//Log.i("appLog", "done!");
 
 				handler.post(new Runnable() {
 					public void run() {
@@ -63,7 +62,7 @@ public class SplashScreen extends ActivityCircle {
 	}
 
 	private void startMaboo() {
-		Log.i("appLog", "init maboo()");
+		//Log.i("appLog", "init maboo()");
 
 		startActivity(tInicial);
 

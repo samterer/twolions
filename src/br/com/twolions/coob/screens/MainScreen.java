@@ -9,10 +9,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,7 +39,7 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 	private HexValidator hex;
 
-	private boolean isHelpExibido = false;
+	private static boolean isHelpExibido = false;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -154,42 +156,52 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 
-		// Log.i("main","O Estado da Tela foi Mudado: onConfigurationChanged(newConfig)");
+		Log.i("main",
+				"O Estado da Tela foi Mudado: onConfigurationChanged(newConfig)");
 
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
-			// trava a exibição da tela de help
-			// isHelpExibido = true;
-
-			// prepara tela horizontal
-			initHorizon();
-
-			paintBackgroundHorizon();
+			exibeLayoutHorizon();
 
 		} else { // prepara tela vertical
 
-			init();
+			exibeLayoutVert();
 
-			organizeBt();
-
-			listenerText();
-
-			// insere as cores que já existiam
-			for (int i = 0; i < vLinearLayout.size(); i++) {
-				LinearLayout ll = (LinearLayout) vLinearLayout.elementAt(i);
-
-				ll.setBackgroundColor(list_color[i]);
-
-			}
-
-			// insere os antigos valores nos campos
-			for (int i = 0; i < vEditText.size(); i++) {
-				EditText e = (EditText) vEditText.elementAt(i);
-				e.setText(list_hex[i]);
-
-			}
 		}
 
+	}
+
+	private void exibeLayoutHorizon() {
+		// trava a exibição da tela de help
+		isHelpExibido = true;
+
+		// prepara tela horizontal
+		initHorizon();
+
+		paintBackgroundHorizon();
+	}
+
+	private void exibeLayoutVert() {
+		init();
+
+		organizeBt();
+
+		listenerText();
+
+		// insere as cores que já existiam
+		for (int i = 0; i < vLinearLayout.size(); i++) {
+			LinearLayout ll = (LinearLayout) vLinearLayout.elementAt(i);
+
+			ll.setBackgroundColor(list_color[i]);
+
+		}
+
+		// insere os antigos valores nos campos
+		for (int i = 0; i < vEditText.size(); i++) {
+			EditText e = (EditText) vEditText.elementAt(i);
+			e.setText(list_hex[i]);
+
+		}
 	}
 
 	// inicializa as variaveis da tela na horizontal
@@ -236,11 +248,6 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 			LinearLayout ll_horizon = (LinearLayout) vLinearLayoutHorizon
 					.elementAt(i);
-
-			// Log.i("main", "id of ll [" + ll_horizon.getTag().toString() +
-			// "]");
-
-			// Log.i("main", "color q sera aplicada [" + list_color[i] + "]");
 
 			ll_horizon.setBackgroundColor(list_color[i]);
 
@@ -294,7 +301,6 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 		// bt rigt
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
 		bt_right.setImageResource(R.drawable.bt_about);
-
 	}
 
 	public void btBarLeft(View v) {
