@@ -28,7 +28,7 @@ public class SplashScreen extends ActivityCircle {
 
 		setContentView(R.layout.splash_layout);
 
-		timer = new CountDownTimer(2000, 1000) // 3seceonds
+		timer = new CountDownTimer(5000, 1000) // 3seceonds
 												// Timer
 		{
 			@Override
