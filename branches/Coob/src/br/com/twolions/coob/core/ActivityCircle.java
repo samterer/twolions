@@ -3,7 +3,6 @@ package br.com.twolions.coob.core;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -16,41 +15,42 @@ public class ActivityCircle extends Activity {
 		super.onCreate(icicle);
 
 		if (icicle == null) {
-			Log.i("appLog", "Open activity.");
+			// Log.i("appLog", "Open activity.");
 		} else {
-			Log.i("appLog", getClassName() + ".onCreate() chamado: " + icicle);
+			// Log.i("appLog", getClassName() + ".onCreate() chamado: " +
+			// icicle);
 		}
 
 	}
 
 	protected void onStart() {
 		super.onStart();
-		Log.i("appLog", getClassName() + ".onStart() chamado.");
+		// Log.i("appLog", getClassName() + ".onStart() chamado.");
 	}
 
 	protected void onRestart() {
 		super.onRestart();
-		Log.i("appLog", getClassName() + ".onRestart() chamado.");
+		// Log.i("appLog", getClassName() + ".onRestart() chamado.");
 	}
 
 	protected void onResume() {
 		super.onResume();
-		Log.i("appLog", getClassName() + ".onResume() chamado.");
+		// Log.i("appLog", getClassName() + ".onResume() chamado.");
 	}
 
 	protected void onPause() {
 		super.onPause();
-		Log.i("appLog", getClassName() + ".onPause() chamado.");
+		// Log.i("appLog", getClassName() + ".onPause() chamado.");
 	}
 
 	protected void onStop() {
 		super.onStop();
-		Log.i("appLog", getClassName() + ".onStop() chamado.");
+		// Log.i("appLog", getClassName() + ".onStop() chamado.");
 	}
 
 	protected void onDestroy() {
 		super.onDestroy();
-		Log.i("appLog", getClassName() + ".onDestroy() chamado.");
+		// Log.i("appLog", getClassName() + ".onDestroy() chamado.");
 	}
 
 	// retorna o nome da classe sem o pacote

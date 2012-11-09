@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -36,7 +35,7 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 	private String[] list_hex;
 
-	HexValidator hex;
+	private HexValidator hex;
 
 	private boolean isHelpExibido = false;
 
@@ -115,6 +114,7 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 	private void initHelpView() {
 
 		if (!isHelpExibido) {
+
 			isHelpExibido = true;
 
 			LinearLayout img = (LinearLayout) findViewById(R.id.help);
@@ -127,17 +127,17 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 	// pint ao background q o usuario esta utilizando
 	private void setBackground(int index, String color) {
 
-		list_hex[index] = color.replace('#', ' ');
+		list_hex[index] = color.replace("#", "");
 
 		list_color[index] = Color.parseColor(color);
 
 		LinearLayout ll = (LinearLayout) vLinearLayout.elementAt(index);
 
-		Log.i("main", "pintando background [" + index + "] com a cor [" + color
-				+ "]");
-		
+		// Log.i("main", "pintando background [" + index + "] com a cor [" +
+		// color+ "]");
+
 		EditText ed = (EditText) vEditText.elementAt(index);
-		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(ed.getWindowToken(), 0);
 
 		try {
@@ -154,10 +154,13 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 
-		Log.i("main",
-				"O Estado da Tela foi Mudado: onConfigurationChanged(newConfig)");
+		// Log.i("main","O Estado da Tela foi Mudado: onConfigurationChanged(newConfig)");
 
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
+			// trava a exibição da tela de help
+			// isHelpExibido = true;
+
 			// prepara tela horizontal
 			initHorizon();
 
@@ -178,6 +181,7 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 				ll.setBackgroundColor(list_color[i]);
 
 			}
+
 			// insere os antigos valores nos campos
 			for (int i = 0; i < vEditText.size(); i++) {
 				EditText e = (EditText) vEditText.elementAt(i);
@@ -249,22 +253,39 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 	/****************************************************************
 	 * TOUCH
 	 ****************************************************************/
-	
-	public boolean dispatchTouchEvent(MotionEvent event) {
-	    View v = getCurrentFocus();
-	    boolean ret = super.dispatchTouchEvent(event);
-	    View w = getCurrentFocus();
-	    int scrcoords[] = new int[2];
-	    w.getLocationOnScreen(scrcoords);
-	    float x = event.getRawX() + w.getLeft() - scrcoords[0];
-	    float y = event.getRawY() + w.getTop() - scrcoords[1];
 
-	    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-	    Log.d("Activity", "Touch event "+event.getRawX()+","+event.getRawY()+" "+x+","+y+" rect "+w.getLeft()+","+w.getTop()+","+w.getRight()+","+w.getBottom()+" coords "+scrcoords[0]+","+scrcoords[1]);
-	    if (event.getAction() == MotionEvent.ACTION_UP && (x < w.getLeft() || x >= w.getRight() || y < w.getTop() || y > w.getBottom()) ) { 
-	    	imm.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
-	    }
-	    return ret;
+	public boolean dispatchTouchEvent(MotionEvent event) {
+		// View v = getCurrentFocus();
+
+		boolean ret = super.dispatchTouchEvent(event);
+
+		try {
+
+			View w = getCurrentFocus();
+			int scrcoords[] = new int[2];
+			w.getLocationOnScreen(scrcoords);
+			float x = event.getRawX() + w.getLeft() - scrcoords[0];
+			float y = event.getRawY() + w.getTop() - scrcoords[1];
+
+			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			// Log.d("main",
+			// "Touch event " + event.getRawX() + "," + event.getRawY()
+			// + " " + x + "," + y + " rect " + w.getLeft() + ","
+			// + w.getTop() + "," + w.getRight() + ","
+			// + w.getBottom() + " coords " + scrcoords[0] + ","
+			// + scrcoords[1]);
+			if (event.getAction() == MotionEvent.ACTION_UP
+					&& (x < w.getLeft() || x >= w.getRight() || y < w.getTop() || y > w
+							.getBottom())) {
+				imm.hideSoftInputFromWindow(getWindow().getCurrentFocus()
+						.getWindowToken(), 0);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return ret;
 
 	}
 
@@ -312,20 +333,6 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 						public void onTextChanged(CharSequence s, int start,
 								int before, int count) {
 
-							// if (s.length() > 0) { // insere o sharp caso ele
-							// não
-							// // existe no campo
-							// if (s.charAt(0) == '#') {
-							// //
-							// } else {
-							//
-							// e.toString().replace('#', ' ');
-							//
-							// e.setText("#" + e.getText().toString());
-							//
-							// }
-							//
-							// }
 						}
 
 						public void beforeTextChanged(CharSequence s,
@@ -339,26 +346,26 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 							text.append(s.toString());
 
 							if (text.length() > 5) {
-								Log.i("main", "insert #");
+								// Log.i("main", "insert #");
 								// insere o #
 								text.insert(0, "#");
-								Log.i("main", "s [" + text.toString() + "]");
+								// Log.i("main", "s [" + text.toString() + "]");
 							}
 
-							Log.i("main", "s [" + text.toString() + "]");
+							// Log.i("main", "s [" + text.toString() + "]");
 
 							try {
 
 								if (hex.validate(text.toString())) {
 
-									Log.i("main",
-											"o text no item ["
-													+ Integer
-															.valueOf(
-																	e.getTag()
-																			.toString())
-															.intValue()
-													+ "] é hex.");
+									// Log.i("main",
+									// "o text no item ["
+									// + Integer
+									// .valueOf(
+									// e.getTag()
+									// .toString())
+									// .intValue()
+									// + "] é hex.");
 
 									setBackground(
 											Integer.valueOf(
@@ -370,14 +377,14 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 								} else {
 
-									Log.i("main",
-											"o text no item ["
-													+ Integer
-															.valueOf(
-																	e.getTag()
-																			.toString())
-															.intValue()
-													+ "] NÃO é hex.");
+									// Log.i("main",
+									// "o text no item ["
+									// + Integer
+									// .valueOf(
+									// e.getTag()
+									// .toString())
+									// .intValue()
+									// + "] NÃO é hex.");
 
 									return;
 								}
