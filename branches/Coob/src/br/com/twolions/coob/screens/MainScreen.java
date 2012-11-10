@@ -4,12 +4,12 @@ import java.util.Vector;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -41,6 +41,8 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 
 	private static boolean isHelpExibido = false;
 
+	private static boolean isHorizonExibidoPrimeiro = false;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -64,10 +66,13 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 		// inicia a tela de ajuda
 		initHelpView();
 
+		// habilita a tela a receber as modificações de orientação
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
 	}
 
 	/****************************************************************
-	 * SERVICES
+	 * ESTADO
 	 ****************************************************************/
 
 	private void init() {
@@ -107,57 +112,12 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 		// exp para verificar os hex
 		hex = new HexValidator();
 
-		// TODO
-		// l_inf_dir.setBackgroundColor(Color.parseColor("FFFFFF"));
-
 	}
-
-	// exibe a tela de help sobre a tela do app
-	private void initHelpView() {
-
-		if (!isHelpExibido) {
-
-			isHelpExibido = true;
-
-			LinearLayout img = (LinearLayout) findViewById(R.id.help);
-			img.setVisibility(View.VISIBLE);
-
-		}
-
-	}
-
-	// pint ao background q o usuario esta utilizando
-	private void setBackground(int index, String color) {
-
-		list_hex[index] = color.replace("#", "");
-
-		list_color[index] = Color.parseColor(color);
-
-		LinearLayout ll = (LinearLayout) vLinearLayout.elementAt(index);
-
-		// Log.i("main", "pintando background [" + index + "] com a cor [" +
-		// color+ "]");
-
-		EditText ed = (EditText) vEditText.elementAt(index);
-		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(ed.getWindowToken(), 0);
-
-		try {
-			ll.setBackgroundColor(Color.parseColor(color));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/****************************************************************
-	 * ESTADO
-	 ****************************************************************/
 
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 
-		Log.i("main",
-				"O Estado da Tela foi Mudado: onConfigurationChanged(newConfig)");
+		// Log.i("main","O Estado da Tela foi Mudado: onConfigurationChanged(newConfig)");
 
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
@@ -172,9 +132,19 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 	}
 
 	private void exibeLayoutHorizon() {
+		
 		// trava a exibição da tela de help
-		isHelpExibido = true;
+		//isHelpExibido = true;
 
+		if(!isHorizonExibidoPrimeiro) { 
+			// o layout horizontal foi exibido antes da tela vertical
+			
+			isHorizonExibidoPrimeiro = true;
+			
+			isHelpExibido = false;
+		
+		}
+		
 		// prepara tela horizontal
 		initHorizon();
 
@@ -182,6 +152,7 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 	}
 
 	private void exibeLayoutVert() {
+		
 		init();
 
 		organizeBt();
@@ -202,6 +173,8 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 			e.setText(list_hex[i]);
 
 		}
+		
+		initHelpView();
 	}
 
 	// inicializa as variaveis da tela na horizontal
@@ -255,6 +228,47 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 			t.setText('#' + list_hex[i]);
 		}
 
+	}
+
+	/****************************************************************
+	 * SERVICES
+	 ****************************************************************/
+
+	// exibe a tela de help sobre a tela do app
+	private void initHelpView() {
+
+		if (!isHelpExibido) {
+
+			isHelpExibido = true;
+
+			LinearLayout img = (LinearLayout) findViewById(R.id.help);
+			img.setVisibility(View.VISIBLE);
+
+		}
+
+	}
+
+	// pint ao background q o usuario esta utilizando
+	private void setBackground(int index, String color) {
+
+		list_hex[index] = color.replace("#", "");
+
+		list_color[index] = Color.parseColor(color);
+
+		LinearLayout ll = (LinearLayout) vLinearLayout.elementAt(index);
+
+		// Log.i("main", "pintando background [" + index + "] com a cor [" +
+		// color+ "]");
+
+		EditText ed = (EditText) vEditText.elementAt(index);
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(ed.getWindowToken(), 0);
+
+		try {
+			ll.setBackgroundColor(Color.parseColor(color));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/****************************************************************
@@ -317,8 +331,13 @@ public class MainScreen extends ActivityCircle implements InterfaceBar {
 	}
 
 	public void hideHelp(View v) {
+		
+		// a tela não foi inicializa horizontalmente primeiro
+		isHorizonExibidoPrimeiro = true;
+
 		LinearLayout img = (LinearLayout) findViewById(R.id.help);
 		img.setVisibility(View.INVISIBLE);
+
 	}
 
 	/****************************************************************
