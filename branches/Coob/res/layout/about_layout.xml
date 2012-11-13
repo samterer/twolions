@@ -3,8 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#3d3d3d"
-    android:orientation="vertical" 
-    android:onClick="hideAbout">
+    android:onClick="hideAbout"
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Coob Colours"
+            android:text="@string/app_name"
             android:textColor="@color/branco"
             android:textSize="24dp" />
     </LinearLayout>
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Version 1.2.2"
+            android:text="@string/app_version"
             android:textColor="@color/cinza_claro"
             android:textSize="14dp" >
         </TextView>
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingTop="15dp"
-        android:text="© 2012-2012 @naoquica"
+        android:text="@string/app_copywrite"
         android:textColor="@color/cinza_claro"
         android:textSize="14dp" />
 
@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="All rights reserved."
+            android:text="@string/app_allrights"
             android:textColor="@color/cinza_claro"
             android:textSize="14dp" />
     </LinearLayout>
