@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="50dp"
+    android:background="@color/cinza_coob"
+    android:orientation="vertical"
+    android:shrinkColumns="3" >
+
+    <TableRow>
+
+        <!-- buttons in left -->
+
+        <ImageView
+            android:id="@+id/bt_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:onClick="btBarLeft" />
+
+        <!-- title -->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/branco"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <!-- buttons in right -->
+
+        <ImageView
+            android:id="@+id/bt_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:onClick="btBarRight" />
+    </TableRow>
+
+</TableLayout>
