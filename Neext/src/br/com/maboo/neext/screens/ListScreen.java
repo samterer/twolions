@@ -9,15 +9,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import br.com.maboo.neext.R;
-import br.com.maboo.neext.adapters.ListItemAdapter;
+import br.com.maboo.neext.adapters.ListAdapter;
 import br.com.maboo.neext.core.NeextActivity;
+import br.com.maboo.neext.dao.ItemNoteDAO;
 import br.com.maboo.neext.interfaces.InterfaceBar;
 import br.com.maboo.neext.modelobj.ItemNote;
-import br.com.maboo.neext.modelobj.ListNoteLog;
+import br.com.maboo.neext.modelobj.ListNote;
 import br.com.maboo.neext.transaction.Transaction;
 import br.com.maboo.neext.util.Constants;
 
@@ -26,61 +29,50 @@ public class ListScreen extends NeextActivity implements InterfaceBar,
 
 	private String TAG = Constants.LOG_APP;
 
+	protected static final int INSERIR_EDITAR = 1;
+
+	public static ItemNoteDAO dao;
+
 	private List<ItemNote> itens;
 
 	private ListView listview_log;
 
+	private Long id_item;
+
+	private int type;
+
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		// gera lista teste
-		geraListaTeste();
+		dao = new ItemNoteDAO(this);
 
-		init(icicle);
+		montaTela(icicle);
 
 		organizeBt();
 
 	}
 
 	/****************************************************************
-	 * SERVICES
+	 * ESTADO
 	 ****************************************************************/
 
-	private List<ItemNote> geraListaTeste() {
-		List<ItemNote> list = null;
-
-		String[] subj = { "teste1", "teste2", "teste3" };
-
-		String[] date = { "13/11/2012 - 23:42", "18/12/2012 - 23:42",
-				"22/11/2009 - 08:42" };
-
-		for (int i = 0; i < subj.length; i++) {
-
-			ItemNote obj = new ItemNote(date[i], subj[i], subj[i] + " texto.");
-
-			list.add(obj);
-		}
-
-		return list;
-	}
-
-	private void init(Bundle icicle) {
+	@SuppressWarnings("unchecked")
+	private void montaTela(Bundle icicle) {
 
 		setContentView(R.layout.list_layout);
 
 		listview_log = (ListView) findViewById(R.id.listview_log);
-		listview_log.setAdapter(new ListItemAdapter(this, itens));
+		listview_log.setAdapter(new ListAdapter(this, itens));
 
 		itens = (List<ItemNote>) getLastNonConfigurationInstance();
+
+		effect(); // effect for opening
 
 		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
 
 		if (icicle != null) {
 
-			// Recuperamos a lista de carros salva pelo
-			// onSaveInstanceState(bundle)
-			ListNoteLog lista = (ListNoteLog) icicle
-					.getSerializable(ListNoteLog.KEY);
+			ListNote lista = (ListNote) icicle.getSerializable(ListNote.KEY);
 
 			Log.i(TAG, "Lendo estado: savedInstanceState(carros)");
 
@@ -90,13 +82,19 @@ public class ListScreen extends NeextActivity implements InterfaceBar,
 
 		if (itens != null) { // Atualiza o ListView diretamente
 
-			listview_log.setAdapter(new ListItemAdapter(this, itens));
+			listview_log.setAdapter(new ListAdapter(this, itens));
 
 		} else {
 
 			startTransaction(this);
 
 		}
+
+	}
+
+	public void execute() throws Exception {
+
+		this.itens = getItens();
 
 	}
 
@@ -112,31 +110,54 @@ public class ListScreen extends NeextActivity implements InterfaceBar,
 		Log.i(TAG, "Salvando Estado: onSaveInstanceState(bundle)");
 
 		// Salvar o estado da tela
-		outState.putSerializable(ListNoteLog.KEY, new ListNoteLog(itens));
+		outState.putSerializable(ListNote.KEY, new ListNote(itens));
 	}
 
-	public void execute() throws Exception {
-		this.itens = getItens();
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+
+	}
+
+	/****************************************************************
+	 * SERVICES
+	 ****************************************************************/
+
+	public void effect() {
+		LayoutAnimationController controller = AnimationUtils
+				.loadLayoutAnimation(this, R.anim.anime_slide_to_right);
+
+		listview_log.setLayoutAnimation(controller);
 	}
 
 	private List<ItemNote> getItens() {
 		List<ItemNote> list = null;
 
 		try {
-			list = geraListaTeste();
+
+			list = dao.listarItemNotes();
+
 		} catch (NullPointerException e) {
+
 			e.printStackTrace();
+
 		}
 
 		return list;
 	}
 
-	/****************************************************************
-	 * ESTADO
-	 ****************************************************************/
+	/**
+	 * Abre a tela apenas de visualizaçãod o item
+	 */
+	private void openViewItem() {
 
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
+		// Cria a intent para abrir a tela de editar
+		Intent it = new Intent(this, ViewItemScreen.class);
+
+		// id do item
+		it.putExtra(ItemNote._ID, id_item);
+
+		// Abre a tela de edição
+		startActivityForResult(it, INSERIR_EDITAR);
 
 	}
 
@@ -192,6 +213,27 @@ public class ListScreen extends NeextActivity implements InterfaceBar,
 		startActivity(new Intent(this, AboutScreen.class));
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+
+	}
+
+	public void createItem(View v) {
+
+		// Cria a intent para abrir a tela de editar
+		Intent it = new Intent(this, FormItemScreen.class);
+
+		// tipo de tarefa
+		it.putExtra("task", "create");
+
+		// Passa o id do carro como parâmetro
+		it.putExtra(ItemNote.TYPE, type);
+
+		// Abre a tela de edição
+		startActivityForResult(it, INSERIR_EDITAR);
+
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+	}
+
+	public void changeColor(View v) {
 
 	}
 

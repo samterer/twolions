@@ -6,34 +6,43 @@
     android:background="#7a7a7a"
     android:paddingBottom="2dp"
     android:paddingLeft="5dp"
-    android:paddingTop="2dp" >
+    android:paddingTop="4dp" >
 
     <EditText
-        android:id="@+id/add_subject"
-        style="@style/texto16cinzaDark"
+        android:id="@+id/subject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.88"
-        android:gravity="center_vertical|center_horizontal"
-        android:hint="insert subject"
+        android:layout_weight="0.42"
+        android:gravity="center_vertical"
+        android:hint="insert a subject"
         android:maxLength="20"
-        android:scaleType="centerInside"
-        android:tag="add_subject" />
+        android:tag="subject" />
 
-    <ImageView
-        android:id="@+id/bt_color"
-        android:layout_width="41dp"
-        android:layout_height="41dp"
-        android:layout_gravity="center"
-        android:paddingLeft="5dp"
-        android:src="@drawable/bt_color_off" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="5dp" >
 
-    <ImageView
-        android:id="@+id/bt_add"
-        android:layout_width="41dp"
-        android:layout_height="41dp"
-        android:layout_gravity="center"
-        android:paddingLeft="5dp"
-        android:src="@drawable/bt_add_off" />
+        <ImageView
+            android:id="@+id/bt_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:contentDescription="color for select"
+            android:gravity="center_vertical|center_horizontal"
+            android:onClick="changeColor"
+            android:src="@drawable/bt_color_off" />
+
+        <ImageView
+            android:id="@+id/bt_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="bt for add new note"
+            android:gravity="center_vertical"
+            android:onClick="createItem"
+            android:src="@drawable/bt_add_off" />
+    </LinearLayout>
 
 </LinearLayout>

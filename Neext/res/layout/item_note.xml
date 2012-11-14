@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="80dp"
     android:layout_gravity="left|center_vertical"
-    android:background="@color/transparente" >
+    android:background="@color/pastel" >
 
     <RelativeLayout
         android:id="@+id/r_item_log"
@@ -13,6 +13,7 @@
 
         <TextView
             android:id="@+id/subject"
+            style="@style/texto20pretoNegrito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -23,6 +24,7 @@
 
         <TextView
             android:id="@+id/date"
+            style="@style/texto14cinza"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -32,6 +34,7 @@
 
         <TextView
             android:id="@+id/hour"
+            style="@style/texto14cinza"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

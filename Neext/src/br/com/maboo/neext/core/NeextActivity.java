@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.LayoutInflater.Factory;
@@ -14,15 +15,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import br.com.maboo.neext.R;
+import br.com.maboo.neext.sql.SqlScript;
 import br.com.maboo.neext.transaction.Transaction;
 import br.com.maboo.neext.transaction.TransactionTask;
 import br.com.maboo.neext.util.AndroidUtils;
+import br.com.maboo.neext.util.Constants;
 
 public class NeextActivity extends ActivityCircle {
 
 	private TransactionTask task;
 
-	// public static SqlScript sqlScript;
+	public static SqlScript sqlScript;
 
 	/******************************************************************************
 	 * ESTADOS
@@ -52,22 +55,22 @@ public class NeextActivity extends ActivityCircle {
 		super.onPause();
 
 		// fecha conexao
-		// if (sqlScript != null) {
+		if (sqlScript != null) {
 
-		// Log.i(Constants.LOG_BASE, this.getString(R.string.a_f_db));
+			Log.i(Constants.LOG_BASE, this.getString(R.string.a_f_db));
 
-		// sqlScript.fechar();
-		// }
+			sqlScript.fechar();
+		}
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 
-		// Log.i(Constants.LOG_BASE, this.getString(R.string.a_c_db));
+		Log.i(Constants.LOG_BASE, this.getString(R.string.a_c_db));
 
 		// abre base
-		// sqlScript = new SqlScript(this);
+		sqlScript = new SqlScript(this);
 
 	}
 
@@ -75,7 +78,7 @@ public class NeextActivity extends ActivityCircle {
 			final Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
 
-		// sqlScript = new SqlScript(this);
+		sqlScript = new SqlScript(this);
 
 	}
 
@@ -98,7 +101,7 @@ public class NeextActivity extends ActivityCircle {
 		if (dbOk) {
 
 			// abre base
-			// sqlScript = new SqlScript(this);
+			sqlScript = new SqlScript(this);
 
 			// Inicia a transção
 			task = new TransactionTask(this, transaction, R.string.m_wait);
@@ -121,8 +124,6 @@ public class NeextActivity extends ActivityCircle {
 		MenuInflater inflater = getMenuInflater();
 
 		inflater.inflate(R.menu.menu_inf, menu);
-
-		// setMenuBackground();
 
 		return true;
 	}
