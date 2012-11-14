@@ -13,10 +13,11 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.modelobj.ItemNote;
+import br.com.maboo.neext.util.Constants;
 
-public class ListItemAdapter extends BaseAdapter {
+public class ListAdapter extends BaseAdapter {
 
-	protected static final String TAG = "appLog";
+	protected static final String TAG = Constants.LOG_APP;
 
 	private LayoutInflater inflater;
 
@@ -24,9 +25,9 @@ public class ListItemAdapter extends BaseAdapter {
 
 	Typeface tf; // font
 
-	public ListItemAdapter(Activity context, List<ItemNote> itens) {
+	public ListAdapter(Activity context, List<ItemNote> itens) {
 
-		this.itens = itens;
+		Log.i(TAG, "ListAdapter...");
 
 		this.inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,6 +49,7 @@ public class ListItemAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View view, ViewGroup parent) {
+
 		ViewHolder holder = null;
 
 		ItemNote itemRequest = itens.get(position);
@@ -74,54 +76,62 @@ public class ListItemAdapter extends BaseAdapter {
 		} else {
 			// Ja existe no cache, bingo entao pega!
 			try {
+
 				holder = (ViewHolder) view.getTag();
+
 			} catch (NullPointerException e) {
+
 				e.printStackTrace();
+
 			}
 		}
 
-		// subject
-		holder.subject.setText(String.valueOf(itemRequest.getSubject()));
-		holder.subject.setVisibility(View.VISIBLE);
+		try {
+			// subject
+			holder.subject.setText(String.valueOf(itemRequest.getSubject()));
+			holder.subject.setVisibility(View.VISIBLE);
 
-		// formata a data
-		// formata date
-		String dateFromBase = itemRequest.getDate();
+			// formata a data
+			// formata date
+			String dateFromBase = itemRequest.getDate();
 
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < dateFromBase.length(); i++) {
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < dateFromBase.length(); i++) {
 
-			if (dateFromBase.charAt(i) == '-') { // insere valor da
-													// data
+				if (dateFromBase.charAt(i) == '-') { // insere valor da
+														// data
 
-				Log.i(TAG, "date [" + sb.toString() + "]");
+					Log.i(TAG, "date [" + sb.toString() + "]");
 
-				holder.date.setText(sb.toString());
+					holder.date.setText(sb.toString());
 
-				sb = new StringBuffer();
+					sb = new StringBuffer();
 
-				i++;
+					i++;
 
-			} else if (i == 15) { // insere
-									// valor
-									// da hora
-									// o numero dessa linha é comparado a
-									// 16, pois esse é o tamanho maximo
-									// correto de uma data, de acordo com a
-									// inserção dela 'dd/mm/aaaa - hh:mm'
+				} else if (i == 15) { // insere
+										// valor
+										// da hora
+										// o numero dessa linha é comparado a
+										// 16, pois esse é o tamanho maximo
+										// correto de uma data, de acordo com a
+										// inserção dela 'dd/mm/aaaa - hh:mm'
+					sb.append(dateFromBase.charAt(i));
+
+					Log.i(TAG, "hour [" + sb.toString() + "]");
+
+					holder.hour.setText(sb.toString()); // hora
+
+					break;
+
+				}
+
+				Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
+
 				sb.append(dateFromBase.charAt(i));
-
-				Log.i(TAG, "hour [" + sb.toString() + "]");
-
-				holder.hour.setText(sb.toString()); // hora
-
-				break;
-
 			}
-
-			Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
-
-			sb.append(dateFromBase.charAt(i));
+		} catch (NullPointerException e) {
+			e.printStackTrace();
 		}
 
 		return view;

@@ -28,7 +28,7 @@ public class SplashScreen extends ActivityCircle {
 
 		setContentView(R.layout.splash_layout);
 
-		timer = new CountDownTimer(5000, 1000) // 3seceonds
+		timer = new CountDownTimer(350, 1000) // 3seceonds
 												// Timer
 		{
 			@Override
@@ -45,7 +45,7 @@ public class SplashScreen extends ActivityCircle {
 					public void run() {
 						if (!isFinishSplash) {
 
-							startMaboo();
+							startNow();
 
 							finish();
 
@@ -62,7 +62,7 @@ public class SplashScreen extends ActivityCircle {
 
 	}
 
-	private void startMaboo() {
+	private void startNow() {
 		Log.i("appLog", "init maboo()");
 
 		startActivity(tInicial);

@@ -7,6 +7,10 @@
     <string name="app_name">Neext Notes</string>
     <string name="app_version">1.0.0</string>
 
+    <!-- msg code -->
+    <string name="a_f_db">fechando conexão com o db...</string>
+    <string name="a_c_db">criando nova conexão com o db...</string>
+
     <!-- About -->
     <string name="app_copywrite">© 2012-2012 @maboobr</string>
     <string name="app_allrights">All rights reserved.</string>
@@ -15,8 +19,8 @@
     <string name="m_about">About</string>
     <string name="m_set">Settings</string>
     <string name="m_exit">Exit</string>
-    
-     <!-- msg -->
-	<string name="m_wait">Loading...</string>
+
+    <!-- msg -->
+    <string name="m_wait">Loading...</string>
 
 </resources>
