@@ -109,7 +109,7 @@ public class ItemNoteDAO extends DBConnection {
 
 			// Lê os dados
 			itemLog.setId(c.getLong(0));
-			itemLog.setType(c.getInt(1));
+			itemLog.setType(c.getString(1));
 			itemLog.setDate(c.getString(2));
 			itemLog.setSubject(c.getString(3));
 			itemLog.setText(c.getString(4));
@@ -146,7 +146,7 @@ public class ItemNoteDAO extends DBConnection {
 
 				// recupera os atributos de carro
 				itemLog.setId(c.getLong(idxId));
-				itemLog.setType(c.getInt(idxIdType));
+				itemLog.setType(c.getString(idxIdType));
 				itemLog.setDate(c.getString(idxIdDate));
 				itemLog.setSubject(c.getString(idxIdSubject));
 
@@ -202,7 +202,7 @@ public class ItemNoteDAO extends DBConnection {
 				// recupera os atributos de carro
 				itemLog.setId(c.getLong(idxId));
 
-				itemLog.setType(c.getInt(idxIdType));
+				itemLog.setType(c.getString(idxIdType));
 				itemLog.setDate(c.getString(idxIdDate));
 				itemLog.setSubject(c.getString(idxIdSubject));
 

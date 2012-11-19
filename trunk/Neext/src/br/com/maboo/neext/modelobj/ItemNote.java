@@ -18,7 +18,7 @@ public class ItemNote implements BaseColumns, Serializable {
 	private long id;
 	// a date deve sempre estar no formato
 	// dd/mm/aaaa-hh:mm
-	private int type;
+	private String type;
 	private String date;
 	private String subject;
 	private String text;
@@ -34,11 +34,11 @@ public class ItemNote implements BaseColumns, Serializable {
 		this.id = id;
 	}
 
-	public int getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(final int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
@@ -79,7 +79,7 @@ public class ItemNote implements BaseColumns, Serializable {
 	public ItemNote() {
 	}
 
-	public ItemNote(final int type, final String date, final String subject,
+	public ItemNote(final String type, final String date, final String subject,
 			final String text) {
 		super();
 
@@ -93,7 +93,7 @@ public class ItemNote implements BaseColumns, Serializable {
 
 	}
 
-	public ItemNote(final long id, final int type, final String date,
+	public ItemNote(final long id, final String type, final String date,
 			final String subject, final String text) {
 		super();
 

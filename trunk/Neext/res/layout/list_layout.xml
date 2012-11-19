@@ -19,6 +19,6 @@
         android:scrollbars="none" >
     </ListView>
 
-    <include layout="@layout/add_subject"/>
+    <include layout="@layout/add_subject" />
 
 </LinearLayout>
