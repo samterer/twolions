@@ -63,7 +63,7 @@ public class SplashScreen extends ActivityCircle {
 	}
 
 	private void startNow() {
-		Log.i("appLog", "init maboo()");
+		Log.i("appLog", "init neext()");
 
 		startActivity(tInicial);
 

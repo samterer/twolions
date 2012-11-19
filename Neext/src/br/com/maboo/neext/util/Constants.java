@@ -3,10 +3,10 @@ package br.com.maboo.neext.util;
 public class Constants {
 
 	// authority
-	public static final String AUTHORITY = "br.com.twolions.neext";
+	public static final String AUTHORITY = "br.com.maboo.neext";
 
 	// version of current data base
-	public static final int DB_VERSION = 1;
+	public static final int DB_VERSION = 3;
 
 	// db
 	public static final String DB_NAME = "bd_neext";

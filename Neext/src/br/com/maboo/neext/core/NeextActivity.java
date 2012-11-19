@@ -45,10 +45,16 @@ public class NeextActivity extends ActivityCircle {
 
 				task.cancel(true);
 				task.closedProgress();
+				
+				update();
 
 			}
 		}
 
+	}
+	
+	public void update() {
+		
 	}
 
 	public void onPause() {

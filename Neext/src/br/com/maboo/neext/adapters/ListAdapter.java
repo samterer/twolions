@@ -4,12 +4,14 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.modelobj.ItemNote;
@@ -23,11 +25,13 @@ public class ListAdapter extends BaseAdapter {
 
 	private List<ItemNote> itens;
 
-	Typeface tf; // font
+	private Typeface tf; // font
 
 	public ListAdapter(Activity context, List<ItemNote> itens) {
 
 		Log.i(TAG, "ListAdapter...");
+		
+		this.itens = itens;
 
 		this.inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -50,11 +54,16 @@ public class ListAdapter extends BaseAdapter {
 
 	public View getView(int position, View view, ViewGroup parent) {
 
+		Log.i(TAG, "ListAdapter...");
+		
 		ViewHolder holder = null;
 
 		ItemNote itemRequest = itens.get(position);
 
 		if (view == null) {
+			
+			Log.i(TAG, "ListAdapter...");
+			
 			// Nao existe a View no cache para esta linha então cria um novo
 			holder = new ViewHolder();
 
@@ -64,6 +73,8 @@ public class ListAdapter extends BaseAdapter {
 			view.setTag(holder); // seta a tag
 			view.setId(position);
 
+			holder.type = itemRequest.getType();
+			
 			holder.subject = (TextView) view.findViewById(R.id.subject);
 			holder.subject.setTypeface(tf);
 
@@ -74,6 +85,9 @@ public class ListAdapter extends BaseAdapter {
 			holder.hour.setTypeface(tf);
 
 		} else {
+			
+			Log.i(TAG, "ListAdapter...");
+			
 			// Ja existe no cache, bingo entao pega!
 			try {
 
@@ -87,10 +101,13 @@ public class ListAdapter extends BaseAdapter {
 		}
 
 		try {
+			//set background
+			FrameLayout fl = (FrameLayout) view.findViewById(R.id.frameLayout);
+			fl.setBackgroundColor(Color.parseColor("#"+holder.type.toString()));
+			
 			// subject
 			holder.subject.setText(String.valueOf(itemRequest.getSubject()));
-			holder.subject.setVisibility(View.VISIBLE);
-
+			
 			// formata a data
 			// formata date
 			String dateFromBase = itemRequest.getDate();
@@ -139,6 +156,7 @@ public class ListAdapter extends BaseAdapter {
 
 	// Design Patter "ViewHolder" para Android
 	class ViewHolder {
+		String type;
 		TextView date;
 		TextView hour;
 		TextView subject;

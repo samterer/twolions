@@ -23,4 +23,12 @@
     <!-- msg -->
     <string name="m_wait">Loading...</string>
 
+    <!-- alertas -->
+    <string name="a_dt_car">Are you sure you want to delete this car?</string>
+    <string name="a_dt_item">Are you sure you want to delete this item?</string>
+
+    <!-- Positivo e negativo -->
+    <string name="a_n">Not</string>
+    <string name="a_y">Yes</string>
+
 </resources>

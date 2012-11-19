@@ -43,7 +43,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private EditText text;
 
 	private static Long id_item;
-	private static int type;
+	private static String type;
 
 	// itemRequest na tela
 	private ItemNote itemRequest;
@@ -94,7 +94,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			if (task.equals("create")) { // cria novo itemRequest
 
-				type = extras.getInt(ItemNote.TYPE);
+				type = extras.getString(ItemNote.TYPE);
 				Log.i(TAG, "searching type [" + type + "]");
 
 			} else if (task.equals("edit")) { // edit itemRequest

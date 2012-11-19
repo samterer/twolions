@@ -31,7 +31,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 	private static Long id_item;
 
-	private static int type;
+	private static String type;
 
 	protected static final int INSERIR_EDITAR = 1;
 
@@ -87,26 +87,22 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			type = itemRequest.getType();
 
 		}
+		
+		setContentView(R.layout.form_note);
 
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				"fonts/DroidSansFallback.ttf"); // modifica as fontes
 
 		// date
 		date = (TextView) findViewById(R.id.date);
+		
 		// hour
 		hour = (TextView) findViewById(R.id.hour);
 
 		// subject
-
-		tv = (TextView) findViewById(R.id.t_subject);
-		vTextView.add(tv);
-
 		subject = (EditText) findViewById(R.id.subject);
 
 		vEditText.add(subject);
-
-		tv = (TextView) findViewById(R.id.t_text);
-		vTextView.add(tv);
 
 		text = (EditText) findViewById(R.id.text);
 
@@ -271,12 +267,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		startActivityForResult(it, INSERIR_EDITAR);
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
-
-	}
-
-	public void onBackPressed() { // call my backbutton pressed method when
-
-		Log.i("appLog", "Clicked back");
 
 	}
 
