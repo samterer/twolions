@@ -17,11 +17,17 @@
         android:textSize="25dp"
         android:typeface="monospace" />
 
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:background="@color/cinza_claro" />
+
     <ImageView
         android:id="@+id/imgSubject"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_weight="1"
+        android:onClick="btBarRight"
         android:src="@drawable/bt_edit" />
 
 </LinearLayout>

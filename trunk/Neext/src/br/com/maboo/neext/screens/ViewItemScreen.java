@@ -19,7 +19,6 @@ import br.com.maboo.neext.interfaces.InterfaceBar;
 import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.util.Constants;
 import br.com.maboo.neext.util.EditTextTools;
-import br.com.maboo.neext.util.TextViewTools;
 
 public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
@@ -41,7 +40,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	private ItemNote itemRequest;
 
 	Vector<EditText> vEditText; // vetor de editText
-	Vector<TextView> vTextView; // vetor de TextViews
 
 	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
@@ -62,7 +60,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	private void init() {
 
 		vEditText = new Vector<EditText>();
-		vTextView = new Vector<TextView>();
 
 		TextView tv;
 
@@ -96,15 +93,20 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				"fonts/DroidSansFallback.ttf"); // modifica as fontes
 
+		// color of item
+		int color = Color.parseColor("#" + type.toString());
+
 		// change background title
 		bg_title = (LinearLayout) findViewById(R.id.bg_title);
-		bg_title.setBackgroundColor(Color.parseColor("#" + type.toString()));
+		bg_title.setBackgroundColor(color);
 
 		// date
 		date = (TextView) findViewById(R.id.date);
+		date.setTextColor(color);
 
 		// hour
 		hour = (TextView) findViewById(R.id.hour);
+		hour.setTextColor(color);
 
 		// subject
 		subject = (EditText) findViewById(R.id.subject);
@@ -117,9 +119,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		EditTextTools.insertFontInAllFields(vEditText, tf); // change font
 															// editText
-
-		TextViewTools.insertFontInAllFields(vTextView, tf); // change font
-															// textView
 
 		changeFormatEditText(); // aplica o formato para apenas visualização
 
