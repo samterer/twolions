@@ -2,46 +2,61 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/frameLayout"
     android:layout_width="fill_parent"
-    android:layout_height="80dp"
+    android:layout_height="60dp"
     android:layout_gravity="left|center_vertical"
     android:background="@color/pastel" >
 
     <RelativeLayout
-        android:id="@+id/r_item_log"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
-        <TextView
-            android:id="@+id/subject"
-            style="@style/texto20pretoNegrito"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="15dp"
-            android:text="Medium Text" />
+        <RelativeLayout
+            android:id="@+id/r_item_log"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
 
-        <TextView
-            android:id="@+id/date"
-            style="@style/texto14cinza"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:text="TextView" />
+            <ImageView
+                android:id="@+id/imgLeftCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/boxe" />
 
-        <TextView
-            android:id="@+id/hour"
-            style="@style/texto14cinza"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="10dp"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/date"
+                style="@style/texto14cinza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/hour"
+                style="@style/texto14cinza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/subject"
+                style="@style/texto20pretoNegrito"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/imgLeftCenter"
+                android:text="Medium Text" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -68,5 +83,10 @@
             android:onClick="deleteConConfirm"
             android:src="@drawable/bt_delete" />
     </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/cinza_claro" />
 
 </FrameLayout>

@@ -11,7 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.modelobj.ItemNote;
@@ -30,7 +31,7 @@ public class ListAdapter extends BaseAdapter {
 	public ListAdapter(Activity context, List<ItemNote> itens) {
 
 		Log.i(TAG, "ListAdapter...");
-		
+
 		this.itens = itens;
 
 		this.inflater = (LayoutInflater) context
@@ -54,16 +55,12 @@ public class ListAdapter extends BaseAdapter {
 
 	public View getView(int position, View view, ViewGroup parent) {
 
-		Log.i(TAG, "ListAdapter...");
-		
 		ViewHolder holder = null;
 
 		ItemNote itemRequest = itens.get(position);
 
 		if (view == null) {
-			
-			Log.i(TAG, "ListAdapter...");
-			
+
 			// Nao existe a View no cache para esta linha então cria um novo
 			holder = new ViewHolder();
 
@@ -73,8 +70,13 @@ public class ListAdapter extends BaseAdapter {
 			view.setTag(holder); // seta a tag
 			view.setId(position);
 
+			holder.rl = (RelativeLayout) view.findViewById(R.id.r_item_log);
+
+			holder.imgLeftCenter = (ImageView) view
+					.findViewById(R.id.imgLeftCenter);
+
 			holder.type = itemRequest.getType();
-			
+
 			holder.subject = (TextView) view.findViewById(R.id.subject);
 			holder.subject.setTypeface(tf);
 
@@ -85,9 +87,7 @@ public class ListAdapter extends BaseAdapter {
 			holder.hour.setTypeface(tf);
 
 		} else {
-			
-			Log.i(TAG, "ListAdapter...");
-			
+
 			// Ja existe no cache, bingo entao pega!
 			try {
 
@@ -100,55 +100,51 @@ public class ListAdapter extends BaseAdapter {
 			}
 		}
 
-		try {
-			//set background
-			FrameLayout fl = (FrameLayout) view.findViewById(R.id.frameLayout);
-			fl.setBackgroundColor(Color.parseColor("#"+holder.type.toString()));
-			
-			// subject
-			holder.subject.setText(String.valueOf(itemRequest.getSubject()));
-			
-			// formata a data
-			// formata date
-			String dateFromBase = itemRequest.getDate();
+		// set background in image
+		holder.imgLeftCenter.setBackgroundColor(Color.parseColor("#"
+				+ holder.type.toString()));
 
-			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < dateFromBase.length(); i++) {
+		// subject
+		holder.subject.setText(String.valueOf(itemRequest.getSubject()));
 
-				if (dateFromBase.charAt(i) == '-') { // insere valor da
-														// data
+		// formata a data
+		// formata date
+		String dateFromBase = itemRequest.getDate();
 
-					Log.i(TAG, "date [" + sb.toString() + "]");
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < dateFromBase.length(); i++) {
 
-					holder.date.setText(sb.toString());
+			if (dateFromBase.charAt(i) == '-') { // insere valor da
+													// data
 
-					sb = new StringBuffer();
+				// Log.i(TAG, "date [" + sb.toString() + "]");
 
-					i++;
+				holder.date.setText(sb.toString());
 
-				} else if (i == 15) { // insere
-										// valor
-										// da hora
-										// o numero dessa linha é comparado a
-										// 16, pois esse é o tamanho maximo
-										// correto de uma data, de acordo com a
-										// inserção dela 'dd/mm/aaaa - hh:mm'
-					sb.append(dateFromBase.charAt(i));
+				sb = new StringBuffer();
 
-					Log.i(TAG, "hour [" + sb.toString() + "]");
+				i++;
 
-					holder.hour.setText(sb.toString()); // hora
-
-					break;
-
-				}
-
-				Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
-
+			} else if (i == 15) { // insere
+									// valor
+									// da hora
+									// o numero dessa linha é comparado a
+									// 16, pois esse é o tamanho maximo
+									// correto de uma data, de acordo com a
+									// inserção dela 'dd/mm/aaaa - hh:mm'
 				sb.append(dateFromBase.charAt(i));
+
+				// Log.i(TAG, "hour [" + sb.toString() + "]");
+
+				holder.hour.setText(sb.toString()); // hora
+
+				break;
+
 			}
-		} catch (NullPointerException e) {
-			e.printStackTrace();
+
+			// Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
+
+			sb.append(dateFromBase.charAt(i));
 		}
 
 		return view;
@@ -156,6 +152,8 @@ public class ListAdapter extends BaseAdapter {
 
 	// Design Patter "ViewHolder" para Android
 	class ViewHolder {
+		ImageView imgLeftCenter;
+		RelativeLayout rl;
 		String type;
 		TextView date;
 		TextView hour;
