@@ -126,7 +126,15 @@ public class ListScreen extends NeextActivity implements InterfaceBar,
 		super.onConfigurationChanged(newConfig);
 
 	}
-	
+
+	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
+		super.onActivityResult(codigo, codigoRetorno, it);
+
+		// atualiza a lista na tela
+		update();
+
+	}
+
 	public void update() {
 
 		// Pega a lista de carros e exibe na tela

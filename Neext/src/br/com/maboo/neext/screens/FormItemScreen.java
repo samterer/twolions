@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +16,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.core.FormItemActivity;
 import br.com.maboo.neext.interfaces.InterfaceBar;
@@ -24,7 +27,6 @@ import br.com.maboo.neext.model.ItemModel;
 import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.util.Constants;
 import br.com.maboo.neext.util.EditTextTools;
-import br.com.maboo.neext.util.TextViewTools;
 
 /**
  * Activity que utiliza o TableLayout para editar o itemLog
@@ -37,13 +39,14 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private final String TAG = Constants.LOG_APP;
 
 	// Campos texto
+	private LinearLayout bg_title;
 	private TextView date;
 	private TextView hour;
 	private EditText subject;
 	private EditText text;
+	private String type;
 
 	private static Long id_item;
-	private static String type;
 
 	// itemRequest na tela
 	private ItemNote itemRequest;
@@ -61,7 +64,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private static final int DATE_DIALOG_ID = 998;
 
 	Vector<EditText> vEditText; // vetor de editText
-	Vector<TextView> vTextView; // vetor de TextViews
 
 	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
@@ -82,9 +84,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private void init() {
 
 		vEditText = new Vector<EditText>();
-		vTextView = new Vector<TextView>();
-
-		TextView tv;
 
 		final Bundle extras = getIntent().getExtras();
 
@@ -94,8 +93,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			if (task.equals("create")) { // cria novo itemRequest
 
-				type = extras.getString(ItemNote.TYPE);
-				Log.i(TAG, "searching type [" + type + "]");
+				// verifica se o usuario já passou um subject
+				id_item = null;
 
 			} else if (task.equals("edit")) { // edit itemRequest
 
@@ -105,19 +104,28 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				itemRequest = ItemModel.buscarItemNote(id_item); // busca
 																	// informações
 																	// do
-				// itemRequest
-
-				type = itemRequest.getType();
 
 			}
 
 		}
+
+		setContentView(R.layout.form_note);
 
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				"fonts/DroidSansFallback.ttf"); // modifica as fontes
 
 		// calendar
 		final Calendar c = Calendar.getInstance();
+
+		// color default
+		type = "ff0000";
+
+		// color of item
+		int color = Color.parseColor("#" + type.toString());
+
+		// title
+		bg_title = (LinearLayout) findViewById(R.id.bg_title);
+		bg_title.setBackgroundColor(color);
 
 		// date
 		date = (TextView) findViewById(R.id.date);
@@ -128,6 +136,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		date.setText(new StringBuilder().append(pad(day_time)).append("/")
 				.append(pad(month_time)).append("/").append(pad(year_time)));
 
+		date.setTextColor(color);
+
 		// hour
 		hour = (TextView) findViewById(R.id.hour);
 		hour_time = c.get(Calendar.HOUR_OF_DAY);
@@ -136,21 +146,15 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		hour.setText(new StringBuilder().append(pad(hour_time)).append(":")
 				.append(pad(min_time)));
 
+		hour.setTextColor(color);
+
 		// subject
-
-		tv = (TextView) findViewById(R.id.t_subject);
-		vTextView.add(tv);
-
 		subject = (EditText) findViewById(R.id.subject);
 		subject.setTypeface(tf);
 
 		vEditText.add(subject);
 
 		// text
-
-		tv = (TextView) findViewById(R.id.t_text);
-		vTextView.add(tv);
-
 		text = (EditText) findViewById(R.id.text);
 		text.setTypeface(tf);
 
@@ -158,8 +162,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		EditTextTools.insertFontInAllFields(vEditText, tf); // change font
 															// editText
-		TextViewTools.insertFontInAllFields(vTextView, tf); // change font
-															// textView
 
 		if (itemRequest != null) { // edit itemRequest?
 
@@ -184,6 +186,14 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		try {
 
+			// color of item
+			int color = Color
+					.parseColor("#" + itemRequest.getType().toString());
+			type = itemRequest.getType().toString();
+
+			// change background title
+			bg_title.setBackgroundColor(color);
+
 			// formata date
 			String dateFromBase = itemRequest.getDate();
 
@@ -193,9 +203,11 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				if (dateFromBase.charAt(i) == '-') { // insere valor da
 														// data
 
-					Log.i(TAG, "date [" + sb.toString() + "]");
+					// Log.i(TAG, "date [" + sb.toString() + "]");
 
 					date.setText(sb.toString());
+
+					date.setTextColor(color);
 
 					// insere os valores nas variaveis de classe
 					day_time = Integer.valueOf(
@@ -215,9 +227,11 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 										// inserção dela 'dd/mm/aaaa - hh:mm'
 					sb.append(dateFromBase.charAt(i));
 
-					Log.i(TAG, "hour [" + sb.toString() + "]");
+					// Log.i(TAG, "hour [" + sb.toString() + "]");
 
 					hour.setText(sb.toString()); // hora
+
+					hour.setTextColor(color);
 
 					break;
 
@@ -229,11 +243,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			}
 
 			// subject
-
 			subject.setText(String.valueOf((itemRequest.getSubject())));
 
 			// text
-
 			text.setText(String.valueOf((itemRequest.getText())));
 
 		} catch (NullPointerException e) {
@@ -247,19 +259,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	 * SERVICES
 	 ******************************************************************************/
 
-	// @Override
-	// protected void onPause() {
-	// super.onPause();
-	// // Cancela para não ficar nada na tela pendente
-	// setResult(RESULT_CANCELED);
-	//
-	// // Fecha a tela
-	// finish();
-	// }
-
 	public void salvar() {
 
-		// if (type == EXPENSE || type == REPAIR || type == NOTE) {
 		if (EditTextTools.isEmptyEdit(vEditText, this)) {
 			return;
 		}
@@ -270,10 +271,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			itemLog4Save.setId(id_item);
 		}
 
-		// type of itemRequest
+		// type
 		itemLog4Save.setType(type);
 
-		// hour
+		// hour and date
 		// get date for save
 		StringBuffer sbDate = new StringBuffer();
 		sbDate.append(date.getText().toString() + "-" + hour.getText());
@@ -281,10 +282,14 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		itemLog4Save.setDate(sbDate.toString());
 
 		// subject
-
 		itemLog4Save.setSubject(subject.getText().toString());
 
+		// text
 		itemLog4Save.setText(text.getText().toString());
+
+		// Salvar
+		Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
+		ItemModel.salvarItemNote(itemLog4Save);
 
 		// OK
 		setResult(RESULT_OK, new Intent());
@@ -315,22 +320,19 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	}
 
 	public void btBarLeft(final View v) {
-
-		setResult(RESULT_CANCELED);
-
-		// Fecha a tela
-		finish();
-
-		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
-
+		//
 	}
 
 	public void btBarRight(final View v) {
-		salvar();
+		//
 	}
 
 	public void onBackPressed() { // call my backbutton pressed method when
-		// boolean==true
+		super.onBackPressed(); // boolean==true
+
+		salvar();
+
+		Toast.makeText(this, "Note saved!", Toast.LENGTH_SHORT).show();
 
 	}
 

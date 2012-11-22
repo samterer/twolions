@@ -4,20 +4,18 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <!-- DATE -->
-
+    <!-- EDIT SUBJECT -->
+
     <include
         android:layout_gravity="center_vertical"
         layout="@layout/subject" />
 
+    <!-- DATE -->
+
     <TableRow
-        android:layout_marginTop="10dp"
-        android:gravity="center" >
-
-        <LinearLayout android:gravity="center" >
-
-            <include layout="@layout/date" />
-        </LinearLayout>
+        android:gravity="right" 
+        >
+        <include layout="@layout/date" />
     </TableRow>
 
     <include
@@ -25,47 +23,6 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="15dp"
         layout="@layout/line" />
-
-    <!-- SUBJECT -->
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center" >
-
-        <TextView
-            android:id="@+id/t_subject"
-            style="@style/texto16cinzaDark"
-            android:gravity="center"
-            android:text="" />
-    </TableRow>
-
-    <!-- EDIT SUBJECT -->
-
-    <TableRow
-        android:layout_marginTop="3dp"
-        android:gravity="center" >
-    </TableRow>
-
-    <include
-        android:layout_height="2dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="15dp"
-        layout="@layout/line" />
-
-    <!-- TEXT -->
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center" >
-
-        <TextView
-            android:id="@+id/t_text"
-            style="@style/texto16cinzaDark"
-            android:gravity="center"
-            android:text="" />
-    </TableRow>
 
     <!-- EDIT TEXT -->
 

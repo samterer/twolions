@@ -48,7 +48,7 @@ public class SqlScript extends DBConnection {
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(type,date,subject,text) values('00ff00','25/11/2012-22:30','teste3','testando testando');",
+					+ "(type,date,subject,text) values('a5f5a5','25/11/2012-22:30','teste3','testando testando');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
