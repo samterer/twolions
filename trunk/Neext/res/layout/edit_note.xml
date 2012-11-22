@@ -5,6 +5,10 @@
     android:orientation="vertical" >
 
     <!-- DATE -->
+
+    <include
+        android:layout_gravity="center_vertical"
+        layout="@layout/subject" />
 
     <TableRow
         android:layout_marginTop="10dp"
@@ -41,8 +45,6 @@
     <TableRow
         android:layout_marginTop="3dp"
         android:gravity="center" >
-
-        <include layout="@layout/subject" />
     </TableRow>
 
     <include

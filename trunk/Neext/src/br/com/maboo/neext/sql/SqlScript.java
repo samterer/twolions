@@ -40,7 +40,7 @@ public class SqlScript extends DBConnection {
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(type,date,subject,text) values('fefbde','25/12/2012-20:30','teste1','testando testando');",
+					+ "(type,date,subject,text) values('a6a6ed','25/12/2012-20:30','teste1','testando testando');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
@@ -48,11 +48,11 @@ public class SqlScript extends DBConnection {
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(type,date,subject,text) values('fefbde','25/11/2012-22:30','teste3','testando testando');",
+					+ "(type,date,subject,text) values('00ff00','25/11/2012-22:30','teste3','testando testando');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(type,date,subject,text) values('c7eb78','25/11/2012-23:30','teste4','testando testando');" };
+					+ "(type,date,subject,text) values('FFA500','25/11/2012-23:30','teste4','testando testando');" };
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(final Context ctx) {

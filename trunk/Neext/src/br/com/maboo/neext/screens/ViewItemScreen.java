@@ -4,11 +4,13 @@ import java.util.Vector;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.maboo.neext.R;
@@ -24,14 +26,14 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	private final String TAG = Constants.LOG_APP;
 
 	// Campos texto
+	private LinearLayout bg_title;
 	private TextView date;
 	private TextView hour;
 	private EditText subject;
 	private EditText text;
+	private String type;
 
 	private static Long id_item;
-
-	private static String type;
 
 	protected static final int INSERIR_EDITAR = 1;
 
@@ -84,18 +86,23 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 			}
 
+			// recupera a cor do item
 			type = itemRequest.getType();
 
 		}
-		
+
 		setContentView(R.layout.form_note);
 
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				"fonts/DroidSansFallback.ttf"); // modifica as fontes
 
+		// change background title
+		bg_title = (LinearLayout) findViewById(R.id.bg_title);
+		bg_title.setBackgroundColor(Color.parseColor("#" + type.toString()));
+
 		// date
 		date = (TextView) findViewById(R.id.date);
-		
+
 		// hour
 		hour = (TextView) findViewById(R.id.hour);
 
