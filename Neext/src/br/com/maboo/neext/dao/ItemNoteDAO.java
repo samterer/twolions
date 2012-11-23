@@ -160,6 +160,28 @@ public class ItemNoteDAO extends DBConnection {
 		return itemLogs;
 	}
 
+	public ItemNote buscarLastItemNote() {
+		// select * from ItemNote where _id=?
+		final Cursor c = db.query(true, table_name, ItemNote.colunas, null,
+				null, null, null, null, null);
+
+		// Posicinoa no ultimo elemento
+		c.moveToPosition(c.getCount() - 1);
+
+		final ItemNote itemLog = new ItemNote();
+
+		// Lê os dados
+		itemLog.setId(c.getLong(0));
+		itemLog.setType(c.getString(1));
+		itemLog.setDate(c.getString(2));
+		itemLog.setSubject(c.getString(3));
+		itemLog.setText(c.getString(4));
+
+		Log.i(CATEGORIA, "ItemNote: " + itemLog.toString());
+
+		return itemLog;
+	}
+
 	// Retorna um cursor com todos os carros
 	public Cursor getCursor() {
 		try {
@@ -172,11 +194,7 @@ public class ItemNoteDAO extends DBConnection {
 	}
 
 	// retorna uma lista de itens pelo type
-	// type:
-	// - fuel - 0
-	// - expense - 1
-	// - note - 2
-	// - repair - 3
+	// type = cor
 	public List<ItemNote> listarItemNotesPorTipo(final String type_item) {
 		final Cursor c = db.query(table_name, ItemNote.colunas, ItemNote.TYPE
 				+ "='" + type_item + "'", null, null, null, null);

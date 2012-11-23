@@ -21,4 +21,9 @@ public class Constants {
 
 	public static final String LOG_BASE = "base";
 
+	// chaves do request
+	public static final int INSERIR = 1;
+	public static final int EDITAR = 2;
+	public static final int VIEW = 3;
+
 }
