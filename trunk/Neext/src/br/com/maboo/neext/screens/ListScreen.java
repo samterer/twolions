@@ -18,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -46,8 +47,6 @@ public class ListScreen extends NeextActivity implements InterfaceBar,
 	private ListView listview_log;
 
 	private Long id_item;
-
-	private int type;
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -241,13 +240,17 @@ public class ListScreen extends NeextActivity implements InterfaceBar,
 		Intent it = new Intent(this, FormItemScreen.class);
 
 		// tipo de tarefa
-		it.putExtra("task", "create");
+		int T_KEY = Constants.INSERIR;
+		it.putExtra("T_KEY", T_KEY);
 
-		// Passa o id do carro como parâmetro
-		it.putExtra(ItemNote.TYPE, type);
+		// passa o subject
+		EditText add_subject = (EditText) findViewById(R.id.add_subject);
+		String subj = add_subject.getText().toString();
+
+		it.putExtra("subj", subj);
 
 		// Abre a tela de edição
-		startActivityForResult(it, INSERIR_EDITAR);
+		startActivityForResult(it, T_KEY);
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}

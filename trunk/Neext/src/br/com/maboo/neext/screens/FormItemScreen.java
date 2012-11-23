@@ -11,11 +11,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -44,7 +47,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private TextView hour;
 	private EditText subject;
 	private EditText text;
-	private String type;
+	private String type = "";
+	private ImageView imgSubject;
 
 	private static Long id_item;
 
@@ -55,7 +59,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private static final int TIME_DIALOG_ID = 999;
 	private int hour_time;
 	private int min_time;
-
+	// date
 	private int day_time;
 	private int month_time;
 	private int year_time;
@@ -74,6 +78,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		actionBt(this);
 
+		listenerText();
+
 		addListenerOnButton();
 	}
 
@@ -83,20 +89,27 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	private void init() {
 
+		setContentView(R.layout.form_note);
+
+		// subtitulo já prédefinido
+		String subj = "";
+
 		vEditText = new Vector<EditText>();
 
 		final Bundle extras = getIntent().getExtras();
 
 		if (extras != null) { // Se for para Editar, recuperar os valores ...
 
-			String task = extras.getString("task");
+			int task = extras.getInt("T_KEY");
 
-			if (task.equals("create")) { // cria novo itemRequest
+			if (task == Constants.INSERIR) { // cria novo itemRequest
 
 				// verifica se o usuario já passou um subject
 				id_item = null;
 
-			} else if (task.equals("edit")) { // edit itemRequest
+				subj = extras.getString("subj");
+
+			} else if (task == Constants.EDITAR) { // edit itemRequest
 
 				id_item = extras.getLong(ItemNote._ID);
 
@@ -104,12 +117,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				itemRequest = ItemModel.buscarItemNote(id_item); // busca
 																	// informações
 																	// do
-
 			}
 
 		}
-
-		setContentView(R.layout.form_note);
 
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				"fonts/DroidSansFallback.ttf"); // modifica as fontes
@@ -126,6 +136,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// title
 		bg_title = (LinearLayout) findViewById(R.id.bg_title);
 		bg_title.setBackgroundColor(color);
+
+		// bt edit
+		imgSubject = (ImageView) findViewById(R.id.imgSubject);
 
 		// date
 		date = (TextView) findViewById(R.id.date);
@@ -152,6 +165,11 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		subject = (EditText) findViewById(R.id.subject);
 		subject.setTypeface(tf);
 
+		// insert subject if id_item = null;
+		if (id_item == null) {
+			subject.append(subj);
+		}
+
 		vEditText.add(subject);
 
 		// text
@@ -159,6 +177,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		text.setTypeface(tf);
 
 		vEditText.add(text);
+
+		// change button edit for button colors
+		imgSubject.setVisibility(View.INVISIBLE);
 
 		EditTextTools.insertFontInAllFields(vEditText, tf); // change font
 															// editText
@@ -269,10 +290,12 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		if (id_item != null) {
 			// É uma atualização
 			itemLog4Save.setId(id_item);
+		} else {
+			id_item = (long) -999;
 		}
 
 		// type
-		itemLog4Save.setType(type);
+		itemLog4Save.setType(type.toString());
 
 		// hour and date
 		// get date for save
@@ -291,11 +314,15 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
 		ItemModel.salvarItemNote(itemLog4Save);
 
-		// OK
-		setResult(RESULT_OK, new Intent());
+		Intent it = new Intent(this, ViewItemScreen.class);
 
-		// Fecha a tela
-		finish();
+		// id do item
+		it.putExtra(ItemNote._ID, id_item);
+
+		// OK
+		startActivity(it);
+
+		Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
@@ -328,11 +355,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	}
 
 	public void onBackPressed() { // call my backbutton pressed method when
-		super.onBackPressed(); // boolean==true
 
 		salvar();
 
-		Toast.makeText(this, "Note saved!", Toast.LENGTH_SHORT).show();
+		super.onBackPressed(); // boolean==true
 
 	}
 
@@ -403,5 +429,50 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		}
 	};
+
+	/****************************************************************
+	 * EDIT TEXT
+	 ****************************************************************/
+
+	public void listenerText() {
+
+		// verifica se existe um subject, se não existir ele insere o texto do
+		// text no subject
+		// para que o subject nunca fique vazio
+
+		EditText e = text;
+
+		if (e != null) {
+
+			if (e.isFocusable()) {
+
+				e.addTextChangedListener(new TextWatcher() {
+
+					public void onTextChanged(CharSequence s, int start,
+							int before, int count) {
+
+					}
+
+					public void beforeTextChanged(CharSequence s, int start,
+							int count, int after) {
+
+					}
+
+					public void afterTextChanged(Editable s) {
+
+						if (subject.toString() == "" || subject.length() == 0) {
+
+							StringBuffer text = new StringBuffer();
+							text.append(s.toString());
+
+							subject.append(text);
+						}
+
+					}
+				});
+			}
+		}
+
+	}
 
 }

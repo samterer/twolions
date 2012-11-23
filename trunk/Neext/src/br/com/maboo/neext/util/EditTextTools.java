@@ -6,7 +6,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.widget.EditText;
-import br.com.maboo.neext.R;
 
 public class EditTextTools {
 
@@ -31,8 +30,7 @@ public class EditTextTools {
 
 				Log.i("appLog", "Field [" + et.getTag() + "] empty.");
 
-				et.setHintTextColor(context.getResources().getColor(
-						R.color.vermelho));
+				// et.setHintTextColor(context.getResources().getColor(R.color.vermelho));
 
 			} else {
 
@@ -50,8 +48,7 @@ public class EditTextTools {
 			result = true; // ainda existem campos não preenchidos
 
 			// ainda existem campos não preenchidos
-			AndroidUtils.alertDialog(context,
-					"Please, fill in all fields with red color.");
+			// AndroidUtils.alertDialog(context,"Please, fill in all fields with red color.");
 
 		}
 

@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center" >
 
     <EditText
         android:id="@+id/text"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:gravity="top|center_horizontal"
-        android:height="200dp"
-        android:hint="insert a text"
-        android:maxLength="240"
+        android:gravity="top"
+        android:lines="14"
         android:tag="text"
-        android:width="200dp" />
+        android:width="240dp" />
 
 </LinearLayout>

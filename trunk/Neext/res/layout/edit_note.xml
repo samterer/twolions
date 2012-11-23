@@ -19,9 +19,9 @@
     </TableRow>
 
     <include
-        android:layout_height="2dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
         layout="@layout/line" />
 
     <!-- EDIT TEXT -->
@@ -29,8 +29,11 @@
     <TableRow
         android:layout_marginTop="3dp"
         android:gravity="center" >
+
+        <include
+            android:layout_width="fill_parent"
+            layout="@layout/text" />
 
-        <include layout="@layout/text" />
     </TableRow>
 
 </TableLayout>

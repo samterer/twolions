@@ -105,7 +105,17 @@ public class ListAdapter extends BaseAdapter {
 				+ holder.type.toString()));
 
 		// subject
-		holder.subject.setText(String.valueOf(itemRequest.getSubject()));
+		// verifica se o subject é muito grande, se for, coloca reticencias no
+		// final
+		if (itemRequest.getSubject().length() > 10) {
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < 10; i++) {
+				sb.append(itemRequest.getSubject().toString().charAt(i));
+			}
+			holder.subject.setText(sb.toString() + "...");
+		} else {
+			holder.subject.setText(String.valueOf(itemRequest.getSubject()));
+		}
 
 		// formata a data
 		// formata date

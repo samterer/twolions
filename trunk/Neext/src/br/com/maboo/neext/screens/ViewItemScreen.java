@@ -34,8 +34,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 	private static Long id_item;
 
-	protected static final int INSERIR_EDITAR = 1;
-
 	// itemRequest na tela
 	private ItemNote itemRequest;
 
@@ -61,8 +59,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		vEditText = new Vector<EditText>();
 
-		TextView tv;
-
 		Log.i(TAG, "view itemRequest screen");
 
 		final Bundle extras = getIntent().getExtras();
@@ -73,18 +69,35 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 			if (id_item != null) { // searching itemRequest
 
-				Log.i(TAG, "searching itemRequest [" + id_item + "]");
+				if (id_item == -999) { // verifica se é pra fazer o searching
+										// pelo ultimo registro inserido
+					Log.i(TAG, "searching itemRequest [" + -999 + "]");
 
-				itemRequest = buscarItemNote(id_item);
+					itemRequest = buscarLastItemNote();
+
+					type = itemRequest.getType();
+
+					Log.i(TAG, "Color of item [" + itemRequest.getSubject()
+							+ "] é [" + type + "]");
+
+				} else {
+
+					Log.i(TAG, "searching itemRequest [" + id_item + "]");
+
+					itemRequest = buscarItemNote(id_item);
+
+					type = itemRequest.getType();
+
+					Log.i(TAG, "Color of item [" + itemRequest.getSubject()
+							+ "] é [" + type + "]");
+
+				}
 
 			} else {
 
 				finish();
 
 			}
-
-			// recupera a cor do item
-			type = itemRequest.getType();
 
 		}
 
@@ -93,7 +106,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				"fonts/DroidSansFallback.ttf"); // modifica as fontes
 
-		// color of item
+		// change background of item
 		int color = Color.parseColor("#" + type.toString());
 
 		// change background title
@@ -113,6 +126,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		vEditText.add(subject);
 
+		// text
 		text = (EditText) findViewById(R.id.text);
 
 		vEditText.add(text);
@@ -146,10 +160,10 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// Quando a activity EditarCarro retornar, seja se foi para adicionar
 		// vamos atualizar a lista
-		if (codigoRetorno == RESULT_OK) {
-			// atualiza a lista na tela
-			// init();
-		}
+		// Log.i(TAG, "refresh view...");
+
+		// atualiza a view
+		init();
 	}
 
 	// open screen with datas of object
@@ -207,10 +221,10 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			}
 
 			// subject
-
 			subject.setText(String.valueOf((itemRequest.getSubject())));
 			subject.setFocusable(false);
 
+			// text
 			text.setText(String.valueOf((itemRequest.getText())));
 			text.setFocusable(false);
 
@@ -229,6 +243,10 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	// Buscar o itemLog pelo id_item
 	protected ItemNote buscarItemNote(final long id) {
 		return ListScreen.dao.buscarItemNote(id);
+	}
+
+	protected ItemNote buscarLastItemNote() {
+		return ListScreen.dao.buscarLastItemNote();
 	}
 
 	private static String pad(int c) {
@@ -264,16 +282,19 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		// Cria a intent para abrir a tela de editar
 		Intent it = new Intent(this, FormItemScreen.class);
 
-		it.putExtra("task", "edit");
-
 		// id do itemRequest
 		it.putExtra(ItemNote._ID, id_item);
 
+		// type os task
+		int T_KEY = Constants.EDITAR;
+		it.putExtra("T_KEY", T_KEY);
+
 		// Abre a tela de edição
-		startActivityForResult(it, INSERIR_EDITAR);
+		startActivityForResult(it, T_KEY);
+
+		finish();
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 
 	}
-
 }
