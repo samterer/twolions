@@ -10,8 +10,11 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -349,6 +352,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar,
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
 		bt_right.setImageResource(R.drawable.bt_about);
 
+		registerForContextMenu(listview_log);
 	}
 
 	public void btBarLeft(View v) {
@@ -415,7 +419,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar,
 						ItemNote item = itens.get(position);
 						id_item = item.getId();
 
-						// showBtsEditDelete(true);
+						openContextMenu(view);
 
 						return true;
 					}
@@ -428,12 +432,6 @@ public class ListScreen extends NeextActivity implements InterfaceBar,
 
 						Log.i(TAG, "onItemClick > onItemClick in position["
 								+ pos + "]");
-
-						// element = null;
-
-						// element = view;
-
-						// position = pos;
 
 					}
 				});
@@ -534,6 +532,46 @@ public class ListScreen extends NeextActivity implements InterfaceBar,
 			}
 
 			return false;
+		}
+
+	}
+
+	/******************************************************************************
+	 * SUB MENU
+	 ******************************************************************************/
+
+	public void onCreateContextMenu(ContextMenu menu, View v,
+
+	ContextMenuInfo menuInfo) {
+
+		super.onCreateContextMenu(menu, v, menuInfo);
+
+		menu.add(0, 0, 0, "SMS");
+
+		menu.add(0, 1, 0, "Email");
+
+	}
+
+	public boolean onContextItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+
+		case 0:
+
+			// Code for menu option Edit
+
+			return true;
+
+		case 1:
+
+			// Code for menu option Delete
+
+			return true;
+
+		default:
+
+			return false;
+
 		}
 
 	}
