@@ -48,8 +48,9 @@ public class ItemNoteDAO extends DBConnection {
 		values.put(ItemNote.TYPE, itemLog.getType());
 		values.put(ItemNote.DATE, String.valueOf(itemLog.getDate()));
 		values.put(ItemNote.SUBJECT, itemLog.getSubject());
-
 		values.put(ItemNote.TEXT, itemLog.getText());
+		values.put(ItemNote.CHECK, itemLog.isCheck());
+		values.put(ItemNote.DATE_NOTIFICATION, itemLog.getDate_notification());
 
 		// Log.i(CATEGORIA, "Inserindo o itemLog: " +
 		// buscarItemNote(itemLog.getId()).toString());
@@ -62,10 +63,10 @@ public class ItemNoteDAO extends DBConnection {
 		final ContentValues values = new ContentValues();
 		values.put(ItemNote.TYPE, itemLog.getType());
 		values.put(ItemNote.DATE, String.valueOf(itemLog.getDate()));
-
 		values.put(ItemNote.SUBJECT, itemLog.getSubject());
-
 		values.put(ItemNote.TEXT, itemLog.getText());
+		values.put(ItemNote.CHECK, itemLog.isCheck());
+		values.put(ItemNote.DATE_NOTIFICATION, itemLog.getDate_notification());
 
 		final String _id = String.valueOf(itemLog.getId());
 
@@ -113,6 +114,9 @@ public class ItemNoteDAO extends DBConnection {
 			itemLog.setDate(c.getString(2));
 			itemLog.setSubject(c.getString(3));
 			itemLog.setText(c.getString(4));
+			itemLog.setCheck(Boolean.parseBoolean(c.getString(5)));
+			itemLog.setDate_notification(c.getString(6));
+			
 
 			Log.i(CATEGORIA, "ItemNote: " + itemLog.toString());
 
@@ -136,9 +140,10 @@ public class ItemNoteDAO extends DBConnection {
 			final int idxIdType = c.getColumnIndex(ItemNote.TYPE);
 			final int idxIdDate = c.getColumnIndex(ItemNote.DATE);
 			final int idxIdSubject = c.getColumnIndex(ItemNote.SUBJECT);
-
 			final int idxIdText = c.getColumnIndex(ItemNote.TEXT);
-
+			final int idxIdCheck = c.getColumnIndex(ItemNote.CHECK);
+			final int idxIdDate_notification = c.getColumnIndex(ItemNote.DATE_NOTIFICATION);
+			
 			// Loop até o final
 			do {
 				final ItemNote itemLog = new ItemNote();
@@ -149,8 +154,9 @@ public class ItemNoteDAO extends DBConnection {
 				itemLog.setType(c.getString(idxIdType));
 				itemLog.setDate(c.getString(idxIdDate));
 				itemLog.setSubject(c.getString(idxIdSubject));
-
 				itemLog.setText(c.getString(idxIdText));
+				itemLog.setCheck(Boolean.parseBoolean(c.getString(idxIdCheck)));
+				itemLog.setDate_notification(c.getString(idxIdDate_notification));
 
 				Log.i(CATEGORIA, "ItemNote: " + itemLog.toString());
 
@@ -176,6 +182,8 @@ public class ItemNoteDAO extends DBConnection {
 		itemLog.setDate(c.getString(2));
 		itemLog.setSubject(c.getString(3));
 		itemLog.setText(c.getString(4));
+		itemLog.setCheck(Boolean.parseBoolean(c.getString(5)));
+		itemLog.setDate_notification(c.getString(6));
 
 		Log.i(CATEGORIA, "ItemNote: " + itemLog.toString());
 
@@ -209,8 +217,9 @@ public class ItemNoteDAO extends DBConnection {
 			final int idxIdDate = c.getColumnIndex(ItemNote.DATE);
 			final int idxIdType = c.getColumnIndex(ItemNote.TYPE);
 			final int idxIdSubject = c.getColumnIndex(ItemNote.SUBJECT);
-
 			final int idxIdText = c.getColumnIndex(ItemNote.TEXT);
+			final int idxIdCheck = c.getColumnIndex(ItemNote.CHECK);
+			final int idxIdDate_notification = c.getColumnIndex(ItemNote.DATE_NOTIFICATION);
 
 			// Loop até o final
 			do {
@@ -223,8 +232,9 @@ public class ItemNoteDAO extends DBConnection {
 				itemLog.setType(c.getString(idxIdType));
 				itemLog.setDate(c.getString(idxIdDate));
 				itemLog.setSubject(c.getString(idxIdSubject));
-
 				itemLog.setText(c.getString(idxIdText));
+				itemLog.setCheck(Boolean.parseBoolean(c.getString(idxIdCheck)));
+				itemLog.setDate_notification(c.getString(idxIdDate_notification));
 
 				Log.i(CATEGORIA, "ItemNote: " + itemLog.toString());
 
