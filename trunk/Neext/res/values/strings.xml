@@ -30,5 +30,14 @@
     <!-- Positivo e negativo -->
     <string name="a_n">Not</string>
     <string name="a_y">Yes</string>
+    
+    <!-- Menu itens -->
+    <string-array name="menu">
+		<item>Check</item>
+		<item>Edit</item>
+		<item>Delte</item>
+	</string-array>
+	
+    <string name="footer">This is a demo of the ListView. Click and hold on to one of the items above to show the context menu.</string>
 
 </resources>

@@ -8,7 +8,7 @@ import br.com.maboo.neext.util.Constants;
 public class ItemNote implements BaseColumns, Serializable {
 
 	public static String[] colunas = new String[] { ItemNote._ID,
-			ItemNote.TYPE, ItemNote.DATE, ItemNote.SUBJECT, ItemNote.TEXT };
+			ItemNote.TYPE, ItemNote.DATE, ItemNote.SUBJECT, ItemNote.TEXT, ItemNote.CHECK, ItemNote.DATE_NOTIFICATION };
 
 	/**
 	 * Pacote do Content Provider. Precisa ser único.
@@ -22,6 +22,13 @@ public class ItemNote implements BaseColumns, Serializable {
 	private String date;
 	private String subject;
 	private String text;
+
+	// check
+	private boolean check;
+
+	// notification
+	// dd/mm/aaaa-hh:mm
+	private String date_notification;
 
 	private static final long serialVersionUID = 6601006766832473959L;
 	public static final String KEY = "itemNote";
@@ -66,6 +73,24 @@ public class ItemNote implements BaseColumns, Serializable {
 		this.text = text;
 	}
 
+	// check
+	public boolean isCheck() {
+		return check;
+	}
+
+	public void setCheck(boolean check) {
+		this.check = check;
+	}
+
+	// notification
+	public String getDate_notification() {
+		return date_notification;
+	}
+
+	public void setDate_notification(String date_notification) {
+		this.date_notification = date_notification;
+	}
+
 	public static final String DEFAULT_SORT_ORDER = Constants.DEFAULT_SORT_ORDER;
 
 	public static final String TYPE = "type";
@@ -76,11 +101,18 @@ public class ItemNote implements BaseColumns, Serializable {
 
 	public static final String TEXT = "text";
 
+	// check
+	public static final String CHECK = "check";
+
+	// notification
+	public static final String DATE_NOTIFICATION = "date_notification";
+
 	public ItemNote() {
 	}
 
 	public ItemNote(final String type, final String date, final String subject,
-			final String text) {
+			final String text, final boolean check,
+			final String date_notification) {
 		super();
 
 		this.type = type;
@@ -91,10 +123,15 @@ public class ItemNote implements BaseColumns, Serializable {
 
 		this.text = text;
 
+		this.check = check;
+
+		this.date_notification = date_notification;
+
 	}
 
 	public ItemNote(final long id, final String type, final String date,
-			final String subject, final String text) {
+			final String subject, final String text, final boolean check,
+			final String date_notification) {
 		super();
 
 		this.id = id;
@@ -106,10 +143,14 @@ public class ItemNote implements BaseColumns, Serializable {
 		this.subject = subject;
 
 		this.text = text;
+
+		this.check = check;
+
+		this.date_notification = date_notification;
 	}
 
 	public String toString() {
 		return "Id: " + id + ", Type: " + type + ", Date: " + date
-				+ ", Subject: " + subject + ", Text: " + text;
+				+ ", Subject: " + subject + ", Text: " + text + ", Check: " + check + ", Date_notification: " + date_notification;
 	}
 }
