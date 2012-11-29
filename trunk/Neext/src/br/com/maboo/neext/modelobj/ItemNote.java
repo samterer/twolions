@@ -23,8 +23,8 @@ public class ItemNote implements BaseColumns, Serializable {
 	private String subject;
 	private String text;
 
-	// check
-	private boolean check;
+	// check_item
+	private boolean check_item;
 
 	// notification
 	// dd/mm/aaaa-hh:mm
@@ -73,13 +73,13 @@ public class ItemNote implements BaseColumns, Serializable {
 		this.text = text;
 	}
 
-	// check
+	// check_item
 	public boolean isCheck() {
-		return check;
+		return check_item;
 	}
 
 	public void setCheck(boolean check) {
-		this.check = check;
+		this.check_item = check;
 	}
 
 	// notification
@@ -101,8 +101,8 @@ public class ItemNote implements BaseColumns, Serializable {
 
 	public static final String TEXT = "text";
 
-	// check
-	public static final String CHECK = "check";
+	// check_item
+	public static final String CHECK = "check_item";
 
 	// notification
 	public static final String DATE_NOTIFICATION = "date_notification";
@@ -123,7 +123,7 @@ public class ItemNote implements BaseColumns, Serializable {
 
 		this.text = text;
 
-		this.check = check;
+		this.check_item = check;
 
 		this.date_notification = date_notification;
 
@@ -144,13 +144,13 @@ public class ItemNote implements BaseColumns, Serializable {
 
 		this.text = text;
 
-		this.check = check;
+		this.check_item = check;
 
 		this.date_notification = date_notification;
 	}
 
 	public String toString() {
 		return "Id: " + id + ", Type: " + type + ", Date: " + date
-				+ ", Subject: " + subject + ", Text: " + text + ", Check: " + check + ", Date_notification: " + date_notification;
+				+ ", Subject: " + subject + ", Text: " + text + ", Check: " + check_item + ", Date_notification: " + date_notification;
 	}
 }

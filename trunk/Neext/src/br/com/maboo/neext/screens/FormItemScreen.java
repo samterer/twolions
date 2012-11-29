@@ -282,7 +282,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	public void salvar() {
 
-		if (EditTextTools.isEmptyEdit(vEditText, this)) {
+		if (subject.getText().toString().length() < 1) {
 			return;
 		}
 
@@ -431,7 +431,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	};
 
 	/****************************************************************
-	 * EDIT TEXT
+	 * EDIT ITEM_TEXT
 	 ****************************************************************/
 
 	public void listenerText() {

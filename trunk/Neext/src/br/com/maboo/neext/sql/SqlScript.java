@@ -1,6 +1,7 @@
 package br.com.maboo.neext.sql;
 
 import android.content.Context;
+import android.provider.SyncStateContract.Columns;
 import br.com.maboo.neext.util.Constants;
 
 public class SqlScript extends DBConnection {
@@ -26,30 +27,30 @@ public class SqlScript extends DBConnection {
 			+ TB_ITEM_LOG;
 
 	// Cria a tabela com o "_id" sequencial
+	private static String[] columns = {"_id","type","date","subject","text","check_item","date_notification"};
 	// type item
 	// cores
 	private static final String[] SCRIPT_CREATE_TB_ITEM_LOG = new String[] {
 			sqlScript[0]
 					+ " "
 					+ TB_ITEM_LOG
-					+ " ( _id integer primary key autoincrement, type integer not null, date text not null, subject text not null, text text,check text not null,date_notification text)",
-
+					+ " ( "+columns[0]+" integer primary key autoincrement, "+columns[1]+" integer not null, "+columns[2]+" text not null, "+columns[3]+" text not null, "+columns[4]+" text not null, "+columns[5]+" text, "+columns[6]+" text)",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(type,date,subject,text,check,date_notification) values('a6a6ed','25/12/2012-20:30','teste1','testando testando', 'false', ' ');",
+					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('a6a6ed','25/12/2012-20:30','teste1','testando testando','false','25/12/2012-20:30');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(type,date,subject,text,check,date_notification) values('c7eb78','25/12/2012-21:30','teste2','testando testando', 'false', ' ');",
+					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('c7eb78','25/12/2012-21:30','teste2','testando testando','false','25/12/2012-20:30');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(type,date,subject,text,check,date_notification) values('a5f5a5','25/11/2012-22:30','teste3','testando testando', 'true', ' ');",
+					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('a5f5a5','25/11/2012-22:30','teste3','testando testando','true','25/12/2012-20:30');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(type,date,subject,text,check,date_notification) values('FFA500','25/11/2012-23:30','teste4','testando testando', 'false', ' ');" };
+					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('FFA500','25/11/2012-23:30','teste4','testando testando','false','25/12/2012-20:30');" };
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(final Context ctx) {

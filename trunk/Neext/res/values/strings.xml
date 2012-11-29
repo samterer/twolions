@@ -35,7 +35,7 @@
     <string-array name="menu">
 		<item>Check</item>
 		<item>Edit</item>
-		<item>Delte</item>
+		<item>Delete</item>
 	</string-array>
 	
     <string name="footer">This is a demo of the ListView. Click and hold on to one of the items above to show the context menu.</string>
