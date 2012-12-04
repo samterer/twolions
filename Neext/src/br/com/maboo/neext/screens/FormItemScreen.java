@@ -48,10 +48,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private LinearLayout bg_title;
 	private TextView date;
 	private TextView hour;
-	private TextView type_edit;
+	private TextView title_edit;
 	private EditText subject;
 	private EditText text;
-	private String type = "";
+	private String typeColor = "";
 	private ImageView imgSubject;
 
 	private static Long id_item;
@@ -112,6 +112,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				id_item = null;
 
 				subj = extras.getString("subj");
+				
+				// recebe a color definida pelo usuario
+				typeColor = extras.getString("color");
 
 			} else if (task == Constants.EDITAR) { // edit itemRequest
 
@@ -121,6 +124,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				itemRequest = ItemModel.buscarItemNote(id_item); // busca
 																	// informações
 																	// do
+				
+				typeColor = Constants.CREATE_DEFAULT_COLOR; // coloco a cor default
+				
 			}
 
 		}
@@ -131,21 +137,19 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// calendar
 		final Calendar c = Calendar.getInstance();
 
-		// color default
-		type = "ff0000";
-
 		// color of item
-		int color = Color.parseColor("#" + type.toString());
+		int color = Color.parseColor("#" + typeColor.toString());
 
 		// title
 		bg_title = (LinearLayout) findViewById(R.id.bg_title);
 		bg_title.setBackgroundColor(color);
 
-		// bt edit
+		// bt edit color
 		imgSubject = (ImageView) findViewById(R.id.imgSubject);
+		imgSubject.setTag(typeColor);
 		
 		//type edit
-		type_edit = (TextView) findViewById(R.id.type_edit);
+		title_edit = (TextView) findViewById(R.id.type_edit);
 
 		// date
 		date = (TextView) findViewById(R.id.date);
@@ -184,10 +188,11 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		text.setTypeface(tf);
 
 		vEditText.add(text);
-
-		// change button edit for button colors
-		imgSubject.setVisibility(View.INVISIBLE);
-
+		
+		// muda o button de edit por um bt de cor
+		imgSubject.setImageResource(R.drawable.bt_edit_color);
+		imgSubject.setVisibility(View.VISIBLE);
+		
 		EditTextTools.insertFontInAllFields(vEditText, tf); // change font
 															// editText
 
@@ -217,18 +222,14 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			// color of item
 			int color = Color
 					.parseColor("#" + itemRequest.getType().toString());
-			type = itemRequest.getType().toString();
+			typeColor = itemRequest.getType().toString();
 			
 			// escreve noc abeçalho que esta em mode editing
-			type_edit.setText("Editing");
-			type_edit.setTextColor(color);
+			title_edit.setText("Editing");
+			title_edit.setTextColor(color);
 
 			// change background title
 			bg_title.setBackgroundColor(color);
-
-			// muda o button de edit por um bt de cor
-			imgSubject.setImageResource(R.drawable.bt_edit_color);
-			imgSubject.setVisibility(View.VISIBLE);
 			
 			// formata date
 			String dateFromBase = itemRequest.getDate();
@@ -309,8 +310,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			id_item = (long) -999;
 		}
 
-		// type
-		itemLog4Save.setType(type.toString());
+		// typeColor
+		itemLog4Save.setType(typeColor.toString());
 
 		// hour and date
 		// get date for save
@@ -367,6 +368,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	
 	// muda cor do item
 	public void btBarRight(final View v) {
+		
 		if (customMenuDialog == null) { // instancia o menu apenas uma vez
 
 			customMenuDialog = new MenuDialog(this);
@@ -376,6 +378,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		if (!customMenuDialog.isShowing()) {
 			customMenuDialog.show();
 		}
+	
 	}
 
 	public void onBackPressed() { // call my backbutton pressed method when
@@ -508,15 +511,14 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		Toast.makeText(this, "Change to color [#"+color+"]", Toast.LENGTH_SHORT).show();
 		
 		// muda cor do item
-		type = color;
-		itemRequest.setType(type);
+		typeColor = color;
 		
 		// muda cor da tela
 		// color of item
 		int newcolor = Color
-				.parseColor("#" + itemRequest.getType().toString());
+				.parseColor("#" + typeColor);
 		
-		type_edit.setTextColor(newcolor);
+		title_edit.setTextColor(newcolor);
 		
 		bg_title.setBackgroundColor(newcolor);
 		
@@ -530,20 +532,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		
 	}
 	private MenuDialog customMenuDialog;
-	
-	public void btEditColor(View v) {
-
-		if (customMenuDialog == null) { // instancia o menu apenas uma vez
-
-			customMenuDialog = new MenuDialog(this);
-
-		}
-
-		if (!customMenuDialog.isShowing()) {
-			customMenuDialog.show();
-		}
-
-	}
 
 	private class MenuDialog extends AlertDialog {
 		public MenuDialog(Context context) {
@@ -561,29 +549,23 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// 2 - azul claro 45c4ff
 		// 3 - verde claro 39bf2b
 		// 4 - roxo a6a6ed
-		String LARANJA = "FFA500";
-		String AZUL_CLARO = "45c4ff";
-		String VERDE_CLARO = "39bf2b";
-		String ROXO = "a6a6ed";
-		
-		String[] cores = {};
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			
+
 			LinearLayout layout_menu = (LinearLayout) findViewById(R.id.layout_menu);
-			
+
 			for (int i = 0; i < 4; i++) {
 				final ImageView imgV = (ImageView) layout_menu.getChildAt(i);
 				imgV.setOnClickListener(new View.OnClickListener() {
 
 					public void onClick(View v) {
 
-						changeToColor(imgV.getTag().toString());
+							changeToColor(imgV.getTag().toString());	
 
 					}
 
 				});
-				
+
 			}
 
 		}

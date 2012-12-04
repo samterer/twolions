@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_add_subject"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -29,11 +30,14 @@
             android:id="@+id/bt_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginRight="5dp"
+            android:background="#39bf2b"
+            android:tag="39bf2b"
             android:contentDescription="color for select"
             android:gravity="center_vertical|center_horizontal"
-            android:onClick="changeColor"
-            android:src="@drawable/bt_color_off" />
+            android:onClick="btEditColor"
+            android:src="@drawable/bt_edit_color" />
 
         <ImageView
             android:id="@+id/bt_add"

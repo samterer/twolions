@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:windowSoftInputMode="adjustResize" >
         <activity
-            android:name=".screens.SplashScreen"
+            android:name=".screens.ListScreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
@@ -21,12 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
+      <!--   <activity
             android:name=".screens.ListScreen"
             android:label="ListScreen"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
-        </activity>
+        </activity> -->
         <activity
             android:name=".screens.FormItemScreen"
             android:label="FormItemScreen"

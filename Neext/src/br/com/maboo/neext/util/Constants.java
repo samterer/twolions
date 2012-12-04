@@ -25,5 +25,10 @@ public class Constants {
 	public static final int INSERIR = 1;
 	public static final int EDITAR = 2;
 	public static final int VIEW = 3;
+	
+	// cor padrao do botão de create
+	public static final String CREATE_DEFAULT_COLOR = "39bf2b";
+	
+	// cores padrões
 
 }

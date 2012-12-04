@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -22,7 +24,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.adapters.ListAdapter;
 import br.com.maboo.neext.core.NeextActivity;
@@ -47,6 +51,9 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	private ListView listview_log;
 
 	private Long id_item;
+	private String typeColor = Constants.CREATE_DEFAULT_COLOR;
+	
+	private MenuDialog customMenuDialog; // menu de cores
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -245,20 +252,19 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		int T_KEY = Constants.INSERIR;
 		it.putExtra("T_KEY", T_KEY);
 
-		// passa o subject
+		// passa o subject pré inserido pelo usuario
 		EditText add_subject = (EditText) findViewById(R.id.add_subject);
 		String subj = add_subject.getText().toString();
 
 		it.putExtra("subj", subj);
+		
+		// passa a color do item definida pelo usuario		
+		it.putExtra("color", typeColor);
 
 		// Abre a tela de edição
 		startActivityForResult(it, T_KEY);
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
-	}
-
-	public void changeColor(View v) {
-
 	}
 
 	/****************************************************************
@@ -427,13 +433,9 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		
 			item.setCheck(true);
 			
-			//Toast.makeText(this, "check item! "+item.getId(), Toast.LENGTH_SHORT).show();
-			
 		} else {
 			
 			item.setCheck(false);
-			
-			//Toast.makeText(this, "uncheck item! "+item.getId(), Toast.LENGTH_SHORT).show();
 			
 		}
 		
@@ -441,12 +443,117 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 			item.setId(item.getId());
 		}
 		
-		dao.atualizar(item);
+		dao.atualizar(item); // atualiza item
 		
-		// atualiza a lista na tela
-		update();
+		update(); 		// atualiza a lista na tela
 		
+	}
+	
+	public void changeToColor(String color) {
 		
+		Toast.makeText(this, "Change to color [#"+color+"]", Toast.LENGTH_SHORT).show();
+		
+		// muda cor da tela
+		// color of item
+		int newcolor = Color
+				.parseColor("#" + color);
+			
+		ImageView bt_color = (ImageView) findViewById(R.id.bt_color); // bt de color do item a ser criado
+		bt_color.setBackgroundColor(newcolor);
+		bt_color.setTag(color);
+		
+		typeColor = bt_color.getTag().toString();
+		
+		// closed menu for select item
+		customMenuDialog.dismiss();
+		
+	}
+	
+	
+	public void btEditColor(View v) {
+
+		if (customMenuDialog == null) { // instancia o menu apenas uma vez
+
+			customMenuDialog = new MenuDialog(this);
+
+		}
+
+		if (!customMenuDialog.isShowing()) {
+			customMenuDialog.show();
+		}
+
+	}
+
+	private class MenuDialog extends AlertDialog {
+		public MenuDialog(Context context) {
+			super(context);
+
+			View cus_menu = getLayoutInflater().inflate(R.layout.custom_menu,
+					null);
+
+			setView(cus_menu);
+
+		}
+		
+		// lista de cores
+		// 1 - laranja FFA500
+		// 2 - azul claro 45c4ff
+		// 3 - verde claro 39bf2b
+		// 4 - roxo a6a6ed
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			
+			LinearLayout layout_menu = (LinearLayout) findViewById(R.id.layout_menu);
+			
+			for (int i = 0; i < 4; i++) {
+				final ImageView imgV = (ImageView) layout_menu.getChildAt(i);
+				imgV.setOnClickListener(new View.OnClickListener() {
+
+					public void onClick(View v) {
+
+						changeToColor(imgV.getTag().toString());
+
+					}
+
+				});
+				
+			}
+
+		}
+
+		/**
+		 * Verifica onde foi o clique do usuario, se foi no menu de item (ok),
+		 * se não (fecha o menu)
+		 */
+		public boolean onTouchEvent(MotionEvent event) {
+
+			// I only care if the event is an UP action
+			if (event.getAction() == MotionEvent.ACTION_UP) {
+
+				// create a rect for storing the window rect
+				Rect r = new Rect(0, 0, 0, 0);
+
+				// retrieve the windows rect
+				this.getWindow().getDecorView().getHitRect(r);
+
+				// check if the event position is inside the window rect
+				boolean intersects = r.contains((int) event.getX(),
+						(int) event.getY());
+
+				// if the event is not inside then we can close the activity
+				if (!intersects) {
+
+					// close the activity
+					customMenuDialog.dismiss();
+
+					// notify that we consumed this event
+					return true;
+				}
+			}
+			// let the system handle the event
+			return super.onTouchEvent(event);
+		}
+
 	}
 	
 	
