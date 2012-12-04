@@ -99,6 +99,17 @@ public class ListAdapter extends BaseAdapter {
 
 			}
 		}
+		
+		// verifica se o item esta check ou uncheck
+		if(itemRequest.isCheck()) {
+			holder.rl.setBackgroundColor(view.getResources().getColor(R.color.cinza_coob_c));
+			// change img
+			holder.imgLeftCenter.setImageResource(R.drawable.boxe_check);
+		} else {
+			holder.rl.setBackgroundColor(view.getResources().getColor(R.color.pastel));
+			// change img
+			holder.imgLeftCenter.setImageResource(R.drawable.boxe);
+		}
 
 		// set background in image
 		holder.imgLeftCenter.setBackgroundColor(Color.parseColor("#"

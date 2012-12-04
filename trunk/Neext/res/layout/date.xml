@@ -2,16 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bg_date"
     android:layout_width="fill_parent"
-    android:layout_height="53dp"
-    android:gravity="right" >
+    android:layout_height="53dp" 
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/type_edit"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text=""
+        android:layout_marginLeft="15dp"
+          android:textColor="@color/branco"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:typeface="monospace" />
 
     <TextView
         android:id="@+id/date"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_gravity="right"
         android:onClick="showTimePickerDialog"
         android:scaleType="centerInside"
+         android:layout_marginLeft="85dp"
         android:text="22/12/2012"
         android:textColor="@color/branco"
         android:textSize="14dp"
@@ -22,7 +35,7 @@
         android:id="@+id/hour"
         android:layout_width="62dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_gravity="right"
         android:onClick="showTimePickerDialog"
         android:scaleType="centerInside"
         android:text="09:45"
