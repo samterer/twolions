@@ -13,7 +13,6 @@
     <!-- DATE -->
 
     <TableRow
-        android:gravity="right" 
         >
         <include layout="@layout/date" />
     </TableRow>
@@ -28,8 +27,7 @@
 
     <TableRow
         android:layout_marginTop="3dp"
-        android:gravity="center" >
-
+        android:gravity="center" >
         <include
             android:layout_width="fill_parent"
             layout="@layout/text" />

@@ -3,12 +3,12 @@
     android:id="@+id/frameLayout"
     android:layout_width="fill_parent"
     android:layout_height="60dp"
-    android:layout_gravity="left|center_vertical"
-    android:background="@color/pastel" >
+    android:layout_gravity="left|center_vertical">
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent" 
+            android:background="@color/pastel" >
 
         <RelativeLayout
             android:id="@+id/r_item_log"

@@ -3,17 +3,20 @@ package br.com.maboo.neext.screens;
 import java.util.Calendar;
 import java.util.Vector;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
@@ -45,6 +48,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private LinearLayout bg_title;
 	private TextView date;
 	private TextView hour;
+	private TextView type_edit;
 	private EditText subject;
 	private EditText text;
 	private String type = "";
@@ -139,6 +143,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// bt edit
 		imgSubject = (ImageView) findViewById(R.id.imgSubject);
+		
+		//type edit
+		type_edit = (TextView) findViewById(R.id.type_edit);
 
 		// date
 		date = (TextView) findViewById(R.id.date);
@@ -211,10 +218,18 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			int color = Color
 					.parseColor("#" + itemRequest.getType().toString());
 			type = itemRequest.getType().toString();
+			
+			// escreve noc abeçalho que esta em mode editing
+			type_edit.setText("Editing");
+			type_edit.setTextColor(color);
 
 			// change background title
 			bg_title.setBackgroundColor(color);
 
+			// muda o button de edit por um bt de cor
+			imgSubject.setImageResource(R.drawable.bt_edit_color);
+			imgSubject.setVisibility(View.VISIBLE);
+			
 			// formata date
 			String dateFromBase = itemRequest.getDate();
 
@@ -349,9 +364,18 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	public void btBarLeft(final View v) {
 		//
 	}
-
+	
+	// muda cor do item
 	public void btBarRight(final View v) {
-		//
+		if (customMenuDialog == null) { // instancia o menu apenas uma vez
+
+			customMenuDialog = new MenuDialog(this);
+
+		}
+
+		if (!customMenuDialog.isShowing()) {
+			customMenuDialog.show();
+		}
 	}
 
 	public void onBackPressed() { // call my backbutton pressed method when
@@ -368,7 +392,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			public void onClick(View v) {
 
-				showDialog(TIME_DIALOG_ID);
+			//	showDialog(TIME_DIALOG_ID);
 
 			}
 
@@ -378,7 +402,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			public void onClick(View v) {
 
-				showDialog(DATE_DIALOG_ID);
+			//	showDialog(DATE_DIALOG_ID);
 
 			}
 
@@ -471,6 +495,130 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 					}
 				});
 			}
+		}
+
+	}
+	
+	/****************************************************************
+	 * CHANGE COLOR
+	 ****************************************************************/
+	
+	public void changeToColor(String color) {
+		
+		Toast.makeText(this, "Change to color [#"+color+"]", Toast.LENGTH_SHORT).show();
+		
+		// muda cor do item
+		type = color;
+		itemRequest.setType(type);
+		
+		// muda cor da tela
+		// color of item
+		int newcolor = Color
+				.parseColor("#" + itemRequest.getType().toString());
+		
+		type_edit.setTextColor(newcolor);
+		
+		bg_title.setBackgroundColor(newcolor);
+		
+		date.setTextColor(newcolor);
+		
+		hour.setTextColor(newcolor);
+
+		
+		// closed menu for select item
+		customMenuDialog.dismiss();
+		
+	}
+	private MenuDialog customMenuDialog;
+	
+	public void btEditColor(View v) {
+
+		if (customMenuDialog == null) { // instancia o menu apenas uma vez
+
+			customMenuDialog = new MenuDialog(this);
+
+		}
+
+		if (!customMenuDialog.isShowing()) {
+			customMenuDialog.show();
+		}
+
+	}
+
+	private class MenuDialog extends AlertDialog {
+		public MenuDialog(Context context) {
+			super(context);
+
+			View cus_menu = getLayoutInflater().inflate(R.layout.custom_menu,
+					null);
+
+			setView(cus_menu);
+
+		}
+		
+		// lista de cores
+		// 1 - laranja FFA500
+		// 2 - azul claro 45c4ff
+		// 3 - verde claro 39bf2b
+		// 4 - roxo a6a6ed
+		String LARANJA = "FFA500";
+		String AZUL_CLARO = "45c4ff";
+		String VERDE_CLARO = "39bf2b";
+		String ROXO = "a6a6ed";
+		
+		String[] cores = {};
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			
+			LinearLayout layout_menu = (LinearLayout) findViewById(R.id.layout_menu);
+			
+			for (int i = 0; i < 4; i++) {
+				final ImageView imgV = (ImageView) layout_menu.getChildAt(i);
+				imgV.setOnClickListener(new View.OnClickListener() {
+
+					public void onClick(View v) {
+
+						changeToColor(imgV.getTag().toString());
+
+					}
+
+				});
+				
+			}
+
+		}
+
+		/**
+		 * Verifica onde foi o clique do usuario, se foi no menu de item (ok),
+		 * se não (fecha o menu)
+		 */
+		public boolean onTouchEvent(MotionEvent event) {
+
+			// I only care if the event is an UP action
+			if (event.getAction() == MotionEvent.ACTION_UP) {
+
+				// create a rect for storing the window rect
+				Rect r = new Rect(0, 0, 0, 0);
+
+				// retrieve the windows rect
+				this.getWindow().getDecorView().getHitRect(r);
+
+				// check if the event position is inside the window rect
+				boolean intersects = r.contains((int) event.getX(),
+						(int) event.getY());
+
+				// if the event is not inside then we can close the activity
+				if (!intersects) {
+
+					// close the activity
+					customMenuDialog.dismiss();
+
+					// notify that we consumed this event
+					return true;
+				}
+			}
+			// let the system handle the event
+			return super.onTouchEvent(event);
 		}
 
 	}

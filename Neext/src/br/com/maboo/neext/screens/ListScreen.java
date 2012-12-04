@@ -23,7 +23,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.adapters.ListAdapter;
 import br.com.maboo.neext.core.NeextActivity;
@@ -236,6 +235,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		dao.deletar(id);
 	}
 
+	// abre a tela de criação de item com o subject inserido (se houver um)
 	public void createItem(View v) {
 
 		// Cria a intent para abrir a tela de editar
@@ -329,6 +329,11 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 
 	}
+	
+	// bloqueio do bt de menu (Default do android)
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		return false;
+	 }
 
 
 	/******************************************************************************
@@ -348,13 +353,25 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 			String[] menuItems = getResources().getStringArray(R.array.menu);
 
 			for (int i = 0; i < menuItems.length; i++) {
-				menu.add(Menu.NONE, i, i, menuItems[i]);
+				if(i == 0) { // montao bt check ou uncheck
+					if(item.isCheck()) {
+						menu.add(Menu.NONE, i, i, "Uncheck");
+					} else {
+						menu.add(Menu.NONE, i, i, "Check");
+					}
+				} else {
+					menu.add(Menu.NONE, i, i, menuItems[i]);
+				}
 			}
+			
+			//Toast.makeText(this, "item ["+item.toString()+"]", Toast.LENGTH_LONG).show();
+			
 		}
 
 	}
-
-	private static final int CHECK = 0;
+	
+	// botões do menu individual dos itens
+	private static final int CHECK_OR_UNCHECK = 0;
 	private static final int EDIT = 1;
 	private static final int DELETE = 2;
 	public boolean onContextItemSelected(MenuItem item) {
@@ -367,12 +384,11 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		int menuItemIndex = item.getItemId();
 
 		switch (menuItemIndex) {
-		case CHECK:
+		case CHECK_OR_UNCHECK:
 
-			Toast.makeText(this, "check item!", Toast.LENGTH_SHORT).show();
+			checkOrUncheckItem(itemNote);
 			
 			break;
-
 		case EDIT:
 			
 			// Cria a intent para abrir a tela de editar
@@ -400,5 +416,39 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 
 		return true;
 	}
+	
+	/******************************************************************************
+	 * CHECKED AND UNCHECKED
+	 ******************************************************************************/
+	
+	private void checkOrUncheckItem(ItemNote item) {	
+		
+		if(!item.isCheck()) {
+		
+			item.setCheck(true);
+			
+			//Toast.makeText(this, "check item! "+item.getId(), Toast.LENGTH_SHORT).show();
+			
+		} else {
+			
+			item.setCheck(false);
+			
+			//Toast.makeText(this, "uncheck item! "+item.getId(), Toast.LENGTH_SHORT).show();
+			
+		}
+		
+		if (item != null) { 			// É uma atualização (pra não ter erro)
+			item.setId(item.getId());
+		}
+		
+		dao.atualizar(item);
+		
+		// atualiza a lista na tela
+		update();
+		
+		
+	}
+	
+	
 
 }
