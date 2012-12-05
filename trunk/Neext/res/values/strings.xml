@@ -19,6 +19,7 @@
     <string name="m_about">About</string>
     <string name="m_set">Settings</string>
     <string name="m_exit">Exit</string>
+    <string name="m_delete">Delete</string>
 
     <!-- msg -->
     <string name="m_wait">Loading...</string>

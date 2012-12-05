@@ -449,6 +449,10 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		
 	}
 	
+	/******************************************************************************
+	 * CHANGE COLOR
+	 ******************************************************************************/
+	
 	public void changeToColor(String color) {
 		
 		Toast.makeText(this, "Change to color [#"+color+"]", Toast.LENGTH_SHORT).show();
