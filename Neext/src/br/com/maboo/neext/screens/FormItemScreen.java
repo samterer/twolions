@@ -37,7 +37,6 @@ import br.com.maboo.neext.util.EditTextTools;
 /**
  * Activity que utiliza o TableLayout para editar o itemLog
  * 
- * @author rlecheta
  * 
  */
 public class FormItemScreen extends FormItemActivity implements InterfaceBar {
@@ -52,7 +51,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private EditText subject;
 	private EditText text;
 	private String typeColor = "";
+	private boolean check = false;
 	private ImageView imgSubject;
+	private LinearLayout bg_check;
 
 	private static Long id_item;
 
@@ -120,12 +121,15 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				id_item = extras.getLong(ItemNote._ID);
 
-				Log.i(TAG, "searching itemRequest [" + id_item + "]");
+				//Log.i(TAG, "searching itemRequest [" + id_item + "]");
 				itemRequest = ItemModel.buscarItemNote(id_item); // busca
 																	// informações
 																	// do
 				
-				typeColor = Constants.CREATE_DEFAULT_COLOR; // coloco a cor default
+				typeColor = itemRequest.getType(); // coloco a cor default
+				
+				
+				check = itemRequest.isCheck(); // verifica se o item esta check ou uncheck
 				
 			}
 
@@ -193,18 +197,21 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		imgSubject.setImageResource(R.drawable.bt_edit_color);
 		imgSubject.setVisibility(View.VISIBLE);
 		
+		// tela check ou uncheck
+		bg_check = (LinearLayout) findViewById(R.id.bg_check);
+		
 		EditTextTools.insertFontInAllFields(vEditText, tf); // change font
 															// editText
 
 		if (itemRequest != null) { // edit itemRequest?
 
-			Log.i(TAG, "Edição de itemRequest...");
+			//Log.i(TAG, "Edição de itemRequest...");
 
 			loadingEdit();
 
 		} else {// create a new itemRequest?
 
-			Log.i(TAG, "Criação de itemRequest...");
+			//Log.i(TAG, "Criação de itemRequest...");
 
 		}
 
@@ -274,7 +281,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				}
 
-				Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
+				//Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
 
 				sb.append(dateFromBase.charAt(i));
 			}
@@ -284,6 +291,13 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			// text
 			text.setText(String.valueOf((itemRequest.getText())));
+			
+			//screen check ou uncheck
+			if(check) {
+				bg_check.setVisibility(View.VISIBLE);
+			} else {
+				bg_check.setVisibility(View.INVISIBLE);
+			}
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -325,9 +339,12 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// text
 		itemLog4Save.setText(text.getText().toString());
+		
+		//check ou uncheck
+		itemLog4Save.setCheck(check);
 
 		// Salvar
-		Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
+		//Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
 		ItemModel.salvarItemNote(itemLog4Save);
 
 		Intent it = new Intent(this, ViewItemScreen.class);
@@ -370,9 +387,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	public void btBarRight(final View v) {
 		
 		if (customMenuDialog == null) { // instancia o menu apenas uma vez
-
 			customMenuDialog = new MenuDialog(this);
-
 		}
 
 		if (!customMenuDialog.isShowing()) {
