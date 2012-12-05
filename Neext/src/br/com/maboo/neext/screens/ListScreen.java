@@ -149,8 +149,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 
 		listview_log.setAdapter(new ListAdapter(this, itens));
 
-		effect(); // efeito alpha
-		
+		//effect(); // efeito alpha
 		
 		listview_log.setOnItemClickListener(this);
 

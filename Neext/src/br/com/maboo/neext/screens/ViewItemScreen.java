@@ -390,11 +390,20 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		itemRequest.setCheck(!itemRequest.isCheck());
 
+		if (menu != null) {
+			String titleCheck = "Check";
+			if (itemRequest.isCheck()) {
+				titleCheck = "Uncheck";
+			} else {
+				titleCheck = "Check";
+			}
+			menu.findItem(R.id.check).setTitle(titleCheck);
+		}
 
 		if (itemRequest != null) { // É uma atualização (pra não ter erro)
 			itemRequest.setId(itemRequest.getId());
 		}
-		
+
 		ListScreen.dao.atualizar(itemRequest); // atualiza item
 
 		init(); // atualiza a view
@@ -405,12 +414,23 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	 * MENU
 	 ******************************************************************************/
 
+	Menu menu;
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		MenuInflater inflater = getMenuInflater();
 
 		inflater.inflate(R.menu.menu_inf, menu);
 
+		String titleCheck = "Check";
+		if (itemRequest.isCheck()) {
+			titleCheck = "Uncheck";
+		} else {
+			titleCheck = "Check";
+		}
+		menu.findItem(R.id.check).setTitle(titleCheck);
+		
+		this.menu = menu;
+		
 		return true;
 	}
 
