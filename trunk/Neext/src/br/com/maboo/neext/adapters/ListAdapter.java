@@ -30,7 +30,7 @@ public class ListAdapter extends BaseAdapter {
 
 	public ListAdapter(Activity context, List<ItemNote> itens) {
 
-		Log.i(TAG, "ListAdapter...");
+		Log.i(TAG, "ListAdapter....");
 
 		this.itens = itens;
 
