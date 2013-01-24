@@ -85,7 +85,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		listenerText();
 
-		addListenerOnButton();
+		//addListenerOnButton();
 	}
 
 	/******************************************************************************
@@ -321,6 +321,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			// É uma atualização
 			itemLog4Save.setId(id_item);
 		} else {
+			// cria novo item
 			id_item = (long) -999;
 		}
 
@@ -403,14 +404,17 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		super.onBackPressed(); // boolean==true
 
 	}
-
-	public void addListenerOnButton() {
+	
+	/**
+	 * Altera hora e data
+	 */
+/*	public void addListenerOnButton() {
 
 		hour.setOnClickListener(new OnClickListener() { // change hour
 
 			public void onClick(View v) {
 
-			//	showDialog(TIME_DIALOG_ID);
+			showDialog(TIME_DIALOG_ID);
 
 			}
 
@@ -420,7 +424,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			public void onClick(View v) {
 
-			//	showDialog(DATE_DIALOG_ID);
+			showDialog(DATE_DIALOG_ID);
 
 			}
 
@@ -428,6 +432,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	}
 
+	
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case TIME_DIALOG_ID:
@@ -471,7 +476,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		}
 	};
-
+*/
 	/****************************************************************
 	 * EDIT ITEM_TEXT
 	 ****************************************************************/
@@ -575,7 +580,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 					public void onClick(View v) {
 
-							changeToColor(imgV.getTag().toString());	
+							changeToColor(imgV.getTag().toString().substring(1, imgV.getTag().toString().length()));	
 
 					}
 

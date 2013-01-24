@@ -6,7 +6,7 @@ public class Constants {
 	public static final String AUTHORITY = "br.com.maboo.neext";
 
 	// version of current data base
-	public static final int DB_VERSION = 2;
+	public static final int DB_VERSION = 3;
 
 	// db
 	public static final String DB_NAME = "bd_neext";
@@ -26,8 +26,8 @@ public class Constants {
 	public static final int EDITAR = 2;
 	public static final int VIEW = 3;
 	
-	// cor padrao do botão de create
-	public static final String CREATE_DEFAULT_COLOR = "39bf2b";
+	// cor padrao do item, quando criado pelo botão de create na ListScreen
+	public static final String CREATE_DEFAULT_COLOR = "007fc1";
 	
 	// cores padrões
 

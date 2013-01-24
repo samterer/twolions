@@ -13,21 +13,21 @@
         android:text=""
         android:layout_marginLeft="15dp"
           android:textColor="@color/branco"
-        android:textSize="14dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         android:typeface="monospace" />
 
     <TextView
         android:id="@+id/date"
-        android:layout_width="100dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:onClick="showTimePickerDialog"
         android:scaleType="centerInside"
-         android:layout_marginLeft="85dp"
+         android:layout_marginLeft="75dp"
         android:text="22/12/2012"
         android:textColor="@color/branco"
-        android:textSize="14dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         android:typeface="monospace" />
 
@@ -40,7 +40,7 @@
         android:scaleType="centerInside"
         android:text="09:45"
         android:textColor="@color/branco"
-        android:textSize="14dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         android:typeface="monospace" />
 
