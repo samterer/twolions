@@ -11,35 +11,35 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#FFA500"
+        android:background="@color/laranja_note"
         android:src="@drawable/boxe"
-        android:tag="FFA500" />
+        android:tag="@color/laranja_note" />
 
     <ImageView
         android:id="@+id/btAzulClaro"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#45c4ff"
+        android:background="@color/rosa_note"
         android:src="@drawable/boxe"
-        android:tag="45c4ff" />
+        android:tag="@color/rosa_note" />
 
     <ImageView
         android:id="@+id/btRoxo"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#a6a6ed"
+        android:background="@color/azul_note"
         android:src="@drawable/boxe"
-        android:tag="a6a6ed" />
+        android:tag="@color/azul_note" />
 
     <ImageView
         android:id="@+id/btVerdeClaro"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#39bf2b"
+        android:background="@color/vermelho_note"
         android:src="@drawable/boxe"
-        android:tag="39bf2b" />
+        android:tag="@color/vermelho_note" />
 
 </LinearLayout>

@@ -25,7 +25,7 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="texto14branco">
+    <style name="texto14Branco">
         <item name="android:textColor">@color/branco</item>
         <item name="android:textSize">14sp</item>
     </style>
@@ -44,10 +44,25 @@
         <item name="android:textColor">@color/cinza_dark</item>
         <item name="android:textSize">16sp</item>
     </style>
+    
+     <style name="texto16Branco">
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 
     <style name="texto16cinzaDarkNegrito" parent="texto16cinzaDark">
         <item name="android:textStyle">bold</item>
     </style>
+    
+    <!-- Texto com Fonte 18 -->
+    <style name="texto18Branco">
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="texto18BrancoNegrito" parent="texto18Branco">
+        <item name="android:textStyle">bold</item>
+    </style>    
 
     <!-- Texto com Fonte 20 -->
     <style name="texto20">
@@ -55,13 +70,29 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+      <style name="texto20Branco">
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    
     <style name="texto20pretoNegrito" parent="texto20">
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Texto com Fonte 24 -->
+    <style name="texto24Branco">
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+    
     <!-- Texto com Fonte 28 -->
     <style name="texto28">
         <item name="android:textColor">@color/preto</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+    
+    <style name="texto28Branco">
+        <item name="android:textColor">@color/branco</item>
         <item name="android:textSize">28sp</item>
     </style>
 

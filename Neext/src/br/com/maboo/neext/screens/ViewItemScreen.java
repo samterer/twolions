@@ -261,6 +261,8 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 			// subject
 			subject.setText(String.valueOf((itemRequest.getSubject())));
+			subject.setTextColor(Color.parseColor("#"
+					+ "ffffff"));
 			subject.setFocusable(false);
 
 			// text

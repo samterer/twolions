@@ -70,7 +70,7 @@ public class ListAdapter extends BaseAdapter {
 			view.setTag(holder); // seta a tag
 			view.setId(position);
 
-			holder.rl = (RelativeLayout) view.findViewById(R.id.r_item_log);
+			holder.bgItem = (RelativeLayout) view.findViewById(R.id.r_item_log);
 
 			holder.imgLeftCenter = (ImageView) view
 					.findViewById(R.id.imgLeftCenter);
@@ -102,17 +102,21 @@ public class ListAdapter extends BaseAdapter {
 		
 		// verifica se o item esta check ou uncheck
 		if(itemRequest.isCheck()) {
-			holder.rl.setBackgroundColor(view.getResources().getColor(R.color.cinza_coob_c));
+			holder.bgItem.setBackgroundColor(view.getResources().getColor(R.color.cinza_coob_c));
 			// change img
 			holder.imgLeftCenter.setImageResource(R.drawable.boxe_check);
 		} else {
-			holder.rl.setBackgroundColor(view.getResources().getColor(R.color.pastel));
+			holder.bgItem.setBackgroundColor(view.getResources().getColor(R.color.pastel));
 			// change img
 			holder.imgLeftCenter.setImageResource(R.drawable.boxe);
 		}
 
 		// set background in image
 		holder.imgLeftCenter.setBackgroundColor(Color.parseColor("#"
+				+ holder.type.toString()));
+		
+		//set background no fundo do item
+		holder.bgItem.setBackgroundColor(Color.parseColor("#"
 				+ holder.type.toString()));
 
 		// subject
@@ -123,7 +127,7 @@ public class ListAdapter extends BaseAdapter {
 			for (int i = 0; i < 10; i++) {
 				sb.append(itemRequest.getSubject().toString().charAt(i));
 			}
-			holder.subject.setText(sb.toString() + "...");
+			holder.subject.setText(sb.toString() + "[...]");
 		} else {
 			holder.subject.setText(String.valueOf(itemRequest.getSubject()));
 		}
@@ -174,7 +178,7 @@ public class ListAdapter extends BaseAdapter {
 	// Design Patter "ViewHolder" para Android
 	class ViewHolder {
 		ImageView imgLeftCenter;
-		RelativeLayout rl;
+		RelativeLayout bgItem;
 		String type;
 		TextView date;
 		TextView hour;

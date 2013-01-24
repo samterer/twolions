@@ -38,19 +38,19 @@ public class SqlScript extends DBConnection {
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('a6a6ed','25/12/2012-20:30','teste1','testando testando','false','25/12/2012-20:30');",
+					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('ec7700','25/12/2012-20:30','teste1','testando testando','false','25/12/2012-20:30');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('c7eb78','25/12/2012-21:30','teste2','testando testando','false','25/12/2012-20:30');",
+					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('c10088','25/12/2012-21:30','teste2','testando testando','false','25/12/2012-20:30');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('a5f5a5','25/11/2012-22:30','teste3','testando testando','true','25/12/2012-20:30');",
+					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('007fc1','25/11/2012-22:30','teste3','testando testando','true','25/12/2012-20:30');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('FFA500','25/11/2012-23:30','teste4','testando testando','false','25/12/2012-20:30');" };
+					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('ec0000','25/11/2012-23:30','teste4','testando testando','false','25/12/2012-20:30');" };
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(final Context ctx) {
