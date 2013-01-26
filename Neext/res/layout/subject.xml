@@ -12,7 +12,7 @@
         android:layout_height="75dp"
         android:layout_gravity="center"
         android:layout_weight="5"
-        android:maxLength="20"
+        android:maxLength="18"
         android:tag="subject"
         android:textColor="@color/preto"
         android:textSize="28dp"
