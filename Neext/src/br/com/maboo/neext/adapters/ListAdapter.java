@@ -112,8 +112,11 @@ public class ListAdapter extends BaseAdapter {
 		}
 
 		// set background in image
-		holder.imgLeftCenter.setBackgroundColor(Color.parseColor("#"
-				+ holder.type.toString()));
+		if(holder.type.toString().charAt(0) != '#') { // verifica se já possui o #, se sim, não insere de novo
+			holder.imgLeftCenter.setBackgroundColor(Color.parseColor("#"+ holder.type.toString()));	
+		} else {
+			holder.imgLeftCenter.setBackgroundColor(Color.parseColor(holder.type.toString()));	
+		}
 		
 		//set background no fundo do item
 		holder.bgItem.setBackgroundColor(Color.parseColor("#"

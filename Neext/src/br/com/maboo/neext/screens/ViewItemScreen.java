@@ -127,8 +127,15 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			Typeface tf = Typeface.createFromAsset(getAssets(),
 					"fonts/DroidSansFallback.ttf"); // modifica as fontes
 
-			// change background of item
-			int color = Color.parseColor("#" + typeColor.toString());
+			// change background of item	
+			String parseColor = "";
+			if(typeColor.toString().charAt(0) != '#') { // verifica se já possui o #
+				parseColor = "#" + typeColor.toString();
+			} else {
+				parseColor = typeColor.toString();
+			}
+			
+			int color = Color.parseColor(parseColor);
 
 			// change background title
 			bg_title = (LinearLayout) findViewById(R.id.bg_title);

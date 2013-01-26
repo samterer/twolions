@@ -111,11 +111,16 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				// verifica se o usuario já passou um subject
 				id_item = null;
+				if (extras.getString("subj") != null) {
+					subj = extras.getString("subj");
+				}
 
-				subj = extras.getString("subj");
-				
 				// recebe a color definida pelo usuario
-				typeColor = extras.getString("color");
+				if (extras.getString("color") != null) {
+					typeColor = extras.getString("color");
+				} else {
+					typeColor = Constants.CREATE_DEFAULT_COLOR;
+				}
 
 			} else if (task == Constants.EDITAR) { // edit itemRequest
 
