@@ -66,29 +66,4 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/tb_edicao"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|center_vertical"
-        android:gravity="center|center_vertical"
-        android:visibility="gone" >
-
-        <ImageView
-            android:id="@+id/bt_edit"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:onClick="editItem"
-            android:src="@drawable/bt_edit" />
-
-        <ImageView
-            android:id="@+id/bt_delete"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:onClick="deleteConConfirm"
-            android:src="@drawable/bt_delete" />
-    </LinearLayout>
-
 </FrameLayout>
