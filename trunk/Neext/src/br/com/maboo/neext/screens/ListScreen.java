@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -23,10 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.adapters.ListAdapter;
 import br.com.maboo.neext.core.NeextActivity;
@@ -53,7 +48,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	private Long id_item;
 	private String typeColor = Constants.CREATE_DEFAULT_COLOR;
 	
-	private MenuDialog customMenuDialog; // menu de cores
+	//private MenuDialog customMenuDialog; // menu de cores
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -252,13 +247,13 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		it.putExtra("T_KEY", T_KEY);
 
 		// passa o subject pré inserido pelo usuario
-		EditText add_subject = (EditText) findViewById(R.id.add_subject);
-		String subj = add_subject.getText().toString();
+		//EditText add_subject = (EditText) findViewById(R.id.add_subject);
+		//String subj = add_subject.getText().toString();
 
-		it.putExtra("subj", subj);
+		//it.putExtra("subj", subj);
 		
 		// passa a color do item definida pelo usuario		
-		it.putExtra("color", typeColor);
+		//it.putExtra("color", typeColor);
 
 		// Abre a tela de edição
 		startActivityForResult(it, T_KEY);
@@ -316,8 +311,8 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	public void organizeBt() {
 
 		// bt rigt
-		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
-		bt_right.setImageResource(R.drawable.bt_about);
+		//final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
+		//bt_right.setImageResource(R.drawable.bt_about);
 
 		registerForContextMenu(listview_log);
 	}
@@ -451,7 +446,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	/******************************************************************************
 	 * CHANGE COLOR
 	 ******************************************************************************/
-	
+	/*
 	public void changeToColor(String color) {
 		
 		Toast.makeText(this, "Change to color [#"+color+"]", Toast.LENGTH_SHORT).show();
@@ -471,7 +466,6 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		customMenuDialog.dismiss();
 		
 	}
-	
 	
 	public void btEditColor(View v) {
 
@@ -527,7 +521,6 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		/**
 		 * Verifica onde foi o clique do usuario, se foi no menu de item (ok),
 		 * se não (fecha o menu)
-		 */
 		public boolean onTouchEvent(MotionEvent event) {
 
 			// I only care if the event is an UP action
@@ -558,7 +551,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		}
 
 	}
-	
+	*/
 	
 
 }
