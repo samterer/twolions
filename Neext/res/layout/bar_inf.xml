@@ -3,18 +3,14 @@
     android:id="@+id/layout_add_subject"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:background="@color/transparente"
-    android:gravity="right"
-    android:paddingBottom="5dp"
-    android:paddingLeft="5dp"
-    android:paddingTop="4dp" >
+    android:background="@color/transparente">
 
     <ImageView
         android:id="@+id/bt_add"
         android:layout_width="wrap_content"
         android:layout_height="54dp"
         android:layout_gravity="right"
+        android:paddingLeft="200dp"
         android:onClick="createItem"
         android:src="@drawable/bt_add" />
 

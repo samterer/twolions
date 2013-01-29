@@ -13,24 +13,22 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" 
+        android:layout_height="fill_parent"
         android:paddingTop="20dp" >
 
         <RelativeLayout
             android:id="@+id/r_item_log"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
-
-            <ImageView
+            <ImageView
                 android:id="@+id/imgLeftCenter"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="-40dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
-                android:src="@drawable/boxe"
-                android:visibility="invisible" />
+                android:src="@drawable/boxe" />
 
             <TextView
                 android:id="@+id/date"
@@ -50,8 +48,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:paddingBottom="20dp"
                 android:layout_marginRight="10dp"
+                android:paddingBottom="20dp"
                 android:text="TextView" />
 
             <TextView

@@ -100,27 +100,24 @@ public class ListAdapter extends BaseAdapter {
 			}
 		}
 		
+		holder.imgLeftCenter.setImageResource(R.drawable.boxe);
+		
 		// verifica se o item esta check ou uncheck
 		if(itemRequest.isCheck()) {
-			holder.bgItem.setBackgroundColor(view.getResources().getColor(R.color.cinza_coob_c));
-			// change img
+			// image check
 			holder.imgLeftCenter.setImageResource(R.drawable.boxe_check);
-		} else {
-			holder.bgItem.setBackgroundColor(view.getResources().getColor(R.color.pastel));
-			// change img
-			holder.imgLeftCenter.setImageResource(R.drawable.boxe);
+		}
+		
+		//color type
+		if(holder.type.toString().charAt(0) != '#') {
+			holder.type = "#" + holder.type;
 		}
 
 		// set background in image
-		if(holder.type.toString().charAt(0) != '#') { // verifica se já possui o #, se sim, não insere de novo
-			holder.imgLeftCenter.setBackgroundColor(Color.parseColor("#"+ holder.type.toString()));	
-		} else {
-			holder.imgLeftCenter.setBackgroundColor(Color.parseColor(holder.type.toString()));	
-		}
+		//holder.imgLeftCenter.setBackgroundColor(Color.parseColor(holder.type.toString()));	
 		
 		//set background no fundo do item
-		holder.bgItem.setBackgroundColor(Color.parseColor("#"
-				+ holder.type.toString()));
+		holder.bgItem.setBackgroundColor(Color.parseColor(holder.type.toString()));
 
 		// subject
 		// verifica se o subject é muito grande, se for, coloca reticencias no

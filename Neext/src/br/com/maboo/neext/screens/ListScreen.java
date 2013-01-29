@@ -253,7 +253,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		//it.putExtra("subj", subj);
 		
 		// passa a color do item definida pelo usuario		
-		//it.putExtra("color", typeColor);
+		it.putExtra("color", typeColor);
 
 		// Abre a tela de edição
 		startActivityForResult(it, T_KEY);

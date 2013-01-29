@@ -13,6 +13,7 @@
         android:gravity="top"
         android:lines="14"
         android:tag="text"
+        android:hint="insert a text"
         android:width="240dp" />
 
 </LinearLayout>
