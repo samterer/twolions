@@ -118,8 +118,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				// recebe a color definida pelo usuario
 				if (extras.getString("color") != null) {
 					typeColor = extras.getString("color");
-				} else {
-					typeColor = Constants.CREATE_DEFAULT_COLOR;
 				}
 
 			} else if (task == Constants.EDITAR) { // edit itemRequest
@@ -131,7 +129,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 																	// informações
 																	// do
 				
-				typeColor = itemRequest.getType(); // coloco a cor default
+				typeColor = itemRequest.getType(); // coloco a cor do item (pq ela já existe no banco)
 				
 				
 				check = itemRequest.isCheck(); // verifica se o item esta check ou uncheck
@@ -145,9 +143,15 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// calendar
 		final Calendar c = Calendar.getInstance();
+		
+		
+		//color type
+		if(typeColor.toString().charAt(0) != '#') {
+			typeColor = "#" + typeColor;
+		}
 
 		// color of item
-		int color = Color.parseColor("#" + typeColor.toString());
+		int color = Color.parseColor(typeColor);
 
 		// title
 		bg_title = (LinearLayout) findViewById(R.id.bg_title);
@@ -230,10 +234,16 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// }
 
 		try {
+			
+			//color type
+			if(itemRequest.getType().toString().charAt(0) != '#') {
+				itemRequest.setType("#" + itemRequest.getType());
+			}
 
 			// color of item
 			int color = Color
-					.parseColor("#" + itemRequest.getType().toString());
+					.parseColor(itemRequest.getType().toString());
+			
 			typeColor = itemRequest.getType().toString();
 			
 			// escreve noc abeçalho que esta em mode editing

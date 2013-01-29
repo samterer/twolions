@@ -16,6 +16,7 @@
         android:tag="subject"
         android:textColor="@color/preto"
         android:textSize="28dp"
+        android:hint="insert a subject"
         android:typeface="monospace" />
 
     <View

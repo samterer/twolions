@@ -27,8 +27,10 @@
 
     <!-- cores paleta notificações -->
     <color name="laranja_note">#ec7700</color>
-    <color name="rosa_note">#c10088</color>
+    <color name="roxo_note">#c10088</color>
     <color name="azul_note">#007fc1</color>
     <color name="vermelho_note">#ec0000</color>
+    <color name="verde_note">#00c112</color>
+    
 
 </resources>

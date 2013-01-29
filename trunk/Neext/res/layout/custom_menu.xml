@@ -11,18 +11,18 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/laranja_note"
+        android:background="@color/verde_note"
         android:src="@drawable/boxe"
-        android:tag="@color/laranja_note" />
+        android:tag="@color/verde_note" />
 
     <ImageView
         android:id="@+id/btAzulClaro"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/rosa_note"
+        android:background="@color/roxo_note"
         android:src="@drawable/boxe"
-        android:tag="@color/rosa_note" />
+        android:tag="@color/roxo_note" />
 
     <ImageView
         android:id="@+id/btRoxo"
