@@ -100,7 +100,7 @@ public class ListAdapter extends BaseAdapter {
 			}
 		}
 		
-		holder.imgLeftCenter.setImageResource(R.drawable.boxe);
+		holder.imgLeftCenter.setImageResource(R.drawable.boxe_check); // esta como box check para alinhar os itens
 		
 		// verifica se o item esta check ou uncheck
 		if(itemRequest.isCheck()) {

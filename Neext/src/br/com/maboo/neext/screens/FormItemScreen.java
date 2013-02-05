@@ -4,9 +4,6 @@ import java.util.Calendar;
 import java.util.Vector;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,13 +15,10 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.core.FormItemActivity;
@@ -330,38 +324,72 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		if (subject.getText().toString().length() < 1) {
 			return;
 		}
+		
+		int cont = 0; // se esse valor for maior que zero o item sera atualizado\criado
 
-		ItemNote itemLog4Save = new ItemNote();
+		ItemNote i4s = new ItemNote();
 		if (id_item != null) {
 			// É uma atualização
-			itemLog4Save.setId(id_item);
+			i4s.setId(id_item);
 		} else {
 			// cria novo item
 			id_item = (long) -999;
+			cont++; // confirma que o item será salvo
+		}
+		
+		// verifica se o usuario alterou algum dado, 
+		// se nenhum dado foi alterado não atualiza o item
+		if (id_item != -999) {
+
+			// recupera o i4s do dado
+
+			// color
+			if (!itemRequest.getType().equals(typeColor.toString())) {
+				cont++;
+			}
+			// subject
+			if (!itemRequest.getSubject().equals(subject.getText().toString())) {
+				cont++;
+			}
+			// text
+			if (!itemRequest.getText().equals(text.getText().toString())) {
+				cont++;
+			}
+			// check
+			if (!itemRequest.isCheck() == check) {
+				cont++;
+			}
+
 		}
 
 		// typeColor
-		itemLog4Save.setType(typeColor.toString());
+		i4s.setType(typeColor.toString());
 
 		// hour and date
 		// get date for save
 		StringBuffer sbDate = new StringBuffer();
 		sbDate.append(date.getText().toString() + "-" + hour.getText());
 
-		itemLog4Save.setDate(sbDate.toString());
+		i4s.setDate(sbDate.toString());
 
 		// subject
-		itemLog4Save.setSubject(subject.getText().toString());
+		i4s.setSubject(subject.getText().toString());
 
 		// text
-		itemLog4Save.setText(text.getText().toString());
+		i4s.setText(text.getText().toString());
 		
 		//check ou uncheck
-		itemLog4Save.setCheck(check);
+		i4s.setCheck(check);
 
 		// Salvar
-		//Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
-		ItemModel.salvarItemNote(itemLog4Save);
+		
+		if(cont > 0) { // confirma se o item vai realmente ser atualizado
+			//Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
+			ItemModel.salvarItemNote(i4s);	
+			
+			Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+			
+		}
 
 		Intent it = new Intent(this, ViewItemScreen.class);
 
@@ -370,8 +398,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// OK
 		startActivity(it);
-
-		Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
@@ -543,7 +569,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	
 	public void changeToColor(String color) {
 		
-		Toast.makeText(this, "Change to color [#"+color+"]", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "Change to color [#"+color+"]", Toast.LENGTH_SHORT).show();
 		
 		// muda cor do item
 		typeColor = color;

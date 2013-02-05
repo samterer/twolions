@@ -33,10 +33,10 @@ public class ItemNoteDAO extends DBConnection {
 	public long salvar(final ItemNote itemLog) {
 		long id = itemLog.getId();
 
-		if (id != 0) {
+		if (id > 0) {
 			atualizar(itemLog);
 		} else {
-			// Insere novo
+			// Insere novo - itens novos possuem o id -999
 			id = inserir(itemLog);
 		}
 
