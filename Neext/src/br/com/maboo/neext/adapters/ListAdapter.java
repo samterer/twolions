@@ -17,6 +17,7 @@ import android.widget.TextView;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.util.Constants;
+import br.com.maboo.neext.util.LinedTextView;
 
 public class ListAdapter extends BaseAdapter {
 
@@ -77,7 +78,7 @@ public class ListAdapter extends BaseAdapter {
 
 			holder.type = itemRequest.getType();
 
-			holder.subject = (TextView) view.findViewById(R.id.subject);
+			holder.subject = (LinedTextView) view.findViewById(R.id.subject);
 			holder.subject.setTypeface(tf);
 
 			holder.date = (TextView) view.findViewById(R.id.date);
@@ -106,6 +107,10 @@ public class ListAdapter extends BaseAdapter {
 		if(itemRequest.isCheck()) {
 			// image check
 			holder.imgLeftCenter.setImageResource(R.drawable.boxe_check);
+			
+			// cria a linha no meio do item
+			holder.subject.check();
+			
 		}
 		
 		//color type
@@ -182,6 +187,6 @@ public class ListAdapter extends BaseAdapter {
 		String type;
 		TextView date;
 		TextView hour;
-		TextView subject;
+		LinedTextView subject;
 	}
 }

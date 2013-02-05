@@ -151,16 +151,14 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 			// subject
 			subject = (EditText) findViewById(R.id.subject);
-
 			vEditText.add(subject);
 
 			// text
 			text = (EditText) findViewById(R.id.text);
-
+			vEditText.add(text);
+			
 			// tela check ou uncheck
 			bg_check = (LinearLayout) findViewById(R.id.bg_check);
-
-			vEditText.add(text);
 
 			EditTextTools.insertFontInAllFields(vEditText, tf); // change font
 																// editText

@@ -161,7 +161,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// date
 		date = (TextView) findViewById(R.id.date);
 		day_time = c.get(Calendar.DAY_OF_MONTH);
-		month_time = c.get(Calendar.MONTH);
+		month_time = c.get(Calendar.MONTH) + 1; // para que não aja o mês 00, muito obrigado java
 		year_time = c.get(Calendar.YEAR);
 
 		date.setText(new StringBuilder().append(pad(day_time)).append("/")
@@ -181,7 +181,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// subject
 		subject = (EditText) findViewById(R.id.subject);
-		subject.setTypeface(tf);
+		//subject.setTypeface(tf);
 
 		// insert subject if id_item = null;
 		if (id_item == null) {
@@ -192,7 +192,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// text
 		text = (EditText) findViewById(R.id.text);
-		text.setTypeface(tf);
+		//text.setTypeface(tf);
 
 		vEditText.add(text);
 		

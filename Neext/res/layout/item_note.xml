@@ -53,7 +53,8 @@
                 android:paddingBottom="20dp"
                 android:text="TextView" />
 
-            <TextView
+            <view
+                class="br.com.maboo.neext.util.LinedTextView"
                 android:id="@+id/subject"
                 style="@style/texto28Branco"
                 android:layout_width="wrap_content"
