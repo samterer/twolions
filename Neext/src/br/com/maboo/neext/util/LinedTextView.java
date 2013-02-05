@@ -1,66 +1,54 @@
 package br.com.maboo.neext.util;
 
-import br.com.maboo.neext.R.color;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.widget.TextView;
+import br.com.maboo.neext.R;
 
-public class LinedTextView extends TextView {
+public class LinedTextView extends TextView
+{
+    private int dividerColor;
+    private Paint paint;
+    
+    private boolean check = false;
 
-	private Rect mRect;
-	private Paint mPaint;
-	private boolean check = false;
+    public LinedTextView(Context context)
+    {
+        super(context);
+        init(context);
+    }
 
-	public LinedTextView(Context context) {
-		super(context);
-	
-		mRect = new Rect();
-		mPaint = new Paint();
-		mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-		mPaint.setColor(Color.WHITE); // SET YOUR OWN COLOR HERE
+    public LinedTextView(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+        init(context);
+    }
 
-	}
+    public LinedTextView(Context context, AttributeSet attrs, int defStyle)
+    {
+        super(context, attrs, defStyle);
+        init(context);
+    }
 
-	protected void onDraw(Canvas canvas) {
-		
-		if(check) {
-			//Rect r = mRect;
-			//Paint paint = mPaint;
+    private void init(Context context)
+    {
+        Resources resources = context.getResources();
+        //replace with your color
+        dividerColor = resources.getColor(R.color.branco);
 
-			//int baseline = getLineBounds(0, r);// line
-			canvas.drawLine(mRect.exactCenterY(), 0, mRect.right,0, mPaint);	
-			//canvas.drawColor(color.amarelo);
-		} else {
-			//canvas.drawColor(color.transparente);
-		}
+        paint = new Paint();
+        paint.setColor(dividerColor);
+        //replace with your desired width
+        paint.setStrokeWidth(resources.getDimension(getWidth()));
+    }
 
-		super.onDraw(canvas);
-	}
-
-	public LinedTextView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-
-	}
-
-	public LinedTextView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-
-	}
-	
-	public void check() {
-		if(!check) {
-			this.check = true;
-		}
-	}
-	
-	public void unCheck() {
-		if(check) {
-			this.check = false;
-		}
-	}
-
+    @Override
+    protected void onDraw(Canvas canvas)
+    {
+        super.onDraw(canvas);
+        canvas.drawLine(0, getHeight(), getWidth(), 0, paint);
+    }
 }

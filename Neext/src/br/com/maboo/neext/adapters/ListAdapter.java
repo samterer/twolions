@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +18,6 @@ import android.widget.TextView;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.util.Constants;
-import br.com.maboo.neext.util.LinedTextView;
 
 public class ListAdapter extends BaseAdapter {
 
@@ -71,6 +71,10 @@ public class ListAdapter extends BaseAdapter {
 			view.setTag(holder); // seta a tag
 			view.setId(position);
 
+			//check
+			holder.check = itemRequest.isCheck();
+			
+			
 			holder.bgItem = (RelativeLayout) view.findViewById(R.id.r_item_log);
 
 			holder.imgLeftCenter = (ImageView) view
@@ -78,7 +82,7 @@ public class ListAdapter extends BaseAdapter {
 
 			holder.type = itemRequest.getType();
 
-			holder.subject = (LinedTextView) view.findViewById(R.id.subject);
+			holder.subject = (TextView) view.findViewById(R.id.subject);
 			holder.subject.setTypeface(tf);
 
 			holder.date = (TextView) view.findViewById(R.id.date);
@@ -86,7 +90,7 @@ public class ListAdapter extends BaseAdapter {
 
 			holder.hour = (TextView) view.findViewById(R.id.hour);
 			holder.hour.setTypeface(tf);
-
+			
 		} else {
 
 			// Ja existe no cache, bingo entao pega!
@@ -101,15 +105,13 @@ public class ListAdapter extends BaseAdapter {
 			}
 		}
 		
-		holder.imgLeftCenter.setImageResource(R.drawable.boxe_check); // esta como box check para alinhar os itens
+		holder.imgLeftCenter.setImageResource(R.drawable.boxe_check); // esta como box check para alinhar os itens (a imagem alinha os itens)
 		
 		// verifica se o item esta check ou uncheck
-		if(itemRequest.isCheck()) {
-			// image check
-			holder.imgLeftCenter.setImageResource(R.drawable.boxe_check);
+		if(holder.check == true) {
 			
 			// cria a linha no meio do item
-			holder.subject.check();
+			holder.subject.setPaintFlags(holder.subject.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 			
 		}
 		
@@ -117,9 +119,6 @@ public class ListAdapter extends BaseAdapter {
 		if(holder.type.toString().charAt(0) != '#') {
 			holder.type = "#" + holder.type;
 		}
-
-		// set background in image
-		//holder.imgLeftCenter.setBackgroundColor(Color.parseColor(holder.type.toString()));	
 		
 		//set background no fundo do item
 		holder.bgItem.setBackgroundColor(Color.parseColor(holder.type.toString()));
@@ -187,6 +186,7 @@ public class ListAdapter extends BaseAdapter {
 		String type;
 		TextView date;
 		TextView hour;
-		LinedTextView subject;
+		TextView subject;
+		boolean check;
 	}
 }
