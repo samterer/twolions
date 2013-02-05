@@ -6,7 +6,7 @@ public class Constants {
 	public static final String AUTHORITY = "br.com.maboo.neext";
 
 	// version of current data base
-	public static final int DB_VERSION = 1; // se mudar a versão aqui ele reseta o banco
+	public static final int DB_VERSION = 3; // se mudar a versão aqui ele reseta o banco
 
 	// db
 	public static final String DB_NAME = "bd_neext";
