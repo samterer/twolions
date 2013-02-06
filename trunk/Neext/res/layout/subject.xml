@@ -15,7 +15,7 @@
         android:maxLength="18"
         android:tag="subject"
         android:textColor="@color/preto"
-        android:textSize="28dp"
+        android:textSize="25dp"
         android:hint="insert a subject"
         android:typeface="monospace" />
 
@@ -26,11 +26,11 @@
 
     <ImageView
         android:id="@+id/imgSubject"
-        android:layout_width="66dp"
-        android:layout_height="56dp"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:onClick="btBarRight"
-        android:src="@drawable/bt_edit" />
+        android:src="@drawable/bt_edit_off" />
 
 </LinearLayout>

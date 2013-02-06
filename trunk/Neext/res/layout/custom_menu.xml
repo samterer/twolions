@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@color/verde_note"
-        android:src="@drawable/boxe"
+        android:src="@drawable/bt_edit_color"
         android:tag="@color/verde_note" />
 
     <ImageView
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@color/roxo_note"
-        android:src="@drawable/boxe"
+        android:src="@drawable/bt_edit_color"
         android:tag="@color/roxo_note" />
 
     <ImageView
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@color/azul_note"
-        android:src="@drawable/boxe"
+        android:src="@drawable/bt_edit_color"
         android:tag="@color/azul_note" />
 
     <ImageView
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@color/vermelho_note"
-        android:src="@drawable/boxe"
+        android:src="@drawable/bt_edit_color"
         android:tag="@color/vermelho_note" />
 
 </LinearLayout>

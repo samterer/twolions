@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -201,7 +202,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		imgSubject.setVisibility(View.VISIBLE);
 		
 		// tela check ou uncheck
-		bg_check = (LinearLayout) findViewById(R.id.bg_check);
+		//bg_check = (LinearLayout) findViewById(R.id.bg_check);
 		
 		EditTextTools.insertFontInAllFields(vEditText, tf); // change font
 															// editText
@@ -303,9 +304,13 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			
 			//screen check ou uncheck
 			if(check) {
-				bg_check.setVisibility(View.VISIBLE);
+				//bg_check.setVisibility(View.VISIBLE);
+				// cria a linha no meio do item
+				subject.setPaintFlags(subject.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 			} else {
-				bg_check.setVisibility(View.INVISIBLE);
+				subject.setPaintFlags(subject.getPaintFlags()
+		                & ~Paint.STRIKE_THRU_TEXT_FLAG);
+				//bg_check.setVisibility(View.INVISIBLE);
 			}
 
 		} catch (NullPointerException e) {

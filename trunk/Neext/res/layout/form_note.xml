@@ -7,20 +7,4 @@
 
     <include layout="@layout/edit_note" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            android:id="@+id/bg_check"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="left"
-            android:background="@drawable/screen_check"
-            android:visibility="invisible" >
-        </LinearLayout>
-    </LinearLayout>
-
 </FrameLayout>

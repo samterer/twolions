@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -158,7 +159,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			vEditText.add(text);
 			
 			// tela check ou uncheck
-			bg_check = (LinearLayout) findViewById(R.id.bg_check);
+			//bg_check = (LinearLayout) findViewById(R.id.bg_check);
 
 			EditTextTools.insertFontInAllFields(vEditText, tf); // change font
 																// editText
@@ -276,9 +277,12 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 			// screen check ou uncheck
 			if (check) {
-				bg_check.setVisibility(View.VISIBLE);
+				//bg_check.setVisibility(View.VISIBLE);
+				subject.setPaintFlags(subject.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 			} else {
-				bg_check.setVisibility(View.INVISIBLE);
+				subject.setPaintFlags(subject.getPaintFlags()
+		                & ~Paint.STRIKE_THRU_TEXT_FLAG);
+				//bg_check.setVisibility(View.INVISIBLE);
 			}
 
 		} catch (NullPointerException e) {
