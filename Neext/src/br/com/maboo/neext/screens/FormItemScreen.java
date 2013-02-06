@@ -3,6 +3,7 @@ package br.com.maboo.neext.screens;
 import java.util.Calendar;
 import java.util.Vector;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -181,7 +183,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// subject
 		subject = (EditText) findViewById(R.id.subject);
-		//subject.setTypeface(tf);
 
 		// insert subject if id_item = null;
 		if (id_item == null) {
@@ -192,7 +193,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// text
 		text = (EditText) findViewById(R.id.text);
-		//text.setTypeface(tf);
 
 		vEditText.add(text);
 		
@@ -445,79 +445,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		super.onBackPressed(); // boolean==true
 
 	}
-	
-	/**
-	 * Altera hora e data
-	 */
-/*	public void addListenerOnButton() {
 
-		hour.setOnClickListener(new OnClickListener() { // change hour
-
-			public void onClick(View v) {
-
-			showDialog(TIME_DIALOG_ID);
-
-			}
-
-		});
-
-		date.setOnClickListener(new OnClickListener() { // change date
-
-			public void onClick(View v) {
-
-			showDialog(DATE_DIALOG_ID);
-
-			}
-
-		});
-
-	}
-
-	
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-		case TIME_DIALOG_ID:
-			// set time picker as current time
-			return new TimePickerDialog(this, timePickerListener, hour_time,
-					min_time, false);
-		case DATE_DIALOG_ID:
-			return new DatePickerDialog(this, myDateSetListener, year_time,
-					month_time, day_time);
-		}
-
-		return null;
-
-	}
-
-	private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
-		public void onTimeSet(TimePicker view, int selectedHour,
-				int selectedMinute) {
-			hour_time = selectedHour;
-			min_time = selectedMinute;
-
-			// set current time into textview
-			hour.setText(new StringBuilder().append(pad(hour_time)).append(":")
-					.append(pad(min_time)));
-
-		}
-	};
-
-	private DatePickerDialog.OnDateSetListener myDateSetListener = new DatePickerDialog.OnDateSetListener() {
-
-		public void onDateSet(DatePicker view, int year, int monthOfYear,
-				int dayOfMonth) {
-
-			day_time = dayOfMonth;
-			month_time = monthOfYear;
-			year_time = year;
-
-			// set current time into textview
-			date.setText(new StringBuilder().append(pad(day_time)).append("/")
-					.append(pad(month_time)).append("/").append(pad(year_time)));
-
-		}
-	};
-*/
 	/****************************************************************
 	 * EDIT ITEM_TEXT
 	 ****************************************************************/
@@ -655,6 +583,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 					// close the activity
 					customMenuDialog.dismiss();
+					
+					InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+				    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
 					// notify that we consumed this event
 					return true;
