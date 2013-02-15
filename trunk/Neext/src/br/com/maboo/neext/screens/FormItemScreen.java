@@ -396,7 +396,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			
 		}
 
-		Intent it = new Intent(this, ViewItemScreen.class);
+		Intent it = new Intent(this, ItemScreen.class);
 
 		// id do item
 		it.putExtra(ItemNote._ID, id_item);

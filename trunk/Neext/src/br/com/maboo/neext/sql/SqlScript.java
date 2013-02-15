@@ -1,7 +1,6 @@
 package br.com.maboo.neext.sql;
 
 import android.content.Context;
-import android.provider.SyncStateContract.Columns;
 import br.com.maboo.neext.util.Constants;
 
 public class SqlScript extends DBConnection {

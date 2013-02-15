@@ -8,20 +8,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.adapters.ListAdapter;
 import br.com.maboo.neext.core.NeextActivity;
@@ -155,10 +156,11 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	 ****************************************************************/
 
 	public void effect() {
-		LayoutAnimationController controller = AnimationUtils
-				.loadLayoutAnimation(this, R.anim.anime_slide_to_right);
+		// LayoutAnimationController controller =
+		// AnimationUtils.loadLayoutAnimation(this,
+		// R.anim.anime_slide_to_right);
 
-		listview_log.setLayoutAnimation(controller);
+		// listview_log.setLayoutAnimation(controller);
 	}
 
 	// recupera toda a lista de itens da base
@@ -184,13 +186,15 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	private void openViewItem() {
 
 		// Cria a intent para abrir a tela de editar
-		Intent it = new Intent(this, ViewItemScreen.class);
+		Intent it = new Intent(this, ItemScreen.class);
 
 		// id do item
 		it.putExtra(ItemNote._ID, id_item);
 
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
+		
+		overridePendingTransition(R.anim.scale_in, R.anim.anime_slide_to_left);
 
 	}
 
@@ -246,12 +250,6 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		int T_KEY = Constants.INSERIR;
 		it.putExtra("T_KEY", T_KEY);
 
-		// passa o subject pré inserido pelo usuario
-		//EditText add_subject = (EditText) findViewById(R.id.add_subject);
-		//String subj = add_subject.getText().toString();
-
-		//it.putExtra("subj", subj);
-		
 		// passa a color do item definida pelo usuario		
 		it.putExtra("color", typeColor);
 
@@ -310,9 +308,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 
 	public void organizeBt() {
 
-		// bt rigt
-		//final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
-		//bt_right.setImageResource(R.drawable.bt_about);
+		listeningGesture();
 
 		registerForContextMenu(listview_log);
 	}
@@ -444,114 +440,138 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	}
 	
 	/******************************************************************************
-	 * CHANGE COLOR
+	 * GESTURE
 	 ******************************************************************************/
-	/*
-	public void changeToColor(String color) {
-		
-		Toast.makeText(this, "Change to color [#"+color+"]", Toast.LENGTH_SHORT).show();
-		
-		// muda cor da tela
-		// color of item
-		int newcolor = Color
-				.parseColor("#" + color);
-			
-		ImageView bt_color = (ImageView) findViewById(R.id.bt_color); // bt de color do item a ser criado
-		bt_color.setBackgroundColor(newcolor);
-		bt_color.setTag(color);
-		
-		typeColor = bt_color.getTag().toString();
-		
-		// closed menu for select item
-		customMenuDialog.dismiss();
-		
+	/******************************************************************************
+	 * GESTURE
+	 ******************************************************************************/
+	private int REL_SWIPE_MIN_DISTANCE;
+	private int REL_SWIPE_MAX_OFF_PATH;
+	private int REL_SWIPE_THRESHOLD_VELOCITY;
+
+	private static int position = 0;
+	private static View element;
+	
+	private void listeningGesture() {
+
+		// As paiego pointed out, it's better to use density-aware measurements.
+		DisplayMetrics dm = getResources().getDisplayMetrics();
+		REL_SWIPE_MIN_DISTANCE = (int) (120.0f * dm.densityDpi / 160.0f + 0.5);
+		REL_SWIPE_MAX_OFF_PATH = (int) (250.0f * dm.densityDpi / 160.0f + 0.5);
+		REL_SWIPE_THRESHOLD_VELOCITY = (int) (200.0f * dm.densityDpi / 160.0f + 0.5);
+
+		final GestureDetector gestureDetector = new GestureDetector(
+				new MyGestureDetector());
+
+		View.OnTouchListener gestureListener = new View.OnTouchListener() {
+
+			public boolean onTouch(View v, MotionEvent e) {
+
+				Log.i(TAG, "onTouch > onTouch!");
+
+				position = listview_log.pointToPosition((int) e.getX(),
+						(int) e.getY());
+
+				Log.i(TAG, "onTouch > [position: " + position + "]");
+
+				element = v;
+
+				return gestureDetector.onTouchEvent(e);
+
+			}
+
+		};
+
+		listview_log.setOnTouchListener(gestureListener);
+
 	}
 	
-	public void btEditColor(View v) {
+	private void onLTRFling() {
 
-		if (customMenuDialog == null) { // instancia o menu apenas uma vez
+		Log.i(TAG, "onLTRFling > Left-to-right fling in position[" + position
+				+ "]");
 
-			customMenuDialog = new MenuDialog(this);
+		try {
+			
+			 Toast.makeText(this, "Left-to-right fling in position[" +
+			 position + "]", Toast.LENGTH_SHORT).show();
+			
 
-		}
+			ItemNote item = itens.get(position);
 
-		if (!customMenuDialog.isShowing()) {
-			customMenuDialog.show();
+			id_item = item.getId();
+			
+
+		} catch (Exception e) {
+			Log.i(TAG, "! element esta null");
 		}
 
 	}
 
-	private class MenuDialog extends AlertDialog {
-		public MenuDialog(Context context) {
-			super(context);
+	private void onRTLFling() {
 
-			View cus_menu = getLayoutInflater().inflate(R.layout.custom_menu,
-					null);
+		Log.i(TAG, "onRTLFling > Right-to-left fling in position[" + position
+				+ "]");
 
-			setView(cus_menu);
+		try {
+			
+			 Toast.makeText(this, "Right-to-left fling in position[" +
+			 position + "]", Toast.LENGTH_SHORT).show();
+			
 
+			ItemNote item = itens.get(position);
+			id_item = item.getId();
+			
+			// get the row the clicked button is in
+			//ItemNote itemNote = itens.get(pos);
+			//id_item = itemNote.getId();
+
+			// open list item log
+			openViewItem();
+
+		} catch (Exception e) {
+			Log.i(TAG, "! element esta null");
 		}
-		
-		// lista de cores
-		// 1 - laranja FFA500
-		// 2 - azul claro 45c4ff
-		// 3 - verde claro 39bf2b
-		// 4 - roxo a6a6ed
-		protected void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			
-			LinearLayout layout_menu = (LinearLayout) findViewById(R.id.layout_menu);
-			
-			for (int i = 0; i < 4; i++) {
-				final ImageView imgV = (ImageView) layout_menu.getChildAt(i);
-				imgV.setOnClickListener(new View.OnClickListener() {
+	}
 
-					public void onClick(View v) {
+	class MyGestureDetector extends SimpleOnGestureListener {
 
-						changeToColor(imgV.getTag().toString());
+		// Detect a single-click and call my own handler.
+		public boolean onSingleTapUp(MotionEvent e) {
 
-					}
+			// ListView lv = listview_log;
+			int pos = listview_log.pointToPosition((int) e.getX(),
+					(int) e.getY());
 
-				});
-				
+			if (pos < 0) { // as vezes a position na list retornava a mesma
+							// posição mas negativo
+				pos = pos * (-1);
 			}
 
+			return false;
 		}
 
-		/**
-		 * Verifica onde foi o clique do usuario, se foi no menu de item (ok),
-		 * se não (fecha o menu)
-		public boolean onTouchEvent(MotionEvent event) {
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+				float velocityY) {
+			if (Math.abs(e1.getY() - e2.getY()) > REL_SWIPE_MAX_OFF_PATH)
+				return false;
 
-			// I only care if the event is an UP action
-			if (event.getAction() == MotionEvent.ACTION_UP) {
+			if (e1.getX() - e2.getX() > REL_SWIPE_MIN_DISTANCE
+					&& Math.abs(velocityX) > REL_SWIPE_THRESHOLD_VELOCITY) {
 
-				// create a rect for storing the window rect
-				Rect r = new Rect(0, 0, 0, 0);
+				onRTLFling();
 
-				// retrieve the windows rect
-				this.getWindow().getDecorView().getHitRect(r);
+			} else if (e2.getX() - e1.getX() > REL_SWIPE_MIN_DISTANCE
+					&& Math.abs(velocityX) > REL_SWIPE_THRESHOLD_VELOCITY) {
 
-				// check if the event position is inside the window rect
-				boolean intersects = r.contains((int) event.getX(),
-						(int) event.getY());
-
-				// if the event is not inside then we can close the activity
-				if (!intersects) {
-
-					// close the activity
-					customMenuDialog.dismiss();
-
-					// notify that we consumed this event
-					return true;
-				}
+				onLTRFling();
 			}
-			// let the system handle the event
-			return super.onTouchEvent(event);
+
+			return false;
 		}
 
 	}
-	*/
+
 	
 
 }
