@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import br.com.maboo.neext.R;
@@ -240,8 +241,8 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		dao.deletar(id);
 	}
 
-	// abre a tela de criação de item com o subject inserido (se houver um)
-	public void createItem(View v) {
+	// abre a tela de criação de item
+	public void bar_bt_right(View v) {
 
 		// Cria a intent para abrir a tela de editar
 		Intent it = new Intent(this, FormItemScreen.class);
@@ -307,6 +308,11 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	}
 
 	public void organizeBt() {
+		
+		// insere a imagem no bt
+		// bt de criação de item
+		ImageView bt = (ImageView) findViewById(R.id.bar_bt_right);
+		bt.setImageDrawable(getResources().getDrawable(R.drawable.bt_add));
 
 		listeningGesture();
 
