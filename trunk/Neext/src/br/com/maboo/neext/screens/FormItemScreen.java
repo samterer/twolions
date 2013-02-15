@@ -241,8 +241,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			
 			typeColor = itemRequest.getType().toString();
 			
-			// escreve noc abeçalho que esta em mode editing
-			title_edit.setText("Editing");
+			// escreve no cabeçalho que esta em mode editing
+			title_edit.setText(R.string.m_edit);
 			title_edit.setTextColor(color);
 
 			// change background title

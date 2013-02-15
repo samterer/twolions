@@ -22,6 +22,7 @@ import br.com.maboo.neext.interfaces.InterfaceBar;
 import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.util.Constants;
 import br.com.maboo.neext.util.EditTextTools;
+import br.com.maboo.neext.util.TextViewTools;
 
 public class ItemScreen extends FormItemActivity implements InterfaceBar {
 
@@ -29,6 +30,7 @@ public class ItemScreen extends FormItemActivity implements InterfaceBar {
 
 	// Campos texto
 	private LinearLayout bg_title;
+	private TextView type_edit;
 	private TextView date;
 	private TextView hour;
 	private EditText subject;
@@ -132,7 +134,11 @@ public class ItemScreen extends FormItemActivity implements InterfaceBar {
 			// change background title
 			bg_title = (LinearLayout) findViewById(R.id.bg_title);
 			bg_title.setBackgroundColor(color);
-
+			
+			//type edit
+			type_edit = (TextView) findViewById(R.id.type_edit);
+			type_edit.setTextColor(color);
+			
 			// date
 			date = (TextView) findViewById(R.id.date);
 			date.setTextColor(color);
@@ -255,6 +261,10 @@ public class ItemScreen extends FormItemActivity implements InterfaceBar {
 
 				sb.append(dateFromBase.charAt(i));
 			}
+			
+			// escreve no cabeçalho qnd foi a ultima edição
+			type_edit.setText(TextViewTools.getLastEdit(hour.getText().toString(),date.getText().toString(), this));
+
 
 			// subject
 			subject.setText(String.valueOf((itemRequest.getSubject())));
@@ -268,12 +278,10 @@ public class ItemScreen extends FormItemActivity implements InterfaceBar {
 
 			// screen check ou uncheck
 			if (check) {
-				//bg_check.setVisibility(View.VISIBLE);
 				subject.setPaintFlags(subject.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 			} else {
 				subject.setPaintFlags(subject.getPaintFlags()
 		                & ~Paint.STRIKE_THRU_TEXT_FLAG);
-				//bg_check.setVisibility(View.INVISIBLE);
 			}
 
 		} catch (NullPointerException e) {

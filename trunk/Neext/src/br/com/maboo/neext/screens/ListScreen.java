@@ -222,7 +222,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		alerta.show();
 	}
 
-	// delete car
+	// delete item
 	public void deleteItem() {
 		if (id_item != null) {
 			excluirItem(id_item);
@@ -234,6 +234,18 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 			update();
 		}
 
+	}
+	
+	// compartilhar a nota
+	private void shareIt(ItemNote itemNote) {
+		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+		
+		sharingIntent.setType("text/plain");
+		
+		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, itemNote.getSubject());
+		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, itemNote.getText());
+		
+		startActivity(Intent.createChooser(sharingIntent, "Share via"));
 	}
 
 	// passe o id do item que será excluido
@@ -376,6 +388,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	private static final int CHECK_OR_UNCHECK = 0;
 	private static final int EDIT = 1;
 	private static final int DELETE = 2;
+	private static final int SHARE = 3;
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
 				.getMenuInfo();
@@ -412,6 +425,11 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		case DELETE:
 
 			deleteConConfirm();
+			
+			break;
+		case SHARE:
+
+			shareIt(itemNote);
 			
 			break;
 		}

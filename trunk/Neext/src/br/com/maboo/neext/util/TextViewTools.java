@@ -2,8 +2,11 @@ package br.com.maboo.neext.util;
 
 import java.util.Vector;
 
+import android.content.Context;
 import android.graphics.Typeface;
+import android.text.format.Time;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TextViewTools {
 
@@ -17,6 +20,25 @@ public class TextViewTools {
 
 	}
 
-	// convert date
+	// retorna o tempo entre a data atual e a data passada
+	public static String getLastEdit(String hour, String date, Context context){
+		String result = "";
+		
+		Time dt = new Time(); 
+		// campo 2 = /
+		// campo 5 = /
+		dt.set(Integer.valueOf(date.substring(0, 1)).intValue(), Integer
+				.valueOf(date.substring(3, 4)).intValue(),
+				Integer.valueOf(date.substring(6, 9)).intValue());
+		dt.normalize(true);
+		
+		dt.monthDay += 1;
+	
+		
+		Toast.makeText(context, hour+" "+dt, Toast.LENGTH_SHORT).show();
+		
+		
+		return result;
+	}
 
 }
