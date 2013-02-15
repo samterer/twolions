@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, CoobActivity!</string>
+    <string name="hello">Hello World, NotesNoteActivity!</string>
 
     <!-- App -->
     <string name="app_name">Notes Note</string>
@@ -23,9 +23,9 @@
 
     <!-- msg -->
     <string name="m_wait">Loading...</string>
+    <string name="m_edit">Editing</string>
 
     <!-- alertas -->
-    <string name="a_dt_car">Are you sure you want to delete this car?</string>
     <string name="a_dt_item">Are you sure you want to delete this item?</string>
 
     <!-- Positivo e negativo -->
@@ -37,6 +37,7 @@
 		<item>Check</item>
 		<item>Edit</item>
 		<item>Delete</item>
+		<item>Share</item>
 	</string-array>
 	
     <string name="footer">This is a demo of the ListView. Click and hold on to one of the items above to show the context menu.</string>
