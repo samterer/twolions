@@ -21,12 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-      <!--   <activity
-            android:name=".screens.ListScreen"
-            android:label="ListScreen"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
-        </activity> -->
         <activity
             android:name=".screens.FormItemScreen"
             android:label="FormItemScreen"
@@ -34,7 +28,7 @@
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
-            android:name=".screens.ViewItemScreen"
+            android:name=".screens.ItemScreen"
             android:label="ViewItemScreen"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >

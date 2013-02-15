@@ -6,5 +6,6 @@
     android:background="@color/cinza_c" >
 
     <include layout="@layout/edit_note" />
+    
 
 </FrameLayout>

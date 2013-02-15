@@ -12,7 +12,7 @@
         android:layout_marginRight="10dp"
         android:gravity="top"
         android:maxLength="250"
-        android:lines="18"
+        android:lines="20"
         android:tag="text"
         android:hint="insert a text"
         android:width="240dp" />

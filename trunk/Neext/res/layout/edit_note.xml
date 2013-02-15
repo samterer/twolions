@@ -33,5 +33,9 @@
             layout="@layout/text" />
 
     </TableRow>
+    
+     <!-- BAR INF -->
+    
+    <include android:layout_gravity="bottom" layout="@layout/bar_inf" />
 
 </TableLayout>

@@ -10,15 +10,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.InflateException;
-import android.view.LayoutInflater;
-import android.view.LayoutInflater.Factory;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -404,7 +396,7 @@ public class ItemScreen extends FormItemActivity implements InterfaceBar {
 	/******************************************************************************
 	 * CHECKED AND UNCHECKED
 	 ******************************************************************************/
-
+/*
 	private void checkOrUncheckItem() {
 
 		itemRequest.setCheck(!itemRequest.isCheck());
@@ -428,12 +420,11 @@ public class ItemScreen extends FormItemActivity implements InterfaceBar {
 		init(); // atualiza a view
 
 	}
-
+*/
 	/******************************************************************************
 	 * MENU
 	 ******************************************************************************/
-
-	Menu menu;
+/*	Menu menu;
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		MenuInflater inflater = getMenuInflater();
@@ -474,7 +465,7 @@ public class ItemScreen extends FormItemActivity implements InterfaceBar {
 						 * background. This is done using a thread giving the
 						 * background change as runnable object
 						 */
-						new Handler().post(new Runnable() {
+	/*					new Handler().post(new Runnable() {
 							public void run() {
 
 								view.setBackgroundResource(R.color.pastel);
@@ -489,7 +480,8 @@ public class ItemScreen extends FormItemActivity implements InterfaceBar {
 			}
 		});
 	}
-
+	*/
+	/*
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
@@ -511,5 +503,6 @@ public class ItemScreen extends FormItemActivity implements InterfaceBar {
 
 		return false;
 	}
+	*/
 
 }
