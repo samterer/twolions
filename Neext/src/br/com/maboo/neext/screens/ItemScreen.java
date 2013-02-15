@@ -31,7 +31,7 @@ import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.util.Constants;
 import br.com.maboo.neext.util.EditTextTools;
 
-public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
+public class ItemScreen extends FormItemActivity implements InterfaceBar {
 
 	private final String TAG = Constants.LOG_APP;
 
@@ -43,7 +43,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	private EditText text;
 	private String typeColor = "";
 	private boolean check = false;
-	private LinearLayout bg_check;
 
 	private static Long id_item = null;
 
@@ -391,6 +390,15 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+
+		overridePendingTransition(R.anim.anime_slide_to_right, R.anim.scale_out);
+	
 	}
 
 	/******************************************************************************
