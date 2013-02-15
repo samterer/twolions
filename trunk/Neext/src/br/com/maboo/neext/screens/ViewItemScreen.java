@@ -24,7 +24,7 @@ import br.com.maboo.neext.util.Constants;
 import br.com.maboo.neext.util.EditTextTools;
 import br.com.maboo.neext.util.TextViewTools;
 
-public class ItemScreen extends FormItemActivity implements InterfaceBar {
+public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 	private final String TAG = Constants.LOG_APP;
 

@@ -24,6 +24,7 @@
     <!-- msg -->
     <string name="m_wait">Loading...</string>
     <string name="m_edit">Editing</string>
+    <string name="m_save">Save!</string>
 
     <!-- alertas -->
     <string name="a_dt_item">Are you sure you want to delete this item?</string>
