@@ -5,6 +5,9 @@ import java.util.Vector;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -29,7 +32,9 @@ import br.com.maboo.neext.interfaces.InterfaceBar;
 import br.com.maboo.neext.model.ItemModel;
 import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.util.Constants;
+import br.com.maboo.neext.util.ConstantsNotify;
 import br.com.maboo.neext.util.EditTextTools;
+import br.com.maboo.neext.util.NotificationViewer;
 
 /**
  * Activity que utiliza o TableLayout para editar o itemLog
@@ -50,7 +55,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private String typeColor = "";
 	private boolean check = false;
 	private ImageView imgSubject;
-	private LinearLayout bg_check;
 
 	private static Long id_item;
 
@@ -58,16 +62,12 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private ItemNote itemRequest;
 
 	// hour
-	private static final int TIME_DIALOG_ID = 999;
 	private int hour_time;
 	private int min_time;
 	// date
 	private int day_time;
 	private int month_time;
 	private int year_time;
-
-	// spinner value
-	private static final int DATE_DIALOG_ID = 998;
 
 	Vector<EditText> vEditText; // vetor de editText
 
@@ -392,11 +392,11 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			//Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
 			ItemModel.salvarItemNote(i4s);	
 			
-			Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.m_save, Toast.LENGTH_SHORT).show();
 			
 		}
 
-		Intent it = new Intent(this, ItemScreen.class);
+		Intent it = new Intent(this, ViewItemScreen.class);
 
 		// id do item
 		it.putExtra(ItemNote._ID, id_item);

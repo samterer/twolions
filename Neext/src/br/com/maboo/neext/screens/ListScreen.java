@@ -33,6 +33,7 @@ import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.modelobj.ListNote;
 import br.com.maboo.neext.transaction.Transaction;
 import br.com.maboo.neext.util.Constants;
+import br.com.maboo.neext.util.NotificationUtil;
 
 public class ListScreen extends NeextActivity implements InterfaceBar, OnItemClickListener,
 		Transaction {
@@ -187,7 +188,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	private void openViewItem() {
 
 		// Cria a intent para abrir a tela de editar
-		Intent it = new Intent(this, ItemScreen.class);
+		Intent it = new Intent(this, ViewItemScreen.class);
 
 		// id do item
 		it.putExtra(ItemNote._ID, id_item);
@@ -446,6 +447,10 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		if(!item.isCheck()) {
 		
 			item.setCheck(true);
+			
+			// cria notificação
+			NotificationUtil no = new NotificationUtil(this);
+			no.createNotify("item text", item.getSubject(), item.getText());
 			
 		} else {
 			
