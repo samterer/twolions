@@ -33,7 +33,8 @@ import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.modelobj.ListNote;
 import br.com.maboo.neext.transaction.Transaction;
 import br.com.maboo.neext.util.Constants;
-import br.com.maboo.neext.util.NotificationUtil;
+import br.com.maboo.neext.util.NotificationCreate;
+import br.com.maboo.neext.util.NotificationViewer;
 
 public class ListScreen extends NeextActivity implements InterfaceBar, OnItemClickListener,
 		Transaction {
@@ -51,12 +52,14 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	private Long id_item;
 	private String typeColor = Constants.CREATE_DEFAULT_COLOR;
 	
-	//private MenuDialog customMenuDialog; // menu de cores
+	private Context context;
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
 		dao = new ItemNoteDAO(this);
+		
+		this.context = getApplicationContext();
 
 		montaTela(icicle);
 
@@ -449,8 +452,10 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 			item.setCheck(true);
 			
 			// cria notificação
-			NotificationUtil no = new NotificationUtil(this);
-			no.createNotify("item text", item.getSubject(), item.getText());
+			NotificationCreate nc = new NotificationCreate(
+					getApplicationContext(), "New note was marked.",
+					item.getSubject(), "Click here and check note.");
+			nc.criarNotificacao(NotificationViewer.class);
 			
 		} else {
 			
