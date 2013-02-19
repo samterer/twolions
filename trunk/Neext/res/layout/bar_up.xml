@@ -22,7 +22,7 @@
                 android:gravity="center_horizontal|center_vertical"
                 android:paddingLeft="-20dp"
                 android:text="@string/app_name"
-                android:textColor="@color/cinza_default"
+                android:textColor="@color/cinza_dark"
                 android:textSize="35dp"
                 android:typeface="monospace" />
         </LinearLayout>
@@ -30,13 +30,13 @@
         <!-- buttons in right -->
 
         <ImageView
-            android:id="@+id/bt_right"
+            android:id="@+id/bt_right_up"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:paddingBottom="10dp"
             android:layout_weight="1"
-            android:onClick="btBarRight"
+            android:onClick="btBarUpRight"
             android:src="@drawable/bt_about" />
     </TableRow>
 

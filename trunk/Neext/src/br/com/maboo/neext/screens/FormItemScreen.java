@@ -5,9 +5,6 @@ import java.util.Vector;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -32,9 +29,7 @@ import br.com.maboo.neext.interfaces.InterfaceBar;
 import br.com.maboo.neext.model.ItemModel;
 import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.util.Constants;
-import br.com.maboo.neext.util.ConstantsNotify;
 import br.com.maboo.neext.util.EditTextTools;
-import br.com.maboo.neext.util.NotificationViewer;
 
 /**
  * Activity que utiliza o TableLayout para editar o itemLog
@@ -54,7 +49,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private EditText text;
 	private String typeColor = "";
 	private boolean check = false;
-	private ImageView imgSubject;
+	private ImageView bt_right_up;
 
 	private static Long id_item;
 
@@ -155,8 +150,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		bg_title.setBackgroundColor(color);
 
 		// bt edit color
-		imgSubject = (ImageView) findViewById(R.id.imgSubject);
-		imgSubject.setTag(typeColor);
+		bt_right_up = (ImageView) findViewById(R.id.bt_right_up);
+		bt_right_up.setTag(typeColor);
 		
 		//type edit
 		title_edit = (TextView) findViewById(R.id.type_edit);
@@ -198,8 +193,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		vEditText.add(text);
 		
 		// muda o button de edit por um bt de cor
-		imgSubject.setImageResource(R.drawable.bt_edit_color);
-		imgSubject.setVisibility(View.VISIBLE);
+		bt_right_up.setImageResource(R.drawable.bt_edit_color);
+		bt_right_up.setVisibility(View.VISIBLE);
 		
 		// tela check ou uncheck
 		//bg_check = (LinearLayout) findViewById(R.id.bg_check);
@@ -413,34 +408,20 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		else
 			return "0" + String.valueOf(c);
 	}
-
+	
 	/******************************************************************************
-	 * CLICK\TOUCH
+	 * BUTTONS
 	 ******************************************************************************/
-
 	public void actionBt(final Context context) {
 
 	}
 
+	
 	public void organizeBt() {
+		// insere a imagem no bt central
+		ImageView bt = (ImageView) findViewById(R.id.bt_center_down);
+		bt.setImageDrawable(getResources().getDrawable(R.drawable.bt_save_off));
 
-	}
-
-	public void btBarLeft(final View v) {
-		//
-	}
-	
-	// muda cor do item
-	public void btBarRight(final View v) {
-		
-		if (customMenuDialog == null) { // instancia o menu apenas uma vez
-			customMenuDialog = new MenuDialog(this);
-		}
-
-		if (!customMenuDialog.isShowing()) {
-			customMenuDialog.show();
-		}
-	
 	}
 
 	public void onBackPressed() { // call my backbutton pressed method when
@@ -449,6 +430,39 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		super.onBackPressed(); // boolean==true
 
+	}
+	
+	public void btBarUpLeft(View v) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void btBarUpRight(View v) {
+		
+		if (customMenuDialog == null) { // instancia o menu apenas uma vez
+			customMenuDialog = new MenuDialog(this);
+		}
+
+		if (!customMenuDialog.isShowing()) {
+			customMenuDialog.show();
+		}
+
+	}
+
+	public void btBarDownLeft(View v) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void btBarDownRight(View v) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	public void btBarDownCenter(View v) {
+
+		onBackPressed();
+		
 	}
 
 	/****************************************************************
@@ -601,5 +615,4 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		}
 
 	}
-
 }

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -349,6 +350,21 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	protected void excluirItem(long id) {
 		ListScreen.dao.deletar(id);
 	}
+	
+	
+	// compartilhar a nota
+	private void shareIt(ItemNote itemNote) {
+		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+		sharingIntent.setType("text/plain");
+
+		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+				itemNote.getSubject());
+		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+				itemNote.getText());
+
+		startActivity(Intent.createChooser(sharingIntent, "Share via"));
+	}
 
 	/******************************************************************************
 	 * CLICK\TOUCH
@@ -359,20 +375,38 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	}
 
 	public void organizeBt() {
+		
+		// insere a imagem no bt central
+		ImageView btLeft = (ImageView) findViewById(R.id.bt_left_down);
+		btLeft.setImageDrawable(getResources().getDrawable(R.drawable.bt_delete_off));
+		
+		// insere a imagem no bt central
+		ImageView btCenter = (ImageView) findViewById(R.id.bt_center_down);
+		btCenter.setImageDrawable(getResources().getDrawable(R.drawable.bt_check_off));
+		
+		// insere a imagem no bt central
+		ImageView btRight = (ImageView) findViewById(R.id.bt_right_down);
+		btRight.setImageDrawable(getResources().getDrawable(R.drawable.bt_share_off));
 
 	}
 
-	public void btBarLeft(final View v) {
-
-		setResult(RESULT_OK);
-
-		// Fecha a tela
-		finish();
+	public void onBackPressed() {
+		super.onBackPressed();
+		
+		overridePendingTransition(R.anim.scale_in, R.anim.anime_slide_to_right);
 
 	}
+	
+	/******************************************************************************
+	 * BUTTONS
+	 ******************************************************************************/
+	public void btBarUpLeft(View v) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	public void btBarRight(final View v) {
-
+	public void btBarUpRight(View v) {
+		
 		// Cria a intent para abrir a tela de editar
 		Intent it = new Intent(this, FormItemScreen.class);
 
@@ -389,35 +423,36 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		finish();
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+		
+	}
 
+	public void btBarDownLeft(View v) {
+		
+		// delet item e retorna para a lista de itens
+		deleteConConfirm();
+		
+	}
+
+	public void btBarDownRight(View v) {
+		
+		// compartilha o item
+		shareIt(itemRequest);
+		
 	}
 	
-	@Override
-	public void onBackPressed() {
-		// TODO Auto-generated method stub
-		super.onBackPressed();
-
-		overridePendingTransition(R.anim.anime_slide_to_right, R.anim.scale_out);
-	
+	public void btBarDownCenter(View v) {
+		
+		// check item and update page
+		checkOrUncheckItem();
+		
 	}
 
 	/******************************************************************************
 	 * CHECKED AND UNCHECKED
 	 ******************************************************************************/
-/*
 	private void checkOrUncheckItem() {
 
 		itemRequest.setCheck(!itemRequest.isCheck());
-
-		if (menu != null) {
-			String titleCheck = "Check";
-			if (itemRequest.isCheck()) {
-				titleCheck = "Uncheck";
-			} else {
-				titleCheck = "Check";
-			}
-			menu.findItem(R.id.check).setTitle(titleCheck);
-		}
 
 		if (itemRequest != null) { // É uma atualização (pra não ter erro)
 			itemRequest.setId(itemRequest.getId());
@@ -428,7 +463,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		init(); // atualiza a view
 
 	}
-*/
+
 	/******************************************************************************
 	 * MENU
 	 ******************************************************************************/

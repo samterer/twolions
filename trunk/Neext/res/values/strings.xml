@@ -4,7 +4,7 @@
     <string name="hello">Hello World, NotesNoteActivity!</string>
 
     <!-- App -->
-    <string name="app_name">Notes Note</string>
+    <string name="app_name">NotesNote</string>
     <string name="app_version">1.0.0</string>
 
     <!-- msg code -->

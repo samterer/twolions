@@ -6,7 +6,7 @@
     android:gravity="center"
     android:orientation="vertical" >
 
-    <include layout="@layout/bar_sup" />
+    <include layout="@layout/bar_up" />
 
     <ListView
         android:id="@+id/listview_log"
@@ -19,6 +19,6 @@
         android:scrollbars="none" >
     </ListView>
 
-    <include layout="@layout/bar_inf" />
+    <include layout="@layout/bar_down" />
 
 </LinearLayout>
