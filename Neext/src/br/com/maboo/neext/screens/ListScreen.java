@@ -257,24 +257,6 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		dao.deletar(id);
 	}
 
-	// abre a tela de criação de item
-	public void bar_bt_right(View v) {
-
-		// Cria a intent para abrir a tela de editar
-		Intent it = new Intent(this, FormItemScreen.class);
-
-		// tipo de tarefa
-		int T_KEY = Constants.INSERIR;
-		it.putExtra("T_KEY", T_KEY);
-
-		// passa a color do item definida pelo usuario		
-		it.putExtra("color", typeColor);
-
-		// Abre a tela de edição
-		startActivityForResult(it, T_KEY);
-
-		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
-	}
 
 	/****************************************************************
 	 * TOUCH
@@ -327,25 +309,14 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		
 		// insere a imagem no bt
 		// bt de criação de item
-		ImageView bt = (ImageView) findViewById(R.id.bar_bt_right);
+		ImageView bt = (ImageView) findViewById(R.id.bt_right_down);
 		bt.setImageDrawable(getResources().getDrawable(R.drawable.bt_add));
+		// align pandding
+		bt.setPadding(175, 0, 0, 0);
 
 		listeningGesture();
 
 		registerForContextMenu(listview_log);
-	}
-
-	public void btBarLeft(View v) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void btBarRight(View v) {
-
-		startActivity(new Intent(this, AboutScreen.class));
-
-		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
-
 	}
 	
 	// bloqueio do bt de menu (Default do android)
@@ -474,8 +445,49 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	}
 	
 	/******************************************************************************
-	 * GESTURE
+	 * BUTTONS
 	 ******************************************************************************/
+	public void btBarUpLeft(View v) {
+		// TODO Auto-generated method stub	
+	}
+
+	public void btBarUpRight(View v) {
+		
+		startActivity(new Intent(this, AboutScreen.class));
+
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+		
+	}
+
+	public void btBarDownLeft(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void btBarDownRight(View v) {
+		
+		// Cria a intent para abrir a tela de editar
+		Intent it = new Intent(this, FormItemScreen.class);
+
+		// tipo de tarefa
+		int T_KEY = Constants.INSERIR;
+		it.putExtra("T_KEY", T_KEY);
+
+		// passa a color do item definida pelo usuario		
+		it.putExtra("color", typeColor);
+
+		// Abre a tela de edição
+		startActivityForResult(it, T_KEY);
+
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+		
+	}
+	
+	public void btBarDownCenter(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/******************************************************************************
 	 * GESTURE
 	 ******************************************************************************/
@@ -484,7 +496,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	private int REL_SWIPE_THRESHOLD_VELOCITY;
 
 	private static int position = 0;
-	private static View element;
+	//private static View element;
 	
 	private void listeningGesture() {
 
@@ -508,7 +520,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 
 				Log.i(TAG, "onTouch > [position: " + position + "]");
 
-				element = v;
+				//element = v;
 
 				return gestureDetector.onTouchEvent(e);
 
@@ -598,13 +610,15 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 			} else if (e2.getX() - e1.getX() > REL_SWIPE_MIN_DISTANCE
 					&& Math.abs(velocityX) > REL_SWIPE_THRESHOLD_VELOCITY) {
 
-				onLTRFling();
+				//onLTRFling();
 			}
 
 			return false;
 		}
 
 	}
+
+
 
 	
 
