@@ -32,5 +32,10 @@
     <color name="vermelho_note">#ec0000</color>
     <color name="verde_note">#00c112</color>
     
+    <!-- cores paleta notificações -->
+    <color name="verde_musgo_note">#3b7c89</color>
+    <color name="azul_lagoa_note">#67bfad</color>
+    <color name="laranja_clara_note">#f5a749</color>
+    <color name="vermelho_ovo_note">#f25050</color>
 
 </resources>

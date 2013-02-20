@@ -19,7 +19,7 @@ public class NotificationViewer extends ActivityCircle {
 		// Para cancelar precisa utilizar o mesmo id que foi utilizado para
 		// criar
 		nm.cancel(ConstantsNotify.NOTIFICATION_ID);
-		
+
 		finish();
 
 		String SettingsPage = "br.com.maboo.neext/.screens.ListScreen";

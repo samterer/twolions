@@ -55,6 +55,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	// itemRequest na tela
 	private ItemNote itemRequest;
+	
+	// color default para texto
+	private int defaultColor = Constants.defaultColor;
 
 	// hour
 	private int hour_time;
@@ -164,8 +167,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		date.setText(new StringBuilder().append(pad(day_time)).append("/")
 				.append(pad(month_time)).append("/").append(pad(year_time)));
-
-		date.setTextColor(color);
+		date.setTextColor(defaultColor);
 
 		// hour
 		hour = (TextView) findViewById(R.id.hour);
@@ -174,8 +176,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		hour.setText(new StringBuilder().append(pad(hour_time)).append(":")
 				.append(pad(min_time)));
-
-		hour.setTextColor(color);
+		hour.setTextColor(defaultColor);
 
 		// subject
 		subject = (EditText) findViewById(R.id.subject);
@@ -195,13 +196,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// muda o button de edit por um bt de cor
 		bt_right_up.setImageResource(R.drawable.bt_edit_color);
 		bt_right_up.setVisibility(View.VISIBLE);
-		
-		// tela check ou uncheck
-		//bg_check = (LinearLayout) findViewById(R.id.bg_check);
-		
+
 		EditTextTools.insertFontInAllFields(vEditText, tf); // change font
 															// editText
-
 		if (itemRequest != null) { // edit itemRequest?
 
 			//Log.i(TAG, "Edição de itemRequest...");
@@ -238,9 +235,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			
 			// escreve no cabeçalho que esta em mode editing
 			title_edit.setText(R.string.m_edit);
-			title_edit.setTextColor(color);
+			title_edit.setTextColor(defaultColor);
 
-			// change background title
+			// change background title (barra superior)
 			bg_title.setBackgroundColor(color);
 			
 			// formata date
@@ -255,8 +252,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 					// Log.i(TAG, "date [" + sb.toString() + "]");
 
 					date.setText(sb.toString());
-
-					date.setTextColor(color);
+					date.setTextColor(defaultColor);
 
 					// insere os valores nas variaveis de classe
 					day_time = Integer.valueOf(
@@ -279,8 +275,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 					// Log.i(TAG, "hour [" + sb.toString() + "]");
 
 					hour.setText(sb.toString()); // hora
-
-					hour.setTextColor(color);
+					hour.setTextColor(defaultColor);
 
 					break;
 
@@ -298,14 +293,12 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			text.setText(String.valueOf((itemRequest.getText())));
 			
 			//screen check ou uncheck
-			if(check) {
-				//bg_check.setVisibility(View.VISIBLE);
+			if(check) { // checka o item
 				// cria a linha no meio do item
 				subject.setPaintFlags(subject.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-			} else {
+			} else { // tira o check do item
 				subject.setPaintFlags(subject.getPaintFlags()
 		                & ~Paint.STRIKE_THRU_TEXT_FLAG);
-				//bg_check.setVisibility(View.INVISIBLE);
 			}
 
 		} catch (NullPointerException e) {
@@ -321,7 +314,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	public void salvar() {
 
-		if (subject.getText().toString().length() < 1) {
+		if (subject.getText().toString().length() < 1) { // se o campo subjet estiver fazio nao salva
 			return;
 		}
 		
@@ -415,7 +408,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	public void actionBt(final Context context) {
 
 	}
-
 	
 	public void organizeBt() {
 		// insere a imagem no bt central
@@ -526,14 +518,13 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		int newcolor = Color
 				.parseColor("#" + typeColor);
 		
-		title_edit.setTextColor(newcolor);
+		title_edit.setTextColor(defaultColor);
 		
 		bg_title.setBackgroundColor(newcolor);
 		
-		date.setTextColor(newcolor);
+		date.setTextColor(defaultColor);
 		
-		hour.setTextColor(newcolor);
-
+		hour.setTextColor(defaultColor);
 		
 		// closed menu for select item
 		customMenuDialog.dismiss();

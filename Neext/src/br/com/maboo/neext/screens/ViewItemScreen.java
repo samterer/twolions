@@ -23,6 +23,8 @@ import br.com.maboo.neext.interfaces.InterfaceBar;
 import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.util.Constants;
 import br.com.maboo.neext.util.EditTextTools;
+import br.com.maboo.neext.util.NotificationCreate;
+import br.com.maboo.neext.util.NotificationViewer;
 import br.com.maboo.neext.util.TextViewTools;
 
 public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
@@ -45,6 +47,9 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	private ItemNote itemRequest;
 
 	Vector<EditText> vEditText; // vetor de editText
+	
+	// color default para texto
+	private int defaultColor = Constants.defaultColor;
 
 	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
@@ -132,21 +137,21 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			
 			int color = Color.parseColor(parseColor);
 
-			// change background title
+			// change background title (barra superior)
 			bg_title = (LinearLayout) findViewById(R.id.bg_title);
 			bg_title.setBackgroundColor(color);
 			
-			//type edit
+			//type edit 
 			type_edit = (TextView) findViewById(R.id.type_edit);
-			type_edit.setTextColor(color);
+			type_edit.setTextColor(defaultColor);
 			
 			// date
 			date = (TextView) findViewById(R.id.date);
-			date.setTextColor(color);
+			date.setTextColor(defaultColor);
 
 			// hour
 			hour = (TextView) findViewById(R.id.hour);
-			hour.setTextColor(color);
+			hour.setTextColor(defaultColor);
 
 			// subject
 			subject = (EditText) findViewById(R.id.subject);
@@ -453,99 +458,29 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	private void checkOrUncheckItem() {
 
 		itemRequest.setCheck(!itemRequest.isCheck());
+		
+		// if(itemRequest.isCheck() == true) {		
+		//	StringBuffer text = new StringBuffer(); // corpo do note
+		//	for (int i = 0; i < itemRequest.getText().length(); i++) { // sinopse do corpo da notificação
+		//		text.append(itemRequest.getText().charAt(i));	
+		//	}
+
+			// cria notificação
+		//	NotificationCreate nc = new NotificationCreate(
+		//			getApplicationContext(), "New note was marked.",
+		//			itemRequest.getSubject(), text);
+		//	nc.criarNotificacao(NotificationViewer.class);
+		// }
 
 		if (itemRequest != null) { // É uma atualização (pra não ter erro)
 			itemRequest.setId(itemRequest.getId());
+			
+			ListScreen.dao.atualizar(itemRequest); // atualiza item
 		}
 
-		ListScreen.dao.atualizar(itemRequest); // atualiza item
+		
 
 		init(); // atualiza a view
 
 	}
-
-	/******************************************************************************
-	 * MENU
-	 ******************************************************************************/
-/*	Menu menu;
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		MenuInflater inflater = getMenuInflater();
-
-		inflater.inflate(R.menu.menu_inf, menu);
-
-		String titleCheck = "Check";
-		if (itemRequest.isCheck()) {
-			titleCheck = "Uncheck";
-		} else {
-			titleCheck = "Check";
-		}
-		menu.findItem(R.id.check).setTitle(titleCheck);
-		
-		this.menu = menu;
-		
-		return true;
-	}
-
-	protected void setMenuBackground() {
-
-		// Log.d(TAG, "Enterting setMenuBackGround");
-		getLayoutInflater().setFactory(new Factory() {
-
-			public View onCreateView(String name, Context context,
-					AttributeSet attrs) {
-
-				if (name.equalsIgnoreCase("com.android.internal.view.menu.IconMenuItemView")) {
-
-					try { // Ask our inflater to create the view
-						LayoutInflater f = getLayoutInflater();
-						final View view = f.createView(name, null, attrs);
-
-						/*
-						 * The background gets refreshed each time a new item is
-						 * added the options menu. So each time Android applies
-						 * the default background we need to set our own
-						 * background. This is done using a thread giving the
-						 * background change as runnable object
-						 */
-	/*					new Handler().post(new Runnable() {
-							public void run() {
-
-								view.setBackgroundResource(R.color.pastel);
-							}
-						});
-						return view;
-					} catch (InflateException e) {
-					} catch (ClassNotFoundException e) {
-					}
-				}
-				return null;
-			}
-		});
-	}
-	*/
-	/*
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-		switch (item.getItemId()) {
-		case R.id.check:
-
-			// check item and update page
-			checkOrUncheckItem();
-
-			return true;
-
-		case R.id.delet:
-
-			// delet item e retorna para a lista de itens
-			deleteConConfirm();
-
-			return true;
-
-		}
-
-		return false;
-	}
-	*/
-
 }
