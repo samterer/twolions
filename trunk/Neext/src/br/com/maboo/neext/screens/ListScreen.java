@@ -361,9 +361,10 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	
 	// botões do menu individual dos itens
 	private static final int CHECK_OR_UNCHECK = 0;
-	private static final int EDIT = 1;
-	private static final int DELETE = 2;
-	private static final int SHARE = 3;
+	private static final int NOTIFYNOW = 1;
+	private static final int EDIT = 2;
+	private static final int DELETE = 3;
+	private static final int SHARE = 4;
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
 				.getMenuInfo();
@@ -377,6 +378,11 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		case CHECK_OR_UNCHECK:
 
 			checkOrUncheckItem(itemNote);
+			
+			break;
+		case NOTIFYNOW:
+			
+			notifyNow(itemNote);
 			
 			break;
 		case EDIT:
@@ -413,6 +419,23 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	}
 	
 	/******************************************************************************
+	 * ALERTS
+	 ******************************************************************************/
+	private void notifyNow(ItemNote item) {
+		StringBuffer text = new StringBuffer(); // corpo do note
+		for (int i = 0; i < item.getText().length(); i++) { // sinopse do
+																	// corpo da
+																	// notificação
+			text.append(item.getText().charAt(i));
+		}
+
+		// cria notificação
+		NotificationCreate nc = new NotificationCreate(getApplicationContext(),
+				"Don't forget.", item.getSubject(), text);
+		nc.criarNotificacao(NotificationViewer.class);
+	}
+
+	/******************************************************************************
 	 * CHECKED AND UNCHECKED
 	 ******************************************************************************/
 	
@@ -420,13 +443,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		
 		if(!item.isCheck()) {
 		
-			item.setCheck(true);
-			
-			// cria notificação
-			NotificationCreate nc = new NotificationCreate(
-					getApplicationContext(), "New note was marked.",
-					item.getSubject(), "Click here and check note.");
-			nc.criarNotificacao(NotificationViewer.class);
+			item.setCheck(true);	
 			
 		} else {
 			
