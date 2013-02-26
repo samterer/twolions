@@ -551,8 +551,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	
 	private void onLTRFling() {
 
-		Log.i(TAG, "onLTRFling > Left-to-right fling in position[" + position
-				+ "]");
+	//	Log.i(TAG, "onLTRFling > Left-to-right fling in position[" + position	+ "]");
 
 		try {
 			
@@ -566,20 +565,19 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 			
 
 		} catch (Exception e) {
-			Log.i(TAG, "! element esta null");
+		//	Log.i(TAG, "! element esta null");
+			e.printStackTrace();
 		}
 
 	}
 
 	private void onRTLFling() {
 
-		Log.i(TAG, "onRTLFling > Right-to-left fling in position[" + position
-				+ "]");
+	//	Log.i(TAG, "onRTLFling > Right-to-left fling in position[" + position + "]");
 
 		try {
 			
-			 Toast.makeText(this, "Right-to-left fling in position[" +
-			 position + "]", Toast.LENGTH_SHORT).show();
+			// Toast.makeText(this, "Right-to-left fling in position[" +position + "]", Toast.LENGTH_SHORT).show();
 			
 
 			ItemNote item = itens.get(position);
@@ -593,7 +591,8 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 			openViewItem();
 
 		} catch (Exception e) {
-			Log.i(TAG, "! element esta null");
+			e.printStackTrace();
+			//Log.i(TAG, "! element esta null");
 		}
 	}
 
