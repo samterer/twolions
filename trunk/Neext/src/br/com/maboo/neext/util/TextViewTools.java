@@ -1,7 +1,5 @@
 package br.com.maboo.neext.util;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
@@ -9,9 +7,7 @@ import java.util.Vector;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.net.ParseException;
-import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TextViewTools {
 
@@ -29,35 +25,43 @@ public class TextViewTools {
 	public static String getLastEdit(String hour, String date, Context context) {
 		String result = "";
 
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		Calendar cal = Calendar.getInstance();
+		Calendar xmas = Calendar.getInstance(); // data da ultima alteração
+		xmas.set(Integer.valueOf(date.substring(6, 9)).intValue(), Integer
+				.valueOf(date.substring(3, 4)).intValue(),
+				Integer.valueOf(date.substring(0, 1)).intValue());
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		final Calendar now = Calendar.getInstance(); // data atual
+
 		try {
-			Date date1 = sdf.parse(date);
-			Date date2 = sdf.parse(dateFormat.format(cal.getTime()));
-			long differenceMilliSeconds = date2.getTime() - date1.getTime();
-			Log.i("appLog", "diferenca em milisegundos: "
-					+ differenceMilliSeconds);
-			Log.i("appLog", "diferenca em segundos: "
-					+ (differenceMilliSeconds / 1000));
-			Log.i("appLog", "diferenca em minutos: "
-					+ (differenceMilliSeconds / 1000 / 60));
-			Log.i("appLog", "diferenca em horas: "
-					+ (differenceMilliSeconds / 1000 / 60 / 60));
-			Log.i("appLog", "diferenca em dias: "
-					+ (differenceMilliSeconds / 1000 / 60 / 60 / 24));
+			long date1 = xmas.getTimeInMillis();
+			long date2 = now.getTimeInMillis();
+			long differenceMilliSeconds = date2 - date1;
+
+			// return valor
+			long dias = differenceMilliSeconds / 1000 / 60 / 60 / 24;
+			long horas = differenceMilliSeconds / 1000 / 60 / 60;
+			long minutos = differenceMilliSeconds / 1000 / 60;
+			long segundos = differenceMilliSeconds / 1000;
+
+			if (dias > 0) {
+				return "" + dias + " dias atrás";
+			} else if (horas > 0) {
+				return "" + horas + " horas atrás";
+			} else if (minutos > 0) {
+				return "" + minutos + " minutos atrás";
+			} else {
+				return "" + segundos + " segundos atrás";
+			}
+
 		} catch (ParseException e) {
 			e.printStackTrace();
-		} catch (java.text.ParseException e) {
-			e.printStackTrace();
 		}
-
-		Toast.makeText(
-				context,
-				"save date: '" + hour + " " + date + "' | current date: '"
-						+ dateFormat.format(cal.getTime()) + "' ",
-				Toast.LENGTH_LONG).show();
+		//
+		// Toast.makeText(
+		// context,
+		// "save date: '" + hour + " " + date + "' | current date: '"
+		// + dateFormat.format(cal.getTime()) + "' ",
+		// Toast.LENGTH_LONG).show();
 
 		return result;
 	}

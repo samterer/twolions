@@ -21,57 +21,71 @@ public class DBConnection {
 
 		// Abre o banco de dados já existente
 		try {
-			// if (db == null) {
+			if (db == null) {
+				synchronized (DBConnection.class) {
 
-			if (db != null) {
-				if (db.isOpen()) {
-					if (dbHelper != null) {
-					
-						Log.i(CATEGORIA, "Abrindo o db para edição.");
-						
-						db = dbHelper.getReadableDatabase();
-					
-					} else {
-					
-						Log.i(CATEGORIA, "o dbHelper é nulo.");
+					if (db == null) {
 
+						db = ctx.openOrCreateDatabase(base_name,
+								Context.MODE_PRIVATE, null);
 					}
-				} else {
-				
-					Log.i(CATEGORIA, "O db esta fechado.");
-					
-					db = ctx.openOrCreateDatabase(base_name, Context.MODE_PRIVATE,null);
-					
-					Log.i(CATEGORIA, "Pronto! Db aberto.");
 				}
-			} else {
-			
-				Log.i(CATEGORIA, "Abrindo conexão com o db.");
-				
-				db = ctx.openOrCreateDatabase(base_name, Context.MODE_PRIVATE,
-						null);
-			
 			}
+
+			// if (db != null) {
+			// if (db.isOpen()) {
+			// if (dbHelper != null) {
+			//
+			// Log.i(CATEGORIA, "Abrindo o db para edição.");
+			//
+			// db = dbHelper.getReadableDatabase();
+			//
+			// } else {
+			//
+			// Log.i(CATEGORIA, "o dbHelper é nulo.");
+			//
+			// }
+			// } else {
+			//
+			// Log.i(CATEGORIA, "O db esta fechado.");
+			//
+			// db = ctx.openOrCreateDatabase(base_name,
+			// Context.MODE_PRIVATE,null);
+			//
+			// Log.i(CATEGORIA, "Pronto! Db aberto.");
+			// }
+			// } else {
+			//
+			// Log.i(CATEGORIA, "Abrindo conexão com o db.");
+			//
+			// db = ctx.openOrCreateDatabase(base_name, Context.MODE_PRIVATE,
+			// null);
+			//
+			// }
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+
 	public long inserir(final ContentValues valores, final String table_name) {
 		final long id = db.insert(table_name, "", valores);
 		return id;
 	}
+
 	public int atualizar(final ContentValues valores, final String where,
 			final String[] whereArgs, final String table_name) {
 		final int count = db.update(table_name, valores, where, whereArgs);
 		Log.i(CATEGORIA, "Atualizou [" + count + "] registros");
 		return count;
 	}
+
 	public int deletar(final String where, final String[] whereArgs,
 			final String table_name) {
 		final int count = db.delete(table_name, where, whereArgs);
 		Log.i(CATEGORIA, "Deletou [" + count + "] registros");
 		return count;
 	}
+
 	public Cursor query(final SQLiteQueryBuilder queryBuilder,
 			final String[] projection, final String selection,
 			final String[] selectionArgs, final String groupBy,
