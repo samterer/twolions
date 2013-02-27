@@ -124,6 +124,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 																	// informações
 																	// do
 				
+			//	try { // se retornar nulo é pq foi o ultimo valor inserido
+					
+			//	}
 				typeColor = itemRequest.getType(); // coloco a cor do item (pq ela já existe no banco)
 				
 				
@@ -318,41 +321,74 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			return;
 		}
 		
-		int cont = 0; // se esse valor for maior que zero o item sera atualizado\criado
-
-		ItemNote i4s = new ItemNote();
-		if (id_item != null) {
-			// É uma atualização
-			i4s.setId(id_item);
-		} else {
-			// cria novo item
-			id_item = (long) -999;
-			cont++; // confirma que o item será salvo
+		if (id_item != null) { // atualização			
+			updateItem(); // atualiza item			
+		} else {			
+			saveNewItem(); // cria novo item no banco		
 		}
+
+	}
+	
+	/**
+	 * Salva item recem criado
+	 */
+	private void saveNewItem() {
+		ItemNote i4s = new ItemNote();
+
+		// typeColor
+		i4s.setType(typeColor.toString());
+
+		// hour and date
+		// get date for save
+		StringBuffer sbDate = new StringBuffer();
+		sbDate.append(date.getText().toString() + "-" + hour.getText());
+
+		i4s.setDate(sbDate.toString());
+
+		// subject
+		i4s.setSubject(subject.getText().toString());
+
+		// text
+		i4s.setText(text.getText().toString());
+
+		// check ou uncheck
+		i4s.setCheck(check);
 		
-		// verifica se o usuario alterou algum dado, 
-		// se nenhum dado foi alterado não atualiza o item
-		if (id_item != -999) {
+		id_item = ItemModel.salvarItemNote(i4s);
+		
+		Toast.makeText(this, R.string.m_save, Toast.LENGTH_SHORT).show();
 
-			// recupera o i4s do dado
+		backToViewItemScreen();
+	}
 
-			// color
-			if (!itemRequest.getType().equals(typeColor.toString())) {
-				cont++;
-			}
-			// subject
-			if (!itemRequest.getSubject().equals(subject.getText().toString())) {
-				cont++;
-			}
-			// text
-			if (!itemRequest.getText().equals(text.getText().toString())) {
-				cont++;
-			}
-			// check
-			if (!itemRequest.isCheck() == check) {
-				cont++;
-			}
+	/**
+	 * Atualiza item
+	 */
+	private void updateItem() {
+		int cont = 0; // se esse valor for maior que zero o item sera
+						// atualizado\criado
+		ItemNote i4s = new ItemNote();
 
+		// É uma atualização
+		i4s.setId(id_item);
+
+		// recupera o i4s do dado
+
+		// color
+		if (!itemRequest.getType().equals(typeColor.toString())) {
+			cont++;
+		}
+		// subject
+		if (!itemRequest.getSubject().equals(subject.getText().toString())) {
+			cont++;
+		}
+		// text
+		if (!itemRequest.getText().equals(text.getText().toString())) {
+			cont++;
+		}
+		// check
+		if (!itemRequest.isCheck() == check) {
+			cont++;
 		}
 
 		// typeColor
@@ -370,20 +406,28 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// text
 		i4s.setText(text.getText().toString());
-		
-		//check ou uncheck
-		i4s.setCheck(check);
 
-		// Salvar
+		// check ou uncheck
+		i4s.setCheck(check);
 		
-		if(cont > 0) { // confirma se o item vai realmente ser atualizado
+		// Salvar		
+		if(cont > 0) { // confirma se o item vai realmente ser atualizado (significa que o user mudou parametros na tela)
 			//Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
-			ItemModel.salvarItemNote(i4s);	
+			id_item = ItemModel.salvarItemNote(i4s);	// no caso de ser a primeira inserção já devolve o id do novo item
 			
 			Toast.makeText(this, R.string.m_save, Toast.LENGTH_SHORT).show();
 			
 		}
 
+		backToViewItemScreen();
+	}
+	
+	/**
+	 * Retorna pra tela de view item
+	 * @param c
+	 * @return
+	 */
+	private void backToViewItemScreen() {
 		Intent it = new Intent(this, ViewItemScreen.class);
 
 		// id do item

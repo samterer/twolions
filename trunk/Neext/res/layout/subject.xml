@@ -27,7 +27,7 @@
     <ImageView
         android:id="@+id/bt_right_up"
         android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:onClick="btBarUpRight"

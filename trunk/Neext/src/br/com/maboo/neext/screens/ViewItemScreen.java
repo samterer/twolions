@@ -23,8 +23,6 @@ import br.com.maboo.neext.interfaces.InterfaceBar;
 import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.util.Constants;
 import br.com.maboo.neext.util.EditTextTools;
-import br.com.maboo.neext.util.NotificationCreate;
-import br.com.maboo.neext.util.NotificationViewer;
 import br.com.maboo.neext.util.TextViewTools;
 
 public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
