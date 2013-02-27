@@ -23,7 +23,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.adapters.ListAdapter;
 import br.com.maboo.neext.core.NeextActivity;
@@ -362,9 +361,9 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	// botões do menu individual dos itens
 	private static final int CHECK_OR_UNCHECK = 0;
 	private static final int NOTIFYNOW = 1;
-	private static final int EDIT = 2;
-	private static final int DELETE = 3;
-	private static final int SHARE = 4;
+	private static final int EDIT = 1;
+	private static final int DELETE = 2;
+	private static final int SHARE = 3;
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
 				.getMenuInfo();
@@ -380,11 +379,11 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 			checkOrUncheckItem(itemNote);
 			
 			break;
-		case NOTIFYNOW:
+		//case NOTIFYNOW:
 			
-			notifyNow(itemNote);
+		//	notifyNow(itemNote);
 			
-			break;
+		//	break;
 		case EDIT:
 			
 			// Cria a intent para abrir a tela de editar
@@ -530,12 +529,12 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 
 			public boolean onTouch(View v, MotionEvent e) {
 
-				Log.i(TAG, "onTouch > onTouch!");
+				//Log.i(TAG, "onTouch > onTouch!");
 
 				position = listview_log.pointToPosition((int) e.getX(),
 						(int) e.getY());
 
-				Log.i(TAG, "onTouch > [position: " + position + "]");
+				//Log.i(TAG, "onTouch > [position: " + position + "]");
 
 				//element = v;
 
@@ -549,27 +548,28 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 
 	}
 	
-	private void onLTRFling() {
-
-	//	Log.i(TAG, "onLTRFling > Left-to-right fling in position[" + position	+ "]");
-
-		try {
-			
-			 Toast.makeText(this, "Left-to-right fling in position[" +
-			 position + "]", Toast.LENGTH_SHORT).show();
-			
-
-			ItemNote item = itens.get(position);
-
-			id_item = item.getId();
-			
-
-		} catch (Exception e) {
-		//	Log.i(TAG, "! element esta null");
-			e.printStackTrace();
-		}
-
-	}
+	/*
+	 * private void onLTRFling() {
+	 * 
+	 * // Log.i(TAG, "onLTRFling > Left-to-right fling in position[" + position
+	 * + "]");
+	 * 
+	 * try {
+	 * 
+	 * Toast.makeText(this, "Left-to-right fling in position[" + position + "]",
+	 * Toast.LENGTH_SHORT).show();
+	 * 
+	 * 
+	 * ItemNote item = itens.get(position);
+	 * 
+	 * id_item = item.getId();
+	 * 
+	 * 
+	 * } catch (Exception e) { // Log.i(TAG, "! element esta null");
+	 * e.printStackTrace(); }
+	 * 
+	 * }
+	 */
 
 	private void onRTLFling() {
 
@@ -577,15 +577,10 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 
 		try {
 			
-			// Toast.makeText(this, "Right-to-left fling in position[" +position + "]", Toast.LENGTH_SHORT).show();
-			
+			// Toast.makeText(this, "Right-to-left fling in position[" +position + "]", Toast.LENGTH_SHORT).show();			
 
 			ItemNote item = itens.get(position);
 			id_item = item.getId();
-			
-			// get the row the clicked button is in
-			//ItemNote itemNote = itens.get(pos);
-			//id_item = itemNote.getId();
 
 			// open list item log
 			openViewItem();

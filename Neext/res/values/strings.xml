@@ -36,7 +36,7 @@
     <!-- Menu itens -->
     <string-array name="menu">
 		<item>Check</item>
-		<item>Notify Now</item>
+		<!-- <item>Notify Now</item>  -->
 		<item>Edit</item>
 		<item>Delete</item>
 		<item>Share</item>
