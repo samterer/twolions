@@ -23,8 +23,8 @@ public class ItemModel {
 	 * 
 	 * @param itemLog
 	 */
-	public static void salvarItemNote(final ItemNote itemLog) {
-		ListScreen.dao.salvar(itemLog);
+	public static long salvarItemNote(final ItemNote itemLog) {
+		return ListScreen.dao.salvar(itemLog);
 	}
 
 	/**

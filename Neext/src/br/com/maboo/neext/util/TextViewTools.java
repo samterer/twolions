@@ -1,7 +1,6 @@
 package br.com.maboo.neext.util;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Vector;
 
 import android.content.Context;
