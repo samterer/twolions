@@ -267,8 +267,9 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			}
 			
 			// escreve no cabeçalho qnd foi a ultima edição
-			//type_edit.setText(TextViewTools.getLastEdit(hour.getText().toString(),date.getText().toString(), this));
-			type_edit.setText("");
+			type_edit.setText(TextViewTools.getLastEdit(hour.getText()
+					.toString(), date.getText().toString(), this));
+			//type_edit.setText("");
 
 			// subject
 			subject.setText(String.valueOf((itemRequest.getSubject())));
