@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -18,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -149,7 +152,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 
 		listview_log.setAdapter(new ListAdapter(this, itens));
 
-		//effect(); // efeito alpha
+	//	effect(); // efeito alpha
 		
 		listview_log.setOnItemClickListener(this);
 
@@ -160,11 +163,10 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	 ****************************************************************/
 
 	public void effect() {
-		// LayoutAnimationController controller =
-		// AnimationUtils.loadLayoutAnimation(this,
-		// R.anim.anime_slide_to_right);
+	//	LayoutAnimationController controller = AnimationUtils
+	//			.loadLayoutAnimation(this, R.anim.slide_to_right);
 
-		// listview_log.setLayoutAnimation(controller);
+	//	listview_log.setLayoutAnimation(controller);
 	}
 
 	// recupera toda a lista de itens da base
@@ -179,6 +181,9 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 
 			e.printStackTrace();
 
+		} catch (SQLException e)  {
+			
+			e.printStackTrace();
 		}
 
 		return list;

@@ -54,13 +54,16 @@ public class ListAdapter extends BaseAdapter {
 		return position;
 	}
 
+	@SuppressWarnings("unused")
 	public View getView(int position, View view, ViewGroup parent) {
 
 		ViewHolder holder = null;
 
 		ItemNote itemRequest = itens.get(position);
 
-		if (view == null) {
+		if (holder == null) {	// verifica se o holder existe
+			
+			Log.i("appLog","### holder ["+itemRequest.getSubject()+"] ###");
 
 			// Nao existe a View no cache para esta linha então cria um novo
 			holder = new ViewHolder();
@@ -72,8 +75,7 @@ public class ListAdapter extends BaseAdapter {
 			view.setId(position);
 
 			//check
-			holder.check = itemRequest.isCheck();
-			
+			holder.check = itemRequest.isCheck();		
 			
 			holder.bgItem = (RelativeLayout) view.findViewById(R.id.r_item_log);
 
@@ -95,7 +97,7 @@ public class ListAdapter extends BaseAdapter {
 
 			// Ja existe no cache, bingo entao pega!
 			try {
-
+				
 				holder = (ViewHolder) view.getTag();
 
 			} catch (NullPointerException e) {
@@ -103,6 +105,7 @@ public class ListAdapter extends BaseAdapter {
 				e.printStackTrace();
 
 			}
+			
 		}
 		
 		holder.imgLeftCenter.setImageResource(R.drawable.boxe_check); // esta como box check para alinhar os itens (a imagem alinha os itens)
