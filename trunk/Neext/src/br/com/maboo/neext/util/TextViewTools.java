@@ -24,43 +24,27 @@ public class TextViewTools {
 	public static String getLastEdit(String hour, String date, Context context) {
 		String result = "";
 
-		Calendar xmas = Calendar.getInstance(); // data da ultima alteração
-		xmas.set(Integer.valueOf(date.substring(6, 9)).intValue(), Integer
-				.valueOf(date.substring(3, 4)).intValue(),
-				Integer.valueOf(date.substring(0, 1)).intValue());
-
 		final Calendar now = Calendar.getInstance(); // data atual
 
 		try {
-			long date1 = xmas.getTimeInMillis();
-			long date2 = now.getTimeInMillis();
-			long differenceMilliSeconds = date2 - date1;
-
-			// return valor
-			long dias = differenceMilliSeconds / 1000 / 60 / 60 / 24;
-			long horas = differenceMilliSeconds / 1000 / 60 / 60;
-			long minutos = differenceMilliSeconds / 1000 / 60;
-			long segundos = differenceMilliSeconds / 1000;
-
-			if (dias > 0) {
-				return "" + dias + " dias atrás";
-			} else if (horas > 0) {
-				return "" + horas + " horas atrás";
-			} else if (minutos > 0) {
-				return "" + minutos + " minutos atrás";
+			
+			//ano
+			if(Integer.valueOf(date.substring(6, 9)).intValue() < now.getTime().getYear()) {
+				// a mais de um anos
+				return "há muito tempo atrás - "+now.getTime().getYear();
 			} else {
-				return "" + segundos + " segundos atrás";
+					if(Integer.valueOf(date.substring(0, 1)).intValue() < now.getTime().getDay()+1) {
+						// ha uns dias
+						return "há alguns dias atrás";
+					} else {
+						// ha alguma tempo
+						return "há alguma tempo atrás";
+					}
 			}
 
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		//
-		// Toast.makeText(
-		// context,
-		// "save date: '" + hour + " " + date + "' | current date: '"
-		// + dateFormat.format(cal.getTime()) + "' ",
-		// Toast.LENGTH_LONG).show();
 
 		return result;
 	}
