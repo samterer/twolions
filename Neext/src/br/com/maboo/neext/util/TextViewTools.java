@@ -1,11 +1,15 @@
 package br.com.maboo.neext.util;
 
-import java.util.Calendar;
 import java.util.Vector;
+
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.net.ParseException;
+import android.util.Log;
 import android.widget.TextView;
 
 public class TextViewTools {
@@ -21,30 +25,35 @@ public class TextViewTools {
 	}
 
 	// retorna o tempo entre a data atual e a data passada
+	// dd / mm / yyyy
+	// [0][2] / [3][5] / [6][7][8][10]
+	// hh : mm : 00
+	// [0][2] : [3][5]
 	public static String getLastEdit(String hour, String date, Context context) {
 		String result = "";
 
-		final Calendar now = Calendar.getInstance(); // data atual
+		int year = Integer.valueOf(date.substring(6, 10)).intValue();
+		int mouth = Integer.valueOf(date.substring(3, 5)).intValue();
+		int day = Integer.valueOf(date.substring(0, 2)).intValue();
+		
+		int hh =  Integer.valueOf(hour.substring(0, 2)).intValue();
+		int mm = Integer.valueOf(hour.substring(3, 5)).intValue();
 
-		try {
-			
-			//ano
-			if(Integer.valueOf(date.substring(6, 9)).intValue() < now.getTime().getYear()) {
-				// a mais de um anos
-				return "há muito tempo atrás - "+now.getTime().getYear();
-			} else {
-					if(Integer.valueOf(date.substring(0, 1)).intValue() < now.getTime().getDay()+1) {
-						// ha uns dias
-						return "há alguns dias atrás";
-					} else {
-						// ha alguma tempo
-						return "há alguma tempo atrás";
-					}
-			}
+		String dateStart = mouth+"/"+day+"/"+year +" "+ hh+":"+mm+":"+00;
+		String dateStop = "03/05/2013 02:22:33";
 
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		final DateTimeFormatter format = DateTimeFormat
+				.forPattern("MM/dd/yyyy HH:mm:ss");
+
+		DateTime dt1 = format.parseDateTime(dateStart);
+		DateTime dt2 = format.parseDateTime(dateStop);
+
+		final Period period = new Period(dt1, dt2);
+
+		Log.i("appLog", period.getDays() + " days, ");
+		Log.i("appLog", period.getHours() + " hours, ");
+		Log.i("appLog", period.getMinutes() + " minutes, ");
+		Log.i("appLog", period.getSeconds() + " seconds.");
 
 		return result;
 	}
