@@ -243,7 +243,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			// change background title (barra superior)
 			bg_title.setBackgroundColor(color);
 			
-			// formata date
+			/*// formata date
 			String dateFromBase = itemRequest.getDate();
 
 			StringBuffer sb = new StringBuffer();
@@ -287,7 +287,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				//Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
 
 				sb.append(dateFromBase.charAt(i));
-			}
+			}*/
 
 			// subject
 			subject.setText(String.valueOf((itemRequest.getSubject())));
@@ -398,7 +398,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// get date for save
 		StringBuffer sbDate = new StringBuffer();
 		sbDate.append(date.getText().toString() + "-" + hour.getText());
-
+		
 		i4s.setDate(sbDate.toString());
 
 		// subject
@@ -454,9 +454,14 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	}
 	
 	public void organizeBt() {
+		
 		// insere a imagem no bt central
 		ImageView bt = (ImageView) findViewById(R.id.bt_center_down);
 		bt.setImageDrawable(getResources().getDrawable(R.drawable.bt_save_off));
+		
+		// insere a imagem no bt right
+		ImageView bt1 = (ImageView) findViewById(R.id.bt_right_down);
+		bt1.setImageDrawable(getResources().getDrawable(R.drawable.bt_delete_off));
 
 	}
 
@@ -491,7 +496,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	}
 
 	public void btBarDownRight(View v) {
-		// TODO Auto-generated method stub
+		
+		finish();
+		
 
 	}
 	
@@ -648,6 +655,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			// let the system handle the event
 			return super.onTouchEvent(event);
 		}
+		
+		
 
 	}
 }

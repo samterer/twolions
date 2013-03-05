@@ -1,5 +1,6 @@
 package br.com.maboo.neext.util;
 
+import java.util.Calendar;
 import java.util.Vector;
 
 import org.joda.time.DateTime;
@@ -40,7 +41,17 @@ public class TextViewTools {
 		int mm = Integer.valueOf(hour.substring(3, 5)).intValue();
 
 		String dateStart = mouth+"/"+day+"/"+year +" "+ hh+":"+mm+":"+00;
-		String dateStop = "03/05/2013 02:22:33";
+		//String dateStop = "03/05/2013 02:52:00";
+		
+		final Calendar c = Calendar.getInstance();
+	    int mYear = c.get(Calendar.YEAR);
+	    int mMonth = c.get(Calendar.MONTH) + 1;
+	    int mDay = c.get(Calendar.DAY_OF_MONTH);
+	    
+	    int mHh =  c.getTime().getHours();
+		int mMm = c.getTime().getMinutes();
+		
+		String dateStop = mDay+"/"+mMonth+"/"+mYear+" "+ mHh +":"+ mMm +":"+00;
 
 		final DateTimeFormatter format = DateTimeFormat
 				.forPattern("MM/dd/yyyy HH:mm:ss");
@@ -50,10 +61,23 @@ public class TextViewTools {
 
 		final Period period = new Period(dt1, dt2);
 
-		Log.i("appLog", period.getDays() + " days, ");
-		Log.i("appLog", period.getHours() + " hours, ");
-		Log.i("appLog", period.getMinutes() + " minutes, ");
-		Log.i("appLog", period.getSeconds() + " seconds.");
+	//	Log.i("appLog", period.getDays() + " days ##");
+	//	Log.i("appLog", period.getHours() + " hours ##");
+	//	Log.i("appLog", period.getMinutes() + " minutes ##");
+	//	Log.i("appLog", period.getSeconds() + " seconds ##");
+		
+		// ha alguns dias
+		if (period.getDays() > 1) {
+			result = "há alguns dias";
+		}
+		// ha algumas horas
+		else if (period.getHours() > 1) {
+			result = "há algumas horas";
+		}
+		// ha alguns minutos 
+		else {
+			result = "há pouco tempo";
+		}
 
 		return result;
 	}
