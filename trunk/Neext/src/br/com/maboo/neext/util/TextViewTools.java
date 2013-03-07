@@ -31,7 +31,6 @@ public class TextViewTools {
 	// hh : mm : 00
 	// [0][2] : [3][5]
 	public static String getLastEdit(String hour, String date, Context context) {
-		String result = "";
 
 		int year = Integer.valueOf(date.substring(6, 10)).intValue();
 		int mouth = Integer.valueOf(date.substring(3, 5)).intValue();
@@ -40,8 +39,8 @@ public class TextViewTools {
 		int hh =  Integer.valueOf(hour.substring(0, 2)).intValue();
 		int mm = Integer.valueOf(hour.substring(3, 5)).intValue();
 
-		String dateStart = mouth+"/"+day+"/"+year +" "+ hh+":"+mm+":"+00;
-		//String dateStop = "03/05/2013 02:52:00";
+		String dateStart = mouth+"/"+day+"/"+year+" "+hh+":"+mm+":"+00;
+		Log.i("appLog", "## dateStart " +dateStart+ " ##");
 		
 		final Calendar c = Calendar.getInstance();
 	    int mYear = c.get(Calendar.YEAR);
@@ -51,7 +50,8 @@ public class TextViewTools {
 	    int mHh =  c.getTime().getHours();
 		int mMm = c.getTime().getMinutes();
 		
-		String dateStop = mDay+"/"+mMonth+"/"+mYear+" "+ mHh +":"+ mMm +":"+00;
+		String dateStop = mMonth+"/"+mDay+"/"+mYear+" "+ mHh +":"+ mMm +":"+00;
+		Log.i("appLog", "## dateStop " +dateStop+ " ##");
 
 		final DateTimeFormatter format = DateTimeFormat
 				.forPattern("MM/dd/yyyy HH:mm:ss");
@@ -61,24 +61,27 @@ public class TextViewTools {
 
 		final Period period = new Period(dt1, dt2);
 
-	//	Log.i("appLog", period.getDays() + " days ##");
-	//	Log.i("appLog", period.getHours() + " hours ##");
-	//	Log.i("appLog", period.getMinutes() + " minutes ##");
-	//	Log.i("appLog", period.getSeconds() + " seconds ##");
+		Log.i("appLog", period.getDays() + " days ##");
+		Log.i("appLog", period.getHours() + " hours ##");
+		Log.i("appLog", period.getMinutes() + " minutes ##");
+		Log.i("appLog", period.getSeconds() + " seconds ##");
 		
 		// ha alguns dias
 		if (period.getDays() > 1) {
-			result = "há alguns dias";
+			return "há "+period.getDays()+" dias";
 		}
 		// ha algumas horas
-		else if (period.getHours() > 1) {
-			result = "há algumas horas";
+		else if (period.getHours() > 1 && period.getDays() <= 1) {
+			return "há "+period.getHours()+" horas";
 		}
-		// ha alguns minutos 
+		// ha alguns minutos
+		else if (period.getMinutes() > 1 && period.getHours() < 2 && period.getDays() < 1) {
+			return "há "+period.getMinutes()+" minutos";
+		}
+		// ha algum tempo 
 		else {
-			result = "há pouco tempo";
+			return "há algum tempo";
 		}
 
-		return result;
 	}
 }
