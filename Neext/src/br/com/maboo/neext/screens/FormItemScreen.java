@@ -461,7 +461,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		
 		// insere a imagem no bt right
 		ImageView bt1 = (ImageView) findViewById(R.id.bt_right_down);
-		bt1.setImageDrawable(getResources().getDrawable(R.drawable.bt_delete_off));
+		bt1.setImageDrawable(getResources().getDrawable(R.drawable.bt_cancel_off));
 
 	}
 
