@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- EDIT SUBJECT -->
+
+    <include
+        android:layout_gravity="center_vertical"
+        layout="@layout/subject" />
+
+    <!-- DATE -->
+
+    <TableRow
+        >
+        <include layout="@layout/date" />
+    </TableRow>
+
+    <include
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+        layout="@layout/line" />
+
+    <!-- EDIT TEXT -->
+
+    <TableRow
+        android:layout_marginTop="3dp"
+        android:gravity="center" >
+        <include
+            android:layout_width="fill_parent"
+            layout="@layout/text" />
+
+    </TableRow>
+    
+     <!-- BAR INF -->
+    
+    <include android:layout_gravity="bottom" layout="@layout/bar_down" />
+
+</TableLayout>

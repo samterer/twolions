@@ -457,27 +457,12 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	private void checkOrUncheckItem() {
 
 		itemRequest.setCheck(!itemRequest.isCheck());
-		
-		// if(itemRequest.isCheck() == true) {		
-		//	StringBuffer text = new StringBuffer(); // corpo do note
-		//	for (int i = 0; i < itemRequest.getText().length(); i++) { // sinopse do corpo da notificação
-		//		text.append(itemRequest.getText().charAt(i));	
-		//	}
-
-			// cria notificação
-		//	NotificationCreate nc = new NotificationCreate(
-		//			getApplicationContext(), "New note was marked.",
-		//			itemRequest.getSubject(), text);
-		//	nc.criarNotificacao(NotificationViewer.class);
-		// }
 
 		if (itemRequest != null) { // É uma atualização (pra não ter erro)
 			itemRequest.setId(itemRequest.getId());
 			
 			ListScreen.dao.atualizar(itemRequest); // atualiza item
 		}
-
-		
 
 		init(); // atualiza a view
 

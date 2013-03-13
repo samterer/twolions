@@ -197,7 +197,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		vEditText.add(text);
 		
 		// muda o button de edit por um bt de cor
-		bt_right_up.setImageResource(R.drawable.bt_edit_color);
+		bt_right_up.setImageResource(R.drawable.boxe);
 		bt_right_up.setVisibility(View.VISIBLE);
 
 		EditTextTools.insertFontInAllFields(vEditText, tf); // change font

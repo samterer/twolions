@@ -12,22 +12,24 @@ public class DBConnection {
 
 	private static final String CATEGORIA = "base";
 
-	protected static SQLiteDatabase db = null;
+	private static SQLiteDatabase db = null;
 
-	protected static SQLiteHelper dbHelper = null;
+	private static SQLiteHelper dbHelper = null;
 
 	public DBConnection(final Context ctx, final String base_name) {
 		super();
 
 		// Abre o banco de dados já existente
 		try {
-			if (db == null) {
+			if (getDb() == null) {
 				synchronized (DBConnection.class) {
 
-					if (db == null) {
+					if (getDb() == null) {
 
-						db = ctx.openOrCreateDatabase(base_name,
-								Context.MODE_PRIVATE, null);
+						Log.i(CATEGORIA, "Abrindo conexão com o db.");
+
+						setDb(ctx.openOrCreateDatabase(base_name,
+								Context.MODE_PRIVATE, null));
 					}
 				}
 			}
@@ -68,20 +70,20 @@ public class DBConnection {
 	}
 
 	public long inserir(final ContentValues valores, final String table_name) {
-		final long id = db.insert(table_name, "", valores);
+		final long id = getDb().insert(table_name, "", valores);
 		return id;
 	}
 
 	public int atualizar(final ContentValues valores, final String where,
 			final String[] whereArgs, final String table_name) {
-		final int count = db.update(table_name, valores, where, whereArgs);
+		final int count = getDb().update(table_name, valores, where, whereArgs);
 		Log.i(CATEGORIA, "Atualizou [" + count + "] registros");
 		return count;
 	}
 
 	public int deletar(final String where, final String[] whereArgs,
 			final String table_name) {
-		final int count = db.delete(table_name, where, whereArgs);
+		final int count = getDb().delete(table_name, where, whereArgs);
 		Log.i(CATEGORIA, "Deletou [" + count + "] registros");
 		return count;
 	}
@@ -90,9 +92,25 @@ public class DBConnection {
 			final String[] projection, final String selection,
 			final String[] selectionArgs, final String groupBy,
 			final String having, final String orderBy) {
-		final Cursor c = queryBuilder.query(db, projection, selection,
+		final Cursor c = queryBuilder.query(getDb(), projection, selection,
 				selectionArgs, groupBy, having, orderBy);
 		return c;
+	}
+
+	public static SQLiteHelper getDbHelper() {
+		return dbHelper;
+	}
+
+	public static void setDbHelper(SQLiteHelper dbHelper) {
+		DBConnection.dbHelper = dbHelper;
+	}
+
+	public static SQLiteDatabase getDb() {
+		return db;
+	}
+
+	public static void setDb(SQLiteDatabase db) {
+		DBConnection.db = db;
 	}
 
 }

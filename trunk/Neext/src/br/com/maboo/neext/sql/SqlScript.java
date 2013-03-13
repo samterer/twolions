@@ -70,24 +70,24 @@ public class SqlScript extends DBConnection {
 		SqlScript.SCRIPT_DELETE_TB_ITEM_LOG };
 
 		// Criar utilizando um script SQL
-		dbHelper = new SQLiteHelper(ctx, SqlScript.BASE_NAME,
+		setDbHelper(new SQLiteHelper(ctx, SqlScript.BASE_NAME,
 				SqlScript.VERSAO_BANCO, script_tables_create,
-				script_tables_delete);
+				script_tables_delete));
 
 		// abre o banco no modo escrita para poder alterar também
-		db = dbHelper.getWritableDatabase();
+		setDb(getDbHelper().getWritableDatabase());
 
 	}
 
 	// Fecha o banco
 	public void fechar() {
 
-		if (db != null) {
-			db.close();
+		if (getDb() != null) {
+			getDb().close();
 		}
 
-		if (dbHelper != null) {
-			dbHelper.close();
+		if (getDbHelper() != null) {
+			getDbHelper().close();
 		}
 	}
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frameLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="100dp"
+    android:layout_gravity="left|center_vertical" >
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:background="@color/cinza_c"
+        android:paddingBottom="20dp" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingTop="20dp" >
+
+        <RelativeLayout
+            android:id="@+id/r_item_log"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+            <ImageView
+                android:id="@+id/imgLeftCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="-30dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/boxe" 
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/date"
+                style="@style/texto10Branco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/hour"
+                style="@style/texto10Branco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:paddingBottom="20dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/subject"
+                style="@style/texto20Branco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/imgLeftCenter"
+                android:text="Medium Text" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</FrameLayout>
