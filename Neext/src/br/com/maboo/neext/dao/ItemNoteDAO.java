@@ -104,7 +104,7 @@ public class ItemNoteDAO extends DBConnection {
 
 	public ItemNote buscarItemNote(final long id) {
 		// select * from ItemNote where _id=?
-		final Cursor c = db.query(true, table_name, ItemNote.colunas,
+		final Cursor c = getDb().query(true, table_name, ItemNote.colunas,
 				ItemNote._ID + "=" + id, null, null, null, null, null);
 
 		if (c.getCount() > 0) {
@@ -187,7 +187,7 @@ public class ItemNoteDAO extends DBConnection {
 
 	public ItemNote buscarLastItemNote() {
 		// select * from ItemNote where _id=?
-		final Cursor c = db.query(true, table_name, ItemNote.colunas, null,
+		final Cursor c = getDb().query(true, table_name, ItemNote.colunas, null,
 				null, null, null, null, null);
 
 		// Posicinoa no ultimo elemento
@@ -218,7 +218,7 @@ public class ItemNoteDAO extends DBConnection {
 	// Retorna um cursor com todos os carros
 	public Cursor getCursor() {
 		try {
-			return db.query(table_name, ItemNote.colunas, null, null, null,
+			return getDb().query(table_name, ItemNote.colunas, null, null, null,
 					null, null, null);
 		} catch (final SQLException e) {
 			Log.e(CATEGORIA, "Erro ao buscar os logs: " + e.toString());
@@ -229,7 +229,7 @@ public class ItemNoteDAO extends DBConnection {
 	// retorna uma lista de itens pelo type
 	// type = cor
 	public List<ItemNote> listarItemNotesPorTipo(final String type_item) {
-		final Cursor c = db.query(table_name, ItemNote.colunas, ItemNote.TYPE
+		final Cursor c = getDb().query(table_name, ItemNote.colunas, ItemNote.TYPE
 				+ "='" + type_item + "'", null, null, null, null);
 
 		final List<ItemNote> itemLogs = new ArrayList<ItemNote>();
@@ -278,8 +278,8 @@ public class ItemNoteDAO extends DBConnection {
 	// Fecha o banco
 	public void fechar() {
 		// fecha o banco de dados
-		if (db != null) {
-			db.close();
+		if (getDb() != null) {
+			getDb().close();
 		}
 	}
 }
