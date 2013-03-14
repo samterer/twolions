@@ -37,19 +37,7 @@ public class SqlScript extends DBConnection {
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('f15b40','25/12/2012-20:30','vermelho_note','testando testando','false','25/12/2012-20:30');",
-			sqlScript[1]
-					+ " "
-					+ TB_ITEM_LOG
-					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('9a6db0','25/12/2012-21:30','roxo_note','testando testando','false','25/12/2012-20:30');",
-			sqlScript[1]
-					+ " "
-					+ TB_ITEM_LOG
-					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('70c3ed','25/11/2012-22:30','azul_note','testando testando','true','25/12/2012-20:30');",
-			sqlScript[1]
-					+ " "
-					+ TB_ITEM_LOG
-					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('aed361','25/11/2012-23:30','verde_note','testando testando','false','25/12/2012-20:30');" };
+					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('f15b40','25/12/2012-20:30','I am a note','','false','13/03/2013-22:48');" };
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(final Context ctx) {
@@ -59,10 +47,7 @@ public class SqlScript extends DBConnection {
 		final String[] script_tables_create = {
 				// create fuel car and 1 register
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[0],
-				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[1],
-				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[2],
-				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[3],
-				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[4] };
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[1] };
 		// delete
 		final String[] script_tables_delete = {
 
@@ -80,7 +65,7 @@ public class SqlScript extends DBConnection {
 	}
 
 	// Fecha o banco
-	public void fechar() {
+	public synchronized void fechar() {
 
 		if (getDb() != null) {
 			getDb().close();

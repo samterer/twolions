@@ -1,6 +1,7 @@
 package br.com.maboo.neext.core;
 
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.AsyncTask;
 import android.util.Log;
 import br.com.maboo.neext.R;
@@ -46,34 +47,23 @@ public class NeextActivity extends ActivityCircle {
 		
 	}
 
-	public void onPause() {
-		super.onPause();
-
-		// fecha conexao
-		if (sqlScript != null) {
-
-			Log.i(Constants.LOG_BASE, this.getString(R.string.a_f_db));
-
-			sqlScript.fechar();
-		}
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-
-		Log.i(Constants.LOG_BASE, this.getString(R.string.a_c_db));
-
-		// abre base
-		sqlScript = new SqlScript(this);
-
-	}
-
 	protected void onActivityResult(final int codigo, final int codigoRetorno,
 			final Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
 
-		sqlScript = new SqlScript(this);
+		try {
+
+			// abre base
+			sqlScript = new SqlScript(this);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			// Não existe conexão
+			AndroidUtils.alertDialog(this,
+					"Sorry, please... soooorry. And now, re-start the app.");
+
+		}
 
 	}
 
@@ -91,7 +81,7 @@ public class NeextActivity extends ActivityCircle {
 	// Inicia a thread
 	public void startTransaction(Transaction transaction) {
 
-		boolean dbOk = AndroidUtils.isConnectionDB(this);
+		boolean dbOk = AndroidUtils.isConnectionDB(this); // verificação de teste apenas
 
 		if (dbOk) {
 
@@ -106,7 +96,7 @@ public class NeextActivity extends ActivityCircle {
 
 			// Não existe conexão
 			AndroidUtils.alertDialog(this,
-					"Bad, bad app! No donut for you. Please, re-start.");
+					"Sorry, please... soooorry. And now, re-start the app.");
 		}
 	}
 

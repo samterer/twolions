@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.SQLException;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -28,6 +30,7 @@ import br.com.maboo.neext.core.FormItemActivity;
 import br.com.maboo.neext.interfaces.InterfaceBar;
 import br.com.maboo.neext.model.ItemModel;
 import br.com.maboo.neext.modelobj.ItemNote;
+import br.com.maboo.neext.util.AndroidUtils;
 import br.com.maboo.neext.util.Constants;
 import br.com.maboo.neext.util.EditTextTools;
 
@@ -120,9 +123,18 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				id_item = extras.getLong(ItemNote._ID);
 
 				//Log.i(TAG, "searching itemRequest [" + id_item + "]");
-				itemRequest = ItemModel.buscarItemNote(id_item); // busca
-																	// informações
-																	// do
+				try {					
+					itemRequest = ItemModel.buscarItemNote(id_item); // busca
+					// informações
+					// do
+				} catch (SQLException e) {
+					
+					// erro caricato
+					AndroidUtils.alertDialog(this,
+							"Sorry, please... soooorry. And now, re-start the app.");
+					
+					e.printStackTrace();
+				}
 				
 			//	try { // se retornar nulo é pq foi o ultimo valor inserido
 					
@@ -197,7 +209,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		vEditText.add(text);
 		
 		// muda o button de edit por um bt de cor
-		bt_right_up.setImageResource(R.drawable.boxe);
+		bt_right_up.setImageResource(R.drawable.paint);
 		bt_right_up.setVisibility(View.VISIBLE);
 
 		EditTextTools.insertFontInAllFields(vEditText, tf); // change font
@@ -318,6 +330,14 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	public void salvar() {
 
 		if (subject.getText().toString().length() < 1) { // se o campo subjet estiver fazio nao salva
+			
+			Intent it = new Intent(this, ListScreen.class);
+			it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // mata a pilha de activitys 
+			// OK
+			startActivity(it);
+
+			overridePendingTransition(R.anim.scale_in, R.anim.anime_slide_to_right);
+			
 			return;
 		}
 		
@@ -354,7 +374,16 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// check ou uncheck
 		i4s.setCheck(check);
 		
-		id_item = ItemModel.salvarItemNote(i4s);
+		try {
+			id_item = ItemModel.salvarItemNote(i4s);			
+		} catch (SQLException e) {
+			
+			// erro caricato
+			AndroidUtils.alertDialog(this,
+					"Sorry, please... soooorry. And now, re-start the app.");
+			
+			e.printStackTrace();
+		}
 		
 		Toast.makeText(this, R.string.m_save, Toast.LENGTH_SHORT).show();
 
@@ -413,7 +442,17 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// Salvar		
 		if(cont > 0) { // confirma se o item vai realmente ser atualizado (significa que o user mudou parametros na tela)
 			//Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
-			id_item = ItemModel.salvarItemNote(i4s);	// no caso de ser a primeira inserção já devolve o id do novo item
+			try {
+				id_item = ItemModel.salvarItemNote(i4s);	// no caso de ser a primeira inserção já devolve o id do novo item
+			} catch (SQLException e) {
+
+				// erro caricato
+				AndroidUtils
+						.alertDialog(this,
+								"Sorry, please... soooorry. And now, re-start the app.");
+
+				e.printStackTrace();
+			}
 			
 			Toast.makeText(this, R.string.m_save, Toast.LENGTH_SHORT).show();
 			
@@ -471,6 +510,14 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		super.onBackPressed(); // boolean==true
 
+	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if ((keyCode == KeyEvent.KEYCODE_HOME)) {
+	        //do nothing
+	        return false;
+	    }
+	    return super.onKeyDown(keyCode, event);
 	}
 	
 	public void btBarUpLeft(View v) {
