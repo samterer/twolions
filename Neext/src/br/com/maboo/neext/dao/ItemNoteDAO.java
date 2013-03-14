@@ -52,8 +52,8 @@ public class ItemNoteDAO extends DBConnection {
 		values.put(ItemNote.CHECK, "false");
 		values.put(ItemNote.DATE_NOTIFICATION, itemLog.getDate_notification());
 
-		// Log.i(CATEGORIA, "Inserindo o itemLog: " +
-		// buscarItemNote(itemLog.getId()).toString());
+		//Log.i(CATEGORIA, "Inserindo o itemLog: " +
+		//buscarItemNote(itemLog.getId()).toString());
 
 		final long id = inserir(values, table_name);
 		return id;
@@ -222,6 +222,7 @@ public class ItemNoteDAO extends DBConnection {
 					null, null, null);
 		} catch (final SQLException e) {
 			Log.e(CATEGORIA, "Erro ao buscar os logs: " + e.toString());
+			
 			return null;
 		}
 	}

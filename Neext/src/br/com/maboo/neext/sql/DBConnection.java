@@ -32,6 +32,8 @@ public class DBConnection {
 								Context.MODE_PRIVATE, null));
 					}
 				}
+			} else {
+				Log.i(CATEGORIA, "Utilizando o db aberto.");
 			}
 
 			// if (db != null) {
@@ -70,21 +72,32 @@ public class DBConnection {
 	}
 
 	public long inserir(final ContentValues valores, final String table_name) {
-		final long id = getDb().insert(table_name, "", valores);
-		return id;
+		try {
+
+			final long id = getDb().insert(table_name, null, valores);
+			
+			Log.i(CATEGORIA, "## Inserio o regitro [" + id + "] ##");
+			
+			return id;
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			return 0;
+		}
+		
 	}
 
 	public int atualizar(final ContentValues valores, final String where,
 			final String[] whereArgs, final String table_name) {
 		final int count = getDb().update(table_name, valores, where, whereArgs);
-		Log.i(CATEGORIA, "Atualizou [" + count + "] registros");
+		Log.i(CATEGORIA, "## Atualizou [" + count + "] registros ##");
 		return count;
 	}
 
 	public int deletar(final String where, final String[] whereArgs,
 			final String table_name) {
 		final int count = getDb().delete(table_name, where, whereArgs);
-		Log.i(CATEGORIA, "Deletou [" + count + "] registros");
+		Log.i(CATEGORIA, "## Deletou [" + count + "] registros ##");
 		return count;
 	}
 

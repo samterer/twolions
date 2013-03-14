@@ -19,8 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -34,6 +32,7 @@ import br.com.maboo.neext.interfaces.InterfaceBar;
 import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.modelobj.ListNote;
 import br.com.maboo.neext.transaction.Transaction;
+import br.com.maboo.neext.util.AndroidUtils;
 import br.com.maboo.neext.util.Constants;
 import br.com.maboo.neext.util.NotificationCreate;
 import br.com.maboo.neext.util.NotificationViewer;
@@ -59,7 +58,19 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		dao = new ItemNoteDAO(this);
+		try {
+		
+			dao = new ItemNoteDAO(this);
+		
+		} catch (SQLException e) {
+			// erro caricato
+			AndroidUtils.alertDialog(this,
+					"Sorry, please... soooorry. And now, re-start the app.");
+			
+			e.printStackTrace();
+			
+		}
+		
 		
 		this.context = getApplicationContext();
 
@@ -139,8 +150,8 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
 
-		// atualiza a lista na tela
-		update();
+			// atualiza a lista na tela
+			update();				
 
 	}
 
@@ -177,11 +188,11 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 
 			list = dao.listarItemNotes();
 
-		} catch (NullPointerException e) {
-
-			e.printStackTrace();
-
 		} catch (SQLException e)  {
+			
+			// erro caricato
+			AndroidUtils.alertDialog(this,
+					"Sorry, please... soooorry. And now, re-start the app.");
 			
 			e.printStackTrace();
 		}
@@ -258,7 +269,16 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 
 	// passe o id do item que será excluido
 	protected void excluirItem(long id) {
-		dao.deletar(id);
+		
+		try {
+			dao.deletar(id);						
+		} catch (SQLException e) {
+			// erro caricato
+			AndroidUtils.alertDialog(this,
+					"Sorry, please... soooorry. And now, re-start the app.");
+			
+			e.printStackTrace();
+		}
 	}
 
 
@@ -459,7 +479,15 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 			item.setId(item.getId());
 		}
 		
-		dao.atualizar(item); // atualiza item
+		try {			
+			dao.atualizar(item); // atualiza item
+		} catch (SQLException e) {
+			// erro caricato
+			AndroidUtils.alertDialog(this,
+					"Sorry, please... soooorry. And now, re-start the app.");
+			
+			e.printStackTrace();
+		}
 		
 		update(); 		// atualiza a lista na tela
 		

@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.SQLException;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -21,6 +22,7 @@ import br.com.maboo.neext.R;
 import br.com.maboo.neext.core.FormItemActivity;
 import br.com.maboo.neext.interfaces.InterfaceBar;
 import br.com.maboo.neext.modelobj.ItemNote;
+import br.com.maboo.neext.util.AndroidUtils;
 import br.com.maboo.neext.util.Constants;
 import br.com.maboo.neext.util.EditTextTools;
 import br.com.maboo.neext.util.TextViewTools;
@@ -303,11 +305,33 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 	// Buscar o itemLog pelo id_item
 	protected ItemNote buscarItemNote(final long id) {
-		return ListScreen.dao.buscarItemNote(id);
+		try {
+			return ListScreen.dao.buscarItemNote(id);
+		} catch (SQLException e) {
+
+			// erro caricato
+			AndroidUtils.alertDialog(this,
+					"Sorry, please... soooorry. And now, re-start the app.");
+
+			e.printStackTrace();
+
+			return null;
+		}
 	}
 
 	protected ItemNote buscarLastItemNote() {
-		return ListScreen.dao.buscarLastItemNote();
+		try {
+			return ListScreen.dao.buscarLastItemNote();
+		} catch (SQLException e) {
+
+			// erro caricato
+			AndroidUtils.alertDialog(this,
+					"Sorry, please... soooorry. And now, re-start the app.");
+
+			e.printStackTrace();
+
+			return null;
+		}
 	}
 
 	// pede pro usuario a confirmação para deletar realmente o item
@@ -352,7 +376,16 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 	// passe o id do item que será excluido
 	protected void excluirItem(long id) {
-		ListScreen.dao.deletar(id);
+		try {
+			ListScreen.dao.deletar(id);
+		} catch (SQLException e) {
+
+			// erro caricato
+			AndroidUtils.alertDialog(this,
+					"Sorry, please... soooorry. And now, re-start the app.");
+
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -461,7 +494,17 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		if (itemRequest != null) { // É uma atualização (pra não ter erro)
 			itemRequest.setId(itemRequest.getId());
 			
-			ListScreen.dao.atualizar(itemRequest); // atualiza item
+			try {
+				ListScreen.dao.atualizar(itemRequest); // atualiza item
+			} catch (SQLException e) {
+
+				// erro caricato
+				AndroidUtils
+						.alertDialog(this,
+								"Sorry, please... soooorry. And now, re-start the app.");
+
+				e.printStackTrace();
+			}
 		}
 
 		init(); // atualiza a view
