@@ -15,6 +15,7 @@
         android:lines="20"
         android:tag="text"
         android:hint="insert a text"
-        android:width="240dp" />
+        android:onClick="btBarUpRight"
+        android:height="345dp" />
 
 </LinearLayout>
