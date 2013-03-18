@@ -31,7 +31,7 @@ public class ListAdapter extends BaseAdapter {
 
 	public ListAdapter(Activity context, List<ItemNote> itens) {
 
-		Log.i(TAG, "ListAdapter....");
+	//	Log.i(TAG, "ListAdapter....");
 
 		this.itens = itens;
 
@@ -63,7 +63,7 @@ public class ListAdapter extends BaseAdapter {
 
 		if (holder == null) {	// verifica se o holder existe
 			
-			Log.i("appLog","### holder ["+itemRequest.getSubject()+"] ###");
+	//		Log.i("appLog","### holder ["+itemRequest.getSubject()+"] ###");
 
 			// Nao existe a View no cache para esta linha então cria um novo
 			holder = new ViewHolder();

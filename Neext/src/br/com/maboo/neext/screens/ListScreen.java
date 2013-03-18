@@ -97,13 +97,13 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 
 		effect(); // effect for opening
 
-		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
+		//Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
 
 		if (icicle != null) {
 
 			ListNote lista = (ListNote) icicle.getSerializable(ListNote.KEY);
 
-			Log.i(TAG, "Lendo estado: savedInstanceState(carros)");
+		//	Log.i(TAG, "Lendo estado: savedInstanceState(carros)");
 
 			this.itens = lista.itens;
 
@@ -128,7 +128,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	}
 
 	public Object onRetainNonConfigurationInstance() {
-		Log.i(TAG, "Salvando Estado: onRetainNonConfigurationInstance()");
+		//Log.i(TAG, "Salvando Estado: onRetainNonConfigurationInstance()");
 
 		return itens;
 	}
@@ -136,7 +136,7 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
-		Log.i(TAG, "Salvando Estado: onSaveInstanceState(bundle)");
+		//Log.i(TAG, "Salvando Estado: onSaveInstanceState(bundle)");
 
 		// Salvar o estado da tela
 		outState.putSerializable(ListNote.KEY, new ListNote(itens));

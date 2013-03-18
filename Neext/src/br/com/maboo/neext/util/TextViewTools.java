@@ -40,7 +40,7 @@ public class TextViewTools {
 		int mm = Integer.valueOf(hour.substring(3, 5)).intValue();
 
 		String dateStart = mouth+"/"+day+"/"+year+" "+hh+":"+mm+":"+00;
-		Log.i("appLog", "## dateStart " +dateStart+ " ##");
+	//	Log.i("appLog", "## dateStart " +dateStart+ " ##");
 		
 		final Calendar c = Calendar.getInstance();
 	    int mYear = c.get(Calendar.YEAR);
@@ -51,7 +51,7 @@ public class TextViewTools {
 		int mMm = c.getTime().getMinutes();
 		
 		String dateStop = mMonth+"/"+mDay+"/"+mYear+" "+ mHh +":"+ mMm +":"+00;
-		Log.i("appLog", "## dateStop " +dateStop+ " ##");
+	//	Log.i("appLog", "## dateStop " +dateStop+ " ##");
 
 		final DateTimeFormatter format = DateTimeFormat
 				.forPattern("MM/dd/yyyy HH:mm:ss");
@@ -61,10 +61,10 @@ public class TextViewTools {
 
 		final Period period = new Period(dt1, dt2);
 
-		Log.i("appLog", period.getDays() + " days ##");
-		Log.i("appLog", period.getHours() + " hours ##");
-		Log.i("appLog", period.getMinutes() + " minutes ##");
-		Log.i("appLog", period.getSeconds() + " seconds ##");
+	//	Log.i("appLog", period.getDays() + " days ##");
+	//	Log.i("appLog", period.getHours() + " hours ##");
+	//	Log.i("appLog", period.getMinutes() + " minutes ##");
+	//	Log.i("appLog", period.getSeconds() + " seconds ##");
 		
 		// ha alguns dias
 		if (period.getDays() > 1) {

@@ -98,7 +98,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 					} else {
 
-						Log.i(TAG, "searching itemRequest [" + id_item + "]");
+					//	Log.i(TAG, "searching itemRequest [" + id_item + "]");
 
 						itemRequest = buscarItemNote(id_item);
 
@@ -109,8 +109,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 														// esta
 														// check ou uncheck
 
-						Log.i(TAG, "Color of item [" + itemRequest.getSubject()
-								+ "] é [" + typeColor + "]");
+					//	Log.i(TAG, "Color of item [" + itemRequest.getSubject() + "] é [" + typeColor + "]");
 
 					}
 
@@ -294,7 +293,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 
-			Log.e(TAG, itemRequest.toString());
+		//	Log.e(TAG, itemRequest.toString());
 		}
 
 	}
@@ -496,6 +495,13 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			
 			try {
 				ListScreen.dao.atualizar(itemRequest); // atualiza item
+				
+				if(itemRequest.isCheck()) {					
+					Toast.makeText(this, "check!", Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(this, "uncheck!", Toast.LENGTH_SHORT).show();
+				}
+				
 			} catch (SQLException e) {
 
 				// erro caricato
