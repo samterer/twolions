@@ -76,7 +76,7 @@ public class DBConnection {
 
 			final long id = getDb().insert(table_name, null, valores);
 			
-			Log.i(CATEGORIA, "## Inserio o regitro [" + id + "] ##");
+	//		Log.i(CATEGORIA, "## Inserio o regitro [" + id + "] ##");
 			
 			return id;
 		} catch (Exception e) {
@@ -90,14 +90,14 @@ public class DBConnection {
 	public int atualizar(final ContentValues valores, final String where,
 			final String[] whereArgs, final String table_name) {
 		final int count = getDb().update(table_name, valores, where, whereArgs);
-		Log.i(CATEGORIA, "## Atualizou [" + count + "] registros ##");
+	//	Log.i(CATEGORIA, "## Atualizou [" + count + "] registros ##");
 		return count;
 	}
 
 	public int deletar(final String where, final String[] whereArgs,
 			final String table_name) {
 		final int count = getDb().delete(table_name, where, whereArgs);
-		Log.i(CATEGORIA, "## Deletou [" + count + "] registros ##");
+	//	Log.i(CATEGORIA, "## Deletou [" + count + "] registros ##");
 		return count;
 	}
 

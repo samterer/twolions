@@ -25,7 +25,7 @@ public class ItemNoteDAO extends DBConnection {
 	public ItemNoteDAO(final Context ctx) {
 		super(ctx, base_name);
 
-		Log.i(CATEGORIA, "ItemNoteDAO...");
+	//	Log.i(CATEGORIA, "ItemNoteDAO...");
 
 	}
 
@@ -76,9 +76,7 @@ public class ItemNoteDAO extends DBConnection {
 
 		final String _id = String.valueOf(itemLog.getId());
 
-		Log.i(CATEGORIA,
-				"Atualizando o itemLog: "
-						+ buscarItemNote(itemLog.getId()).toString());
+	//	Log.i(CATEGORIA, "Atualizando o itemLog: " + buscarItemNote(itemLog.getId()).toString());
 
 		final String where = ItemNote._ID + "=?";
 		final String[] whereArgs = new String[] { _id };
@@ -94,8 +92,7 @@ public class ItemNoteDAO extends DBConnection {
 		final String _id = String.valueOf(id);
 		final String[] whereArgs = new String[] { _id };
 
-		Log.i(CATEGORIA, "Deletando o itemLog: "
-				+ buscarItemNote(id).toString());
+	//	Log.i(CATEGORIA, "Deletando o itemLog: "+ buscarItemNote(id).toString());
 
 		final int count = deletar(where, whereArgs, table_name);
 
@@ -131,7 +128,7 @@ public class ItemNoteDAO extends DBConnection {
 			itemLog.setDate_notification(c.getString(6));
 			
 
-			Log.i(CATEGORIA, "ItemNote: " + itemLog.toString());
+		//	Log.i(CATEGORIA, "ItemNote: " + itemLog.toString());
 
 			return itemLog;
 		}
@@ -177,7 +174,7 @@ public class ItemNoteDAO extends DBConnection {
 				
 				itemLog.setDate_notification(c.getString(idxIdDate_notification));
 
-				Log.i(CATEGORIA, "ItemNote: " + itemLog.toString());
+			//	Log.i(CATEGORIA, "ItemNote: " + itemLog.toString());
 
 			} while (c.moveToNext());
 		}
@@ -187,8 +184,7 @@ public class ItemNoteDAO extends DBConnection {
 
 	public ItemNote buscarLastItemNote() {
 		// select * from ItemNote where _id=?
-		final Cursor c = getDb().query(true, table_name, ItemNote.colunas, null,
-				null, null, null, null, null);
+		final Cursor c = getCursor();
 
 		// Posicinoa no ultimo elemento
 		c.moveToPosition(c.getCount() - 1);
@@ -210,7 +206,7 @@ public class ItemNoteDAO extends DBConnection {
 		
 		itemLog.setDate_notification(c.getString(6));
 
-		Log.i(CATEGORIA, "ItemNote: " + itemLog.toString());
+	//	Log.i(CATEGORIA, "ItemNote: " + itemLog.toString());
 
 		return itemLog;
 	}
@@ -221,7 +217,7 @@ public class ItemNoteDAO extends DBConnection {
 			return getDb().query(table_name, ItemNote.colunas, null, null, null,
 					null, null, null);
 		} catch (final SQLException e) {
-			Log.e(CATEGORIA, "Erro ao buscar os logs: " + e.toString());
+	//		Log.e(CATEGORIA, "Erro ao buscar os logs: " + e.toString());
 			
 			return null;
 		}
@@ -268,7 +264,7 @@ public class ItemNoteDAO extends DBConnection {
 				
 				itemLog.setDate_notification(c.getString(idxIdDate_notification));
 
-				Log.i(CATEGORIA, "ItemNote: " + itemLog.toString());
+		//		Log.i(CATEGORIA, "ItemNote: " + itemLog.toString());
 
 			} while (c.moveToNext());
 		}

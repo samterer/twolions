@@ -37,7 +37,7 @@ public class SqlScript extends DBConnection {
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('f15b40','25/12/2012-20:30','I am a note','','false','13/03/2013-22:48');" };
+					+ "("+columns[1]+","+columns[2]+","+columns[3]+","+columns[4]+","+columns[5]+","+columns[6]+") values('f15b40','25/12/2012-20:30','I am a note','have a good day','false','13/03/2013-22:48');" };
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(final Context ctx) {

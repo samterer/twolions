@@ -231,8 +231,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	// open screen with datas of object
 	public void loadingEdit() {
 
-		Log.i(TAG, "Data for edit");
-		Log.i(TAG, itemRequest.toString());
+	//	Log.i(TAG, "Data for edit");
+	//	Log.i(TAG, itemRequest.toString());
 		// }
 
 		try {
