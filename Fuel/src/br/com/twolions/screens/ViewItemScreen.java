@@ -370,10 +370,9 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 	}
 
-	public void onBackPressed() { // call my backbutton pressed method when
-
-		Log.i("appLog", "Clicked back");
-
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
 	}
 
 }

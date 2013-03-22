@@ -400,9 +400,10 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 
 	}
 
-	public void onBackPressed() { // call my backbutton pressed method when
-		// boolean==true
-
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
 	}
 
 	/******************************************************************************
@@ -493,53 +494,53 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 		openViewItem();
 	}
 
-	private void onLTRFling() {
+	// private void onLTRFling() {
+	//
+	// Log.i(TAG, "onLTRFling > Left-to-right fling in position[" + position
+	// + "]");
+	//
+	// try {
+	// /*
+	// * Toast.makeText(this, "Left-to-right fling in position[" +
+	// * position + "]", Toast.LENGTH_SHORT).show();
+	// */
+	//
+	// ItemLog item = itens.get(position);
+	//
+	// id_item = item.getId();
+	// id_car = item.getId_car();
+	// type = item.getType();
+	//
+	// showBtsEditDelete(true);
+	//
+	// } catch (Exception e) {
+	// Log.i(TAG, "! element esta null");
+	// }
+	//
+	// }
 
-		Log.i(TAG, "onLTRFling > Left-to-right fling in position[" + position
-				+ "]");
-
-		try {
-			/*
-			 * Toast.makeText(this, "Left-to-right fling in position[" +
-			 * position + "]", Toast.LENGTH_SHORT).show();
-			 */
-
-			ItemLog item = itens.get(position);
-
-			id_item = item.getId();
-			id_car = item.getId_car();
-			type = item.getType();
-
-			showBtsEditDelete(true);
-
-		} catch (Exception e) {
-			Log.i(TAG, "! element esta null");
-		}
-
-	}
-
-	private void onRTLFling() {
-
-		Log.i(TAG, "onRTLFling > Right-to-left fling in position[" + position
-				+ "]");
-
-		try {
-			/*
-			 * Toast.makeText(this, "Right-to-left fling in position[" +
-			 * position + "]", Toast.LENGTH_SHORT).show();
-			 */
-
-			ItemLog item = itens.get(position);
-			id_item = item.getId();
-			id_car = item.getId_car();
-			type = item.getType();
-
-			showBtsEditDelete(false);
-
-		} catch (Exception e) {
-			Log.i(TAG, "! element esta null");
-		}
-	}
+	// private void onRTLFling() {
+	//
+	// Log.i(TAG, "onRTLFling > Right-to-left fling in position[" + position
+	// + "]");
+	//
+	// try {
+	// /*
+	// * Toast.makeText(this, "Right-to-left fling in position[" +
+	// * position + "]", Toast.LENGTH_SHORT).show();
+	// */
+	//
+	// ItemLog item = itens.get(position);
+	// id_item = item.getId();
+	// id_car = item.getId_car();
+	// type = item.getType();
+	//
+	// showBtsEditDelete(false);
+	//
+	// } catch (Exception e) {
+	// Log.i(TAG, "! element esta null");
+	// }
+	// }
 
 	class MyGestureDetector extends SimpleOnGestureListener {
 
@@ -568,12 +569,12 @@ public class ListItemScreen extends MabooActivity implements InterfaceBar,
 			if (e1.getX() - e2.getX() > REL_SWIPE_MIN_DISTANCE
 					&& Math.abs(velocityX) > REL_SWIPE_THRESHOLD_VELOCITY) {
 
-				onRTLFling();
+				// onRTLFling();
 
 			} else if (e2.getX() - e1.getX() > REL_SWIPE_MIN_DISTANCE
 					&& Math.abs(velocityX) > REL_SWIPE_THRESHOLD_VELOCITY) {
 
-				onLTRFling();
+				// onLTRFling();
 			}
 
 			return false;

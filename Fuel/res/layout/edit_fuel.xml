@@ -7,8 +7,7 @@
 
     <TableLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg" >
+        android:layout_height="wrap_content" >
 
         <!-- Date -->
 
@@ -23,7 +22,7 @@
         </TableRow>
 
         <include
-            android:layout_height="2dp"
+            android:layout_height="0.5dp"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="15dp"
             layout="@layout/line" />
@@ -52,7 +51,7 @@
         </TableRow>
 
         <include
-            android:layout_height="2dp"
+            android:layout_height="0.5dp"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="15dp"
             layout="@layout/line" />
@@ -81,7 +80,7 @@
         </TableRow>
 
         <include
-            android:layout_height="2dp"
+            android:layout_height="0.5dp"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="15dp"
             layout="@layout/line" />
