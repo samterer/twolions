@@ -10,7 +10,6 @@ import android.content.res.Configuration;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector;

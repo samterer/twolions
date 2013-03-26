@@ -3,13 +3,11 @@ package br.com.maboo.neext.core;
 import android.content.Intent;
 import android.database.SQLException;
 import android.os.AsyncTask;
-import android.util.Log;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.sql.SqlScript;
 import br.com.maboo.neext.transaction.Transaction;
 import br.com.maboo.neext.transaction.TransactionTask;
 import br.com.maboo.neext.util.AndroidUtils;
-import br.com.maboo.neext.util.Constants;
 
 public class NeextActivity extends ActivityCircle {
 

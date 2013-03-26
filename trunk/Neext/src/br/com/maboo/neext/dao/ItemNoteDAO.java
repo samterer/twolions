@@ -7,7 +7,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.util.Log;
 import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.sql.DBConnection;
 import br.com.maboo.neext.util.Constants;

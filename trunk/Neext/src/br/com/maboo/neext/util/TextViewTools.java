@@ -10,7 +10,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.widget.TextView;
 
 public class TextViewTools {

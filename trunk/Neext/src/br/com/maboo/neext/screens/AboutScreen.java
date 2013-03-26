@@ -1,5 +1,7 @@
 package br.com.maboo.neext.screens;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import br.com.maboo.neext.R;
@@ -36,6 +38,20 @@ public class AboutScreen extends ActivityCircle {
 	 ****************************************************************/
 
 	public void hideAbout(View v) {
+		
+		callRakingPage(v);
+		
+		//finish();
+
+		//overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+	}
+
+	public void callRakingPage(View v) {
+		Intent intent = new Intent(
+				Intent.ACTION_VIEW,
+				Uri.parse("https://play.google.com/store/apps/details?id=br.com.maboo.neext&feature=more_from_developer#?t=W251bGwsMSwyLDEwMiwiYnIuY29tLm1hYm9vLm5lZXh0Il0."));
+		startActivity(Intent.createChooser(intent, "Chose browser"));
+
 		finish();
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
