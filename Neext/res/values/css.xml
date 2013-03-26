@@ -111,6 +111,16 @@
     </style>
     
     <!-- Texto com Fonte 40 -->
+    <style name="texto40Branco">
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+    
+    <style name="texto40BrancoNegrito">
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
     <style name="texto40">
         <item name="android:textColor">@color/preto</item>
         <item name="android:textSize">40sp</item>
