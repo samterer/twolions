@@ -3,7 +3,6 @@ package br.com.twolions.screens;
 import java.util.Calendar;
 import java.util.Vector;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;

@@ -1,5 +1,6 @@
 package br.com.twolions.rules;
 
+
 import android.content.Context;
 import android.util.Log;
 import br.com.twolions.R;
