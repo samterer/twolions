@@ -1,5 +1,6 @@
 package br.com.twolions.core;
 
+
 import android.os.Bundle;
 import android.util.Log;
 import br.com.twolions.R;

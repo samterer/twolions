@@ -1,5 +1,6 @@
 package br.com.twolions.core;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;

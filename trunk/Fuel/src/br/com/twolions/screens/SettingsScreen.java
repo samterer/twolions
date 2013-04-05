@@ -1,5 +1,6 @@
 package br.com.twolions.screens;
 
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
