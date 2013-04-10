@@ -42,7 +42,7 @@ public class ListCarScreen extends MabooActivity implements
 
 	private List<Carro> carros;
 
-	ListView listview_car;
+	private ListView listview_car;
 
 	private static String name_car;
 	private static Long id_car;
@@ -245,6 +245,8 @@ public class ListCarScreen extends MabooActivity implements
 
 			item.setLayoutAnimation(controller);
 
+			escondeOutrosItens(view);
+
 		} else {
 
 			ImageView seta = (ImageView) view.findViewById(R.id.seta);
@@ -284,6 +286,19 @@ public class ListCarScreen extends MabooActivity implements
 
 	}
 
+	/**
+	 * Esconde todos os outros itens
+	 */
+	private void escondeOutrosItens(View currentView) {
+		for (int i = 0; i < listview_car.getCount(); i++) {
+			View item = (View) listview_car.getChildAt(i);
+			if (item != currentView) {
+				// item.setVisibility(View.INVISIBLE);
+				showBtsEditDelete(item, false);
+			}
+		}
+	}
+
 	/*
 	 * Abre lista de itens
 	 */
@@ -296,6 +311,9 @@ public class ListCarScreen extends MabooActivity implements
 
 		// Passa o id do carro como parâmetro
 		it.putExtra(Carro._ID, id_car);
+
+		// Passa também o nome do carro para ser usado no titulo
+		it.putExtra(Carro.NOME, name_car);
 
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
@@ -413,8 +431,9 @@ public class ListCarScreen extends MabooActivity implements
 
 	public void btBarLeft(final View v) {
 
-		// Fecha a tela
-		finish();
+		startActivity(new Intent(this, AboutScreen.class));
+
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 
 	}
 
@@ -427,8 +446,8 @@ public class ListCarScreen extends MabooActivity implements
 
 	public void organizeBt() {
 		// bt left
-		// final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		// bt_left.setImageResource(R.drawable.bt_menu);
+		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
+		bt_left.setImageResource(R.drawable.bt_menu);
 
 		// bt rigt
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);

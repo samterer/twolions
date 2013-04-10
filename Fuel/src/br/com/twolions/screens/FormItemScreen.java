@@ -52,7 +52,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	private static Long id_item;
 	private static Long id_car = null;
+	private static String name_car;
+
 	private static int type;
+
 	private static final int FUEL = Constants.FUEL;
 	private static final int EXPENSE = Constants.EXPENSE;
 	private static final int NOTE = Constants.NOTE;
@@ -103,6 +106,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		if (extras != null) { // Se for para Editar, recuperar os valores ...
 
+			name_car = extras.getString(Carro.NOME);
+
 			String task = extras.getString("task");
 
 			if (task.equals("create")) { // cria novo itemRequest
@@ -144,6 +149,15 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		case REPAIR:
 			setContentView(R.layout.form_repair);
 			break;
+		}
+
+		// cria title
+		TextView title = (TextView) findViewById(R.id.title);
+		title.setText(name_car);
+
+		// tamanho da fonte, para não estourar o espaço
+		if (title.getText().length() > 10) {
+			title.setTextSize(15);
 		}
 
 		Typeface tf = Typeface.createFromAsset(getAssets(),
@@ -325,30 +339,29 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			// value u
 			if (type == FUEL) {
 				value_u.setText(String.valueOf((itemRequest.getValue_u())));
-				
-				//get value
-				
-				//pego a moeda anterior
-				
-				//pego a moeda da vez
-				
-			//	4
-				
-			//	dollar
-				
-			//	dollar
-				
-			//	devolve o valor
-				
-			//	se nao
-				
-			//	real
-				
-			//	dolar
-				
-			//	= getDollarSobreReal(shared.moeda, shared.moedda, valor)
-				
-				
+
+				// get value
+
+				// pego a moeda anterior
+
+				// pego a moeda da vez
+
+				// 4
+
+				// dollar
+
+				// dollar
+
+				// devolve o valor
+
+				// se nao
+
+				// real
+
+				// dolar
+
+				// = getDollarSobreReal(shared.moeda, shared.moedda, valor)
+
 			}
 
 			// value p
@@ -474,8 +487,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			} else {
 
 				// pinta de vermelho os dados nos campos de value_p e value_u
-				//value_p.setTextColor(R.color.vermelho);
-				//value_u.setTextColor(R.color.vermelho);
+				// value_p.setTextColor(R.color.vermelho);
+				// value_u.setTextColor(R.color.vermelho);
 
 				return;
 
@@ -483,15 +496,29 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		} else {
 
 			// Salvar
-			ItemModel.salvarItemLog(itemLog4Save);
+			id_item = ItemModel.salvarItemLog(itemLog4Save);
 
 		}
 
+		// abre lista de logs do carro
+		Intent it = new Intent(this, ViewItemScreen.class);
+
+		// Passa o id do carro como parâmetro
+		it.putExtra(ItemLog._ID, id_item);
+
 		// OK
-		setResult(RESULT_OK, new Intent());
+		setResult(RESULT_OK, it);
+
+		it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // mata a pilha de
+														// activitys
+
+		// Abre a tela de edição
+		startActivity(it);
+
+		finish();
 
 		// Fecha a tela
-		finish();
+		// finish();
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
@@ -536,12 +563,14 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	public void btBarLeft(final View v) {
 
-		setResult(RESULT_CANCELED);
+		// setResult(RESULT_CANCELED);
+		// Intent it = new Intent(this, ViewItemScreen.class);
+		// startActivity(it);
 
 		// Fecha a tela
 		finish();
 
-		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+		// overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 
 	}
 
@@ -549,9 +578,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		salvar();
 	}
 
-	public void onBackPressed() { // call my backbutton pressed method when
-		// boolean==true
-
+	public void onBackPressed() { // do call my back button method when
+		//
 	}
 
 	public void addListenerOnButton() {

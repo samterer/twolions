@@ -15,6 +15,7 @@ import android.widget.Toast;
 import br.com.twolions.R;
 import br.com.twolions.core.FormItemActivity;
 import br.com.twolions.interfaces.InterfaceBar;
+import br.com.twolions.modelobj.Carro;
 import br.com.twolions.modelobj.ItemLog;
 import br.com.twolions.settings.Settings;
 import br.com.twolions.util.Constants;
@@ -36,7 +37,10 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 	private static Long id_item;
 	private static Long id_car;
+	private static String name_car;
+
 	private static int type;
+
 	private static final int FUEL = Constants.FUEL;
 	private static final int EXPENSE = Constants.EXPENSE;
 	private static final int NOTE = Constants.NOTE;
@@ -79,6 +83,8 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		if (extras != null) {
 
+			name_car = extras.getString(Carro.NOME);
+
 			id_item = extras.getLong(ItemLog._ID);
 
 			if (id_item != null) { // searching itemRequest
@@ -113,6 +119,17 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			setContentView(R.layout.form_repair);
 			break;
 		}
+
+		// cria title
+		TextView title = (TextView) findViewById(R.id.title);
+		title.setText(name_car);
+
+		// tamanho da fonte, para não estourar o espaço
+		if (title.getText().length() > 10) {
+			title.setTextSize(15);
+		}
+
+		title.setVisibility(View.VISIBLE);
 
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				"fonts/DroidSansFallback.ttf"); // modifica as fontes
@@ -348,11 +365,17 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		setResult(RESULT_OK);
 
-		// Fecha a tela
-		finish();
+		// volta para a lista
+		// Intent it = new Intent(this, ListItemScreen.class);
+		// startActivityForResult(it, RESULT_OK);
+		// startActivity(it);
 
+		finish();
 	}
 
+	/**
+	 * Edita item
+	 */
 	public void btBarRight(final View v) {
 
 		// Cria a intent para abrir a tela de editar
@@ -363,16 +386,23 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		// id do itemRequest
 		it.putExtra(ItemLog._ID, id_item);
 
+		// Passa também o nome do carro para ser usado no titulo
+		it.putExtra(Carro.NOME, name_car);
+
 		// Abre a tela de edição
-		startActivityForResult(it, INSERIR_EDITAR);
+		// startActivityForResult(it, INSERIR_EDITAR);
+		startActivity(it);
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 
 	}
 
 	public void onBackPressed() {
-		// TODO Auto-generated method stub
+
+		setResult(RESULT_OK);
+
 		super.onBackPressed();
+
 	}
 
 }

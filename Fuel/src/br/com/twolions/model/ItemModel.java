@@ -25,8 +25,8 @@ public class ItemModel {
 	 * 
 	 * @param itemLog
 	 */
-	public static void salvarItemLog(final ItemLog itemLog) {
-		ListItemScreen.dao.salvar(itemLog);
+	public static long salvarItemLog(final ItemLog itemLog) {
+		return ListItemScreen.dao.salvar(itemLog);
 	}
 
 	/**
