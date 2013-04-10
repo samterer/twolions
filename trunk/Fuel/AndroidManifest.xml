@@ -29,6 +29,12 @@
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity> -->
         <activity
+            android:name=".screens.AboutScreen"
+            android:label="AboutScreen"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
+        <activity
             android:name=".screens.FormCarScreen"
             android:label="FormCarScreen"
             android:screenOrientation="portrait"

@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, FuelActivity!</string>
     <string name="app_name">Maboo</string>
+
     <string name="name">Name Car</string>
     <string name="aguarde">Loading...</string>
+    
+    <!-- About -->
+    <string name="app_copywrite">© 2012-2013 @maboobr</string>
+    <string name="app_allrights">All rights reserved.</string>
+    
+    <!-- Version -->
+    <string name="app_version">1.0.0</string>
 
     <!-- BASE -->
     <string name="dbname">bd_itsmycar</string>
