@@ -5,7 +5,7 @@
     android:background="@color/pastel"
     android:orientation="vertical" >
 
-    <include layout="@layout/bar_sup" />
+    <include layout="@layout/bar_up" />
 
     <include layout="@xml/edit_set" />
 

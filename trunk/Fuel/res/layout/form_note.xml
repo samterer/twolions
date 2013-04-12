@@ -5,7 +5,7 @@
     android:background="@color/cinza_claro"
     android:orientation="vertical" >
 
-    <include layout="@layout/bar_sup" />
+    <include layout="@layout/bar_up" />
 
     <include layout="@layout/edit_note" />
 
