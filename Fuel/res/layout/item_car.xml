@@ -59,25 +59,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Seta na Direita -->
-
-    <LinearLayout
-        android:id="@+id/seta"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|center_vertical"
-        android:gravity="right|center_vertical" >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="10dp"
-            android:gravity="right|center_vertical"
-            android:src="@drawable/seta_direita"
-            android:visibility="gone" />
-    </LinearLayout>
-
     <LinearLayout
         android:id="@+id/tb_edicao"
         android:layout_width="fill_parent"

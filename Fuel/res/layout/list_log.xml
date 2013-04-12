@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/bg"
+    android:background="@color/cinza_claro"
     android:gravity="center"
     android:orientation="vertical" >
 
-    <include layout="@layout/bar_sup" />
+    <include layout="@layout/bar_up" />
 
     <ListView
         android:id="@+id/listview_log"

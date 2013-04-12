@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.twolions"
+    package="br.com.maboo.fuellist"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -65,7 +65,7 @@
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
-            android:name=".screens.SettingsScreen"
+            android:name="br.com.maboo.fuellist.screens.SettingsScreen"
             android:label="Settings"
             android:configChanges="orientation">
         </activity>
