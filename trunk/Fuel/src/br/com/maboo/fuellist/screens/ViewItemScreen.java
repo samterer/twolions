@@ -17,7 +17,6 @@ import br.com.maboo.fuellist.core.FormItemActivity;
 import br.com.maboo.fuellist.interfaces.InterfaceBar;
 import br.com.maboo.fuellist.modelobj.Carro;
 import br.com.maboo.fuellist.modelobj.ItemLog;
-import br.com.maboo.fuellist.settings.Settings;
 import br.com.maboo.fuellist.util.Constants;
 import br.com.maboo.fuellist.util.EditTextTools;
 import br.com.maboo.fuellist.util.TextViewTools;
@@ -294,15 +293,13 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 			// value u
 			if (type == FUEL) {
-				value_u.setText(Settings.moeda
-						+ String.valueOf((itemRequest.getValue_u())));
+				value_u.setText(String.valueOf((itemRequest.getValue_u())));
 				value_u.setFocusable(false);
 			}
 
 			// value p
 			if (type == EXPENSE || type == REPAIR || type == FUEL) {
-				value_p.setText(Settings.moeda
-						+ String.valueOf((itemRequest.getValue_p())));
+				value_p.setText(String.valueOf((itemRequest.getValue_p())));
 				value_p.setFocusable(false);
 			}
 

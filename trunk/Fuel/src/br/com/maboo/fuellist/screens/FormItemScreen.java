@@ -341,28 +341,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			if (type == FUEL) {
 				value_u.setText(String.valueOf((itemRequest.getValue_u())));
 
-				// get value
-
-				// pego a moeda anterior
-
-				// pego a moeda da vez
-
-				// 4
-
-				// dollar
-
-				// dollar
-
-				// devolve o valor
-
-				// se nao
-
-				// real
-
-				// dolar
-
 				// = getDollarSobreReal(shared.moeda, shared.moedda, valor)
-
 			}
 
 			// value p
@@ -434,28 +413,15 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// value u
 		if (type == FUEL) {
 
-			StringBuffer sb = new StringBuffer(value_u.getText().length());
-
-			sb.append(value_u.getText().toString());
-
-			sb.deleteCharAt(0);
-
-			itemLog4Save
-					.setValue_u(Double.valueOf(sb.toString()).doubleValue());
+			itemLog4Save.setValue_u(Double
+					.valueOf(value_u.getText().toString()));
 		}
 
 		// value p
 		if (type == EXPENSE || type == REPAIR || type == FUEL) {
-			// format number
 
-			StringBuffer sb = new StringBuffer(value_p.getText().length());
-
-			sb.append(value_p.getText().toString());
-
-			sb.deleteCharAt(0);
-
-			itemLog4Save
-					.setValue_p(Double.valueOf(sb.toString()).doubleValue());
+			itemLog4Save.setValue_p(Double
+					.valueOf(value_p.getText().toString()));
 		}
 
 		// text
@@ -631,22 +597,20 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				public void afterTextChanged(Editable s) {
 					try {
-						if (!s.toString()
-								.matches(
-										"^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$")) {
-
-							String userInput = ""
-									+ s.toString().replaceAll("[^\\d]", "");
-
-							Float in = Float.parseFloat(userInput);
-							float percen = in / 100;
-
-							value_p.setText("$" + percen);
-
-						} else {
-							// invalid number
-							return;
-						}
+						/*
+						 * if (!s.toString() .matches(
+						 * "^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$")) {
+						 * 
+						 * String userInput = "" +
+						 * s.toString().replaceAll("[^\\d]", "");
+						 * 
+						 * Float in = Float.parseFloat(userInput); float percen
+						 * = in / 100;
+						 * 
+						 * value_p.setText("$" + percen);
+						 * 
+						 * } else { // invalid number return; }
+						 */
 					} catch (StackOverflowError e) {
 						e.printStackTrace();
 					}
@@ -669,26 +633,24 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				public void afterTextChanged(Editable s) {
 					try {
-						if (!value_p.getText().equals("")
-								|| value_p.getText().equals("$00,00")) {
-
-							if (!s.toString()
-									.matches(
-											"^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$")) {
-
-								String userInput = ""
-										+ s.toString().replaceAll("[^\\d]", "");
-
-								Float in = Float.parseFloat(userInput);
-								float percen = in / 100;
-
-								value_u.setText("$" + percen);
-							} else {
-								// invalid number
-								return;
-							}
-
-						}
+						/*
+						 * if (!value_p.getText().equals("") ||
+						 * value_p.getText().equals("$00,00")) {
+						 * 
+						 * if (!s.toString() .matches(
+						 * "^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$")) {
+						 * 
+						 * String userInput = "" +
+						 * s.toString().replaceAll("[^\\d]", "");
+						 * 
+						 * Float in = Float.parseFloat(userInput); float percen
+						 * = in / 100;
+						 * 
+						 * value_u.setText("$" + percen); } else { // invalid
+						 * number return; }
+						 * 
+						 * }
+						 */
 					} catch (StackOverflowError e) {
 						e.printStackTrace();
 					}
