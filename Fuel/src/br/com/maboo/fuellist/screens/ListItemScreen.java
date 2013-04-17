@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.adapters.ListItemAdapter;
 import br.com.maboo.fuellist.core.FuelListActivity;
@@ -118,7 +119,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		effect(); // effect for opening
 
-		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
+		Log.i("estado", "Lendo estado: getLastNonConfigurationInstance()");
 
 		if (icicle != null) {
 
@@ -146,7 +147,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	}
 
 	public Object onRetainNonConfigurationInstance() {
-		Log.i(TAG, "Salvando Estado: onRetainNonConfigurationInstance()");
+		Log.i("estado", "Salvando Estado: onRetainNonConfigurationInstance()");
 
 		return itens;
 	}
@@ -154,7 +155,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
-		Log.i(TAG, "Salvando Estado: onSaveInstanceState(bundle)");
+		Log.i("estado", "Salvando Estado: onSaveInstanceState(bundle)");
 
 		// Salvar o estado da tela
 		outState.putSerializable(ListItemLog.KEY, new ListItemLog(itens));
@@ -167,19 +168,15 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 
-		Log.i(TAG,
-				"O Estado da Tela foi Mudado: onConfigurationChanged(newConfig)");
+		Log.i("estado",
+				"O Estado da Tela foi Mudado: onConfigurationChanged(landscape)");
+
+		if (customMenuDialog != null) {
+			customMenuDialog.dismiss();
+		}
 
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			if (customMenuDialog == null) {
-				return;
-			} else {
-
-				// abre a tela de report
-				startActivity(new Intent(this, ViewGraphicScreen.class));
-
-				overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
-			}
+			Toast.makeText(this, "sou um report", Toast.LENGTH_SHORT).show();
 		}
 
 	}
