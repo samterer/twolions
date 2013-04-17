@@ -7,6 +7,6 @@
 
     <include layout="@layout/bar_up" />
 
-    <include layout="@xml/edit_set" />
+    <include layout="@xml/edit_settings" />
 
 </LinearLayout>
