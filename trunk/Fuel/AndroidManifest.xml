@@ -65,7 +65,7 @@
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
-            android:name="br.com.maboo.fuellist.screens.SettingsScreen"
+            android:name=".screens.SettingsScreen"
             android:label="Settings"
             android:configChanges="orientation">
         </activity>

@@ -65,6 +65,7 @@
     <string name="m_exit">"Exit"</string>
 
     <!-- Settings -->
+    <string name="s_t">Set your preferences here</string>
     <string name="s_t_1">"Input Volume"</string>
     <string name="s_d_1">"Select units used to input fuel volume"</string>
     <string name="s_t_2">"Input Distance"</string>
@@ -73,8 +74,9 @@
     <string name="s_d_3">"Select currency used to represent fuel coast"</string>
     
     <!-- Edit Settings Inicio -->
-    <string name="settings">Settings</string>
+    <string name="settings">Settings</string>    
     <string name="units">Units</string>
+    
     <string-array name="volume">
         <item>litre</item>
         <item>us_gallon</item>
@@ -107,11 +109,11 @@
     </string-array>
     
     <string-array name="currency_values">
-        <item>Dollar</item>
+        <item>$</item>
         <item>Euro</item>
         <item>Pound</item>
         <item>Yuan/yen</item>
-        <item>Real</item>
+        <item>R$</item>
         <item>HK$ Hong Kong Dollar</item>
     </string-array>
     <!-- Edit Settings FIM -->

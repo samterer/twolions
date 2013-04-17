@@ -7,10 +7,12 @@ import java.util.TimerTask;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -29,6 +31,7 @@ import br.com.maboo.fuellist.interfaces.InterfaceBar;
 import br.com.maboo.fuellist.modelobj.Carro;
 import br.com.maboo.fuellist.modelobj.ItemLog;
 import br.com.maboo.fuellist.modelobj.ListCarros;
+import br.com.maboo.fuellist.modelobj.Settings;
 import br.com.maboo.fuellist.transaction.Transaction;
 import br.com.maboo.fuellist.util.AndroidUtils;
 import br.com.maboo.fuellist.util.Constants;
@@ -169,6 +172,22 @@ public class ListCarScreen extends FuelListActivity implements
 	//
 	// finish();
 	// }
+
+	protected void onResume() {
+
+		SharedPreferences sharedPrefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		Settings set = new Settings(sharedPrefs);
+
+		// teste do settings
+		Log.i("appLog", "## moeda = " + set.getMoeda() + " ##");
+
+		Log.i("appLog", "## volume = " + set.getVolume() + " ##");
+
+		Log.i("appLog", "## distancia = " + set.getDist() + " ##");
+
+		super.onResume();
+	}
 
 	protected void onActivityResult(final int codigo, final int codigoRetorno,
 			final Intent it) {

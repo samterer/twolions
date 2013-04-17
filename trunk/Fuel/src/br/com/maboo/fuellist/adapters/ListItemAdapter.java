@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.modelobj.ItemLog;
-import br.com.maboo.fuellist.settings.Settings;
 import br.com.maboo.fuellist.util.Constants;
 
 public class ListItemAdapter extends BaseAdapter {
@@ -102,8 +101,8 @@ public class ListItemAdapter extends BaseAdapter {
 		if (itemRequest.getType() == Constants.FUEL) {
 			// Log.i(TAG, "valor getValue_u[" + itemRequest.getValue_u() + "]");
 
-			holder.textRightDown.setText(Settings.moeda
-					+ String.valueOf(itemRequest.getValue_u()));
+			holder.textRightDown.setText(String.valueOf(itemRequest
+					.getValue_u()));
 			holder.textRightDown.setVisibility(View.VISIBLE);
 		}
 
@@ -113,8 +112,8 @@ public class ListItemAdapter extends BaseAdapter {
 				|| itemRequest.getType() == Constants.FUEL) {
 			Log.i(TAG, "valor getValue_p[" + itemRequest.getValue_p() + "]");
 
-			holder.textRightUp.setText(Settings.moeda
-					+ String.valueOf(itemRequest.getValue_p()));
+			holder.textRightUp
+					.setText(String.valueOf(itemRequest.getValue_p()));
 			holder.textRightUp.setVisibility(View.VISIBLE);
 		}
 
@@ -156,8 +155,7 @@ public class ListItemAdapter extends BaseAdapter {
 			// Log.i(TAG,"valor total.intValue()["+
 			// String.valueOf(total.intValue()) + "]");
 
-			holder.textLeftDown.setText(String.valueOf(total.intValue())
-					+ Settings.medida);
+			holder.textLeftDown.setText(String.valueOf(total.intValue()));
 			holder.textLeftDown.setVisibility(View.VISIBLE);
 		}
 		// Log.i(TAG, "************************************************");
