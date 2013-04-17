@@ -49,7 +49,7 @@
         <activity
             android:name=".screens.ListItemScreen"
             android:label="ListLogScreen"
-            android:configChanges="orientation"
+            android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
@@ -61,7 +61,7 @@
         <activity
             android:name=".screens.ViewGraphicScreen"
             android:label="ViewGraphicScreen"
-             android:configChanges="orientation"
+            android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
