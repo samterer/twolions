@@ -26,26 +26,20 @@
 
     <TableRow
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center" >
+        android:layout_height="wrap_content" >
+
+        <!-- EDIT SUBJECT -->
+
+        <include layout="@layout/subject" />
 
         <TextView
             android:id="@+id/t_subject"
-            style="@style/texto16cinzaDark"
-            android:gravity="center"
+            style="@style/texto16cinzaDarkNegrito"
+             android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+            android:gravity="center|left"
+            android:padding="5dip"
             android:text="@string/tv_s" />
-    </TableRow>
-
-    <!-- EDIT SUBJECT -->
-
-    <TableRow
-        android:layout_marginTop="3dp"
-        android:gravity="center" >
-
-        <include
-            android:layout_gravity="center"
-            layout="@layout/subject" />
-
     </TableRow>
 
     <include
@@ -58,23 +52,20 @@
 
     <TableRow
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center" >
+        android:layout_height="wrap_content" >
+
+        <!-- EDIT VALUE P -->
+
+        <include layout="@layout/value_p" />
 
         <TextView
             android:id="@+id/t_value_p"
-            style="@style/texto16cinzaDark"
-            android:gravity="center"
+            style="@style/texto16cinzaDarkNegrito"
+             android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+            android:gravity="center|left"
+            android:padding="5dip"
             android:text="@string/tv_v" />
-    </TableRow>
-
-    <!-- EDIT VALUE P -->
-
-    <TableRow
-        android:layout_marginTop="3dp"
-        android:gravity="center" >
-
-        <include layout="@layout/value_p" />
     </TableRow>
 
 </TableLayout>

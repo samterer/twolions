@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center" >
+    android:gravity="left"
+    android:hint="@string/h_text"
+    android:maxLength="240"
+    android:lines="14"
+    android:maxWidth="200dp"
+    android:tag="text" >
 
-    <EditText
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="top|center_horizontal"
-        android:height="200dp"
-        android:hint="@string/h_text"
-        android:maxLength="240"
-        android:tag="text"
-        android:width="200dp" />
-
-</LinearLayout>
+</EditText>

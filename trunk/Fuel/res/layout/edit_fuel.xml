@@ -15,10 +15,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center" >
 
-            <LinearLayout android:gravity="center" >
-
-                <include layout="@layout/date" />
-            </LinearLayout>
+            <include layout="@layout/date" />
         </TableRow>
 
         <include
@@ -31,23 +28,20 @@
 
         <TableRow
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center" >
+            android:layout_height="wrap_content" >
+
+            <!-- EDIT VALUE U -->
+
+            <include layout="@layout/value_u" />
 
             <TextView
                 android:id="@+id/t_value_u"
-                style="@style/texto16cinzaDark"
-                android:gravity="center"
+                style="@style/texto16cinzaDarkNegrito"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center|left"
+                android:padding="5dip"
                 android:text="@string/tv_gp" />
-        </TableRow>
-
-        <!-- EDIT VALUE U -->
-
-        <TableRow
-            android:layout_marginTop="3dp"
-            android:gravity="center" >
-
-            <include layout="@layout/value_u" />
         </TableRow>
 
         <include
@@ -60,23 +54,20 @@
 
         <TableRow
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center" >
+            android:layout_height="wrap_content" >
+
+            <!-- EDIT VALUE P -->
+
+            <include layout="@layout/value_p" />
 
             <TextView
                 android:id="@+id/t_value_p"
-                style="@style/texto16cinzaDark"
-                android:gravity="center"
+                style="@style/texto16cinzaDarkNegrito"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center|left"
+                android:padding="5dip"
                 android:text="@string/tv_ap" />
-        </TableRow>
-
-        <!-- EDIT VALUE P -->
-
-        <TableRow
-            android:layout_marginTop="3dp"
-            android:gravity="center" >
-
-            <include layout="@layout/value_p" />
         </TableRow>
 
         <include
@@ -89,23 +80,20 @@
 
         <TableRow
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center" >
+            android:layout_height="wrap_content" >
+
+            <!-- EDIT ODOMETER -->
+
+            <include layout="@layout/odometer" />
 
             <TextView
                 android:id="@+id/t_odometer"
-                style="@style/texto16cinzaDark"
-                android:gravity="center"
+                style="@style/texto16cinzaDarkNegrito"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center|left"
+                android:padding="5dip"
                 android:text="@string/tv_o" />
-        </TableRow>
-
-        <!-- EDIT ODOMETER -->
-
-        <TableRow
-            android:layout_marginTop="3dp"
-            android:gravity="center" >
-
-            <include layout="@layout/odometer" />
         </TableRow>
     </TableLayout>
 
