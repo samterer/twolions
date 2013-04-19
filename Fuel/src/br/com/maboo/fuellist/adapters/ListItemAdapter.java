@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.modelobj.ItemLog;
+import br.com.maboo.fuellist.modelobj.Settings;
 import br.com.maboo.fuellist.util.Constants;
 
 public class ListItemAdapter extends BaseAdapter {
@@ -24,17 +25,28 @@ public class ListItemAdapter extends BaseAdapter {
 
 	private List<ItemLog> itens;
 
-	Typeface tf; // font
+	private Typeface tf; // font
 
-	public ListItemAdapter(Activity context, List<ItemLog> itens) {
+	private Settings set;
 
-		this.itens = itens;
+	public ListItemAdapter(Activity context, List<ItemLog> itens, Settings set) {
+		Log.i(TAG, "## charge ListItemAdapter ##");
 
-		this.inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		try {
+			this.itens = itens;
 
-		tf = Typeface.createFromAsset(context.getAssets(),
-				"fonts/DroidSansFallback.ttf"); // font
+			this.inflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+			tf = Typeface.createFromAsset(context.getAssets(),
+					"fonts/DroidSansFallback.ttf"); // font
+
+			this.set = set;
+
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public int getCount() {
@@ -67,14 +79,17 @@ public class ListItemAdapter extends BaseAdapter {
 			if (itemRequest.getType() == Constants.FUEL) {
 				holder.textRightDown = (TextView) view
 						.findViewById(R.id.textRightDown);
+
 				holder.textRightDown.setTypeface(tf);
 			}
 
 			if (itemRequest.getType() == Constants.EXPENSE
 					|| itemRequest.getType() == Constants.REPAIR
 					|| itemRequest.getType() == Constants.FUEL) {
+
 				holder.textRightUp = (TextView) view
 						.findViewById(R.id.textRightUp);
+
 				holder.textRightUp.setTypeface(tf);
 			}
 
@@ -86,6 +101,7 @@ public class ListItemAdapter extends BaseAdapter {
 			holder.textLeftDown.setTypeface(tf);
 
 			holder.icone = (ImageView) view.findViewById(R.id.imgLeftCenter);
+
 		} else {
 			// Ja existe no cache, bingo entao pega!
 			try {
@@ -97,23 +113,26 @@ public class ListItemAdapter extends BaseAdapter {
 
 		// Log.i(TAG, "************************************************");
 		// Log.i(TAG, "type [" + itemRequest.getType() + "]");
-		// value u
+		// value u (valor unitario. Ex: litros)
 		if (itemRequest.getType() == Constants.FUEL) {
 			// Log.i(TAG, "valor getValue_u[" + itemRequest.getValue_u() + "]");
 
-			holder.textRightDown.setText(String.valueOf(itemRequest
-					.getValue_u()));
+			holder.textRightDown.setText(set.getMoeda() + " "
+					+ String.valueOf(itemRequest.getValue_u()));
+
 			holder.textRightDown.setVisibility(View.VISIBLE);
 		}
 
-		// value p
+		// value p (valor total que pagou)
 		if (itemRequest.getType() == Constants.EXPENSE
 				|| itemRequest.getType() == Constants.REPAIR
 				|| itemRequest.getType() == Constants.FUEL) {
-			Log.i(TAG, "valor getValue_p[" + itemRequest.getValue_p() + "]");
 
-			holder.textRightUp
-					.setText(String.valueOf(itemRequest.getValue_p()));
+			// Log.i(TAG, "valor getValue_p[" + itemRequest.getValue_p() + "]");
+
+			holder.textRightUp.setText(set.getMoeda() + " "
+					+ String.valueOf(itemRequest.getValue_p()));
+
 			holder.textRightUp.setVisibility(View.VISIBLE);
 		}
 
@@ -142,10 +161,11 @@ public class ListItemAdapter extends BaseAdapter {
 
 			holder.textLeftDown
 					.setText(String.valueOf(itemRequest.getSubject()));
+
 			holder.textLeftDown.setVisibility(View.VISIBLE);
 		}
 
-		// stocked
+		// stocked (qtd de litro abastecido)
 		if (itemRequest.getType() == Constants.FUEL) {
 
 			// calcula qtd de litro abastecido
@@ -155,7 +175,9 @@ public class ListItemAdapter extends BaseAdapter {
 			// Log.i(TAG,"valor total.intValue()["+
 			// String.valueOf(total.intValue()) + "]");
 
-			holder.textLeftDown.setText(String.valueOf(total.intValue()));
+			holder.textLeftDown.setText(String.valueOf(total.intValue()) + " "
+					+ set.getVolume());
+
 			holder.textLeftDown.setVisibility(View.VISIBLE);
 		}
 		// Log.i(TAG, "************************************************");

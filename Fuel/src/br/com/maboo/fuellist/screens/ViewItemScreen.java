@@ -4,8 +4,10 @@ import java.util.Vector;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +19,7 @@ import br.com.maboo.fuellist.core.FormItemActivity;
 import br.com.maboo.fuellist.interfaces.InterfaceBar;
 import br.com.maboo.fuellist.modelobj.Carro;
 import br.com.maboo.fuellist.modelobj.ItemLog;
+import br.com.maboo.fuellist.modelobj.Settings;
 import br.com.maboo.fuellist.util.Constants;
 import br.com.maboo.fuellist.util.EditTextTools;
 import br.com.maboo.fuellist.util.TextViewTools;
@@ -27,8 +30,14 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 	// Campos texto
 	private EditText value_u;
+	private TextView t_value_u_desc;
+
 	private EditText value_p;
+	private TextView t_value_p_desc;
+
 	private EditText odometer;
+	private TextView t_odometer_desc;
+
 	private TextView date;
 	private TextView hour;
 	private EditText subject;
@@ -52,6 +61,8 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 	Vector<EditText> vEditText; // vetor de editText
 	Vector<TextView> vTextView; // vetor de TextViews
+
+	private Settings set;
 
 	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
@@ -152,6 +163,9 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		// value u
 		if (type == FUEL) {
 
+			t_value_u_desc = (TextView) findViewById(R.id.t_value_u_desc);
+			vTextView.add(t_value_u_desc);
+
 			tv = (TextView) findViewById(R.id.t_value_u);
 			vTextView.add(tv);
 
@@ -162,6 +176,9 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// value p
 		if (type == EXPENSE || type == REPAIR || type == FUEL) {
+
+			t_value_p_desc = (TextView) findViewById(R.id.t_value_p_desc);
+			vTextView.add(t_value_p_desc);
 
 			tv = (TextView) findViewById(R.id.t_value_p);
 			vTextView.add(tv);
@@ -184,6 +201,9 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// odemeter
 		if (type == FUEL) {
+
+			t_odometer_desc = (TextView) findViewById(R.id.t_odometer_desc);
+			vTextView.add(t_odometer_desc);
 
 			tv = (TextView) findViewById(R.id.t_odometer);
 			vTextView.add(tv);
@@ -233,6 +253,8 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 	// open screen with datas of object
 	public void loadingDataItem() {
+
+		getSharedPrefs(); // carrega preferencias
 
 		if (itemRequest == null) {
 
@@ -293,13 +315,15 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 			// value u
 			if (type == FUEL) {
-				value_u.setText(String.valueOf((itemRequest.getValue_u())));
+				t_value_u_desc.setText(set.getMoeda() + "/" + set.getVolume());
+				value_u.setText(String.valueOf(itemRequest.getValue_u()));
 				value_u.setFocusable(false);
 			}
 
 			// value p
 			if (type == EXPENSE || type == REPAIR || type == FUEL) {
-				value_p.setText(String.valueOf((itemRequest.getValue_p())));
+				t_value_p_desc.setText(set.getMoeda());
+				value_p.setText(String.valueOf(itemRequest.getValue_p()));
 				value_p.setFocusable(false);
 			}
 
@@ -311,7 +335,8 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 			// odemeter
 			if (type == FUEL) {
-				odometer.setText(String.valueOf((itemRequest.getOdometer())));
+				t_odometer_desc.setText(set.getDist());
+				odometer.setText(String.valueOf(itemRequest.getOdometer()));
 				odometer.setFocusable(false);
 			}
 
@@ -320,6 +345,15 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 			Log.e(TAG, itemRequest.toString());
 		}
+
+	}
+
+	private void getSharedPrefs() {
+
+		SharedPreferences sharedPrefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+
+		this.set = new Settings(sharedPrefs);
 
 	}
 
@@ -348,6 +382,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	}
 
 	public void organizeBt() {
+
 		// bt left
 		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
 		bt_left.setImageResource(R.drawable.bt_back);
@@ -361,11 +396,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	public void btBarLeft(final View v) {
 
 		setResult(RESULT_OK);
-
-		// volta para a lista
-		// Intent it = new Intent(this, ListItemScreen.class);
-		// startActivityForResult(it, RESULT_OK);
-		// startActivity(it);
 
 		finish();
 	}

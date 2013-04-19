@@ -8,11 +8,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.SQLException;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +36,7 @@ import br.com.maboo.fuellist.interfaces.InterfaceBar;
 import br.com.maboo.fuellist.modelobj.Carro;
 import br.com.maboo.fuellist.modelobj.ItemLog;
 import br.com.maboo.fuellist.modelobj.ListItemLog;
+import br.com.maboo.fuellist.modelobj.Settings;
 import br.com.maboo.fuellist.transaction.Transaction;
 import br.com.maboo.fuellist.util.AndroidUtils;
 import br.com.maboo.fuellist.util.Constants;
@@ -61,6 +64,8 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	private static final int DELETE = 1;
 
 	private MenuDialog customMenuDialog;
+
+	private Settings set;
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -136,7 +141,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		if (itens != null) { // Atualiza o ListView diretamente
 
-			listview_log.setAdapter(new ListItemAdapter(this, itens));
+			listview_log.setAdapter(new ListItemAdapter(this, itens, set));
 
 		} else {
 
@@ -188,6 +193,22 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 	}
 
+	protected void onResume() {
+
+		getSharedPrefs();
+
+		super.onResume();
+	}
+
+	private void getSharedPrefs() {
+
+		SharedPreferences sharedPrefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+
+		this.set = new Settings(sharedPrefs);
+
+	}
+
 	/******************************************************************************
 	 * SERVICES
 	 ******************************************************************************/
@@ -205,10 +226,12 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		Log.i(TAG, "Update in list items.");
 
+		getSharedPrefs();
+
 		// Pega a lista de carros e exibe na tela
 		itens = getItens();
 
-		listview_log.setAdapter(new ListItemAdapter(this, itens));
+		listview_log.setAdapter(new ListItemAdapter(this, itens, set));
 
 		effect(); // efeito alpha
 

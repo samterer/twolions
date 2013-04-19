@@ -58,6 +58,16 @@
     <style name="texto20pretoNegrito" parent="texto20">
         <item name="android:textStyle">bold</item>
     </style>
+    
+    <!-- Texto com Fonte 24 -->
+    <style name="texto24cinzaDark">
+        <item name="android:textColor">@color/preto</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="texto24cinzaDarkNegrito" parent="texto24cinzaDark">
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <!-- Texto com Fonte 28 -->
     <style name="texto28">

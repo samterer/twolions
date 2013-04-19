@@ -35,8 +35,8 @@
         <TextView
             android:id="@+id/t_subject"
             style="@style/texto16cinzaDarkNegrito"
-             android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
             android:gravity="center|left"
             android:padding="5dip"
             android:text="@string/tv_s" />
@@ -61,11 +61,26 @@
         <TextView
             android:id="@+id/t_value_p"
             style="@style/texto16cinzaDarkNegrito"
-             android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
             android:gravity="center|left"
             android:padding="5dip"
             android:text="@string/tv_v" />
+    </TableRow>
+
+    <!-- DESC VALUE P -->
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <TextView
+            android:id="@+id/t_value_p_desc"
+            style="@style/texto24cinzaDarkNegrito"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:padding="5dip" />
     </TableRow>
 
 </TableLayout>

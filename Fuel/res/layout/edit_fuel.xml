@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
@@ -38,10 +38,26 @@
                 android:id="@+id/t_value_u"
                 style="@style/texto16cinzaDarkNegrito"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:gravity="center|left"
+                android:layout_height="wrap_content"
+                android:gravity="center|left|top"
                 android:padding="5dip"
                 android:text="@string/tv_gp" />
+        </TableRow>
+
+        <!-- DESC VALUE U -->
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/t_value_u_desc"
+                style="@style/texto24cinzaDarkNegrito"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dip"
+                android:text="teste" />
         </TableRow>
 
         <include
@@ -70,6 +86,22 @@
                 android:text="@string/tv_ap" />
         </TableRow>
 
+        <!-- DESC VALUE P -->
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <TextView
+                android:id="@+id/t_value_p_desc"
+                style="@style/texto24cinzaDarkNegrito"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:padding="5dip"
+                android:text="teste" />
+        </TableRow>
+
         <include
             android:layout_height="0.5dp"
             android:layout_marginBottom="5dp"
@@ -95,6 +127,22 @@
                 android:padding="5dip"
                 android:text="@string/tv_o" />
         </TableRow>
+
+        <!-- DESC ODOMETER -->
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <TextView
+                android:id="@+id/t_odometer_desc"
+                style="@style/texto24cinzaDarkNegrito"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:padding="5dip"
+                android:text="teste" />
+        </TableRow>
     </TableLayout>
 
-</ScrollView>
+</LinearLayout>

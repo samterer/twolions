@@ -55,7 +55,7 @@ public class ListCarScreen extends FuelListActivity implements
 	private static final int EDITAR = 0;
 	private static final int DELETE = 1;
 
-	private String getSelectedItemOfList;
+	private Settings set;
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -175,18 +175,17 @@ public class ListCarScreen extends FuelListActivity implements
 
 	protected void onResume() {
 
-		SharedPreferences sharedPrefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		Settings set = new Settings(sharedPrefs);
-
-		// teste do settings
-		Log.i("appLog", "## moeda = " + set.getMoeda() + " ##");
-
-		Log.i("appLog", "## volume = " + set.getVolume() + " ##");
-
-		Log.i("appLog", "## distancia = " + set.getDist() + " ##");
+		getSharedPrefs();
 
 		super.onResume();
+	}
+
+	private void getSharedPrefs() {
+
+		SharedPreferences sharedPrefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		this.set = new Settings(sharedPrefs);
+
 	}
 
 	protected void onActivityResult(final int codigo, final int codigoRetorno,
