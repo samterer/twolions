@@ -64,5 +64,19 @@
             android:padding="5dip"
             android:text="@string/tv_v" />
     </TableRow>
+    <!-- DESC VALUE P -->
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <TextView
+            android:id="@+id/t_value_p_desc"
+            style="@style/texto24cinzaDarkNegrito"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:padding="5dip" />
+    </TableRow>
 
 </TableLayout>

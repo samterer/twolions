@@ -8,8 +8,10 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -27,6 +29,7 @@ import br.com.maboo.fuellist.interfaces.InterfaceBar;
 import br.com.maboo.fuellist.model.ItemModel;
 import br.com.maboo.fuellist.modelobj.Carro;
 import br.com.maboo.fuellist.modelobj.ItemLog;
+import br.com.maboo.fuellist.modelobj.Settings;
 import br.com.maboo.fuellist.rules.ItemRules;
 import br.com.maboo.fuellist.util.Constants;
 import br.com.maboo.fuellist.util.EditTextTools;
@@ -44,8 +47,14 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	// Campos texto
 	private EditText value_u;
+	private TextView t_value_u_desc;
+
 	private EditText value_p;
+	private TextView t_value_p_desc;
+
 	private TextView odometer;
+	private TextView t_odometer_desc;
+
 	private TextView date;
 	private TextView hour;
 	private EditText subject;
@@ -79,6 +88,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	Vector<EditText> vEditText; // vetor de editText
 	Vector<TextView> vTextView; // vetor de TextViews
+
+	private Settings set;
 
 	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
@@ -199,6 +210,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// value u
 		if (type == FUEL) {
 
+			t_value_u_desc = (TextView) findViewById(R.id.t_value_u_desc);
+			vTextView.add(t_value_u_desc);
+
 			tv = (TextView) findViewById(R.id.t_value_u);
 			vTextView.add(tv);
 
@@ -210,6 +224,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// value p
 		if (type == EXPENSE || type == REPAIR || type == FUEL) {
+
+			t_value_p_desc = (TextView) findViewById(R.id.t_value_p_desc);
+			vTextView.add(t_value_p_desc);
 
 			tv = (TextView) findViewById(R.id.t_value_p);
 			vTextView.add(tv);
@@ -234,6 +251,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// odemeter
 		if (type == FUEL) {
+
+			t_odometer_desc = (TextView) findViewById(R.id.t_odometer_desc);
+			vTextView.add(t_odometer_desc);
 
 			tv = (TextView) findViewById(R.id.t_odometer);
 			vTextView.add(tv);
@@ -281,6 +301,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	// open screen with datas of object
 	public void loadingEdit() {
+
+		getSharedPrefs(); // carrega preferencias
 
 		Log.i(TAG, "Data for edit");
 		Log.i(TAG, itemRequest.toString());
@@ -339,13 +361,13 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			// value u
 			if (type == FUEL) {
+				t_value_u_desc.setText(set.getMoeda() + "/" + set.getVolume());
 				value_u.setText(String.valueOf((itemRequest.getValue_u())));
-
-				// = getDollarSobreReal(shared.moeda, shared.moedda, valor)
 			}
 
 			// value p
 			if (type == EXPENSE || type == REPAIR || type == FUEL) {
+				t_value_p_desc.setText(set.getMoeda());
 				value_p.setText(String.valueOf((itemRequest.getValue_p())));
 			}
 
@@ -356,10 +378,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			// odemeter
 			if (type == FUEL) {
+				t_odometer_desc.setText(set.getDist());
 
 				// recupera ultimo valor registrado de odometer(por data) deste
 				// veiculo
-
 				odometer.setText(String.valueOf((itemRequest.getOdometer())));
 			}
 
@@ -367,6 +389,15 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			e.printStackTrace();
 			Log.e(TAG, itemRequest.toString());
 		}
+
+	}
+
+	private void getSharedPrefs() {
+
+		SharedPreferences sharedPrefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+
+		this.set = new Settings(sharedPrefs);
 
 	}
 

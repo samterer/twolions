@@ -78,43 +78,43 @@
     <string name="units">Units</string>
     
     <string-array name="volume">
-        <item>litre</item>
-        <item>us_gallon</item>
-        <item>imp_galon</item>
+        <item>Litro</item>
+        <item>US Gallon</item>
+        <item>Imperial Gallon</item>
     </string-array>
     
     <string-array name="volume_values">
-        <item>Litre</item>
-        <item>US Gallon</item>
-        <item>Imperial Galon</item>
+        <item>ℓ</item>
+        <item>US gal</item>
+        <item>UK gal</item>
     </string-array>
     
     <string-array name="distance">
-        <item>km</item>
-        <item>miless</item>
+        <item>Kilometros</item>
+        <item>Miles</item>
     </string-array>
     
     <string-array name="distance_values">
         <item>Km</item>
-        <item>Miles</item>
+        <item>mi</item>
     </string-array>
     
     <string-array name="currency">
-        <item>dollar</item>
-        <item>euro</item>
-        <item>pound</item>
-        <item>yuan</item>
-        <item>real</item>
-        <item>hk</item>
+        <item>Dollar</item>
+        <item>Euro</item>
+        <item>Pound</item>
+        <item>Yuan</item>
+        <item>Real</item>
+        <item>Hong Kong Dollar</item>
     </string-array>
     
     <string-array name="currency_values">
         <item>$</item>
-        <item>Euro</item>
-        <item>Pound</item>
-        <item>Yuan/yen</item>
+        <item>€</item>
+        <item>£</item>
+        <item>¥</item>
         <item>R$</item>
-        <item>HK$ Hong Kong Dollar</item>
+        <item>HK$</item>
     </string-array>
     <!-- Edit Settings FIM -->
 

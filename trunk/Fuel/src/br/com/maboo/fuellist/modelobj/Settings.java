@@ -1,6 +1,7 @@
 package br.com.maboo.fuellist.modelobj;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class Settings {
 
@@ -39,10 +40,19 @@ public class Settings {
 	}
 
 	public Settings(SharedPreferences sharedPrefs) {
-		setMoeda(sharedPrefs.getString("pref_currency", "dollar"));
+		Log.i("appLog", "## charge SharedPreferences ##");
 
-		setDist(sharedPrefs.getString("pref_distance", "miless"));
+		setMoeda(sharedPrefs.getString("pref_currency", null));
 
-		setVolume(sharedPrefs.getString("pref_volume", "us_gallon"));
+		setDist(sharedPrefs.getString("pref_distance", null));
+
+		setVolume(sharedPrefs.getString("pref_volume", null));
+
+		// teste do settings
+		Log.i("appLog", "## moeda = " + getMoeda() + " ##");
+
+		Log.i("appLog", "## volume = " + getVolume() + " ##");
+
+		Log.i("appLog", "## distancia = " + getDist() + " ##");
 	}
 }
