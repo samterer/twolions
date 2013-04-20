@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:layout_gravity="center" >
 
-    <EditText
-        android:id="@+id/odometer"
-        style="@style/texto40Negrito"
+    <TableRow
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
-        android:hint="@string/h_click"
-        android:scaleType="centerInside"
-        android:maxLength="7"
-        android:tag="odometer" 
-        android:inputType="number"/>
+        android:layout_height="fill_parent" >
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/odometer"
+            style="@style/texto40Negrito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:hint="@string/h_click"
+            android:inputType="number"
+            android:maxLength="7"
+            android:scaleType="centerInside"
+            android:tag="odometer" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent" >
+
+        <TextView
+            android:id="@+id/t_odometer_desc"
+            style="@style/texto24cinzaDarkNegrito"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+           android:layout_marginTop="-10dp" />
+    </TableRow>
+
+</TableLayout>

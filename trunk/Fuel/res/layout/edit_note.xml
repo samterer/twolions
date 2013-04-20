@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/screen_item"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:scrollbars="none" >
 
     <!-- DATE -->
 
@@ -31,7 +33,7 @@
 
         <TextView
             android:id="@+id/t_subject"
-            style="@style/texto16cinzaDarkNegrito"
+            style="@style/texto16cinzaDark"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:gravity="center|left"
@@ -57,7 +59,7 @@
 
         <TextView
             android:id="@+id/t_text"
-            style="@style/texto16cinzaDarkNegrito"
+            style="@style/texto16cinzaDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center|left"

@@ -92,7 +92,7 @@ public class ListCarScreen extends FuelListActivity implements
 
 		carros = (List<Carro>) getLastNonConfigurationInstance();
 
-		effect(); // efeito alpha
+	//	effect(); // efeito alpha
 
 		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
 
@@ -144,8 +144,6 @@ public class ListCarScreen extends FuelListActivity implements
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 
-		// setContentView(R.layout.list_car);
-
 		listview_car = (ListView) findViewById(R.id.listview_car);
 
 		if (carros != null) {
@@ -154,24 +152,6 @@ public class ListCarScreen extends FuelListActivity implements
 
 		confListForLongClick();
 	}
-
-	//
-	// protected void onPause() {
-	// // TODO Auto-generated method stub
-	// super.onPause();
-	//
-	// if (dialog != null) {
-	// dialog.dismiss();
-	// }
-	// }
-	// protected void onDestroy() {
-	// super.onDestroy();
-	//
-	// // Fecha o banco
-	// dao.fechar();
-	//
-	// finish();
-	// }
 
 	protected void onResume() {
 
@@ -209,6 +189,7 @@ public class ListCarScreen extends FuelListActivity implements
 				.loadLayoutAnimation(this, R.anim.anime_slide_to_right);
 
 		listview_car.setLayoutAnimation(controller);
+		
 	}
 
 	public void update() {
@@ -217,7 +198,7 @@ public class ListCarScreen extends FuelListActivity implements
 
 		listview_car.setAdapter(new ListCarAdapter(this, carros));
 
-		effect(); // efeito alpha
+	//	effect(); // efeito alpha
 
 		confListForLongClick();
 
@@ -344,9 +325,12 @@ public class ListCarScreen extends FuelListActivity implements
 
 		// Passa também o nome do carro para ser usado no titulo
 		it.putExtra(Carro.NOME, name_car);
-
+		
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
+		
+		overridePendingTransition(R.anim.slide_to_left, R.anim.slide_to_left);
+
 
 	}
 

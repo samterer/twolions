@@ -35,7 +35,7 @@ public class SqlScript extends DBConnection {
 			sqlScript[1] + " " + TB_CARRO
 					+ "(nome,placa,tipo) values('Fiesta','JUH-8266','carro');",
 			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Palio','JUH-8266','carro');" };
+					+ "(nome,placa,tipo) values('YBR','DAY-1206','carro');" };
 
 	// ///////////////
 	// TABLE ITEM LOG
@@ -113,12 +113,12 @@ public class SqlScript extends DBConnection {
 	// Fecha o banco
 	public void fechar() {
 
-		if (db != null) {
-			db.close();
+		if (getDb() != null) {
+			getDb().close();
 		}
 
-		if (dbHelper != null) {
-			dbHelper.close();
+		if (getDbHelper() != null) {
+			getDbHelper().close();
 		}
 	}
 }
