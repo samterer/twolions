@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="fill_parent"
     android:layout_gravity="center" >
 
     <TableRow
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
         <EditText
             android:id="@+id/value_u"
-            style="@style/texto40Negrito"
+            style="@style/texto14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:hint="@string/h_click"
             android:inputType="numberDecimal"
             android:maxLength="7"
@@ -24,16 +24,16 @@
     <!-- DESC VALUE U -->
 
     <TableRow
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
         <TextView
             android:id="@+id/t_value_u_desc"
-            style="@style/texto24cinzaDarkNegrito"
+            style="@style/texto14"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:gravity="center"
-            android:layout_marginTop="-10dp" />
+            android:layout_marginTop="-5dp" />
     </TableRow>
 
 </TableLayout>

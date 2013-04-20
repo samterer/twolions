@@ -15,8 +15,11 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -499,10 +502,37 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		finish();
 
-		Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+	//	Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+		
+		LayoutInflater inflater = getLayoutInflater();
+		View layout = inflater.inflate(R.layout.custom_toast,
+		                               (ViewGroup) findViewById(R.id.custom_toast_layout_id));
 
-		// Fecha a tela
-		// finish();
+		TextView text = (TextView) layout.findViewById(R.id.text_toast);
+		text.setText("Saved!");
+		
+		ImageView image = (ImageView) layout.findViewById(R.id.image_toast);
+
+		switch (type) {
+		case Constants.FUEL:
+			image.setImageResource(R.drawable.fuel);
+			break;
+		case Constants.EXPENSE:
+			image.setImageResource(R.drawable.expense);
+			break;
+		case Constants.NOTE:
+			image.setImageResource(R.drawable.note);
+			break;
+		case Constants.REPAIR:
+			image.setImageResource(R.drawable.repair);
+			break;
+		}
+
+		Toast toast = new Toast(getApplicationContext());
+		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.BOTTOM, 0, 0);
+		toast.setDuration(Toast.LENGTH_SHORT);
+		toast.setView(layout);
+		toast.show();
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}

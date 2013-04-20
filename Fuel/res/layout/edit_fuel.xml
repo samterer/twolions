@@ -24,11 +24,10 @@
 
     <TableRow
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="fill_parent"
+        android:gravity="center" >
 
         <!-- EDIT VALUE U -->
-
-        <include layout="@layout/value_u" />
 
         <TextView
             android:id="@+id/t_value_u"
@@ -38,6 +37,8 @@
             android:gravity="center|left"
             android:padding="5dip"
             android:text="@string/tv_gp" />
+
+        <include layout="@layout/value_u" />
     </TableRow>
 
     <include
@@ -50,16 +51,17 @@
 
     <TableRow
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="fill_parent"
+        android:gravity="center" >
 
         <!-- EDIT VALUE P -->
-
-        <include layout="@layout/value_p" />
 
         <include
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             layout="@layout/t_value_p" />
+
+        <include layout="@layout/value_p" />
     </TableRow>
 
     <include
@@ -72,11 +74,10 @@
 
     <TableRow
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="fill_parent"
+        android:gravity="center" >
 
         <!-- EDIT ODOMETER -->
-
-        <include layout="@layout/odometer" />
 
         <TextView
             android:id="@+id/t_odometer"
@@ -86,6 +87,8 @@
             android:gravity="center|left"
             android:padding="5dip"
             android:text="@string/tv_o" />
+
+        <include layout="@layout/odometer" />
     </TableRow>
 
 </TableLayout>
