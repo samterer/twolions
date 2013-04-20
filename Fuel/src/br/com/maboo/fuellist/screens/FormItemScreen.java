@@ -404,17 +404,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	/******************************************************************************
 	 * SERVICES
 	 ******************************************************************************/
-
-	// @Override
-	// protected void onPause() {
-	// super.onPause();
-	// // Cancela para não ficar nada na tela pendente
-	// setResult(RESULT_CANCELED);
-	//
-	// // Fecha a tela
-	// finish();
-	// }
-
 	public void salvar() {
 
 		ItemLog itemLog4Save = new ItemLog();
@@ -518,18 +507,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
 
-	// // Buscar o itemLog pelo id_item
-	//
-	// // Salvar o itemLog
-	// protected void salvarItemLog(final ItemLog itemLog) {
-	// ListItemScreen.dao.salvar(itemLog);
-	// }
-	//
-	// // Excluir o itemLog
-	// protected void excluirItemLog(final long id) {
-	// ListItemScreen.dao.deletar(id);
-	// }
-
 	private static String pad(int c) {
 		if (c >= 10)
 			return String.valueOf(c);
@@ -558,14 +535,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	public void btBarLeft(final View v) {
 
-		// setResult(RESULT_CANCELED);
-		// Intent it = new Intent(this, ViewItemScreen.class);
-		// startActivity(it);
-
 		// Fecha a tela
 		finish();
-
-		// overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 
 	}
 
@@ -611,6 +582,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		});
 
+
 		if (value_p != null) { // aplica regra de decimal
 
 			value_p.addTextChangedListener(new TextWatcher() {
@@ -628,20 +600,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				public void afterTextChanged(Editable s) {
 					try {
-						/*
-						 * if (!s.toString() .matches(
-						 * "^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$")) {
-						 * 
-						 * String userInput = "" +
-						 * s.toString().replaceAll("[^\\d]", "");
-						 * 
-						 * Float in = Float.parseFloat(userInput); float percen
-						 * = in / 100;
-						 * 
-						 * value_p.setText("$" + percen);
-						 * 
-						 * } else { // invalid number return; }
-						 */
+						//
 					} catch (StackOverflowError e) {
 						e.printStackTrace();
 					}
@@ -664,24 +623,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				public void afterTextChanged(Editable s) {
 					try {
-						/*
-						 * if (!value_p.getText().equals("") ||
-						 * value_p.getText().equals("$00,00")) {
-						 * 
-						 * if (!s.toString() .matches(
-						 * "^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$")) {
-						 * 
-						 * String userInput = "" +
-						 * s.toString().replaceAll("[^\\d]", "");
-						 * 
-						 * Float in = Float.parseFloat(userInput); float percen
-						 * = in / 100;
-						 * 
-						 * value_u.setText("$" + percen); } else { // invalid
-						 * number return; }
-						 * 
-						 * }
-						 */
+						//
 					} catch (StackOverflowError e) {
 						e.printStackTrace();
 					}

@@ -16,46 +16,32 @@ public class DBConnection {
 
 	protected static SQLiteHelper dbHelper = null;
 
-	public DBConnection(final Context ctx, final String base_name) {
-		super();
 
-		// Abre o banco de dados já existente
-		try {
-			// if (db == null) {
+    public DBConnection(final Context ctx, final String base_name) {
+            super();
 
-			if (db != null) {
-				if (db.isOpen()) {
-					if (dbHelper != null) {
-					
-						Log.i(CATEGORIA, "Abrindo o db para edição.");
-						
-						db = dbHelper.getReadableDatabase();
-					
-					} else {
-					
-						Log.i(CATEGORIA, "o dbHelper é nulo.");
+            // Abre o banco de dados já existente
+            try {
+                    if (getDb() == null) {
+                            synchronized (DBConnection.class) {
 
-					}
-				} else {
-				
-					Log.i(CATEGORIA, "O db esta fechado.");
-					
-					db = ctx.openOrCreateDatabase(base_name, Context.MODE_PRIVATE,null);
-					
-					Log.i(CATEGORIA, "Pronto! Db aberto.");
-				}
-			} else {
-			
-				Log.i(CATEGORIA, "Abrindo conexão com o db.");
-				
-				db = ctx.openOrCreateDatabase(base_name, Context.MODE_PRIVATE,
-						null);
-			
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+                                    if (getDb() == null) {
+
+                                            Log.i(CATEGORIA, "Abrindo conexão com o db.");
+
+                                            setDb(ctx.openOrCreateDatabase(base_name,
+                                                            Context.MODE_PRIVATE, null));
+                                    }
+                            }
+                    } else {
+                            Log.i(CATEGORIA, "Utilizando o db aberto.");
+                    }
+
+            } catch (SQLException e) {
+                    e.printStackTrace();
+            }
+    }
+    
 	public long inserir(final ContentValues valores, final String table_name) {
 		final long id = db.insert(table_name, "", valores);
 		return id;
@@ -80,5 +66,23 @@ public class DBConnection {
 				selectionArgs, groupBy, having, orderBy);
 		return c;
 	}
+
+	public static SQLiteDatabase getDb() {
+		return db;
+	}
+
+	public static void setDb(SQLiteDatabase db) {
+		DBConnection.db = db;
+	}
+
+	public static SQLiteHelper getDbHelper() {
+		return dbHelper;
+	}
+
+	public static void setDbHelper(SQLiteHelper dbHelper) {
+		DBConnection.dbHelper = dbHelper;
+	}
+	
+	
 
 }

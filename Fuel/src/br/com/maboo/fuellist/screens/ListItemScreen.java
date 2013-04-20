@@ -100,7 +100,6 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 		}
 
 		organizeBt();
-
 	}
 
 	/******************************************************************************
@@ -122,7 +121,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		itens = (List<ItemLog>) getLastNonConfigurationInstance();
 
-		effect(); // effect for opening
+	//	effect(); // effect for opening
 
 		Log.i("estado", "Lendo estado: getLastNonConfigurationInstance()");
 
@@ -188,14 +187,12 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
-
+		
 		update();
 
 	}
 
 	protected void onResume() {
-
-		getSharedPrefs();
 
 		super.onResume();
 	}
@@ -233,7 +230,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		listview_log.setAdapter(new ListItemAdapter(this, itens, set));
 
-		effect(); // efeito alpha
+	//	effect(); // efeito alpha
 
 		confListForLongClick();
 	}
@@ -268,7 +265,6 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	}
 
 	private View itemSelectView;
-
 	public void showBtsEditDelete(View view, boolean exibe) {
 		itemSelectView = view;
 
@@ -488,6 +484,8 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	public void btBarLeft(View v) {
 
 		finish(); // go next screen
+		
+		overridePendingTransition(R.anim.slide_to_right, R.anim.slide_to_right);
 
 	}
 
@@ -503,83 +501,11 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 	}
 
-	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
+		
+		overridePendingTransition(R.anim.slide_to_right, R.anim.slide_to_right);
 	}
-
-	/******************************************************************************
-	 * GESTURE
-	 ******************************************************************************/
-	// private int REL_SWIPE_MIN_DISTANCE;
-	// private int REL_SWIPE_MAX_OFF_PATH;
-	// private int REL_SWIPE_THRESHOLD_VELOCITY;
-	//
-	// private void listeningGesture() {
-	//
-	// // As paiego pointed out, it's better to use density-aware measurements.
-	// DisplayMetrics dm = getResources().getDisplayMetrics();
-	// REL_SWIPE_MIN_DISTANCE = (int) (120.0f * dm.densityDpi / 160.0f + 0.5);
-	// REL_SWIPE_MAX_OFF_PATH = (int) (250.0f * dm.densityDpi / 160.0f + 0.5);
-	// REL_SWIPE_THRESHOLD_VELOCITY = (int) (200.0f * dm.densityDpi / 160.0f +
-	// 0.5);
-	//
-	// final GestureDetector gestureDetector = new GestureDetector(
-	// new MyGestureDetector());
-	//
-	// View.OnTouchListener gestureListener = new View.OnTouchListener() {
-	//
-	// public boolean onTouch(View v, MotionEvent e) {
-	//
-	// Log.i(TAG, "onTouch > onTouch!");
-	//
-	// position = listview_log.pointToPosition((int) e.getX(),
-	// (int) e.getY());
-	//
-	// Log.i(TAG, "onTouch > [position: " + position + "]");
-	//
-	// element = v;
-	//
-	// return gestureDetector.onTouchEvent(e);
-	//
-	// }
-	//
-	// };
-	//
-	// listview_log.setOnTouchListener(gestureListener);
-	//
-	// // Long-click still works in the usual way.
-	// listview_log
-	// .setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-	// public boolean onItemLongClick(AdapterView<?> parent,
-	// View view, int position, long id) {
-	//
-	// ItemLog item = itens.get(position);
-	// id_item = item.getId();
-	//
-	// showBtsEditDelete(true);
-	//
-	// return true;
-	// }
-	// });
-	//
-	// listview_log
-	// .setOnItemClickListener(new AdapterView.OnItemClickListener() {
-	// public void onItemClick(AdapterView<?> parent, View view,
-	// int pos, long id) {
-	//
-	// // Log.i(TAG, "onItemClick > onItemClick in position[" +
-	// // pos + "]");
-	//
-	// // element = null;
-	//
-	// // element = view;
-	//
-	// // position = pos;
-	//
-	// }
-	// });
-	// }
 
 	public void onItemLongClick(AdapterView<?> parent, View view, int pos,
 			long id) {
@@ -590,22 +516,6 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 		showBtsEditDelete(view, true);
 
 	}
-
-	// Do not use LitView.setOnItemClickListener(). Instead, I override
-	// SimpleOnGestureListener.onSingleTapUp() method, and it will call to this
-	// method when
-	// it detects a tap-up event.
-	// private void myOnItemClick(int position) {
-	//
-	// Log.i(TAG, "myOnItemClick > [ position: " + position + "]");
-	//
-	// // get the row the clicked button is in
-	// id_car = itens.get(position).getId_car();
-	// id_item = itens.get(position).getId();
-	//
-	// // open list item log
-	// openViewItem();
-	// }
 
 	public void onItemClick(final AdapterView<?> parent, View view,
 			final int pos, final long id) {
@@ -621,94 +531,13 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 	}
 
-	// private void onLTRFling() {
-	//
-	// Log.i(TAG, "onLTRFling > Left-to-right fling in position[" + position
-	// + "]");
-	//
-	// try {
-	// /*
-	// * Toast.makeText(this, "Left-to-right fling in position[" +
-	// * position + "]", Toast.LENGTH_SHORT).show();
-	// */
-	//
-	// ItemLog item = itens.get(position);
-	//
-	// id_item = item.getId();
-	// id_car = item.getId_car();
-	// type = item.getType();
-	//
-	// showBtsEditDelete(true);
-	//
-	// } catch (Exception e) {
-	// Log.i(TAG, "! element esta null");
-	// }
-	//
-	// }
+	
+	public void openSettings(View v) {
+		startActivity(new Intent(this, SettingsScreen.class));
 
-	// private void onRTLFling() {
-	//
-	// Log.i(TAG, "onRTLFling > Right-to-left fling in position[" + position
-	// + "]");
-	//
-	// try {
-	// /*
-	// * Toast.makeText(this, "Right-to-left fling in position[" +
-	// * position + "]", Toast.LENGTH_SHORT).show();
-	// */
-	//
-	// ItemLog item = itens.get(position);
-	// id_item = item.getId();
-	// id_car = item.getId_car();
-	// type = item.getType();
-	//
-	// showBtsEditDelete(false);
-	//
-	// } catch (Exception e) {
-	// Log.i(TAG, "! element esta null");
-	// }
-	// }
-
-	// class MyGestureDetector extends SimpleOnGestureListener {
-	//
-	// // Detect a single-click and call my own handler.
-	// public boolean onSingleTapUp(MotionEvent e) {
-	//
-	// // ListView lv = listview_log;
-	// int pos = listview_log.pointToPosition((int) e.getX(),
-	// (int) e.getY());
-	//
-	// if (pos < 0) { // as vezes a position na list retornava a mesma
-	// // posição mas negativo
-	// pos = pos * (-1);
-	// }
-	//
-	// myOnItemClick(pos);
-	//
-	// return false;
-	// }
-	//
-	// public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-	// float velocityY) {
-	// if (Math.abs(e1.getY() - e2.getY()) > REL_SWIPE_MAX_OFF_PATH)
-	// return false;
-	//
-	// if (e1.getX() - e2.getX() > REL_SWIPE_MIN_DISTANCE
-	// && Math.abs(velocityX) > REL_SWIPE_THRESHOLD_VELOCITY) {
-	//
-	// // onRTLFling();
-	//
-	// } else if (e2.getX() - e1.getX() > REL_SWIPE_MIN_DISTANCE
-	// && Math.abs(velocityX) > REL_SWIPE_THRESHOLD_VELOCITY) {
-	//
-	// // onLTRFling();
-	// }
-	//
-	// return false;
-	// }
-	//
-	// }
-
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+	}
+	
 	/******************************************************************************
 	 * BARRA DE ITENS
 	 ******************************************************************************/
