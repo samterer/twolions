@@ -20,9 +20,14 @@ public abstract class GameView extends FrameLayout {
 
 	// Dados da tela
 	private DisplayMetrics dm;
+	
+	// Fps por segundo
+	private int fps;
 
 	public GameView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
+		
+		this.fps = 25;
 
 		this.context = context;
 	}
@@ -31,6 +36,8 @@ public abstract class GameView extends FrameLayout {
 		super(context, attrs);
 
 		this.context = context;
+		
+		this.fps = fps;
 
 		startThread(fps);
 
@@ -141,4 +148,9 @@ public abstract class GameView extends FrameLayout {
 		return dm.widthPixels;
 	}
 
+	public int getFps() {
+		return (int) 1000/fps;
+	}
+
+	
 }

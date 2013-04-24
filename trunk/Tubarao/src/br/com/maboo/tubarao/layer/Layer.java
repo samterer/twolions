@@ -64,9 +64,8 @@ public class Layer {
 					d.setBounds(widthFrame * i, y, widthFrame * (i + 1),
 							heightFrame);
 
-					Log.i("game", "coord: widthFrame * i: " + widthFrame * i);
-					Log.i("game", "coord: widthFrame * (i + 1): " + widthFrame
-							* (i + 1));
+				//	Log.i("game", "coord: widthFrame * i: " + widthFrame * i);
+				//	Log.i("game", "coord: widthFrame * (i + 1): " + widthFrame* (i + 1));
 
 					drawables.add(d);
 
@@ -130,9 +129,8 @@ public class Layer {
 			// caso esteja visivel, pinta na tela.
 			currentDrawable.setBounds(x + width * frame, y, x + width
 					* (frame + 1), y + height);
-			Log.i("game", "draw coord: width * frame: " + width * frame);
-			Log.i("game", "draw coord:  width * (frame + 1): " + width
-					* (frame + 1));
+		//	Log.i("game", "draw coord: width * frame: " + width * frame);
+		//	Log.i("game", "draw coord:  width * (frame + 1): " + width* (frame + 1));
 			currentDrawable.draw(canvas);
 		}
 	}
