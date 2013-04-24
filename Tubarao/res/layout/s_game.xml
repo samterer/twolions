@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal" >
 
-    <br.com.maboo.tubarao.screen.TubaraoScreen
+    <br.com.maboo.tubarao.screen.GameScreen
         android:id="@+id/view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

@@ -2,7 +2,7 @@ package br.com.maboo.tubarao.core;
 
 public class GameThread implements Runnable {
 
-	private long fps = 45;
+	private long fps = 25;
 
 	private GameView view;
 

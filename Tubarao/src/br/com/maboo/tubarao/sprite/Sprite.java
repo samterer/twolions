@@ -10,7 +10,7 @@ import br.com.maboo.tubarao.layer.Layer;
 
 public class Sprite extends Layer {
 
-	// protected Drawable[] drawables = null;
+	int velocidade = 4;
 
 	private Rect rectangleCollision = null;
 
@@ -397,6 +397,14 @@ public class Sprite extends Layer {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getVelocidade() {
+		return velocidade;
+	}
+
+	public void setVelocidade(int velocidade) {
+		this.velocidade = velocidade;
 	}
 
 }
