@@ -4,23 +4,23 @@ import android.graphics.drawable.Drawable;
 
 public class TubaraoSprite extends Sprite {
 
-	public TubaraoSprite(Drawable drawable) {
-		super(drawable);
-
-		begin = System.currentTimeMillis();
-	}
-
-	public TubaraoSprite(Drawable drawable, int widthFrame, int heightFrame) {
-		super(drawable, widthFrame, heightFrame);
-
-		begin = System.currentTimeMillis();
-	}
-
 	// animacao do balao flutuando
 	private int speedUpDown = 5;
 	private long begin = 0l;
 	private long trocaDirecao = 0L;
 	private boolean stopAnimation = false;
+
+	public TubaraoSprite(Drawable drawable) {
+		super(drawable);
+
+		begin = System.currentTimeMillis();
+	}
+	
+	public TubaraoSprite(Drawable[] drawables) {
+		super(drawables);
+
+		begin = System.currentTimeMillis();
+	}
 
 	/*
 	 * Metodo responsável pelo movimento de sobe e desce do balao
@@ -45,6 +45,7 @@ public class TubaraoSprite extends Sprite {
 			}
 		}
 	}
+	
 
 	public boolean isStopAnimation() {
 		return stopAnimation;

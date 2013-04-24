@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.text.style.DrawableMarginSpan;
 
 public class AnimatedSprite {
 	private Bitmap bitmap;

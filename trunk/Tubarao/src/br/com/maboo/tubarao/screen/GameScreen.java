@@ -11,7 +11,9 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.widget.TextView;
 import br.com.maboo.tubarao.R;
+import br.com.maboo.tubarao.TubaraoActivity;
 import br.com.maboo.tubarao.core.GameView;
 import br.com.maboo.tubarao.sprite.ObjetoSprite;
 import br.com.maboo.tubarao.sprite.TubaraoSprite;
@@ -31,12 +33,22 @@ public class GameScreen extends GameView {
 
 	private Resources res;
 
-	private Drawable obj_pneu;
+	public static TextView tPontos;
+	public static TextView tTempo;
+
+	private int mPontos;
+
+	long start = 0l;
+
+	Drawable[] ds_tubarao;
+	Drawable[] ds_objetos;
 
 	public GameScreen(Context context, AttributeSet attrs) {
 		super(context, attrs, 55);
 
 		this.res = context.getResources();
+
+		carregaImagens();
 
 		mountScreen();
 
@@ -46,16 +58,40 @@ public class GameScreen extends GameView {
 
 		startThread();
 
+		start = System.currentTimeMillis(); // inicia temporizador do jogo
+
 		setFocusable(true);
 	}
 
 	private void mountScreen() {
+
 		// tubarao
-		tub = new TubaraoSprite(res.getDrawable(R.drawable.tub125x115));
-
+		tub = new TubaraoSprite(ds_tubarao);
 		tub.setPosition(getDeviceScreenWidth() / 2, GROUND);
-
 		getLayerManager().add(tub);
+
+	}
+
+	public void carregaImagens() {
+
+		ds_tubarao = new Drawable[] {
+				res.getDrawable(R.drawable.tub125x115_right),
+				res.getDrawable(R.drawable.tub125x115_left) };
+
+		ds_objetos = new Drawable[] {
+				res.getDrawable(R.drawable.obj_pneu46x42),
+				res.getDrawable(R.drawable.obj_garrafa16x42),
+				res.getDrawable(R.drawable.obj_lata42x38),
+				res.getDrawable(R.drawable.obj_barril39x48) };
+	}
+
+	protected void onLayout(boolean changed, int left, int top, int right,
+			int bottom) {
+		super.onLayout(changed, left, top, right, bottom);
+
+		// pontos
+		tPontos = TubaraoActivity.tPontos;
+		tTempo = TubaraoActivity.tTempo;
 
 	}
 
@@ -64,20 +100,21 @@ public class GameScreen extends GameView {
 		// carrega objetos
 		objetos = new Vector<ObjetoSprite>();
 
-		if (obj_pneu == null) {
-			obj_pneu = res.getDrawable(R.drawable.obj_pneu46x42);
-		}
-
 		for (int i = 0; i < QTD_OBJ; i++) {
-			ObjetoSprite obj = new ObjetoSprite(obj_pneu);
+			ObjetoSprite obj = new ObjetoSprite(ds_objetos[randomInterger(ds_objetos.length)]);
 			obj.setVisible(false);
 
-			getLayerManager().add(obj);
 			objetos.add(obj);
+			getLayerManager().add(obj);
 		}
 
 		setCoordenadaRandom(objetos, getDeviceScreenWidth());
 
+	}
+
+	private int randomInterger(int limit) {
+		int random = 0 + Double.valueOf(Math.random() * (limit - 0)).intValue();
+		return random;
 	}
 
 	/**
@@ -149,14 +186,14 @@ public class GameScreen extends GameView {
 	 */
 	private boolean isBlockMove(int newX) {
 		boolean result = false;
-		if (newX > tub.getX()) { // indo para a direita
-			tub.setFrame(1);
+		if (newX > (tub.getX() + 10)) { // indo para a direita
+			tub.setImage(0);
 
-			if (newX > getDeviceScreenWidth() - tub.getWidth()) {
+			if (newX > getDeviceScreenWidth() - tub.getWidth() - 20) {
 				result = true;
 			}
-		} else { // indo para a esquerda
-			tub.setFrame(0);
+		} else if (newX < (tub.getX() - 10)) { // indo para a esquerda
+			tub.setImage(1);
 
 			if (newX < 20) {
 				result = true;
@@ -188,7 +225,7 @@ public class GameScreen extends GameView {
 				}
 
 			}
-		} else {
+		} else {  //incrementa o nivel
 
 			TimerTask task = new TimerTask() {
 				public void run() {
@@ -226,7 +263,7 @@ public class GameScreen extends GameView {
 		if (objetos != null && objetos.size() > 0) {
 			for (int i = 0; i < objetos.size(); i++) {
 				ObjetoSprite objeto = (ObjetoSprite) objetos.elementAt(i);
-				if (objeto.getY() > getDeviceScreenHeigth()) { // item perdido  
+				if (objeto.getY() > getDeviceScreenHeigth()) { // item perdido
 					objeto.setVisible(false);
 				}
 			}
@@ -240,7 +277,9 @@ public class GameScreen extends GameView {
 		for (int i = 0; i < objetos.size(); i++) {
 			ObjetoSprite objeto = (ObjetoSprite) objetos.elementAt(i);
 			if (tub.collidesWith(objeto, true)) {
+				mPontos++;
 				objeto.setVisible(false);
+				objetos.remove(objeto);
 			}
 		}
 	}
@@ -268,8 +307,20 @@ public class GameScreen extends GameView {
 		// verifica se pegou item
 		if (objetos != null && tub != null) {
 			gotItem();
+
 		}
 
+		if (tPontos != null) {
+			tPontos.setText("pontos: " + mPontos);
+		}
+
+		if (tTempo != null) {
+
+			long mTempo = System.currentTimeMillis() - start;
+			mTempo = mTempo / 1000;
+
+			tTempo.setText("tempo: " + mTempo + "s");
+		}
 	}
 
 }

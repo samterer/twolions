@@ -147,6 +147,11 @@ public abstract class GameView extends FrameLayout {
 
 		return dm.widthPixels;
 	}
+	
+	
+	public void clearAll() {
+		
+	}
 
 	public int getFps() {
 		return (int) 1000/fps;
