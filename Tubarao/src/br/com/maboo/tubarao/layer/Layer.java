@@ -1,15 +1,11 @@
 package br.com.maboo.tubarao.layer;
 
-import java.util.Vector;
-
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 public class Layer {
 
-	protected Drawable currentDrawable;
-	protected Vector<Drawable> drawables;
+	protected Drawable originalDrawable = null;
 
 	protected int height = 0;
 	protected int width = 0;
@@ -17,18 +13,12 @@ public class Layer {
 	protected int x = 0;
 	protected int y = 0;
 
-	protected int widthFrame = 0;
-
-	protected int frame = 0;
-
 	protected boolean visible = true;
-
-	protected int indexImage = 0;
 
 	/**
 	 * Contrutor
 	 * 
-	 * @param currentDrawable
+	 * @param originalDrawable
 	 *            : imagem da animação
 	 * 
 	 *            Para sprites com apenas um frame.
@@ -38,75 +28,19 @@ public class Layer {
 	}
 
 	/**
-	 * Construtor
-	 * 
-	 * @param currentDrawable
-	 *            : imagem da animação
-	 * 
-	 *            Divida a imagem em frame e os guarda em um array
-	 */
-	public Layer(Drawable d, int widthFrame, int heightFrame) {
-
-		drawables = new Vector<Drawable>();
-
-		int qtdImg = 0;
-
-		if (widthFrame > 0) {
-			if (widthFrame % 2 == 0) {
-
-				width = widthFrame;
-				height = heightFrame;
-
-				qtdImg = d.getIntrinsicWidth() / widthFrame;
-
-				for (int i = 0; i < qtdImg; i++) {
-
-					d.setBounds(widthFrame * i, y, widthFrame * (i + 1),
-							heightFrame);
-
-				//	Log.i("game", "coord: widthFrame * i: " + widthFrame * i);
-				//	Log.i("game", "coord: widthFrame * (i + 1): " + widthFrame* (i + 1));
-
-					drawables.add(d);
-
-				}
-
-				this.currentDrawable = getImage(0);
-			}
-		}
-	}
-
-	public Drawable getImage(int indexImage) {
-		if (drawables != null && drawables.size() > 0) {
-			Drawable d = (Drawable) drawables.elementAt(indexImage);
-			return d;
-		}
-		return null;
-	}
-
-	/**
 	 * setImage, altera a imagem do sprite mantendo os valores de linhas e
 	 * colunas.
 	 * 
-	 * @param currentDrawable
+	 * @param originalDrawable
 	 *            : nova imagem.
 	 * */
 
 	protected void setImage(Drawable d) {
 
-		this.currentDrawable = d;
+		this.originalDrawable = d;
 
-		this.height = currentDrawable.getIntrinsicHeight();
-		this.width = currentDrawable.getIntrinsicWidth();
-
-	}
-
-	protected void setImage(Drawable d, int widthFrame, int heightFrame) {
-
-		this.currentDrawable = d;
-
-		this.height = heightFrame;
-		this.width = widthFrame;
+		this.height = originalDrawable.getIntrinsicHeight();
+		this.width = originalDrawable.getIntrinsicWidth();
 
 	}
 
@@ -114,7 +48,7 @@ public class Layer {
 	 * @return the currentDrawable
 	 */
 	public Drawable getImage() {
-		return currentDrawable;
+		return originalDrawable;
 	}
 
 	/**
@@ -126,12 +60,13 @@ public class Layer {
 	 * */
 	public void onDraw(Canvas canvas) {
 		if (visible) {
-			// caso esteja visivel, pinta na tela.
-			currentDrawable.setBounds(x + width * frame, y, x + width
-					* (frame + 1), y + height);
-		//	Log.i("game", "draw coord: width * frame: " + width * frame);
-		//	Log.i("game", "draw coord:  width * (frame + 1): " + width* (frame + 1));
-			currentDrawable.draw(canvas);
+		
+			originalDrawable.setBounds(x, y, x+width, y+height);
+	
+			//	Log.i("game", "draw coord: width * frame: " + width * frame);
+			//	Log.i("game", "draw coord:  width * (frame + 1): " + width* (frame + 1));
+			
+			originalDrawable.draw(canvas);
 		}
 	}
 

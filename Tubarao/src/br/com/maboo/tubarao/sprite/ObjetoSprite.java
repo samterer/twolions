@@ -7,22 +7,12 @@ import android.graphics.drawable.Drawable;
 
 public class ObjetoSprite extends Sprite {
 
-	// animacao do balao flutuando
-	private int speedUpDown = 5;
-	private long begin = 0l;
-	private long trocaDirecao = 0L;
-	private boolean stopAnimation = false;
-
 	public ObjetoSprite(Drawable drawable) {
 		super(drawable);
-
-		begin = System.currentTimeMillis();
-	}
-
-	public ObjetoSprite(Drawable drawable, int widthFrame, int heightFrame) {
-		super(drawable, widthFrame, heightFrame);
-
-		begin = System.currentTimeMillis();
+		
+		if(velocidade == 0) {
+			velocidade = 4;
+		}
 	}
 
 	public synchronized void startDown(final int limiteY, final int fps) {

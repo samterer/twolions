@@ -1,7 +1,5 @@
 package br.com.maboo.tubarao.sprite;
 
-import java.util.TimerTask;
-
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -10,24 +8,18 @@ import br.com.maboo.tubarao.layer.Layer;
 
 public class Sprite extends Layer {
 
-	int velocidade = 4;
+	protected Drawable[] arrayDrawables = null;
+
+	int velocidade = 0;
 
 	private Rect rectangleCollision = null;
-
-	private int indexImage = 0;
 
 	private int widthCollision = 0;
 	private int heightCollision = 0;
 	private int xCollision = 0;
 	private int yCollision = 0;
 
-	private TimerTask timerTask;
-
-	private Drawable currentDrawable;
-
-	// movimentação do sprite
-	private int moveRigthLeft = 0;
-	private int moveUpDown = 0;
+	private int indexImage = 0;
 
 	// verifica se o obj esta sendo selecionado
 	private boolean isTouch = false;
@@ -42,7 +34,7 @@ public class Sprite extends Layer {
 	/**
 	 * Construtor
 	 * 
-	 * @param currentDrawable
+	 * @param originalDrawable
 	 *            : imagem da animação
 	 * 
 	 *            Para sprites com apenas um frame.
@@ -50,7 +42,7 @@ public class Sprite extends Layer {
 	public Sprite(Drawable drawable) {
 		super(drawable);
 
-		this.currentDrawable = drawable;
+		originalDrawable = drawable;
 	}
 
 	/**
@@ -58,43 +50,14 @@ public class Sprite extends Layer {
 	 * 
 	 * @param view
 	 *            : que contém a classe.
-	 * @param currentDrawable
+	 * @param drawable
 	 *            : array com imagens separadas em arquivos diferentes.
 	 * 
 	 * */
+	public Sprite(Drawable[] drawables) {
+		super(drawables[0]);
 
-	public Sprite(Drawable drawable, int widthFrame, int heightFrame) {
-		super(drawable, widthFrame, heightFrame);
-
-		this.currentDrawable = getImage(0);
-	}
-
-	/**
-	 * setImage, altera a imagem do sprite mantendo os valores de linhas e
-	 * colunas.
-	 * 
-	 * @param currentDrawable
-	 *            : nova imagem.
-	 * */
-	public void setImage(Drawable drawable) {
-		super.setImage(drawable);
-
-		// após alterar imagem, redefine o retangulo de colisão.
-		defineCollisionRectangle();
-	}
-
-	/**
-	 * setFrame
-	 * 
-	 * @param int
-	 * 
-	 *        retorna um determinado frame do drawables
-	 */
-	public void setFrame(int indexImage) {
-		if (drawables != null && drawables.size() > 0) {
-			setFrame(indexImage);
-			setImage(getImage(indexImage));
-		}
+		this.arrayDrawables = drawables;
 	}
 
 	/**
@@ -102,14 +65,26 @@ public class Sprite extends Layer {
 	 * 
 	 * Exibe a próxima imagem da animação.
 	 * */
-	public void nextFrame() {
+	public void nextImage() {
 
-		indexImage = (indexImage + 1 < drawables.size()) ? indexImage = indexImage + 1
+		indexImage = (indexImage + 1 < arrayDrawables.length) ? indexImage = indexImage + 1
 				: 0;
 
-		setFrame(indexImage);
+		setImage(arrayDrawables[indexImage]);
+	}
 
-		setImage(getImage(indexImage));
+	/**
+	 * setImage, altera a imagem do sprite mantendo os valores de linhas e
+	 * colunas.
+	 * 
+	 * @param drawable
+	 *            : nova imagem.
+	 * */
+	public void setImage(Drawable drawable) {
+		super.setImage(drawable);
+
+		// após alterar imagem, redefine o retangulo de colisão.
+		defineCollisionRectangle();
 	}
 
 	/**
@@ -185,8 +160,8 @@ public class Sprite extends Layer {
 	 * */
 	private boolean collidesWithPixel(Sprite sprite) {
 
-		Bitmap b1 = ((BitmapDrawable) this.currentDrawable).getBitmap();
-		Bitmap b2 = ((BitmapDrawable) sprite.currentDrawable).getBitmap();
+		Bitmap b1 = ((BitmapDrawable) this.originalDrawable).getBitmap();
+		Bitmap b2 = ((BitmapDrawable) sprite.originalDrawable).getBitmap();
 
 		Rect rectIntersect = new Rect();
 
@@ -237,122 +212,50 @@ public class Sprite extends Layer {
 
 		return rectangleCollision;
 	}
-
+	
 	/**
-	 * move o sprite para a direita utilizando como limite o valor passado em
-	 * limits Caso o valor passado seja menor que 0 o cursor não terá limites
-	 * 
-	 * @param pixelAmount
-	 * @param limits
+	 * @param indiceImage the currentImage to set
 	 */
-	public void moveRight(int pixelAmount, int limits) {
-
-		if (limits < 0) {
-
-			move(pixelAmount, 0);
-
-		} else if (this.moveRigthLeft < limits) {
-
-			move(pixelAmount, 0);
-
-			this.moveRigthLeft += 1;
-
-		}
-
-		// Log.i("Sprite", "REGRA: this.moveRigthLeft < limits");
-
-		// Log.i("Sprite", "this.moveRigthLeft: " + this.moveRigthLeft);
-		// Log.i("Sprite", "limits: " + limits);
+	public void setImage(int indiceImage) {
+		this.indexImage = indiceImage;
+		setImage(arrayDrawables[indiceImage]);
 	}
 
+
 	/**
-	 * move o sprite para a esquerda utilizando como limite o valor passado em
-	 * limits Caso o valor passado seja menor que 0 o cursor não terá limites
-	 * 
-	 * @param pixelAmount
-	 * @param limits
+	 * @return the currentImage
 	 */
-	public void moveLeft(int pixelAmount, int limits) {
-
-		if (limits < 0) {
-
-			move(-pixelAmount, 0);
-
-		} else if (this.moveRigthLeft > limits) {
-
-			move(-pixelAmount, 0);
-
-			this.moveRigthLeft -= 1;
-
-		}
-
-		// Log.i("Sprite", "REGRA: this.moveRigthLeft > limits");
-
-		// Log.i("Sprite", "this.moveRigthLeft: " + this.moveRigthLeft);
-		// Log.i("Sprite", "limits: " + limits);
+	public int getIndexImage() {
+		return indexImage;
 	}
 
+
 	/**
-	 * move o sprite para a cima utilizando como limite o valor passado em
-	 * limits Caso o valor passado seja menor que 0 o cursor não terá limites
-	 * 
-	 * @param pixelAmount
-	 * @param limits
+	 * @return the arrayDrawables
 	 */
-
-	public void moveUP(int pixelAmount, int limits) {
-
-		if (limits < 0) {
-
-			move(0, -pixelAmount);
-
-		} else if (this.moveUpDown > limits) {
-
-			move(0, -pixelAmount);
-
-			this.moveUpDown -= 1;
-
-		}
-
-		// Log.i("Sprite", "REGRA: this.moveUpDown > limits");
-
-		// Log.i("Sprite", "this.moveUpDown: " + this.moveUpDown);
-		// Log.i("Sprite", "limits: " + limits);
+	public Drawable[] getArrayDrawables() {
+		return arrayDrawables;
 	}
 
+
 	/**
-	 * move o sprite para a baixo utilizando como limite o valor passado em
-	 * limits Caso o valor passado seja menor que 0 o cursor não terá limites
-	 * 
-	 * @param pixelAmount
-	 * @param limits
+	 * @param arrayDrawables the arrayDrawables to set
 	 */
-	public void moveDown(int pixelAmount, int limits) {
-
-		if (limits < 0) {
-
-			move(0, pixelAmount);
-
-		} else if (this.moveUpDown < limits) {
-
-			move(0, pixelAmount);
-
-			this.moveUpDown += 1;
-
-		}
-
-		// Log.i("Sprite", "REGRA: this.moveUpDown < limits");
-
-		// Log.i("Sprite", "this.moveUpDown: " + this.moveUpDown);
-		// Log.i("Sprite", "limits: " + limits);
+	public void setArrayDrawables(Drawable[] arrayDrawables) {
+		this.arrayDrawables = arrayDrawables;
+		
+		indexImage = 0;
+		
+		//atualiza imagem que está sendo visualizada
+		setImage(arrayDrawables[0]);
 	}
 
 	public void setOriginalDrawable(Drawable d) {
-		this.currentDrawable = d;
+		this.originalDrawable = d;
 	}
 
 	public Drawable getOriginalDrawable() {
-		return this.currentDrawable;
+		return this.originalDrawable;
 	}
 
 	/**
@@ -360,7 +263,7 @@ public class Sprite extends Layer {
 	 * Sprite(Drawable)
 	 */
 	public boolean isTouch(float touchX, float touchY) {
-		if (currentDrawable.copyBounds().contains((int) touchX, (int) touchY)) {
+		if (originalDrawable.copyBounds().contains((int) touchX, (int) touchY)) {
 			return true;
 		} else {
 			return false;
