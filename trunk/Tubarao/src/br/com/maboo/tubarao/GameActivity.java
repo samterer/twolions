@@ -8,7 +8,7 @@ import android.widget.TextView;
 import br.com.maboo.tubarao.core.GameThread;
 import br.com.maboo.tubarao.core.GameView;
 
-public class TubaraoActivity extends Activity {
+public class GameActivity extends Activity {
 
 	private static final int MENU_PAUSE = 4;
 	private static final int MENU_RESUME = 5;
@@ -93,7 +93,7 @@ public class TubaraoActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		mGameThread.pause(); // pause game when Activity pauses
+	//	mGameThread.pause(); // pause game when Activity pauses
 	}
 
 	/**

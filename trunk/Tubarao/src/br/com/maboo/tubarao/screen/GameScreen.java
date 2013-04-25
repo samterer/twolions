@@ -12,8 +12,8 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.TextView;
+import br.com.maboo.tubarao.GameActivity;
 import br.com.maboo.tubarao.R;
-import br.com.maboo.tubarao.TubaraoActivity;
 import br.com.maboo.tubarao.core.GameView;
 import br.com.maboo.tubarao.sprite.ObjetoSprite;
 import br.com.maboo.tubarao.sprite.TubaraoSprite;
@@ -90,8 +90,8 @@ public class GameScreen extends GameView {
 		super.onLayout(changed, left, top, right, bottom);
 
 		// pontos
-		tPontos = TubaraoActivity.tPontos;
-		tTempo = TubaraoActivity.tTempo;
+		tPontos = GameActivity.tPontos;
+		tTempo = GameActivity.tTempo;
 
 	}
 

@@ -10,7 +10,7 @@ public class Sprite extends Layer {
 
 	protected Drawable[] arrayDrawables = null;
 
-	int velocidade = 0;
+	int peso = 0;
 
 	private Rect rectangleCollision = null;
 
@@ -303,11 +303,11 @@ public class Sprite extends Layer {
 	}
 
 	public int getVelocidade() {
-		return velocidade;
+		return peso;
 	}
 
 	public void setVelocidade(int velocidade) {
-		this.velocidade = velocidade;
+		this.peso = velocidade;
 	}
 
 }
