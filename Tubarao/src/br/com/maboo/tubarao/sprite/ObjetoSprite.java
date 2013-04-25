@@ -10,8 +10,8 @@ public class ObjetoSprite extends Sprite {
 	public ObjetoSprite(Drawable drawable) {
 		super(drawable);
 		
-		if(velocidade == 0) {
-			velocidade = 4;
+		if(peso == 0) {
+			peso = 4;
 		}
 	}
 
@@ -27,7 +27,7 @@ public class ObjetoSprite extends Sprite {
 				}
 			}
 		};
-		move(0, velocidade);
+		move(0, peso);
 		new Timer().schedule(task, fps * 2);
 	}
 
