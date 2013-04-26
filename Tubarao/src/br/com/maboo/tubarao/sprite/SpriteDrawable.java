@@ -6,7 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import br.com.maboo.tubarao.layer.Layer;
 
-public class Sprite extends Layer {
+public class SpriteDrawable extends Layer {
 
 	protected Drawable[] arrayDrawables = null;
 
@@ -34,12 +34,12 @@ public class Sprite extends Layer {
 	/**
 	 * Construtor
 	 * 
-	 * @param originalDrawable
+	 * @param originalBitmap
 	 *            : imagem da animação
 	 * 
 	 *            Para sprites com apenas um frame.
 	 * */
-	public Sprite(Drawable drawable) {
+	public SpriteDrawable(Drawable drawable) {
 		super(drawable);
 
 		originalDrawable = drawable;
@@ -54,7 +54,7 @@ public class Sprite extends Layer {
 	 *            : array com imagens separadas em arquivos diferentes.
 	 * 
 	 * */
-	public Sprite(Drawable[] drawables) {
+	public SpriteDrawable(Drawable[] drawables) {
 		super(drawables[0]);
 
 		this.arrayDrawables = drawables;
@@ -124,26 +124,27 @@ public class Sprite extends Layer {
 	/**
 	 * collidesWith
 	 * 
-	 * @param sprite
+	 * @param spriteDrawable
 	 *            : sprite com que vai ser verificado se há colisão.
 	 * @param pxInvisible
 	 *            : se false, considera todo o retangulo da imagem e true
 	 *            desconsidera pxs invisiveis.
 	 * */
-	public boolean collidesWith(Sprite sprite, boolean pxInvisible) {
+	public boolean collidesWith(SpriteDrawable spriteDrawable,
+			boolean pxInvisible) {
 
 		boolean retorno = false;
 
 		// há intersecção
 		if (visible
 				&& getRectangleCollision().intersect(
-						sprite.getRectangleCollision())) {
+						spriteDrawable.getRectangleCollision())) {
 			// houve colisão com o retangulo
 			retorno = true;
 
 			if (pxInvisible) {
 				// colisão por px.
-				retorno = collidesWithPixel(sprite);
+				retorno = collidesWithPixel(spriteDrawable);
 			}
 		}
 		return retorno;
@@ -154,19 +155,20 @@ public class Sprite extends Layer {
 	 * 
 	 * colisão por pixel, ou colisão perfeita.
 	 * 
-	 * @param sprite
+	 * @param spriteDrawable
 	 * 
 	 *            sprite : com que vai verificar a colisão
 	 * */
-	private boolean collidesWithPixel(Sprite sprite) {
+	private boolean collidesWithPixel(SpriteDrawable spriteDrawable) {
 
 		Bitmap b1 = ((BitmapDrawable) this.originalDrawable).getBitmap();
-		Bitmap b2 = ((BitmapDrawable) sprite.originalDrawable).getBitmap();
+		Bitmap b2 = ((BitmapDrawable) spriteDrawable.originalDrawable)
+				.getBitmap();
 
 		Rect rectIntersect = new Rect();
 
 		rectIntersect.setIntersect(this.getRectangleCollision(),
-				sprite.getRectangleCollision());
+				spriteDrawable.getRectangleCollision());
 
 		int left = rectIntersect.left;
 		int top = rectIntersect.top;
@@ -182,8 +184,8 @@ public class Sprite extends Layer {
 				aX = i - this.x;
 				aY = j - this.y;
 				// obtém o x e y da da intersecção na imagem B
-				bX = i - sprite.getX();
-				bY = j - sprite.getY();
+				bX = i - spriteDrawable.getX();
+				bY = j - spriteDrawable.getY();
 
 				// descobrir o motivo de que em alguns casos os indices de x e y
 				// estão fora da imagens.
@@ -212,15 +214,15 @@ public class Sprite extends Layer {
 
 		return rectangleCollision;
 	}
-	
+
 	/**
-	 * @param indiceImage the currentImage to set
+	 * @param indiceImage
+	 *            the currentImage to set
 	 */
 	public void setImage(int indiceImage) {
 		this.indexImage = indiceImage;
 		setImage(arrayDrawables[indiceImage]);
 	}
-
 
 	/**
 	 * @return the currentImage
@@ -229,7 +231,6 @@ public class Sprite extends Layer {
 		return indexImage;
 	}
 
-
 	/**
 	 * @return the arrayDrawables
 	 */
@@ -237,16 +238,16 @@ public class Sprite extends Layer {
 		return arrayDrawables;
 	}
 
-
 	/**
-	 * @param arrayDrawables the arrayDrawables to set
+	 * @param arrayDrawables
+	 *            the arrayDrawables to set
 	 */
 	public void setArrayDrawables(Drawable[] arrayDrawables) {
 		this.arrayDrawables = arrayDrawables;
-		
+
 		indexImage = 0;
-		
-		//atualiza imagem que está sendo visualizada
+
+		// atualiza imagem que está sendo visualizada
 		setImage(arrayDrawables[0]);
 	}
 
@@ -260,7 +261,7 @@ public class Sprite extends Layer {
 
 	/**
 	 * Retorna true caso o usuario tenha clicado sobre o obj do tipo
-	 * Sprite(Drawable)
+	 * SpriteDrawable(Drawable)
 	 */
 	public boolean isTouch(float touchX, float touchY) {
 		if (originalDrawable.copyBounds().contains((int) touchX, (int) touchY)) {

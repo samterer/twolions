@@ -24,4 +24,21 @@
         <include layout="@layout/h_s_game" />
     </LinearLayout>
 
+    <!-- status do game -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:text="@string/empty_text"
+            android:textColor="#88ffffff"
+            android:textSize="24sp"
+            android:visibility="visible" />
+    </RelativeLayout>
+
 </FrameLayout>

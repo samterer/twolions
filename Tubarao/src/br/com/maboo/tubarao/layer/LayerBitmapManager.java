@@ -2,7 +2,7 @@ package br.com.maboo.tubarao.layer;
 
 import java.util.ArrayList;
 
-public class LayerManager extends ArrayList<Layer> {
+public class LayerBitmapManager extends ArrayList<LayerBitmap> {
 
 	/**
 	 * 
@@ -14,7 +14,7 @@ public class LayerManager extends ArrayList<Layer> {
 	 * 
 	 * @param indice
 	 * */
-	protected Layer getItem(int indice) {
+	protected LayerBitmap getItem(int indice) {
 		return get(indice);
 	}
 

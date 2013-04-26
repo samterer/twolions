@@ -58,16 +58,11 @@ public class Layer {
 	 * 
 	 *            responsável por desenhar o sprite na tela.
 	 * */
-	public void onDraw(Canvas canvas) {
-		if (visible) {
-		
-			originalDrawable.setBounds(x, y, x+width, y+height);
-	
-			//	Log.i("game", "draw coord: width * frame: " + width * frame);
-			//	Log.i("game", "draw coord:  width * (frame + 1): " + width* (frame + 1));
-			
-			originalDrawable.draw(canvas);
-		}
+	public void draw(Canvas canvas) {
+
+		originalDrawable.setBounds(x, y, x + width, y + height);
+
+		originalDrawable.draw(canvas);
 	}
 
 	/**
