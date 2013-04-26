@@ -10,7 +10,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,8 +21,8 @@ import android.widget.TextView;
 import br.com.maboo.tubarao.R;
 import br.com.maboo.tubarao.core.GameActivity;
 import br.com.maboo.tubarao.core.GameSurfaceView;
-import br.com.maboo.tubarao.layer.LayerBitmap;
 import br.com.maboo.tubarao.sprite.ObjetoBitmap;
+import br.com.maboo.tubarao.sprite.SpriteBitmap;
 import br.com.maboo.tubarao.sprite.TubaraoBitmap;
 
 public class GameScreen extends GameSurfaceView {
@@ -84,9 +83,9 @@ public class GameScreen extends GameSurfaceView {
 	}
 
 	private Paint textPaint;
-
+	
 	public void carregaImagens() {
-
+		
 		bs_tubarao = new Bitmap[] {
 				BitmapFactory.decodeStream(res
 						.openRawResource(R.drawable.tub125x115_right)),
@@ -103,6 +102,46 @@ public class GameScreen extends GameSurfaceView {
 				BitmapFactory.decodeStream(res
 						.openRawResource(R.drawable.obj_barril39x48)) };
 	}
+	
+	//TODO
+	public Bitmap resizeImage(Bitmap image,int maxWidth, int maxHeight)
+	{
+	    Bitmap resizedImage = null;
+	    try {
+	        int imageHeight = image.getHeight();
+
+
+	        if (imageHeight > maxHeight)
+	            imageHeight = maxHeight;
+	        int imageWidth = (imageHeight * image.getWidth())
+	                / image.getHeight();
+
+	        if (imageWidth > maxWidth) {
+	            imageWidth = maxWidth;
+	            imageHeight = (imageWidth * image.getHeight())
+	                    / image.getWidth();
+	        }
+
+	        if (imageHeight > maxHeight)
+	            imageHeight = maxHeight;
+	        if (imageWidth > maxWidth)
+	            imageWidth = maxWidth;
+
+
+	        resizedImage = Bitmap.createScaledBitmap(image, imageWidth,
+	                imageHeight, true);
+	    } catch (OutOfMemoryError e) {
+
+	        e.printStackTrace();
+	    }catch(NullPointerException e)
+	    {
+	        e.printStackTrace();
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return resizedImage;
+	}
 
 	private void mountScreen() {
 
@@ -110,6 +149,15 @@ public class GameScreen extends GameSurfaceView {
 		textPaint = new Paint();
 		textPaint.setARGB(255, 255, 255, 255);
 		textPaint.setTextSize(26);
+		
+		// bg
+		SpriteBitmap mFinalbitmap = new SpriteBitmap();
+		Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
+		mFinalbitmap.Initialize(b, b.getHeight(), b.getWidth(), true);
+		mFinalbitmap.setVisible(true);
+		mFinalbitmap.setPosition(0,0);
+
+		getSprites().add(mFinalbitmap);
 
 		// tubarao
 		tub = new TubaraoBitmap(bs_tubarao[0]);
@@ -196,12 +244,14 @@ public class GameScreen extends GameSurfaceView {
 
 		Log.i("appLog", "onTouchEvent: x/y > " + x + "/" + y);
 
+
+		if (mMode != STATE_RUNNING) {
+			setState(STATE_RUNNING);
+		}
+
+		
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-
-			if (mMode != STATE_RUNNING) {
-				setState(STATE_RUNNING);
-			}
 
 			// inicia o movimento (imagem pressionada)
 			tub.setTouch(tub.isTouch(x, y));
@@ -333,7 +383,7 @@ public class GameScreen extends GameSurfaceView {
 		super.onDraw(canvas);
 		
 		if (mMode == STATE_RUNNING) {
-			
+
 			canvas.drawText("pontos: "+mPontos, 20,
 					40, textPaint);
 			
@@ -349,7 +399,6 @@ public class GameScreen extends GameSurfaceView {
 		if (tub != null) {
 			if (tub.isVisible()) {
 				if (tub.isRunAnimation()) {
-					Log.i("game", "animando tub tub...");
 					tub.animation();
 				}
 			}

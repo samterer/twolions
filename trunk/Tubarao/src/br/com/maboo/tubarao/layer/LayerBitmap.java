@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 
 public class LayerBitmap {
 	protected Bitmap originalBitmap;
@@ -26,7 +25,7 @@ public class LayerBitmap {
 	}
 
 	public void setImage(Bitmap bitmap) {
-		Initialize(bitmap, bitmap.getHeight(), bitmap.getWidth(), false);
+		Initialize(bitmap, bitmap.getHeight(), bitmap.getWidth(), true);
 	}
 
 	public void Initialize(Bitmap bitmap, int height, int width, boolean visible) {

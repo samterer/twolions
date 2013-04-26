@@ -1,5 +1,6 @@
 package br.com.maboo.tubarao.core;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -66,7 +67,7 @@ public abstract class GameSurfaceView extends SurfaceView implements Callback {
 
 	}
 
-	protected void onDraw(Canvas canvas) {
+	@SuppressLint("DrawAllocation") protected void onDraw(Canvas canvas) {
 	//	Log.d("game","## onDrawing... ##");
 		canvas.drawRect(0, 0, getWidth(), getHeight(), new Paint());
 
