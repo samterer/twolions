@@ -3,6 +3,7 @@ package br.com.maboo.tubarao.core;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,7 +18,7 @@ import br.com.maboo.tubarao.R;
 import br.com.maboo.tubarao.layer.LayerBitmap;
 import br.com.maboo.tubarao.layer.LayerBitmapManager;
 
-public class GameSurfaceView extends SurfaceView implements Callback {
+public abstract class GameSurfaceView extends SurfaceView implements Callback {
 
 	/*
 	 * State-tracking constants
@@ -65,24 +66,20 @@ public class GameSurfaceView extends SurfaceView implements Callback {
 
 	}
 
-	protected synchronized void onDraw(Canvas canvas) {
-		canvas.save();
+	protected void onDraw(Canvas canvas) {
+	//	Log.d("game","## onDrawing... ##");
+		canvas.drawRect(0, 0, getWidth(), getHeight(), new Paint());
 
 		for (LayerBitmap a : mSprites) {
-			if (a.isVisible()) {
+			
 				a.draw(canvas);
-			}
 		}
 
-		canvas.restore();
-
-		loop();
+		//canvas.restore();
 
 	}
-
-	protected void loop() {
-		//
-	}
+	
+	public abstract void loop();
 
 	// Chamado quando a tela é redimensioada, ou iniciada...
 	protected void onSizeChanged(int width, int height, int oldw, int oldh) {

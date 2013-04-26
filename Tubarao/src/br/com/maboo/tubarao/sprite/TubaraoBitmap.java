@@ -8,7 +8,7 @@ public class TubaraoBitmap extends SpriteBitmap {
 	private int speedUpDown = 5;
 	private long begin = 0l;
 	private long trocaDirecao = 0L;
-	private boolean stopAnimation = false;
+	private boolean runAnimation = true;
 
 	public TubaraoBitmap(Bitmap bitmap) {
 
@@ -21,7 +21,7 @@ public class TubaraoBitmap extends SpriteBitmap {
 	 * Metodo responsável pelo movimento de sobe e desce do balao
 	 */
 	public void animation() {
-		if (!stopAnimation) {
+		if (runAnimation) {
 			long timeNow = System.currentTimeMillis();
 			if (timeNow > (begin + 50)) {
 				move(0, speedUpDown);
@@ -41,11 +41,13 @@ public class TubaraoBitmap extends SpriteBitmap {
 		}
 	}
 
-	public boolean isStopAnimation() {
-		return stopAnimation;
+	public boolean isRunAnimation() {
+		return runAnimation;
 	}
 
-	public void setStopAnimation(boolean stopAnimation) {
-		this.stopAnimation = stopAnimation;
+	public void setRunAnimation(boolean runAnimation) {
+		this.runAnimation = runAnimation;
 	}
+
+
 }

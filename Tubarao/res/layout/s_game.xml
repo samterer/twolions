@@ -12,8 +12,7 @@
         <br.com.maboo.tubarao.screen.GameScreen
             android:id="@+id/view"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@drawable/bg" />
+            android:layout_height="fill_parent" />
     </LinearLayout>
 
     <LinearLayout
@@ -25,6 +24,7 @@
     </LinearLayout>
 
     <!-- status do game -->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
