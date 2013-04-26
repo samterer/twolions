@@ -3,14 +3,19 @@ package br.com.maboo.tubarao.sprite;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
-public class ObjetoSprite extends SpriteDrawable {
+public class ObjetoBitmap extends SpriteBitmap {
 
-	public ObjetoSprite(Drawable drawable) {
-		super(drawable);
-		
-		if(peso == 0) {
+	public ObjetoBitmap(Bitmap bitmap) {
+
+		setImage(bitmap);
+
+	}
+
+	public ObjetoBitmap() {
+
+		if (peso == 0) {
 			peso = 4;
 		}
 	}

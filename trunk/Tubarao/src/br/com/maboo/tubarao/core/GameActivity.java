@@ -1,22 +1,21 @@
-package br.com.maboo.tubarao;
+package br.com.maboo.tubarao.core;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import br.com.maboo.tubarao.core.GameThread;
-import br.com.maboo.tubarao.core.GameView;
+import br.com.maboo.tubarao.R;
+import br.com.maboo.tubarao.screen.GameScreen;
 
-public class GameActivity extends Activity {
+public class GameActivity extends ActivityCircle {
 
 	private static final int MENU_PAUSE = 4;
 	private static final int MENU_RESUME = 5;
 	private static final int MENU_CLEAR = 6;
 	private static final int MENU_STOP = 7;
 
-	private GameThread mGameThread;
-	private GameView mGameView;
+	private GameScreen mGameScreen;
 
 	public static TextView tPontos;
 	public static TextView tTempo;
@@ -28,7 +27,6 @@ public class GameActivity extends Activity {
 	 *            the Menu to which entries may be added
 	 * @return true
 	 */
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 
@@ -48,20 +46,19 @@ public class GameActivity extends Activity {
 	 * @return true if the Menu item was legit (and we consumed it), false
 	 *         otherwise
 	 */
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case MENU_CLEAR:
-			mGameView.clearAll();
+			mGameScreen.clearSprites();
 			return true;
 		case MENU_STOP:
 			finish();
 			return true;
 		case MENU_PAUSE:
-			mGameThread.pause();
+			mGameScreen.pause();
 			return true;
 		case MENU_RESUME:
-			mGameThread.resume();
+			mGameScreen.unpause();
 			return true;
 		}
 
@@ -75,25 +72,38 @@ public class GameActivity extends Activity {
 	 *            a Bundle containing state saved from a previous execution, or
 	 *            null if this is a new execution
 	 */
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 
 		// tell system to use the layout defined in our XML file
 		setContentView(R.layout.s_game);
 
 		tPontos = (TextView) findViewById(R.id.pontos);
 		tTempo = (TextView) findViewById(R.id.tempo);
+
+		// get handles to the LunarView from XML, and its LunarThread
+		mGameScreen = (GameScreen) findViewById(R.id.view);
+
+		// give the LunarView a handle to the TextView used for messages
+		mGameScreen.setTextView((TextView) findViewById(R.id.text));
+
+		if (savedInstanceState == null) {
+			// we were just launched: set up a new game
+			mGameScreen.setState(GameScreen.STATE_READY);
+			Log.i("game", "SIS is null");
+		} else {
+			// we are being restored: resume a previous game
+			mGameScreen.restoreState(savedInstanceState);
+			Log.i("game", "SIS is nonnull");
+		}
 	}
 
 	/**
 	 * Invoked when the Activity loses user focus.
 	 */
-	@Override
 	protected void onPause() {
 		super.onPause();
-	//	mGameThread.pause(); // pause game when Activity pauses
+		mGameScreen.pause(); // pause game when Activity pauses
 	}
 
 	/**
@@ -104,6 +114,8 @@ public class GameActivity extends Activity {
 	 *            a Bundle into which this Activity should save its state
 	 */
 	protected void onSaveInstanceState(Bundle outState) {
+		// just have the View's thread save its state into our Bundle
 		super.onSaveInstanceState(outState);
+		mGameScreen.saveState(outState);
 	}
 }

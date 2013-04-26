@@ -67,7 +67,7 @@ public abstract class GameView extends FrameLayout {
 
 			// Layer l = getLayerManager().get(i);
 
-			getLayerManager().get(i).onDraw(canvas);
+			getLayerManager().get(i).draw(canvas);
 
 		}
 
@@ -87,7 +87,7 @@ public abstract class GameView extends FrameLayout {
 	}
 
 	/**
-	 * start
+	 * timer
 	 * 
 	 * starta a thread do jogo.
 	 * */
