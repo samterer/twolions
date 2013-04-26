@@ -31,8 +31,9 @@ public class GameSurfaceThread extends Thread {
 
 	public void run() {
 		long ticksPS = 1000 / fps;
-		long startTime;
-		long sleepTime;
+		fps = (int) ticksPS;
+		long startTime = 0;
+		long sleepTime = 0;
 
 		while (mRun) {
 			Canvas c = null;
@@ -42,7 +43,20 @@ public class GameSurfaceThread extends Thread {
 				c = mSurfaceHolder.lockCanvas(null);
 				synchronized (mSurfaceHolder) {
 					if (view.mMode == GameSurfaceView.STATE_RUNNING) {
-						view.onDraw(c);
+						view.onDraw(c);					
+					
+						view.loop();
+					}
+
+					try {
+						if (sleepTime > 0) {
+							Thread.sleep(sleepTime);
+						} else {
+							Thread.sleep(10);
+						}
+
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
 			} finally {
@@ -53,14 +67,6 @@ public class GameSurfaceThread extends Thread {
 			}
 
 			sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
-			try {
-				if (sleepTime > 0)
-					sleep(sleepTime);
-				else
-					sleep(10);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
 	}
 

@@ -10,16 +10,19 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.TextView;
 import br.com.maboo.tubarao.R;
 import br.com.maboo.tubarao.core.GameActivity;
 import br.com.maboo.tubarao.core.GameSurfaceView;
+import br.com.maboo.tubarao.layer.LayerBitmap;
 import br.com.maboo.tubarao.sprite.ObjetoBitmap;
 import br.com.maboo.tubarao.sprite.TubaraoBitmap;
 
@@ -82,24 +85,6 @@ public class GameScreen extends GameSurfaceView {
 
 	private Paint textPaint;
 
-	private void mountScreen() {
-
-		// TODO
-		textPaint = new Paint();
-		textPaint.setARGB(255, 255, 255, 255);
-		textPaint.setTextSize(26);
-
-		// tubarao
-		tub = new TubaraoBitmap(bs_tubarao[0]);
-		tub.setArrayBitmaps(bs_tubarao);
-		tub.setVisible(true);
-
-		tub.setPosition(getDeviceScreenWidth() / 2, GROUND);
-
-		getSprites().add(tub);
-
-	}
-
 	public void carregaImagens() {
 
 		bs_tubarao = new Bitmap[] {
@@ -117,6 +102,25 @@ public class GameScreen extends GameSurfaceView {
 						.openRawResource(R.drawable.obj_lata42x38)),
 				BitmapFactory.decodeStream(res
 						.openRawResource(R.drawable.obj_barril39x48)) };
+	}
+
+	private void mountScreen() {
+
+		// TODO
+		textPaint = new Paint();
+		textPaint.setARGB(255, 255, 255, 255);
+		textPaint.setTextSize(26);
+
+		// tubarao
+		tub = new TubaraoBitmap(bs_tubarao[0]);
+		tub.setArrayBitmaps(bs_tubarao);
+		tub.setVisible(true);
+		tub.setRunAnimation(true);
+
+		tub.setPosition(getDeviceScreenWidth() / 2, GROUND);
+
+		getSprites().add(tub);
+
 	}
 
 	protected void onLayout(boolean changed, int left, int top, int right,
@@ -190,7 +194,7 @@ public class GameScreen extends GameSurfaceView {
 		float x = event.getX();
 		float y = event.getY();
 
-		// Log.i("game", "onTouchEvent: x/y > " + x + "/" + y);
+		Log.i("appLog", "onTouchEvent: x/y > " + x + "/" + y);
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
@@ -203,7 +207,6 @@ public class GameScreen extends GameSurfaceView {
 			tub.setTouch(tub.isTouch(x, y));
 
 			break;
-
 		case MotionEvent.ACTION_MOVE:
 			// arrasta o sprite
 			if (tub.isTouch() && !isBlockMove((int) x - (tub.getWidth() / 2))) {
@@ -328,26 +331,27 @@ public class GameScreen extends GameSurfaceView {
 
 	public synchronized void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-
+		
 		if (mMode == STATE_RUNNING) {
-
-			canvas.drawText(getThread().getFps() + " fps",
-					getDeviceScreenWidth() - 100,
-					getDeviceScreenHeigth() - 100, textPaint);
-
-			canvas.drawText(mTempo + "s tempo", getDeviceScreenWidth() - 120,
-					getDeviceScreenHeigth() - 150, textPaint);
-
-			canvas.drawText(mPontos + " pontos", getDeviceScreenWidth() - 140,
-					getDeviceScreenHeigth() - 200, textPaint);
+			
+			canvas.drawText("pontos: "+mPontos, 20,
+					40, textPaint);
+			
+			canvas.drawText("tempo: " +mTempo + "s", getWidth() - 200,
+					40, textPaint);
 		}
+		
 	}
-
-	protected synchronized void loop() {
+	
+	public void loop() {
 		// anima tub
+		// Log.d("game","## lopping entrando... ##");
 		if (tub != null) {
-			if (tub.isVisible() && !tub.isStopAnimation()) {
-				tub.animation();
+			if (tub.isVisible()) {
+				if (tub.isRunAnimation()) {
+					Log.i("game", "animando tub tub...");
+					tub.animation();
+				}
 			}
 		}
 
@@ -375,6 +379,7 @@ public class GameScreen extends GameSurfaceView {
 			mTempo = mTempo / 1000;
 
 		}
+		// Log.d("game","## lopping saindo... ##");
 	}
 
 	public synchronized void restoreState(Bundle icicle) {

@@ -2,8 +2,6 @@ package br.com.maboo.tubarao.sprite;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import br.com.maboo.tubarao.layer.LayerBitmap;
 
 public class SpriteBitmap extends LayerBitmap {
@@ -232,14 +230,14 @@ public class SpriteBitmap extends LayerBitmap {
 	 * Retorna true caso o usuario tenha clicado sobre o obj do tipo
 	 * SpriteBitmap(Bitmap)
 	 */
-	public boolean isTouch(float touchX, float touchY) {
-		Drawable drawable = new BitmapDrawable(originalBitmap);
-
-		if (drawable.copyBounds().contains((int) touchX, (int) touchY)) {
-			return true;
+	public boolean isTouch(float touchX, float touchY) {		
+		if (touchX >= x && x < (x + originalBitmap.getWidth())
+                && touchY >= y && touchY < (y + originalBitmap.getHeight())) {
+			return true; 
 		} else {
 			return false;
 		}
+		
 	}
 
 	public void setTouch(boolean isTouch) {
