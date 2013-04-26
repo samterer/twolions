@@ -66,12 +66,15 @@ public class GameSurfaceView extends SurfaceView implements Callback {
 	}
 
 	protected synchronized void onDraw(Canvas canvas) {
+		canvas.save();
 
 		for (LayerBitmap a : mSprites) {
 			if (a.isVisible()) {
 				a.draw(canvas);
 			}
 		}
+
+		canvas.restore();
 
 		loop();
 

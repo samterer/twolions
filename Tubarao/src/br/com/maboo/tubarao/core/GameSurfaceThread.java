@@ -1,7 +1,6 @@
 package br.com.maboo.tubarao.core;
 
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameSurfaceThread extends Thread {
@@ -51,10 +50,7 @@ public class GameSurfaceThread extends Thread {
 				if (c != null) {
 					mSurfaceHolder.unlockCanvasAndPost(c);
 				}
-
 			}
-
-			Log.d("game", "fps: " + ticksPS);
 
 			sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
 			try {
