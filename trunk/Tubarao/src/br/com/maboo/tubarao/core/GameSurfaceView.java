@@ -94,6 +94,7 @@ public class GameSurfaceView extends SurfaceView implements Callback {
 	public void clearSprites() {
 		synchronized (mSprites) {
 			mSprites.clear();
+			mSprites = new LayerBitmapManager();
 		}
 	}
 
