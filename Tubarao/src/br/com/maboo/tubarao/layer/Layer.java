@@ -1,149 +1,103 @@
 package br.com.maboo.tubarao.layer;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
+import android.graphics.Paint;
+import android.graphics.Rect;
 
 public class Layer {
+	protected Bitmap originalBitmap;
+	protected int x;
+	protected int y;
+	protected Rect sRectangle;
+	protected int currentFrame;
+	protected int height;
+	protected int width;
+	protected boolean visible;
 
-	protected Drawable originalDrawable = null;
-
-	protected int height = 0;
-	protected int width = 0;
-
-	protected int x = 0;
-	protected int y = 0;
-
-	protected boolean visible = true;
-
-	/**
-	 * Contrutor
-	 * 
-	 * @param originalDrawable
-	 *            : imagem da animação
-	 * 
-	 *            Para sprites com apenas um frame.
-	 * */
-	public Layer(Drawable drawable) {
-		setImage(drawable);
+	public Layer() {
+		originalBitmap = null;
+		sRectangle = new Rect(0, 0, 0, 0);
+		currentFrame = 0;
+		x = 0;
+		y = 0;
+		visible = false;
 	}
 
-	/**
-	 * setImage, altera a imagem do sprite mantendo os valores de linhas e
-	 * colunas.
-	 * 
-	 * @param originalDrawable
-	 *            : nova imagem.
-	 * */
-
-	protected void setImage(Drawable d) {
-
-		this.originalDrawable = d;
-
-		this.height = originalDrawable.getIntrinsicHeight();
-		this.width = originalDrawable.getIntrinsicWidth();
-
+	public void setImage(Bitmap bitmap) {
+		Initialize(bitmap, bitmap.getHeight(), bitmap.getWidth(), true);
 	}
 
-	/**
-	 * @return the currentDrawable
-	 */
-	public Drawable getImage() {
-		return originalDrawable;
+	public void Initialize(Bitmap bitmap, int height, int width, boolean visible) {
+		this.originalBitmap = bitmap;
+		this.height = height;
+		this.width = width;
+		this.sRectangle.top = 0;
+		this.sRectangle.bottom = height;
+		this.sRectangle.left = 0;
+		this.sRectangle.right = width;
+		this.visible = visible;
+
+		sRectangle.left = currentFrame * width;
+		sRectangle.right = sRectangle.left + width;
 	}
 
-	/**
-	 * onDraw
-	 * 
-	 * @param canvas
-	 * 
-	 *            responsável por desenhar o sprite na tela.
-	 * */
-	public void draw(Canvas canvas) {
-
-		originalDrawable.setBounds(x, y, x + width, y + height);
-
-		originalDrawable.draw(canvas);
-	}
-
-	/**
-	 * @param x
-	 *            the x to set
-	 * @param y
-	 *            the y to set
-	 */
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 
-	/**
-	 * @param x
-	 *            the x to set
-	 * @param y
-	 *            the y to set
-	 */
-	public void move(int x, int y) {
-		this.x += x;
-		this.y += y;
+	public void move(int toX, int yoY) {
+		
+		this.x += toX;
+		this.y += yoY;
+
 	}
 
-	/**
-	 * @return the height
-	 */
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setX(int value) {
+		this.x = value;
+	}
+
+	public void setY(int value) {
+		this.y = value;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
 	public int getHeight() {
 		return height;
 	}
 
-	/**
-	 * @return the width
-	 */
 	public int getWidth() {
 		return width;
 	}
 
 	/**
-	 * @return the x
+	 * @return the currentDrawable
 	 */
-	public int getX() {
-		return x;
+	public Bitmap getImage() {
+		return originalBitmap;
 	}
 
-	/**
-	 * @param x
-	 *            the x to set
-	 */
-	public void setX(int x) {
-		this.x = x;
-	}
+	public void draw(Canvas canvas) {
 
-	/**
-	 * @return the y
-	 */
-	public int getY() {
-		return y;
+		if (visible) {		
+			Rect dest = new Rect(x, y, x + width, y + height);
+			canvas.drawBitmap(originalBitmap, sRectangle, dest, new Paint());
+		}
 	}
-
-	/**
-	 * @param y
-	 *            the y to set
-	 */
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	/**
-	 * @return the visible
-	 */
-	public boolean isVisible() {
-		return visible;
-	}
-
-	/**
-	 * @param visible
-	 *            the visible to set
-	 */
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-	}
-
 }

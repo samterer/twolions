@@ -2,15 +2,13 @@ package br.com.maboo.tubarao.sprite;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import br.com.maboo.tubarao.layer.Layer;
 
-public class SpriteDrawable extends Layer {
+public class Sprite extends Layer {
 
-	protected Drawable[] arrayDrawables = null;
+	protected Bitmap[] arrayBitmaps = null;
 
-	int peso = 0;
+	private int peso = 0;
 
 	private Rect rectangleCollision = null;
 
@@ -32,56 +30,27 @@ public class SpriteDrawable extends Layer {
 	private int id;
 
 	/**
-	 * Construtor
-	 * 
-	 * @param originalBitmap
-	 *            : imagem da animação
-	 * 
-	 *            Para sprites com apenas um frame.
-	 * */
-	public SpriteDrawable(Drawable drawable) {
-		super(drawable);
-
-		originalDrawable = drawable;
-	}
-
-	/**
-	 * Construtor
-	 * 
-	 * @param view
-	 *            : que contém a classe.
-	 * @param drawable
-	 *            : array com imagens separadas em arquivos diferentes.
-	 * 
-	 * */
-	public SpriteDrawable(Drawable[] drawables) {
-		super(drawables[0]);
-
-		this.arrayDrawables = drawables;
-	}
-
-	/**
 	 * nextFrame
 	 * 
 	 * Exibe a próxima imagem da animação.
 	 * */
 	public void nextImage() {
 
-		indexImage = (indexImage + 1 < arrayDrawables.length) ? indexImage = indexImage + 1
+		indexImage = (indexImage + 1 < arrayBitmaps.length) ? indexImage = indexImage + 1
 				: 0;
 
-		setImage(arrayDrawables[indexImage]);
+		setImage(arrayBitmaps[indexImage]);
 	}
 
 	/**
 	 * setImage, altera a imagem do sprite mantendo os valores de linhas e
 	 * colunas.
 	 * 
-	 * @param drawable
+	 * @param bitmap
 	 *            : nova imagem.
 	 * */
-	public void setImage(Drawable drawable) {
-		super.setImage(drawable);
+	public void setImage(Bitmap bitmap) {
+		super.setImage(bitmap);
 
 		// após alterar imagem, redefine o retangulo de colisão.
 		defineCollisionRectangle();
@@ -124,27 +93,26 @@ public class SpriteDrawable extends Layer {
 	/**
 	 * collidesWith
 	 * 
-	 * @param spriteDrawable
+	 * @param sprite
 	 *            : sprite com que vai ser verificado se há colisão.
 	 * @param pxInvisible
 	 *            : se false, considera todo o retangulo da imagem e true
 	 *            desconsidera pxs invisiveis.
 	 * */
-	public boolean collidesWith(SpriteDrawable spriteDrawable,
-			boolean pxInvisible) {
+	public boolean collidesWith(Sprite sprite, boolean pxInvisible) {
 
 		boolean retorno = false;
 
 		// há intersecção
 		if (visible
 				&& getRectangleCollision().intersect(
-						spriteDrawable.getRectangleCollision())) {
+						sprite.getRectangleCollision())) {
 			// houve colisão com o retangulo
 			retorno = true;
 
 			if (pxInvisible) {
 				// colisão por px.
-				retorno = collidesWithPixel(spriteDrawable);
+				retorno = collidesWithPixel(sprite);
 			}
 		}
 		return retorno;
@@ -155,20 +123,19 @@ public class SpriteDrawable extends Layer {
 	 * 
 	 * colisão por pixel, ou colisão perfeita.
 	 * 
-	 * @param spriteDrawable
+	 * @param sprite
 	 * 
 	 *            sprite : com que vai verificar a colisão
 	 * */
-	private boolean collidesWithPixel(SpriteDrawable spriteDrawable) {
+	private boolean collidesWithPixel(Sprite sprite) {
 
-		Bitmap b1 = ((BitmapDrawable) this.originalDrawable).getBitmap();
-		Bitmap b2 = ((BitmapDrawable) spriteDrawable.originalDrawable)
-				.getBitmap();
+		Bitmap b1 = this.originalBitmap;
+		Bitmap b2 = sprite.originalBitmap;
 
 		Rect rectIntersect = new Rect();
 
 		rectIntersect.setIntersect(this.getRectangleCollision(),
-				spriteDrawable.getRectangleCollision());
+				sprite.getRectangleCollision());
 
 		int left = rectIntersect.left;
 		int top = rectIntersect.top;
@@ -184,8 +151,8 @@ public class SpriteDrawable extends Layer {
 				aX = i - this.x;
 				aY = j - this.y;
 				// obtém o x e y da da intersecção na imagem B
-				bX = i - spriteDrawable.getX();
-				bY = j - spriteDrawable.getY();
+				bX = i - sprite.getX();
+				bY = j - sprite.getY();
 
 				// descobrir o motivo de que em alguns casos os indices de x e y
 				// estão fora da imagens.
@@ -221,7 +188,7 @@ public class SpriteDrawable extends Layer {
 	 */
 	public void setImage(int indiceImage) {
 		this.indexImage = indiceImage;
-		setImage(arrayDrawables[indiceImage]);
+		setImage(arrayBitmaps[indiceImage]);
 	}
 
 	/**
@@ -232,43 +199,45 @@ public class SpriteDrawable extends Layer {
 	}
 
 	/**
-	 * @return the arrayDrawables
+	 * @return the arrayBitmaps
 	 */
-	public Drawable[] getArrayDrawables() {
-		return arrayDrawables;
+	public Bitmap[] getArrayBitmaps() {
+		return arrayBitmaps;
 	}
 
 	/**
-	 * @param arrayDrawables
-	 *            the arrayDrawables to set
+	 * @param arrayBitmaps
+	 *            the arrayBitmaps to set
 	 */
-	public void setArrayDrawables(Drawable[] arrayDrawables) {
-		this.arrayDrawables = arrayDrawables;
+	public void setArrayBitmaps(Bitmap[] arrayBitmaps) {
+		this.arrayBitmaps = arrayBitmaps;
 
 		indexImage = 0;
 
 		// atualiza imagem que está sendo visualizada
-		setImage(arrayDrawables[0]);
+		setImage(arrayBitmaps[0]);
 	}
 
-	public void setOriginalDrawable(Drawable d) {
-		this.originalDrawable = d;
+	public void setOriginalBitmap(Bitmap d) {
+		this.originalBitmap = d;
 	}
 
-	public Drawable getOriginalDrawable() {
-		return this.originalDrawable;
+	public Bitmap getOriginalBitmap() {
+		return this.originalBitmap;
 	}
 
 	/**
 	 * Retorna true caso o usuario tenha clicado sobre o obj do tipo
-	 * SpriteDrawable(Drawable)
+	 * Sprite(Bitmap)
 	 */
 	public boolean isTouch(float touchX, float touchY) {
-		if (originalDrawable.copyBounds().contains((int) touchX, (int) touchY)) {
+		if (touchX >= x && x < (x + originalBitmap.getWidth()) && touchY >= y
+				&& touchY < (y + originalBitmap.getHeight())) {
 			return true;
 		} else {
 			return false;
 		}
+
 	}
 
 	public void setTouch(boolean isTouch) {
@@ -309,6 +278,14 @@ public class SpriteDrawable extends Layer {
 
 	public void setVelocidade(int velocidade) {
 		this.peso = velocidade;
+	}
+
+	public int getPeso() {
+		return peso;
+	}
+
+	public void setPeso(int peso) {
+		this.peso = peso;
 	}
 
 }

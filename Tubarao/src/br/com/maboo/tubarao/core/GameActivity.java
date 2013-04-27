@@ -20,6 +20,10 @@ public class GameActivity extends ActivityCircle {
 	public static TextView tPontos;
 	public static TextView tTempo;
 
+	/******************************************************************************
+	 * MENU
+	 ******************************************************************************/
+
 	/**
 	 * Invoked during init to give the Activity a chance to set up its Menu.
 	 * 
@@ -64,6 +68,10 @@ public class GameActivity extends ActivityCircle {
 
 		return false;
 	}
+
+	/******************************************************************************
+	 * ESTADOS
+	 ******************************************************************************/
 
 	/**
 	 * Invoked when the Activity is created.
@@ -118,4 +126,5 @@ public class GameActivity extends ActivityCircle {
 		super.onSaveInstanceState(outState);
 		mGameScreen.saveState(outState);
 	}
+
 }
