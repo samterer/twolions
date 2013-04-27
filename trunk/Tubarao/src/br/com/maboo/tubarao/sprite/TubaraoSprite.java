@@ -1,23 +1,18 @@
 package br.com.maboo.tubarao.sprite;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
-public class TubaraoSprite extends SpriteDrawable {
+public class TubaraoSprite extends Sprite {
 
 	// animacao do balao flutuando
 	private int speedUpDown = 5;
 	private long begin = 0l;
 	private long trocaDirecao = 0L;
-	private boolean stopAnimation = false;
+	private boolean runAnimation = true;
 
-	public TubaraoSprite(Drawable drawable) {
-		super(drawable);
+	public TubaraoSprite(Bitmap bitmap) {
 
-		begin = System.currentTimeMillis();
-	}
-	
-	public TubaraoSprite(Drawable[] drawables) {
-		super(drawables);
+		setImage(bitmap);
 
 		begin = System.currentTimeMillis();
 	}
@@ -26,7 +21,7 @@ public class TubaraoSprite extends SpriteDrawable {
 	 * Metodo responsável pelo movimento de sobe e desce do balao
 	 */
 	public void animation() {
-		if (!stopAnimation) {
+		if (runAnimation) {
 			long timeNow = System.currentTimeMillis();
 			if (timeNow > (begin + 50)) {
 				move(0, speedUpDown);
@@ -45,13 +40,14 @@ public class TubaraoSprite extends SpriteDrawable {
 			}
 		}
 	}
-	
 
-	public boolean isStopAnimation() {
-		return stopAnimation;
+	public boolean isRunAnimation() {
+		return runAnimation;
 	}
 
-	public void setStopAnimation(boolean stopAnimation) {
-		this.stopAnimation = stopAnimation;
+	public void setRunAnimation(boolean runAnimation) {
+		this.runAnimation = runAnimation;
 	}
+
+
 }

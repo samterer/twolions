@@ -21,11 +21,17 @@ import android.widget.TextView;
 import br.com.maboo.tubarao.R;
 import br.com.maboo.tubarao.core.GameActivity;
 import br.com.maboo.tubarao.core.GameSurfaceView;
-import br.com.maboo.tubarao.sprite.ObjetoBitmap;
-import br.com.maboo.tubarao.sprite.SpriteBitmap;
-import br.com.maboo.tubarao.sprite.TubaraoBitmap;
+import br.com.maboo.tubarao.dados.DadosBitmap;
+import br.com.maboo.tubarao.sprite.ObjetoSprite;
+import br.com.maboo.tubarao.sprite.Sprite;
+import br.com.maboo.tubarao.sprite.TubaraoSprite;
 
 public class GameScreen extends GameSurfaceView {
+
+	/**
+	 * Nivel do jogo
+	 */
+	private int nivel = 4;
 
 	/*
 	 * UI constants
@@ -34,17 +40,18 @@ public class GameScreen extends GameSurfaceView {
 	private static final String KEY_PONTOS = "mTempo";
 
 	private int GROUND = getDeviceScreenHeigth() - 200;
-	private int QTD_OBJ = 5;
-	private int VELOCIDADE_ENTRE_OBJS = 1500;
+	private int VELOCIDADE_ENTRE_OBJS = 500;
 	private int ESPERA_ENTRE_NIVEIS = 4000;
 
-	private Vector<ObjetoBitmap> objetos;
+	private Vector<ObjetoSprite> objetos;
 
-	private TubaraoBitmap tub;
+	private TubaraoSprite tub;
 
 	private boolean isDerubaObjs = false;
 
 	private Resources res;
+
+	private DadosBitmap dados; // imagens das sprites
 
 	public static TextView tPontos;
 	public static TextView tTempo;
@@ -54,8 +61,7 @@ public class GameScreen extends GameSurfaceView {
 
 	long timer = 0l;
 
-	Bitmap[] bs_tubarao;
-	Bitmap[] bs_objetos;
+	private Paint textPaint;
 
 	public GameScreen(Context context, AttributeSet attrs) {
 		super(context, attrs, new Handler() {
@@ -67,108 +73,111 @@ public class GameScreen extends GameSurfaceView {
 
 		this.res = context.getResources();
 
-		carregaImagens();
+		carga();
 
-		mountScreen();
-
-		carregaObjetos();
-
-		startDownObjs();
-
-		timer = System.currentTimeMillis(); // inicia temporizador do jogo
-
-		doStart();
-
-		setFocusable(true);
+		montaTela();
 	}
 
-	private Paint textPaint;
-	
-	public void carregaImagens() {
-		
-		bs_tubarao = new Bitmap[] {
-				BitmapFactory.decodeStream(res
-						.openRawResource(R.drawable.tub125x115_right)),
-				BitmapFactory.decodeStream(res
-						.openRawResource(R.drawable.tub125x115_left)) };
+	public void carga() {
+		Log.i("appLog", "## carga ##");
 
-		bs_objetos = new Bitmap[] {
-				BitmapFactory.decodeStream(res
-						.openRawResource(R.drawable.obj_pneu46x42)),
-				BitmapFactory.decodeStream(res
-						.openRawResource(R.drawable.obj_garrafa16x42)),
-				BitmapFactory.decodeStream(res
-						.openRawResource(R.drawable.obj_lata42x38)),
-				BitmapFactory.decodeStream(res
-						.openRawResource(R.drawable.obj_barril39x48)) };
-	}
-	
-	//TODO
-	public Bitmap resizeImage(Bitmap image,int maxWidth, int maxHeight)
-	{
-	    Bitmap resizedImage = null;
-	    try {
-	        int imageHeight = image.getHeight();
+		dados = new DadosBitmap(res);
 
+		initBackground();
 
-	        if (imageHeight > maxHeight)
-	            imageHeight = maxHeight;
-	        int imageWidth = (imageHeight * image.getWidth())
-	                / image.getHeight();
+		initText();
 
-	        if (imageWidth > maxWidth) {
-	            imageWidth = maxWidth;
-	            imageHeight = (imageWidth * image.getHeight())
-	                    / image.getWidth();
-	        }
+		initTubarao();
 
-	        if (imageHeight > maxHeight)
-	            imageHeight = maxHeight;
-	        if (imageWidth > maxWidth)
-	            imageWidth = maxWidth;
+		initObjetos();
 
-
-	        resizedImage = Bitmap.createScaledBitmap(image, imageWidth,
-	                imageHeight, true);
-	    } catch (OutOfMemoryError e) {
-
-	        e.printStackTrace();
-	    }catch(NullPointerException e)
-	    {
-	        e.printStackTrace();
-	    }
-	    catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return resizedImage;
 	}
 
-	private void mountScreen() {
+	/**
+	 * Cria o background
+	 */
+	private void initBackground() {
+		Log.i("appLog", "## initBackground ##");
 
-		// TODO
-		textPaint = new Paint();
-		textPaint.setARGB(255, 255, 255, 255);
-		textPaint.setTextSize(26);
-		
 		// bg
-		SpriteBitmap mFinalbitmap = new SpriteBitmap();
+		Sprite mFinalbitmap = new Sprite();
 		Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
 		mFinalbitmap.Initialize(b, b.getHeight(), b.getWidth(), true);
 		mFinalbitmap.setVisible(true);
-		mFinalbitmap.setPosition(0,0);
+		mFinalbitmap.setPosition(0, 0);
 
-		getSprites().add(mFinalbitmap);
+		getLayerManager().add(mFinalbitmap);
+	}
+
+	/**
+	 * Inicia os campos para pontos\tempo entre outros
+	 */
+	private void initText() {
+		Log.i("appLog", "## initText ##");
+
+		textPaint = new Paint();
+		textPaint.setARGB(255, 255, 255, 255);
+		textPaint.setTextSize(26);
+
+	}
+
+	/**
+	 * Inicia todas as imagens relacionadas ao tubarão
+	 */
+	private void initTubarao() {
+		Log.i("appLog", "## initText ##");
 
 		// tubarao
-		tub = new TubaraoBitmap(bs_tubarao[0]);
-		tub.setArrayBitmaps(bs_tubarao);
+		tub = new TubaraoSprite(dados.getImgTubNormal()[0]);
+		tub.setArrayBitmaps(dados.getImgTubNormal());
 		tub.setVisible(true);
 		tub.setRunAnimation(true);
 
 		tub.setPosition(getDeviceScreenWidth() / 2, GROUND);
 
-		getSprites().add(tub);
+		getLayerManager().add(tub);
+	}
 
+	/**
+	 * Inicia todas as imagens relacionadas aos objetos
+	 */
+	private void initObjetos() {
+		Log.i("appLog", "## initObjetos ##");
+
+		// carrega objetos
+		objetos = new Vector<ObjetoSprite>();
+
+		int[] array_id = DadosBitmap.TIPO_OBJETOS_POR_NIVEL[nivel];
+
+		for (int j = 0; j < array_id.length; j++) {
+
+			int id_da_vez = array_id[randomInterger(array_id.length)];
+
+			ObjetoSprite obj = new ObjetoSprite(
+					(dados.getImgObjetos(id_da_vez)));
+
+			obj.setPeso(DadosBitmap.PESO_OBJETOS[id_da_vez]);
+			obj.setPontuacao(DadosBitmap.PONTUACAO_OBJETOS[id_da_vez]);
+
+			obj.setVisible(false);
+
+			objetos.add(obj);
+			getLayerManager().add(obj);
+		}
+
+		setCoordenadaRandom(objetos, getDeviceScreenWidth());
+	}
+
+	public void montaTela() {
+		Log.i("appLog", "## montaTela ##");
+
+		startDownObjs();
+
+		doStart();
+
+		timer = System.currentTimeMillis(); // inicia temporizador do jogo
+
+		setFocusable(true);
 	}
 
 	protected void onLayout(boolean changed, int left, int top, int right,
@@ -181,24 +190,6 @@ public class GameScreen extends GameSurfaceView {
 
 	}
 
-	private void carregaObjetos() {
-
-		// carrega objetos
-		objetos = new Vector<ObjetoBitmap>();
-
-		for (int i = 0; i < QTD_OBJ; i++) {
-			ObjetoBitmap obj = new ObjetoBitmap();
-			obj.setImage((bs_objetos[randomInterger(bs_objetos.length)]));
-			obj.setVisible(false);
-
-			objetos.add(obj);
-			getSprites().add(obj);
-		}
-
-		setCoordenadaRandom(objetos, getDeviceScreenWidth());
-
-	}
-
 	private int randomInterger(int limit) {
 		int random = 0 + Double.valueOf(Math.random() * (limit - 0)).intValue();
 		return random;
@@ -208,7 +199,7 @@ public class GameScreen extends GameSurfaceView {
 	 * seta as de posições x, y para iniciar os alimentos, gera y negativo para
 	 * não aparecer na tela inicialmente.
 	 */
-	public static void setCoordenadaRandom(Vector<ObjetoBitmap> objetos,
+	public static void setCoordenadaRandom(Vector<ObjetoSprite> objetos,
 			int widthScreen) {
 
 		// tira a largura do alimento para que algum deles não fique pra fora da
@@ -242,14 +233,12 @@ public class GameScreen extends GameSurfaceView {
 		float x = event.getX();
 		float y = event.getY();
 
-		Log.i("appLog", "onTouchEvent: x/y > " + x + "/" + y);
-
+		// Log.i("appLog", "onTouchEvent: x/y > " + x + "/" + y);
 
 		if (mMode != STATE_RUNNING) {
 			setState(STATE_RUNNING);
 		}
 
-		
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 
@@ -301,7 +290,7 @@ public class GameScreen extends GameSurfaceView {
 	private void moveItensDown() {
 		if (cont < objetos.size()) {
 
-			ObjetoBitmap obj = (ObjetoBitmap) objetos.elementAt(cont);
+			ObjetoSprite obj = (ObjetoSprite) objetos.elementAt(cont);
 
 			if (!obj.isVisible()) {
 
@@ -310,8 +299,7 @@ public class GameScreen extends GameSurfaceView {
 				if (timeNow > (begin + VELOCIDADE_ENTRE_OBJS)) {
 					obj.setVisible(true);
 
-					obj.startDown(getDeviceScreenHeigth(), (int) getThread()
-							.getFps());
+					obj.startDown(getDeviceScreenHeigth(), obj.getPeso());
 
 					begin = System.currentTimeMillis();
 
@@ -324,16 +312,16 @@ public class GameScreen extends GameSurfaceView {
 			TimerTask task = new TimerTask() {
 				public void run() {
 
-					carregaObjetos(); // carrega novos itens
+					initObjetos();
 
 					startDownObjs(); // inicia novamente a fase
 
-					VELOCIDADE_ENTRE_OBJS -= 100;
+					VELOCIDADE_ENTRE_OBJS -= 50;
 
 				}
 			};
 			cont = 0;
-			QTD_OBJ += QTD_OBJ;
+
 			pauseDownObjs();
 
 			objetos.removeAllElements();
@@ -345,20 +333,21 @@ public class GameScreen extends GameSurfaceView {
 
 	private void aumentaVelocidadeQueda() {
 		for (int i = 0; i < objetos.size(); i++) {
-			ObjetoBitmap obj = (ObjetoBitmap) objetos.elementAt(i);
+			ObjetoSprite obj = (ObjetoSprite) objetos.elementAt(i);
 			if (obj.getY() > (getDeviceScreenHeigth() / 2)) {
 				obj.setVelocidade(obj.getVelocidade() + (int) 0.3);
 			}
 		}
 	}
 
-	private void eliminaItensCaidos() {
+	private void clearSpritesOutScreen() {
 		// elimina os itens fora da tela
 		if (objetos != null && objetos.size() > 0) {
 			for (int i = 0; i < objetos.size(); i++) {
-				ObjetoBitmap objeto = (ObjetoBitmap) objetos.elementAt(i);
+				ObjetoSprite objeto = (ObjetoSprite) objetos.elementAt(i);
 				if (objeto.getY() > getDeviceScreenHeigth()) { // item perdido
 					objeto.setVisible(false);
+					getLayerManager().remove(objeto);
 				}
 			}
 		}
@@ -369,7 +358,7 @@ public class GameScreen extends GameSurfaceView {
 	 */
 	private void gotItem() {
 		for (int i = 0; i < objetos.size(); i++) {
-			ObjetoBitmap objeto = (ObjetoBitmap) objetos.elementAt(i);
+			ObjetoSprite objeto = (ObjetoSprite) objetos.elementAt(i);
 			if (tub.collidesWith(objeto, true)) {
 				mPontos++;
 
@@ -381,18 +370,17 @@ public class GameScreen extends GameSurfaceView {
 
 	public synchronized void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		
+
 		if (mMode == STATE_RUNNING) {
 
-			canvas.drawText("pontos: "+mPontos, 20,
-					40, textPaint);
-			
-			canvas.drawText("tempo: " +mTempo + "s", getWidth() - 200,
-					40, textPaint);
+			canvas.drawText("pontos: " + mPontos, 20, 40, textPaint);
+
+			canvas.drawText("tempo: " + mTempo + "s", getWidth() - 200, 40,
+					textPaint);
 		}
-		
+
 	}
-	
+
 	public void loop() {
 		// anima tub
 		// Log.d("game","## lopping entrando... ##");
@@ -407,9 +395,9 @@ public class GameScreen extends GameSurfaceView {
 		// derruba itens
 		if (isDerubaObjs) {
 			moveItensDown(); // derruba itens
-			aumentaVelocidadeQueda();// aumenta velocidade do item abaixo do
-										// meio da tela
-			eliminaItensCaidos(); // elima itens fora da tela
+			// aumentaVelocidadeQueda();// aumenta velocidade do item abaixo do
+			// meio da tela
+			clearSpritesOutScreen(); // elima itens fora da tela
 		}
 
 		// verifica se pegou item

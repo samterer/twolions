@@ -1,6 +1,5 @@
 package br.com.maboo.tubarao.core;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -16,8 +15,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
 import br.com.maboo.tubarao.R;
-import br.com.maboo.tubarao.layer.LayerBitmap;
-import br.com.maboo.tubarao.layer.LayerBitmapManager;
+import br.com.maboo.tubarao.layer.LayerManager;
 
 public abstract class GameSurfaceView extends SurfaceView implements Callback {
 
@@ -31,7 +29,7 @@ public abstract class GameSurfaceView extends SurfaceView implements Callback {
 	public static final int STATE_WIN = 5;
 
 	/** Array com todas as imagens a serem exibidas no onDraw */
-	private LayerBitmapManager mSprites;
+	private LayerManager mSprites;
 
 	/** The state of the game. One of READY, RUNNING, PAUSE, LOSE, or WIN */
 	protected int mMode;
@@ -55,7 +53,7 @@ public abstract class GameSurfaceView extends SurfaceView implements Callback {
 	public GameSurfaceView(Context context, AttributeSet attrs, Handler handler) {
 		super(context, attrs);
 
-		mSprites = new LayerBitmapManager(); // nova layer de sprites
+		mSprites = new LayerManager(); // nova layer de sprites
 
 		mThread = new GameSurfaceThread(this); // instancia a thread
 												// principal
@@ -67,19 +65,23 @@ public abstract class GameSurfaceView extends SurfaceView implements Callback {
 
 	}
 
-	@SuppressLint("DrawAllocation") protected void onDraw(Canvas canvas) {
-	//	Log.d("game","## onDrawing... ##");
+	synchronized protected void onDraw(Canvas canvas) {
 		canvas.drawRect(0, 0, getWidth(), getHeight(), new Paint());
 
-		for (LayerBitmap a : mSprites) {
-			
-				a.draw(canvas);
+		//
+		// for (Layer a : mSprites) {
+		//
+		// a.draw(canvas);
+		// }
+
+		for (int i = mSprites.size() - 1; i > 0; i--) {
+			mSprites.get(i).draw(canvas);
 		}
 
-		//canvas.restore();
+		canvas.restore();
 
 	}
-	
+
 	public abstract void loop();
 
 	// Chamado quando a tela é redimensioada, ou iniciada...
@@ -92,7 +94,7 @@ public abstract class GameSurfaceView extends SurfaceView implements Callback {
 	public void clearSprites() {
 		synchronized (mSprites) {
 			mSprites.clear();
-			mSprites = new LayerBitmapManager();
+			mSprites = new LayerManager();
 		}
 	}
 
@@ -294,7 +296,7 @@ public abstract class GameSurfaceView extends SurfaceView implements Callback {
 		}
 	}
 
-	public LayerBitmapManager getSprites() {
+	public LayerManager getLayerManager() {
 		return mSprites;
 	}
 

@@ -3,16 +3,14 @@ package br.com.maboo.tubarao.sprite;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
-public class ObjetoSprite extends SpriteDrawable {
+public class ObjetoSprite extends Sprite {
 
-	public ObjetoSprite(Drawable drawable) {
-		super(drawable);
-		
-		if(peso == 0) {
-			peso = 4;
-		}
+	private int pontuacao = 0;
+
+	public ObjetoSprite(Bitmap bitmap) {
+		setImage(bitmap);
 	}
 
 	public synchronized void startDown(final int limiteY, final int fps) {
@@ -27,8 +25,16 @@ public class ObjetoSprite extends SpriteDrawable {
 				}
 			}
 		};
-		move(0, peso);
+		move(0, getPeso());
 		new Timer().schedule(task, fps * 2);
+	}
+
+	public int getPontuacao() {
+		return pontuacao;
+	}
+
+	public void setPontuacao(int pontuacao) {
+		this.pontuacao = pontuacao;
 	}
 
 }
