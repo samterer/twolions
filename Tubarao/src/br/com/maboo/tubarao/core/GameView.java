@@ -1,5 +1,6 @@
 package br.com.maboo.tubarao.core;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -17,7 +18,7 @@ import android.widget.TextView;
 import br.com.maboo.tubarao.R;
 import br.com.maboo.tubarao.layer.LayerManager;
 
-public abstract class GameSurfaceView extends SurfaceView implements Callback {
+@SuppressLint("DrawAllocation") public abstract class GameView extends SurfaceView implements Callback {
 
 	/*
 	 * State-tracking constants
@@ -39,23 +40,22 @@ public abstract class GameSurfaceView extends SurfaceView implements Callback {
 
 	private SurfaceHolder mHolder;
 
-	private GameSurfaceThread mThread;
+	private GameThread mThread;
 
 	private Resources res;
 
 	/** Pointer to the text view to display "Paused.." etc. */
-	@SuppressWarnings("unused")
 	protected static TextView mStatusText;
 
 	// Dados da tela
 	private DisplayMetrics dm;
 
-	public GameSurfaceView(Context context, AttributeSet attrs, Handler handler) {
+	public GameView(Context context, AttributeSet attrs, Handler handler) {
 		super(context, attrs);
 
 		mSprites = new LayerManager(); // nova layer de sprites
 
-		mThread = new GameSurfaceThread(this); // instancia a thread
+		mThread = new GameThread(this); // instancia a thread
 												// principal
 		res = context.getResources();
 
@@ -67,12 +67,6 @@ public abstract class GameSurfaceView extends SurfaceView implements Callback {
 
 	synchronized protected void onDraw(Canvas canvas) {
 		canvas.drawRect(0, 0, getWidth(), getHeight(), new Paint());
-
-		//
-		// for (Layer a : mSprites) {
-		//
-		// a.draw(canvas);
-		// }
 
 		for (int i = mSprites.size() - 1; i > 0; i--) {
 			mSprites.get(i).draw(canvas);
@@ -184,7 +178,7 @@ public abstract class GameSurfaceView extends SurfaceView implements Callback {
 	 * 
 	 * @return the animation thread
 	 */
-	public GameSurfaceThread getThread() {
+	public GameThread getThread() {
 		return mThread;
 	}
 
