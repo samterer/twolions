@@ -3,21 +3,21 @@ package br.com.maboo.tubarao.core;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
-public class GameSurfaceThread extends Thread {
+public class GameThread extends Thread {
 
-	private int fps = 60;
+	private int fps = 50;
 
 	/** Used to figure out elapsed time between frames */
 	private long mLastTime;
 
-	private GameSurfaceView view;
+	private GameView view;
 
 	private boolean mRun = false;
 
 	/** Handle to the surface manager object we interact with */
 	private SurfaceHolder mSurfaceHolder;
 
-	public GameSurfaceThread(GameSurfaceView view) {
+	public GameThread(GameView view) {
 
 		this.view = view;
 
@@ -28,6 +28,10 @@ public class GameSurfaceThread extends Thread {
 	public void setRunning(boolean run) {
 		mRun = run;
 	}
+
+	private boolean sleep = false;
+	private boolean pleaseWait = false;
+	private long millis = 0L;
 
 	public void run() {
 		long ticksPS = 1000 / fps;
@@ -42,22 +46,12 @@ public class GameSurfaceThread extends Thread {
 			try {
 				c = mSurfaceHolder.lockCanvas(null);
 				synchronized (mSurfaceHolder) {
-					if (view.mMode == GameSurfaceView.STATE_RUNNING) {
-						view.onDraw(c);					
-					
+					if (view.mMode == GameView.STATE_RUNNING) {
+						view.onDraw(c);
+
 						view.loop();
 					}
 
-					try {
-						if (sleepTime > 0) {
-							Thread.sleep(sleepTime);
-						} else {
-							Thread.sleep(10);
-						}
-
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
 				}
 			} finally {
 
@@ -66,7 +60,35 @@ public class GameSurfaceThread extends Thread {
 				}
 			}
 
-			sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
+			try {
+				long timeTake = System.currentTimeMillis() - startTime;
+				if (timeTake < this.fps) {
+					synchronized (this) {
+						wait(fps - timeTake);
+					}
+				}
+				Thread.yield();
+				synchronized (this) {
+					while (pleaseWait)
+						wait();
+				}
+				if (sleep) {
+					sleep = false;
+					synchronized (this) {
+						sleep(millis);
+					}
+				}
+
+				/*
+				 * sleepTime = ticksPS - (System.currentTimeMillis() -
+				 * startTime);
+				 * 
+				 * try { if (sleepTime > 0) { Thread.sleep(sleepTime); } else {
+				 * Thread.sleep(10); }
+				 */
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

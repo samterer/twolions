@@ -20,18 +20,22 @@ import android.view.MotionEvent;
 import android.widget.TextView;
 import br.com.maboo.tubarao.R;
 import br.com.maboo.tubarao.core.GameActivity;
-import br.com.maboo.tubarao.core.GameSurfaceView;
+import br.com.maboo.tubarao.core.GameView;
 import br.com.maboo.tubarao.dados.DadosBitmap;
 import br.com.maboo.tubarao.sprite.ObjetoSprite;
 import br.com.maboo.tubarao.sprite.Sprite;
 import br.com.maboo.tubarao.sprite.TubaraoSprite;
 
-public class GameScreen extends GameSurfaceView {
+public class GameScreen extends GameView {
 
 	/**
 	 * Nivel do jogo
 	 */
-	private int nivel = 4;
+	private int QTD_OBJ = 4;
+
+	private int LISTA_LEVE = 0;
+	private int LISTA_MEDIA = 1;
+	private int LISTA_PESADA = 2;
 
 	/*
 	 * UI constants
@@ -40,8 +44,8 @@ public class GameScreen extends GameSurfaceView {
 	private static final String KEY_PONTOS = "mTempo";
 
 	private int GROUND = getDeviceScreenHeigth() - 200;
-	private int VELOCIDADE_ENTRE_OBJS = 500;
-	private int ESPERA_ENTRE_NIVEIS = 4000;
+	private int VELOCIDADE_ENTRE_OBJS = 1000;
+	private int ESPERA_ENTRE_NIVEIS = 1000;
 
 	private Vector<ObjetoSprite> objetos;
 
@@ -147,11 +151,29 @@ public class GameScreen extends GameSurfaceView {
 		// carrega objetos
 		objetos = new Vector<ObjetoSprite>();
 
-		int[] array_id = DadosBitmap.TIPO_OBJETOS_POR_NIVEL[nivel];
+		// int[] array_id = DadosBitmap.TIPO_OBJETOS_POR_NIVEL[nivel];
+		
+		int id_da_vez = 0;
 
-		for (int j = 0; j < array_id.length; j++) {
+		for (int j = 0; j < (QTD_OBJ*2); j++) {
 
-			int id_da_vez = array_id[randomInterger(array_id.length)];
+			id_da_vez = DadosBitmap.TIPO_OBJETOS_POR_NIVEL[LISTA_LEVE][randomInterger(DadosBitmap.TIPO_OBJETOS_POR_NIVEL[LISTA_LEVE].length)];
+
+			ObjetoSprite obj = new ObjetoSprite(
+					(dados.getImgObjetos(id_da_vez)));
+
+			obj.setPeso(DadosBitmap.PESO_OBJETOS[id_da_vez]);
+			obj.setPontuacao(DadosBitmap.PONTUACAO_OBJETOS[id_da_vez]);
+
+			obj.setVisible(false);
+
+			objetos.add(obj);
+			getLayerManager().add(obj);
+		}
+		
+		for (int j = 0; j < (QTD_OBJ/2); j++) {
+
+			id_da_vez = DadosBitmap.TIPO_OBJETOS_POR_NIVEL[LISTA_MEDIA][randomInterger(DadosBitmap.TIPO_OBJETOS_POR_NIVEL[LISTA_MEDIA].length)];
 
 			ObjetoSprite obj = new ObjetoSprite(
 					(dados.getImgObjetos(id_da_vez)));
@@ -165,7 +187,7 @@ public class GameScreen extends GameSurfaceView {
 			getLayerManager().add(obj);
 		}
 
-		setCoordenadaRandom(objetos, getDeviceScreenWidth());
+		setCoordenadaRandom(objetos);
 	}
 
 	public void montaTela() {
@@ -199,19 +221,19 @@ public class GameScreen extends GameSurfaceView {
 	 * seta as de posições x, y para iniciar os alimentos, gera y negativo para
 	 * não aparecer na tela inicialmente.
 	 */
-	public static void setCoordenadaRandom(Vector<ObjetoSprite> objetos,
-			int widthScreen) {
+	public void setCoordenadaRandom(Vector<ObjetoSprite> objetos) {
 
 		// tira a largura do alimento para que algum deles não fique pra fora da
 		// tela na posição x..
-		widthScreen -= objetos.get(0).getWidth();
+		int widthScreen = getDeviceScreenWidth() - objetos.get(0).getWidth();
+		widthScreen -= 30;
 
 		for (int i = 0; i < objetos.size(); i++) {
 
 			Random r = new Random(System.currentTimeMillis() + (i * 12345));
 
 			// transforma metade da largura, na posição y.
-			int yAux = (20);
+			int yAux = (50);
 
 			int x = r.nextInt(widthScreen);
 			int y = r.nextInt(yAux);
@@ -284,86 +306,112 @@ public class GameScreen extends GameSurfaceView {
 		return result;
 	}
 
-	private int cont = 0;
 	private long begin = 0l;
 
 	private void moveItensDown() {
-		if (cont < objetos.size()) {
+		if (objetos.size() > 0) { // verifica se os objetos desse nivel já
+									// cairam
+			for (int i = 0; i < objetos.size(); i++) {
+				ObjetoSprite obj = objetos.get(i);
 
-			ObjetoSprite obj = (ObjetoSprite) objetos.elementAt(cont);
+				 // cria objeto na tela e lança ele em queda
+				// (se ele já não estiver na tela)
+				if (!obj.isVisible()) {
 
-			if (!obj.isVisible()) {
+					long timeNow = System.currentTimeMillis();
 
-				long timeNow = System.currentTimeMillis();
+					if (timeNow > (begin + VELOCIDADE_ENTRE_OBJS)) {
+						obj.onDown(getDeviceScreenHeigth());
 
-				if (timeNow > (begin + VELOCIDADE_ENTRE_OBJS)) {
-					obj.setVisible(true);
+						obj.setVisible(true);
 
-					obj.startDown(getDeviceScreenHeigth(), obj.getPeso());
+						begin = System.currentTimeMillis();
 
-					begin = System.currentTimeMillis();
+					}
 
-					cont++;
 				}
-
 			}
 		} else { // incrementa o nivel
 
 			TimerTask task = new TimerTask() {
 				public void run() {
 
+					VELOCIDADE_ENTRE_OBJS -= 55;
+
 					initObjetos();
 
 					startDownObjs(); // inicia novamente a fase
 
-					VELOCIDADE_ENTRE_OBJS -= 50;
-
 				}
 			};
-			cont = 0;
 
-			pauseDownObjs();
+			pauseDownObjs(); // para de cair objetos
 
-			objetos.removeAllElements();
+			if (objetos != null) { // limpa objetos da tela
+				if (objetos.size() > 0) {
+					objetos.removeAllElements();
+					objetos = new Vector<ObjetoSprite>();
+				}
+			}
+
+			QTD_OBJ += QTD_OBJ; // incrementa a qnt de objetos do nivel
 
 			new Timer().schedule(task, ESPERA_ENTRE_NIVEIS);
 		}
 
 	}
 
+	/**
+	 * Aumenta a velocidade da queda de acordo com o peso
+	 */
 	private void aumentaVelocidadeQueda() {
 		for (int i = 0; i < objetos.size(); i++) {
-			ObjetoSprite obj = (ObjetoSprite) objetos.elementAt(i);
+			ObjetoSprite obj = objetos.get(i);
 			if (obj.getY() > (getDeviceScreenHeigth() / 2)) {
-				obj.setVelocidade(obj.getVelocidade() + (int) 0.3);
-			}
-		}
-	}
-
-	private void clearSpritesOutScreen() {
-		// elimina os itens fora da tela
-		if (objetos != null && objetos.size() > 0) {
-			for (int i = 0; i < objetos.size(); i++) {
-				ObjetoSprite objeto = (ObjetoSprite) objetos.elementAt(i);
-				if (objeto.getY() > getDeviceScreenHeigth()) { // item perdido
-					objeto.setVisible(false);
-					getLayerManager().remove(objeto);
-				}
+				obj.setVelocidade(obj.getPeso() + (int) 0.3);
 			}
 		}
 	}
 
 	/**
-	 * Verifica se pegou item
+	 * Limpa itens fora da tela
+	 * 
+	 * Lembrando, quando um objeto excede os limites da tela, ele conta como um
+	 * objeto a menos na tela (descrementObjsInScreen())
+	 */
+	private void clearSpritesOutScreen() {
+		// elimina os itens fora da tela
+		if (objetos != null)
+			if (objetos.size() > 0) {
+				for (int i = 0; i < objetos.size(); i++) {
+					ObjetoSprite obj = objetos.get(i);
+					if (obj.getY() > getDeviceScreenHeigth()) { // item
+																	// perdido
+						obj.setVisible(false);
+						getLayerManager().remove(obj);
+						
+						objetos.remove(obj);
+					}
+				}
+			}
+	}
+
+	/**
+	 * Verifica se o tubarao pegou o item
+	 * 
+	 * Lembrando, quando um objeto é pego, ele conta como um objeto a menos na
+	 * tela (descrementObjsInScreen())
 	 */
 	private void gotItem() {
 		for (int i = 0; i < objetos.size(); i++) {
-			ObjetoSprite objeto = (ObjetoSprite) objetos.elementAt(i);
-			if (tub.collidesWith(objeto, true)) {
+			ObjetoSprite obj = objetos.get(i);
+			if (tub.collidesWith(obj, true)) {
 				mPontos++;
 
-				objeto.setVisible(false);
-				objetos.remove(objeto);
+				obj.setVisible(false);
+				getLayerManager().remove(obj);
+
+				objetos.remove(obj);
 			}
 		}
 	}
@@ -382,22 +430,14 @@ public class GameScreen extends GameSurfaceView {
 	}
 
 	public void loop() {
-		// anima tub
-		// Log.d("game","## lopping entrando... ##");
-		if (tub != null) {
-			if (tub.isVisible()) {
-				if (tub.isRunAnimation()) {
-					tub.animation();
-				}
-			}
-		}
 
 		// derruba itens
 		if (isDerubaObjs) {
 			moveItensDown(); // derruba itens
-			// aumentaVelocidadeQueda();// aumenta velocidade do item abaixo do
-			// meio da tela
-			clearSpritesOutScreen(); // elima itens fora da tela
+		}
+
+		if (isDerubaObjs) {
+			// aumentaVelocidadeQueda();// aumenta velocidade dos itens caindo
 		}
 
 		// verifica se pegou item
@@ -406,17 +446,23 @@ public class GameScreen extends GameSurfaceView {
 
 		}
 
-		if (tPontos != null) {
-			// tPontos.setText("pontos: " + mPontos);
+		if (isDerubaObjs) { // elima itens fora da tela
+			clearSpritesOutScreen();
 		}
 
-		if (tTempo != null) {
+		// anima tub
+		if (tub != null) {
+			if (tub.isVisible()) {
+				if (tub.isRunAnimation()) {
+					tub.animation();
+				}
+			}
+		}
 
+		if (tTempo != null) { // incrementa o tempo
 			mTempo = System.currentTimeMillis() - timer;
 			mTempo = mTempo / 1000;
-
 		}
-		// Log.d("game","## lopping saindo... ##");
 	}
 
 	public synchronized void restoreState(Bundle icicle) {

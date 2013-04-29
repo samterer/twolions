@@ -13,7 +13,7 @@ public class ObjetoSprite extends Sprite {
 		setImage(bitmap);
 	}
 
-	public synchronized void startDown(final int limiteY, final int fps) {
+	public synchronized void onDown(final int limiteY) {
 
 		TimerTask task = new TimerTask() {
 			public void run() {
@@ -21,12 +21,12 @@ public class ObjetoSprite extends Sprite {
 					setVisible(false);
 					cancel();
 				} else {
-					startDown(limiteY, fps);
+					onDown(limiteY);
 				}
 			}
 		};
 		move(0, getPeso());
-		new Timer().schedule(task, fps * 2);
+		new Timer().schedule(task, 10);
 	}
 
 	public int getPontuacao() {
