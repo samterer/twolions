@@ -501,7 +501,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		finish();
 
 		// Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
-		createToast(); // mensagem de save
+		showToast(); // mensagem de save
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
@@ -512,7 +512,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	 * @param c
 	 * @return
 	 */
-	private void createToast() {
+	private void showToast() {
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.custom_toast,
 				(ViewGroup) findViewById(R.id.custom_toast_layout_id));
