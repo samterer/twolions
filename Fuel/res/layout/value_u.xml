@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="center" >
 
@@ -8,32 +8,40 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
+        <!-- TITLE VALUE U -->
+
+        <TextView
+            android:id="@+id/t_value_u"
+            style="@style/texto16cinzaDark"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center|left"
+            android:padding="5dip"
+            android:text="@string/tv_gp" />
+
+        <!-- EDIT VALUE U -->
+
         <EditText
             android:id="@+id/value_u"
             style="@style/texto14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="center|right"
             android:hint="@string/h_click"
             android:inputType="numberDecimal"
             android:maxLength="7"
             android:scaleType="centerInside"
             android:tag="value_u" />
-    </TableRow>
 
-    <!-- DESC VALUE U -->
-
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        <!-- DESC VALUE U -->
 
         <TextView
             android:id="@+id/t_value_u_desc"
             style="@style/texto14"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:gravity="center"
-            android:layout_marginTop="-5dp" />
+            android:layout_marginTop="-5dp"
+            android:gravity="center|right" />
     </TableRow>
 
 </TableLayout>

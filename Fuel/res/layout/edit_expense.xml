@@ -8,8 +8,11 @@
     <!-- DATE -->
 
     <TableRow
-        android:layout_marginTop="10dp"
-        android:gravity="center" >
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="right"
+        android:paddingRight="15dp"
+        android:paddingTop="25dp" >
 
         <include layout="@layout/date" />
     </TableRow>
@@ -23,21 +26,11 @@
     <!-- SUBJECT -->
 
     <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <!-- EDIT SUBJECT -->
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center" >
 
         <include layout="@layout/subject" />
-
-        <TextView
-            android:id="@+id/t_subject"
-            style="@style/texto16cinzaDark"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:gravity="center|left"
-            android:padding="5dip"
-            android:text="@string/tv_s" />
     </TableRow>
 
     <include
@@ -49,17 +42,11 @@
     <!-- VALUE P -->
 
     <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <!-- EDIT VALUE P -->
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center" >
 
         <include layout="@layout/value_p" />
-
-        <include
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            layout="@layout/t_value_p" />
     </TableRow>
 
 </TableLayout>

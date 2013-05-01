@@ -5,8 +5,21 @@
     android:layout_gravity="center" >
 
     <TableRow
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
+
+        <!-- TITLE VALUE U -->
+
+        <TextView
+            android:id="@+id/t_value_p"
+            style="@style/texto16cinzaDark"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center|left"
+            android:padding="5dip"
+            android:text="@string/tv_ap" />
+
+        <!-- EDIT VALUE P -->
 
         <EditText
             android:id="@+id/value_p"
@@ -19,21 +32,16 @@
             android:maxLength="7"
             android:scaleType="centerInside"
             android:tag="value_p" />
-    </TableRow>
 
-    <!-- DESC VALUE P -->
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent" >
+        <!-- DESC VALUE P -->
 
         <TextView
             android:id="@+id/t_value_p_desc"
             style="@style/texto14"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:gravity="center"
-           android:layout_marginTop="-5dp" />
+            android:layout_marginTop="-5dp"
+            android:gravity="center|left" />
     </TableRow>
 
 </TableLayout>
