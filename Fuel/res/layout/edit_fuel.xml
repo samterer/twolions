@@ -5,14 +5,33 @@
     android:layout_height="fill_parent"
     android:scrollbars="none" >
 
+    <!-- TITULO -->
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:paddingTop="25dp" >
+
+        <TextView
+            android:id="@+id/t_screen"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/t_ful"
+            android:textColor="@color/preto"
+            android:textSize="30dp"
+            android:textStyle="normal" />
+    </TableRow>
+
     <!-- Date -->
 
     <TableRow
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="right"
-        android:paddingTop="25dp"
-        android:paddingRight="15dp" >
+        android:paddingRight="15dp"
+        android:paddingTop="25dp" >
 
         <include layout="@layout/date" />
     </TableRow>

@@ -21,6 +21,12 @@
     <!-- Error msg user -->
     <string name="erro_conexao_db_indisponivel">Bad, bad app! No donut for you. Please, re-start.</string>
     <string name="t_e_c">Connection</string>
+    
+    <!-- titulo da tela -->
+	<string name="t_exp">EXPENSE</string>
+    <string name="t_rep">REPAIR</string>
+    <string name="t_not">NOTE</string>
+    <string name="t_ful">FUEL</string>
 
     <!-- titulo de campos -->
     <string name="tv_vr">VEHICLE REGISTRATION</string>

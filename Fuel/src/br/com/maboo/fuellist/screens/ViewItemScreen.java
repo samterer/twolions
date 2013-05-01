@@ -394,15 +394,15 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		bt_right.setImageResource(R.drawable.bt_bar_edit);
 
 	}
-	
+
 	public void addListenerOnButton() {
-		
+
 		TableLayout screen_item = (TableLayout) findViewById(R.id.screen_item);
 		screen_item.setOnLongClickListener(new OnLongClickListener() {
 			public boolean onLongClick(View v) {
-				
+
 				btBarRight(v);
-				
+
 				return true;
 			}
 		});
