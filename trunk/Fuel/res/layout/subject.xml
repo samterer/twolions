@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<EditText xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-    android:id="@+id/subject"
-    android:gravity="center"
-    android:hint="@string/h_subject"
-    android:maxLength="20"
-    android:tag="subject" >
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center" >
 
-</EditText>
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <!-- TITLE SUBJECT -->
+
+        <TextView
+            android:id="@+id/t_subject"
+            style="@style/texto16cinzaDark"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:padding="5dip"
+            android:text="@string/tv_s" />
+
+        <!-- EDIT SUBJECT -->
+
+        <EditText
+            android:id="@+id/subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="@string/h_subject"
+            android:maxLength="20"
+            android:tag="subject" />
+    </TableRow>
+
+</TableLayout>

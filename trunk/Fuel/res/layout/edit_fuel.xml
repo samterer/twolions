@@ -8,8 +8,11 @@
     <!-- Date -->
 
     <TableRow
-        android:layout_marginTop="10dp"
-        android:gravity="center" >
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="right"
+        android:paddingTop="25dp"
+        android:paddingRight="15dp" >
 
         <include layout="@layout/date" />
     </TableRow>
@@ -23,20 +26,9 @@
     <!-- VALUE U -->
 
     <TableRow
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center" >
-
-        <!-- EDIT VALUE U -->
-
-        <TextView
-            android:id="@+id/t_value_u"
-            style="@style/texto16cinzaDark"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:gravity="center|left"
-            android:padding="5dip"
-            android:text="@string/tv_gp" />
 
         <include layout="@layout/value_u" />
     </TableRow>
@@ -50,16 +42,9 @@
     <!-- VALUE P -->
 
     <TableRow
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center" >
-
-        <!-- EDIT VALUE P -->
-
-        <include
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            layout="@layout/t_value_p" />
 
         <include layout="@layout/value_p" />
     </TableRow>
@@ -73,20 +58,9 @@
     <!-- ODOMETER -->
 
     <TableRow
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center" >
-
-        <!-- EDIT ODOMETER -->
-
-        <TextView
-            android:id="@+id/t_odometer"
-            style="@style/texto16cinzaDark"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:gravity="center|left"
-            android:padding="5dip"
-            android:text="@string/tv_o" />
 
         <include layout="@layout/odometer" />
     </TableRow>

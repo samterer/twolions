@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<EditText xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/text"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="left"
-    android:hint="@string/h_text"
-    android:maxLength="240"
-    android:lines="14"
-    android:maxWidth="200dp"
-    android:tag="text" >
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center" >
 
-</EditText>
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <!-- TITLE NOTE -->
+
+        <TextView
+            android:id="@+id/t_text"
+            style="@style/texto16cinzaDark"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center|top"
+            android:padding="5dip"
+            android:text="@string/tv_n" />
+
+        <!-- EDIT NOTE -->
+
+        <EditText
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:hint="@string/h_text"
+            android:lines="14"
+            android:maxLength="240"
+            android:maxWidth="200dp"
+            android:tag="text" />
+    </TableRow>
+
+</TableLayout>
