@@ -23,10 +23,10 @@
 
         <EditText
             android:id="@+id/value_u"
-            style="@style/texto14"
+            style="@style/texto14cinza"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center|right"
+            android:gravity="center"
             android:hint="@string/h_click"
             android:inputType="numberDecimal"
             android:maxLength="7"
@@ -37,11 +37,10 @@
 
         <TextView
             android:id="@+id/t_value_u_desc"
-            style="@style/texto14"
+            style="@style/texto14cinza"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_marginTop="-5dp"
-            android:gravity="center|right" />
+            android:gravity="center|left" />
     </TableRow>
 
 </TableLayout>
