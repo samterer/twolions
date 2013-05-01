@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:scrollbars="none" >
-    
+
     <!-- TITULO -->
 
     <TableRow
@@ -14,31 +14,37 @@
         android:paddingTop="25dp" >
 
         <TextView
-       	    android:id="@+id/t_screen"
+            android:id="@+id/t_screen"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="@string/t_not"
             android:textColor="@color/preto"
             android:textSize="30dp"
-            android:textStyle="normal"
-            android:text="@string/t_not" />
+            android:textStyle="normal" />
     </TableRow>
 
     <!-- DATE -->
 
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center" >
+     <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="right"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp" >
 
         <include layout="@layout/date" />
     </TableRow>
 
+    <!-- -----------------line----------------- -->
+
     <include
         android:layout_height="0.5dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         layout="@layout/line" />
+    <!-- -----------------line----------------- -->
+
 
     <!-- SUBJECT -->
 
@@ -50,11 +56,15 @@
         <include layout="@layout/subject" />
     </TableRow>
 
+    <!-- -----------------line----------------- -->
+
     <include
         android:layout_height="0.5dp"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="15dp"
         layout="@layout/line" />
+    <!-- -----------------line----------------- -->
+
 
     <!-- TEXT -->
 
