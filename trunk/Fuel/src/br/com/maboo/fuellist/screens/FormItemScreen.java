@@ -12,8 +12,6 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -502,15 +500,26 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		finish();
 
-	//	Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
-		
+		// Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+		createToast(); // mensagem de save
+
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+	}
+
+	/**
+	 * Criada mensagem dizendo que o arquivo foi salvo
+	 * 
+	 * @param c
+	 * @return
+	 */
+	private void createToast() {
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.custom_toast,
-		                               (ViewGroup) findViewById(R.id.custom_toast_layout_id));
+				(ViewGroup) findViewById(R.id.custom_toast_layout_id));
 
 		TextView text = (TextView) layout.findViewById(R.id.text_toast);
 		text.setText("Saved!");
-		
+
 		ImageView image = (ImageView) layout.findViewById(R.id.image_toast);
 
 		switch (type) {
@@ -529,12 +538,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		}
 
 		Toast toast = new Toast(getApplicationContext());
-		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.BOTTOM, 0, 0);
+		toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM, 0, 0);
 		toast.setDuration(Toast.LENGTH_SHORT);
 		toast.setView(layout);
 		toast.show();
-
-		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
 
 	private static String pad(int c) {
@@ -612,55 +619,41 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		});
 
-
-		if (value_p != null) { // aplica regra de decimal
-
-			value_p.addTextChangedListener(new TextWatcher() {
-
-				public void onTextChanged(CharSequence s, int start,
-						int before, int count) {
-
-				}
-
-				public void beforeTextChanged(CharSequence s, int start,
-						int count, int after) {
-					// TODO Auto-generated method stub
-
-				}
-
-				public void afterTextChanged(Editable s) {
-					try {
-						//
-					} catch (StackOverflowError e) {
-						e.printStackTrace();
-					}
-
-				}
-			});
-		}
-
-		if (value_u != null) { // aplica regra de decimal
-
-			value_u.addTextChangedListener(new TextWatcher() {
-
-				public void onTextChanged(CharSequence s, int start,
-						int before, int count) {
-				}
-
-				public void beforeTextChanged(CharSequence s, int start,
-						int count, int after) {
-				}
-
-				public void afterTextChanged(Editable s) {
-					try {
-						//
-					} catch (StackOverflowError e) {
-						e.printStackTrace();
-					}
-
-				}
-			});
-		}
+		/*
+		 * if (value_p != null) { // aplica regra de decimal
+		 * 
+		 * value_p.addTextChangedListener(new TextWatcher() {
+		 * 
+		 * public void onTextChanged(CharSequence s, int start, int before, int
+		 * count) {
+		 * 
+		 * }
+		 * 
+		 * public void beforeTextChanged(CharSequence s, int start, int count,
+		 * int after) { // TODO Auto-generated method stub
+		 * 
+		 * }
+		 * 
+		 * public void afterTextChanged(Editable s) { try { // } catch
+		 * (StackOverflowError e) { e.printStackTrace(); }
+		 * 
+		 * } }); }
+		 * 
+		 * if (value_u != null) { // aplica regra de decimal
+		 * 
+		 * value_u.addTextChangedListener(new TextWatcher() {
+		 * 
+		 * public void onTextChanged(CharSequence s, int start, int before, int
+		 * count) { }
+		 * 
+		 * public void beforeTextChanged(CharSequence s, int start, int count,
+		 * int after) { }
+		 * 
+		 * public void afterTextChanged(Editable s) { try { // } catch
+		 * (StackOverflowError e) { e.printStackTrace(); }
+		 * 
+		 * } }); }
+		 */
 
 	}
 
