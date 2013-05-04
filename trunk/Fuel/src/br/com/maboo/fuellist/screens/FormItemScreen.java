@@ -9,6 +9,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.SQLException;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -32,6 +33,7 @@ import br.com.maboo.fuellist.modelobj.Carro;
 import br.com.maboo.fuellist.modelobj.ItemLog;
 import br.com.maboo.fuellist.modelobj.Settings;
 import br.com.maboo.fuellist.rules.ItemRules;
+import br.com.maboo.fuellist.util.AndroidUtils;
 import br.com.maboo.fuellist.util.Constants;
 import br.com.maboo.fuellist.util.EditTextTools;
 import br.com.maboo.fuellist.util.TextViewTools;
@@ -53,7 +55,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private EditText value_p;
 	private TextView t_value_p_desc;
 
-	private TextView odometer;
+	private EditText odometer;
 	private TextView t_odometer_desc;
 
 	private TextView date;
@@ -61,7 +63,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private EditText subject;
 	private EditText text;
 
-	private static Long id_item;
+	private static Long id_item = null;
 	private static Long id_car = null;
 	private static String name_car;
 
@@ -125,24 +127,36 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			if (task.equals("create")) { // cria novo itemRequest
 
+				id_item = null; // mantem o id do item nulo
+
 				id_car = extras.getLong(Carro._ID);
-				Log.i(TAG, "searching type [" + id_car + "]");
+				// Log.i(TAG, "searching type [" + id_car + "]");
 
 				type = extras.getInt(ItemLog.TYPE);
-				Log.i(TAG, "searching type [" + type + "]");
+				// Log.i(TAG, "searching type [" + type + "]");
 
 			} else if (task.equals("edit")) { // edit itemRequest
 
 				id_item = extras.getLong(ItemLog._ID);
 
-				Log.i(TAG, "searching itemRequest [" + id_item + "]");
-				itemRequest = ItemModel.buscarItemLog(id_item); // busca
-																// informações
-																// do
-				// itemRequest
+				// Log.i(TAG, "searching itemRequest [" + id_item + "]");
+				try {
+					itemRequest = ItemModel.buscarItemLog(id_item); // busca
+																	// informações
+																	// do
+					// itemRequest
+				} catch (SQLException e) {
 
-				id_car = itemRequest.getId_car();
-				type = itemRequest.getType();
+					// erro caricato
+					AndroidUtils
+							.alertDialog(this,
+									"Sorry, please... soooorry. And now, re-start the app.");
+
+					e.printStackTrace();
+				}
+
+				id_car = itemRequest.getId_car(); // identificador do automovel
+				type = itemRequest.getType(); // identificador do tipo do item
 
 			}
 
@@ -259,7 +273,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			tv = (TextView) findViewById(R.id.t_odometer);
 			vTextView.add(tv);
 
-			odometer = (TextView) findViewById(R.id.odometer);
+			odometer = (EditText) findViewById(R.id.odometer);
 			odometer.setTypeface(tf);
 
 			if (id_car != null) {
@@ -270,15 +284,17 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 																// odometer
 																// desse
 																// veiculo
-				if (odometer.getText() == "0") { // se o odometro for ficar com
-													// o
-													// valor zero, ele ira ficar
-													// vazio
+				if (odometer.getText().toString() == "0") { // se o odometro for
+															// ficar com
+					// o
+					// valor zero, ele ira ficar
+					// vazio
 					odometer.setText("");
 				}
 
 			}
 
+			vEditText.add(odometer);
 		}
 
 		EditTextTools.insertFontInAllFields(vEditText, tf); // change font
@@ -405,13 +421,20 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	/******************************************************************************
 	 * SERVICES
 	 ******************************************************************************/
-	public void salvar() {
-
-		ItemLog itemLog4Save = new ItemLog();
-		if (id_item != null) {
-			// É uma atualização
-			itemLog4Save.setId(id_item);
+	/**
+	 * Regra de save do item - verifica se é um update - verifica se é um novo
+	 * item que esta sendo salvo
+	 */
+	public void ruleSave() {
+		if (id_item != null) {// atualização
+			updateItem(); // atualiza item
+		} else {
+			saveNewItem(); // cria novo item no banco
 		}
+	}
+
+	public void saveNewItem() {
+		ItemLog itemLog4Save = new ItemLog();
 
 		// id_car
 		itemLog4Save.setId_car(id_car);
@@ -461,32 +484,177 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// regra de negocio
 		if (type == FUEL) { // regras de fuel
-			if (ItemRules.ruleManager(itemLog4Save, this)) {
-
-				// Salvar
-				Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
-				ItemModel.salvarItemLog(itemLog4Save);
-
-			} else {
-
-				// pinta de vermelho os dados nos campos de value_p e value_u
-				// value_p.setTextColor(R.color.vermelho);
-				// value_u.setTextColor(R.color.vermelho);
-
+			if (!ItemRules.ruleManager(itemLog4Save, this)) {
 				return;
-
 			}
-		} else {
+		}
 
-			// Salvar
-			id_item = ItemModel.salvarItemLog(itemLog4Save);
+		try {
+			id_item = ItemModel.salvarItemLog(itemLog4Save); // no caso de
+																// ser a
+
+			showToast("Saved!"); // mensagem para o usuario de que o item foi
+									// salvo
+			// primeira inserção
+			// já devolve o id
+			// do novo item
+		} catch (SQLException e) {
+
+			// erro caricato
+			AndroidUtils.alertDialog(this,
+					"Sorry, please... soooorry. And now, re-start the app.");
+
+			e.printStackTrace();
+		}
+
+		backToViewItemScreen();
+	}
+
+	public void updateItem() {
+		int cont = 0; // se esse valor for maior que zero o item sera
+		// atualizado\criado
+		ItemLog itemLog4Save = new ItemLog();
+
+		// id_car
+		itemLog4Save.setId_car(id_car);
+
+		// id_item
+		itemLog4Save.setId(id_item);
+
+		// type of itemRequest
+		itemLog4Save.setType(type);
+
+		// hour
+		// get date for save
+		StringBuffer sbDate = new StringBuffer();
+		sbDate.append(date.getText().toString() + "-" + hour.getText());
+
+		itemLog4Save.setDate(sbDate.toString());
+
+		// subject
+		if (type == EXPENSE || type == REPAIR || type == NOTE) {
+			if (!itemRequest.getSubject().equals(subject.getText().toString())) {
+				cont++;
+			}
+		}
+
+		// value u
+		if (type == FUEL) {
+			if (!String.valueOf(itemRequest.getValue_u()).equals(
+					value_u.getText().toString())) {
+				cont++;
+			}
+		}
+
+		// value p
+		if (type == EXPENSE || type == REPAIR || type == FUEL) {
+			if (!String.valueOf(itemRequest.getValue_p()).equals(
+					value_p.getText().toString())) {
+				cont++;
+			}
+		}
+
+		// text
+		if (type == NOTE) {
+			if (!itemRequest.getText().equals(text.getText().toString())) {
+				cont++;
+			}
+		}
+
+		// odemeter
+		if (type == FUEL) {
+			if (!String.valueOf(itemRequest.getOdometer()).equals(
+					odometer.getText().toString())) {
+				cont++;
+			}
+		}
+
+		// regra de negocio
+		if (type == FUEL) { // regras de fuel
+			if (!ItemRules.ruleManager(itemLog4Save, this)) {
+				return;
+			}
+		}
+
+		// subject
+		if (type == EXPENSE || type == REPAIR || type == NOTE) {
+			itemLog4Save.setSubject(subject.getText().toString());
+		}
+
+		// value u
+		if (type == FUEL) {
+
+			itemLog4Save.setValue_u(Double
+					.valueOf(value_u.getText().toString()));
+		}
+
+		// value p
+		if (type == EXPENSE || type == REPAIR || type == FUEL) {
+
+			itemLog4Save.setValue_p(Double
+					.valueOf(value_p.getText().toString()));
+		}
+
+		// text
+		if (type == NOTE) {
+			itemLog4Save.setText(text.getText().toString());
+		}
+
+		// odemeter
+		if (type == FUEL) {
+
+			// get last odometer
+
+			itemLog4Save.setOdometer(Long
+					.valueOf(odometer.getText().toString()));
+		}
+
+		// regra de negocio
+		if (type == FUEL) { // regras de fuel
+			if (!ItemRules.ruleManager(itemLog4Save, this)) {
+				return;
+			}
+		}
+
+		// Salvar
+		if (cont > 0) { // confirma se o item vai realmente ser atualizado
+						// (significa que o user mudou parametros na tela)
+			// Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
+			try {
+				id_item = ItemModel.salvarItemLog(itemLog4Save); // no caso de
+																	// ser a
+				// primeira inserção
+				// já devolve o id
+				// do novo item
+			} catch (SQLException e) {
+
+				// erro caricato
+				AndroidUtils
+						.alertDialog(this,
+								"Sorry, please... soooorry. And now, re-start the app.");
+
+				e.printStackTrace();
+			}
+
+			showToast("Updated!");
 
 		}
 
-		// abre lista de logs do carro
+		backToViewItemScreen();
+	}
+
+	/**
+	 * Retorna pra tela de view item
+	 * 
+	 * @param c
+	 * @return
+	 */
+	private void backToViewItemScreen() {
+
+		// retorna para a tela de view
 		Intent it = new Intent(this, ViewItemScreen.class);
 
-		// Passa o id do carro como parâmetro
+		// Passa o id do item
 		it.putExtra(ItemLog._ID, id_item);
 
 		// OK
@@ -494,14 +662,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // mata a pilha de
 														// activitys
-
 		// Abre a tela de edição
 		startActivity(it);
 
 		finish();
-
-		// Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
-		showToast(); // mensagem de save
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
@@ -512,13 +676,13 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	 * @param c
 	 * @return
 	 */
-	private void showToast() {
+	private void showToast(String msg) {
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.custom_toast,
 				(ViewGroup) findViewById(R.id.custom_toast_layout_id));
 
 		TextView text = (TextView) layout.findViewById(R.id.text_toast);
-		text.setText("Saved!");
+		text.setText(msg);
 
 		ImageView image = (ImageView) layout.findViewById(R.id.image_toast);
 
@@ -556,7 +720,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	 ******************************************************************************/
 
 	public void actionBt(final Context context) {
-
 	}
 
 	public void organizeBt() {
@@ -583,15 +746,13 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			return;
 		}
 
-		salvar();
+		ruleSave();
 	}
 
 	public void onBackPressed() { // do call my back button method when
 
-		if (EditTextTools.isEmptyEdit(vEditText, this, "noalert")) {
-			//
-		} else {
-			salvar();
+		if (!EditTextTools.isEmptyEdit(vEditText, this, "noalert")) {
+			ruleSave();
 		}
 
 		super.onBackPressed();

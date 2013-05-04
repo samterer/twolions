@@ -42,11 +42,11 @@ public class Settings {
 	public Settings(SharedPreferences sharedPrefs) {
 		Log.i("appLog", "## charge SharedPreferences ##");
 
-		setMoeda(sharedPrefs.getString("pref_currency", null));
+		setMoeda(sharedPrefs.getString("pref_currency", "$"));
 
-		setDist(sharedPrefs.getString("pref_distance", null));
+		setDist(sharedPrefs.getString("pref_distance", "mi"));
 
-		setVolume(sharedPrefs.getString("pref_volume", null));
+		setVolume(sharedPrefs.getString("pref_volume", "US gal"));
 
 		// teste do settings
 		Log.i("appLog", "## moeda = " + getMoeda() + " ##");

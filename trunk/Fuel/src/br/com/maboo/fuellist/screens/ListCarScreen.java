@@ -7,12 +7,10 @@ import java.util.TimerTask;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -92,7 +90,7 @@ public class ListCarScreen extends FuelListActivity implements
 
 		carros = (List<Carro>) getLastNonConfigurationInstance();
 
-	//	effect(); // efeito alpha
+		// effect(); // efeito alpha
 
 		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
 
@@ -155,17 +153,7 @@ public class ListCarScreen extends FuelListActivity implements
 
 	protected void onResume() {
 
-		getSharedPrefs();
-
 		super.onResume();
-	}
-
-	private void getSharedPrefs() {
-
-		SharedPreferences sharedPrefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		this.set = new Settings(sharedPrefs);
-
 	}
 
 	protected void onActivityResult(final int codigo, final int codigoRetorno,
@@ -189,7 +177,7 @@ public class ListCarScreen extends FuelListActivity implements
 				.loadLayoutAnimation(this, R.anim.anime_slide_to_right);
 
 		listview_car.setLayoutAnimation(controller);
-		
+
 	}
 
 	public void update() {
@@ -198,7 +186,7 @@ public class ListCarScreen extends FuelListActivity implements
 
 		listview_car.setAdapter(new ListCarAdapter(this, carros));
 
-	//	effect(); // efeito alpha
+		// effect(); // efeito alpha
 
 		confListForLongClick();
 
@@ -325,12 +313,11 @@ public class ListCarScreen extends FuelListActivity implements
 
 		// Passa também o nome do carro para ser usado no titulo
 		it.putExtra(Carro.NOME, name_car);
-		
+
 		// Abre a tela de edição
 		startActivityForResult(it, INSERIR_EDITAR);
-		
-		overridePendingTransition(R.anim.slide_to_left, R.anim.slide_to_left);
 
+		overridePendingTransition(R.anim.slide_to_left, R.anim.slide_to_left);
 
 	}
 
