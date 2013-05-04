@@ -100,6 +100,8 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 		}
 
 		organizeBt();
+
+		getSharedPrefs();
 	}
 
 	/******************************************************************************
@@ -121,7 +123,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		itens = (List<ItemLog>) getLastNonConfigurationInstance();
 
-	//	effect(); // effect for opening
+		// effect(); // effect for opening
 
 		Log.i("estado", "Lendo estado: getLastNonConfigurationInstance()");
 
@@ -187,7 +189,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
-		
+
 		update();
 
 	}
@@ -230,7 +232,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		listview_log.setAdapter(new ListItemAdapter(this, itens, set));
 
-	//	effect(); // efeito alpha
+		// effect(); // efeito alpha
 
 		confListForLongClick();
 	}
@@ -265,6 +267,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	}
 
 	private View itemSelectView;
+
 	public void showBtsEditDelete(View view, boolean exibe) {
 		itemSelectView = view;
 
@@ -484,7 +487,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	public void btBarLeft(View v) {
 
 		finish(); // go next screen
-		
+
 		overridePendingTransition(R.anim.slide_to_right, R.anim.slide_to_right);
 
 	}
@@ -503,7 +506,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 	public void onBackPressed() {
 		super.onBackPressed();
-		
+
 		overridePendingTransition(R.anim.slide_to_right, R.anim.slide_to_right);
 	}
 
@@ -531,13 +534,12 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 	}
 
-	
 	public void openSettings(View v) {
 		startActivity(new Intent(this, SettingsScreen.class));
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
-	
+
 	/******************************************************************************
 	 * BARRA DE ITENS
 	 ******************************************************************************/

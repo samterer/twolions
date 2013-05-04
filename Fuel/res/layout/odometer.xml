@@ -2,7 +2,8 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_gravity="center" >
+    android:layout_gravity="center"
+    android:shrinkColumns="3" >
 
     <TableRow
         android:layout_width="fill_parent"
@@ -15,6 +16,7 @@
             style="@style/texto16cinzaDark"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
+            android:layout_weight="1"
             android:gravity="center|left"
             android:padding="5dip"
             android:text="@string/tv_o" />
@@ -26,6 +28,7 @@
             style="@style/texto14cinza"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:hint="@string/h_click"
             android:inputType="number"
@@ -40,7 +43,8 @@
             style="@style/texto14cinza"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:gravity="center|left" />
+            android:gravity="center|left"
+            android:layout_weight="1" />
     </TableRow>
 
 </TableLayout>
