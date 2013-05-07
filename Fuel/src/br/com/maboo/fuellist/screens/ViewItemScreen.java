@@ -304,7 +304,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 				}
 
-				Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
+				// Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
 
 				sb.append(dateFromBase.charAt(i));
 			}

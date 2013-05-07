@@ -7,21 +7,14 @@ import br.com.maboo.fuellist.modelobj.ItemLog;
 import br.com.maboo.fuellist.util.AndroidUtils;
 import br.com.maboo.fuellist.util.Constants;
 
-public class ItemRules {
+public class Rules {
 
-	private static Double value_u;
-	private static Double value_p;
-	private static long odometer;
 	private static Context context;
 
 	private static String TAG = Constants.LOG_APP;
 
-	public ItemRules(ItemLog item) {
-
-	}
-
 	/**
-	 * Gerencia todas as regras
+	 * Gerencia todas as regras de combustivel
 	 * 
 	 * @param cod
 	 * @return result
@@ -29,28 +22,24 @@ public class ItemRules {
 	 *         Se o retorno for true o usuario pode salvar o item
 	 * 
 	 */
-	public static boolean ruleManager(ItemLog item, Context context) {
+	public static boolean ruleFuel(ItemLog item, Context context) {
 
-		ItemRules.context = context;
+		Rules.context = context;
 
 		boolean result = false;
 
 		if (item != null) {
 
-			value_p = item.getValue_p();
-			Log.i(TAG, "rule 'value_p [" + item.getValue_p() + "]'");
+			Log.i(TAG, "## rule 'value_p [" + item.getValue_p() + "]' ##");
 
-			value_u = item.getValue_u();
-			Log.i(TAG, "rule 'value_p [" + item.getValue_u() + "]'");
-
-			odometer = item.getOdometer();
+			Log.i(TAG, "## rule 'value_p [" + item.getValue_u() + "]' ##");
 
 		} else {
 			Log.i(Constants.LOG_APP, "o valor de item é nulo");
 		}
 
 		// chama primeira regra
-		result = ruleOne();
+		result = ruleOne(item.getValue_p(), item.getValue_u());
 
 		return result;
 	}
@@ -60,9 +49,10 @@ public class ItemRules {
 	 * 
 	 * @return
 	 */
-	private static boolean ruleOne() {
+	private static boolean ruleOne(Double value_p, Double value_u) {
 
-		if (value_p >= (value_u * 2)) {
+		Double limite = value_u * 2;
+		if (value_p >= limite) {
 			return true;
 		}
 
