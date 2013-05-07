@@ -42,9 +42,8 @@ public class EditTextTools {
 				cont++;
 
 			}
-
 		}
-		if (cont == 2) {
+		if (cont == v.size()) {
 
 			result = false; // todos os campos foram preenchidos
 
@@ -60,7 +59,6 @@ public class EditTextTools {
 			}
 
 		}
-
 		return result;
 	}
 

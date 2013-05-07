@@ -32,7 +32,7 @@ import br.com.maboo.fuellist.model.ItemModel;
 import br.com.maboo.fuellist.modelobj.Carro;
 import br.com.maboo.fuellist.modelobj.ItemLog;
 import br.com.maboo.fuellist.modelobj.Settings;
-import br.com.maboo.fuellist.rules.ItemRules;
+import br.com.maboo.fuellist.rules.Rules;
 import br.com.maboo.fuellist.util.AndroidUtils;
 import br.com.maboo.fuellist.util.Constants;
 import br.com.maboo.fuellist.util.EditTextTools;
@@ -366,7 +366,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				}
 
-				Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
+				// Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
 
 				sb.append(dateFromBase.charAt(i));
 			}
@@ -484,7 +484,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// regra de negocio
 		if (type == FUEL) { // regras de fuel
-			if (!ItemRules.ruleManager(itemLog4Save, this)) {
+			if (!Rules.ruleFuel(itemLog4Save, this)) {
 				return;
 			}
 		}
@@ -571,7 +571,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// regra de negocio
 		if (type == FUEL) { // regras de fuel
-			if (!ItemRules.ruleManager(itemLog4Save, this)) {
+			if (!Rules.ruleFuel(itemLog4Save, this)) {
 				return;
 			}
 		}
@@ -611,8 +611,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// regra de negocio
 		if (type == FUEL) { // regras de fuel
-			if (!ItemRules.ruleManager(itemLog4Save, this)) {
-				return;
+			if (!Rules.ruleFuel(itemLog4Save, this)) {
+				return; // não passou na regra
 			}
 		}
 

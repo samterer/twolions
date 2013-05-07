@@ -49,10 +49,10 @@ public class Settings {
 		setVolume(sharedPrefs.getString("pref_volume", "US gal"));
 
 		// teste do settings
-		Log.i("appLog", "## moeda = " + getMoeda() + " ##");
+		// Log.i("appLog", "## moeda = " + getMoeda() + " ##");
 
-		Log.i("appLog", "## volume = " + getVolume() + " ##");
+		// Log.i("appLog", "## volume = " + getVolume() + " ##");
 
-		Log.i("appLog", "## distancia = " + getDist() + " ##");
+		// Log.i("appLog", "## distancia = " + getDist() + " ##");
 	}
 }
