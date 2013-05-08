@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.adapters.ListCarAdapter;
 import br.com.maboo.fuellist.core.FuelListActivity;
@@ -431,7 +432,9 @@ public class ListCarScreen extends FuelListActivity implements
 	}
 
 	public void btBarLeft(final View v) {
-		//
+			startActivity(new Intent(this, AboutScreen.class));
+			
+			overridePendingTransition(R.anim.scale_in, R.anim.scale_out);			
 	}
 
 	public void btBarRight(final View v) {
@@ -446,12 +449,13 @@ public class ListCarScreen extends FuelListActivity implements
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
+	
 
 	public void organizeBt() {
 
 		// bt left
-		// final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
-		// bt_left.setImageResource(R.drawable.bt_menu);
+		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
+		bt_left.setImageResource(R.drawable.bt_about);
 
 		// bt rigt
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
