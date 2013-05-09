@@ -178,6 +178,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 				"O Estado da Tela foi Mudado: onConfigurationChanged(landscape)");
 
 		if (customMenuDialog != null) {
+			if(customMenuDialog.isShowing())
 			customMenuDialog.dismiss();
 		}
 
