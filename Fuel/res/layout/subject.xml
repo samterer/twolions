@@ -16,7 +16,7 @@
             style="@style/texto16cinzaDark"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:gravity="center"
             android:padding="5dip"
             android:text="@string/tv_s" />
