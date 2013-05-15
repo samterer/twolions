@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import br.com.maboo.here.R;
 import br.com.maboo.here.core.ActivityCircle;
-import br.com.maboo.here.screen.ShowMapActivity;
+import br.com.maboo.here.screen.ShowMapScreen;
 
-public class VerifyInitMapActivity extends ActivityCircle implements
+public class InitHere extends ActivityCircle implements
 		OnCallHomeScreenListener {
 
 	/**
@@ -26,7 +26,7 @@ public class VerifyInitMapActivity extends ActivityCircle implements
 				// map
 				finish();
 
-				startActivity(new Intent(this, ShowMapActivity.class));
+				startActivity(new Intent(this, ShowMapScreen.class));
 
 			} catch (Exception e) {
 				e.printStackTrace();
