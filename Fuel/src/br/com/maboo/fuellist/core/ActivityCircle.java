@@ -1,13 +1,8 @@
 package br.com.maboo.fuellist.core;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.ViewFlipper;
 
 public class ActivityCircle extends Activity {
 
@@ -16,19 +11,10 @@ public class ActivityCircle extends Activity {
 		super.onCreate(icicle);
 
 		if (icicle == null) {
-			Log.i("appLog", "Open activity.");
+			// Log.i("appLog", "Open activity.");
 		} else {
 			Log.i("appLog", getClassName() + ".onCreate() chamado: " + icicle);
 		}
-		// monta tela
-		confTela();
-	}
-
-	private void confTela() {
-		// retira o titulo da tela
-		// requestWindowFeature(Window.FEATURE_NO_TITLE);
-		// making it full screen
-		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	}
 
 	protected void onStart() {
@@ -66,56 +52,5 @@ public class ActivityCircle extends Activity {
 		String s = getClass().getName();
 		return s.substring(s.lastIndexOf("."));
 	}
-
-	// animacao de transição
-	protected static ViewFlipper flipper;
-
-	public Animation inFromRightAnimation() {
-
-		Animation inFromRight = new TranslateAnimation(
-				Animation.RELATIVE_TO_PARENT, +1.0f,
-				Animation.RELATIVE_TO_PARENT, 0.0f,
-				Animation.RELATIVE_TO_PARENT, 0.0f,
-				Animation.RELATIVE_TO_PARENT, 0.0f);
-		inFromRight.setDuration(500);
-		inFromRight.setInterpolator(new AccelerateInterpolator());
-		return inFromRight;
-	}
-
-	public Animation outToLeftAnimation() {
-		Animation outtoLeft = new TranslateAnimation(
-				Animation.RELATIVE_TO_PARENT, 0.0f,
-				Animation.RELATIVE_TO_PARENT, -1.0f,
-				Animation.RELATIVE_TO_PARENT, 0.0f,
-				Animation.RELATIVE_TO_PARENT, 0.0f);
-		outtoLeft.setDuration(500);
-		outtoLeft.setInterpolator(new AccelerateInterpolator());
-		return outtoLeft;
-	}
-
-	public Animation inFromLeftAnimation() {
-		Animation inFromLeft = new TranslateAnimation(
-				Animation.RELATIVE_TO_PARENT, -1.0f,
-				Animation.RELATIVE_TO_PARENT, 0.0f,
-				Animation.RELATIVE_TO_PARENT, 0.0f,
-				Animation.RELATIVE_TO_PARENT, 0.0f);
-		inFromLeft.setDuration(500);
-		inFromLeft.setInterpolator(new AccelerateInterpolator());
-		return inFromLeft;
-	}
-
-	public Animation outToRightAnimation() {
-		Animation outtoRight = new TranslateAnimation(
-				Animation.RELATIVE_TO_PARENT, 0.0f,
-				Animation.RELATIVE_TO_PARENT, +1.0f,
-				Animation.RELATIVE_TO_PARENT, 0.0f,
-				Animation.RELATIVE_TO_PARENT, 0.0f);
-		outtoRight.setDuration(500);
-		outtoRight.setInterpolator(new AccelerateInterpolator());
-		return outtoRight;
-	}
-
-	// progress
-	protected static ProgressDialog dialog;
 
 }

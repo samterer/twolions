@@ -39,6 +39,11 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 	private String tipo = "carro";
 	private Long id;
 
+	// titulo dos campos
+	private TextView tName;
+	private TextView tPlate;
+	private TextView tType;
+
 	Vector<EditText> vEditText; // vetor de editText
 	Vector<TextView> vTextView; // vetor de TextViews
 

@@ -40,19 +40,6 @@ public class FuelListActivity extends ActivityCircle {
 
 	}
 
-	public void onPause() {
-		super.onPause();
-
-		// fecha conexao
-		if (sqlScript != null) {
-
-			Log.i(Constants.LOG_BASE, this.getString(R.string.a_f_db));
-
-			sqlScript.fechar();
-		}
-	}
-
-	@Override
 	protected void onResume() {
 		super.onResume();
 

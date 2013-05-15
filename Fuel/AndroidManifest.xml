@@ -22,12 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
- <!--        <activity
-            android:name=".screens.ListCarScreen"
-            android:label="ListCarScreen"
-             android:configChanges="orientation"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
-        </activity> -->
         <activity
             android:name=".screens.AboutScreen"
             android:label="AboutScreen"
@@ -59,7 +53,7 @@
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
-            android:name=".screens.ViewGraphicScreen"
+            android:name=".screens.ViewReportScreen"
             android:label="ViewGraphicScreen"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Black.NoTitleBar" >

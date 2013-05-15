@@ -13,7 +13,7 @@
         android:gravity="center" >
 
         <TextView
-            android:id="@+id/text1"
+            android:id="@+id/tName"
             style="@style/texto16cinzaDark"
             android:gravity="center"
             android:text="@string/tv_vr" />
@@ -49,7 +49,7 @@
         android:gravity="center" >
 
         <TextView
-            android:id="@+id/text2"
+            android:id="@+id/tPlate"
             style="@style/texto16cinzaDark"
             android:gravity="center"
             android:text="@string/tv_pr" />
@@ -85,7 +85,7 @@
         android:gravity="center" >
 
         <TextView
-            android:id="@+id/text3"
+            android:id="@+id/tType"
             style="@style/texto16cinzaDark"
             android:gravity="center"
             android:text="@string/tv_tv" />

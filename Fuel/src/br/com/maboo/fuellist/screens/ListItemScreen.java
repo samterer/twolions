@@ -27,7 +27,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.adapters.ListItemAdapter;
 import br.com.maboo.fuellist.core.FuelListActivity;
@@ -66,6 +65,9 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	private MenuDialog customMenuDialog;
 
 	private Settings set;
+
+	// item selecionado
+	private View itemSelectView;
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -121,11 +123,10 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 			title.setTextSize(15);
 		}
 
+		// salva itens na memoria
 		itens = (List<ItemLog>) getLastNonConfigurationInstance();
 
-		// effect(); // effect for opening
-
-		Log.i("estado", "Lendo estado: getLastNonConfigurationInstance()");
+		// Log.i("estado", "Lendo estado: getLastNonConfigurationInstance()");
 
 		if (icicle != null) {
 
@@ -134,7 +135,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 			ListItemLog lista = (ListItemLog) icicle
 					.getSerializable(ListItemLog.KEY);
 
-			// Log.i(TAG, "Lendo estado: savedInstanceState(carros)");
+			// Log.i(TAG, "Lendo estado: savedInstanceState(itens)");
 
 			this.itens = lista.itens;
 
@@ -146,14 +147,15 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		} else {
 
-			startTransaction(this);
+			startTransaction(this); // incia tela
 
 		}
 
 	}
 
 	public Object onRetainNonConfigurationInstance() {
-		Log.i("estado", "Salvando Estado: onRetainNonConfigurationInstance()");
+		// Log.i("estado",
+		// "Salvando Estado: onRetainNonConfigurationInstance()");
 
 		return itens;
 	}
@@ -161,7 +163,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
-		Log.i("estado", "Salvando Estado: onSaveInstanceState(bundle)");
+		// Log.i("estado", "Salvando Estado: onSaveInstanceState(bundle)");
 
 		// Salvar o estado da tela
 		outState.putSerializable(ListItemLog.KEY, new ListItemLog(itens));
@@ -174,25 +176,29 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 
-		Log.i("estado",
-				"O Estado da Tela foi Mudado: onConfigurationChanged(landscape)");
-
-		if (customMenuDialog != null) {
-			if(customMenuDialog.isShowing())
-			customMenuDialog.dismiss();
-		}
+		// Log.i(TAG,"O Estado da Tela foi Mudado: onConfigurationChanged(landscape)");
 
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			Toast.makeText(this, "sou um report", Toast.LENGTH_SHORT).show();
-		}
+			if (customMenuDialog != null) {
+				if (customMenuDialog.isShowing())
+					customMenuDialog.dismiss();
+			}
 
+			startActivity(new Intent(this, ViewReportScreen.class));
+
+			overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+		}
 	}
 
 	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
 
-		update();
+		update(); // re-carrega a lista
 
+	}
+
+	protected void onStart() {
+		super.onStart();
 	}
 
 	protected void onResume() {
@@ -222,18 +228,16 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 	}
 
+	/**
+	 * Atualiza a lista de itens (listAdapter)
+	 */
 	public void update() {
-
-		Log.i(TAG, "Update in list items.");
 
 		getSharedPrefs();
 
-		// Pega a lista de carros e exibe na tela
 		itens = getItens();
 
 		listview_log.setAdapter(new ListItemAdapter(this, itens, set));
-
-		// effect(); // efeito alpha
 
 		confListForLongClick();
 	}
@@ -255,6 +259,9 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 	}
 
+	/**
+	 * Recupera a lista de itens
+	 */
 	private List<ItemLog> getItens() {
 		List<ItemLog> list = null;
 
@@ -266,8 +273,6 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		return list;
 	}
-
-	private View itemSelectView;
 
 	public void showBtsEditDelete(View view, boolean exibe) {
 		itemSelectView = view;
@@ -475,9 +480,6 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	/******************************************************************************
 	 * CLICK\TOUCH
 	 ******************************************************************************/
-
-	// private static int position = 0;
-	// private static View element;
 
 	public void deleteConConfirm(View v) {
 
