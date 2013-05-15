@@ -3,6 +3,8 @@ package br.com.maboo.here.util;
 import android.location.Address;
 import android.location.Location;
 
+import com.google.android.maps.GeoPoint;
+
 /**
  * Ajuda a construir um GeoPoint
  * 

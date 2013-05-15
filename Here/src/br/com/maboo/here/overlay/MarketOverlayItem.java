@@ -2,6 +2,9 @@ package br.com.maboo.here.overlay;
 
 import br.com.maboo.here.marker.Market;
 
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.OverlayItem;
+
 public class MarketOverlayItem extends OverlayItem {
 
 	private Market market;

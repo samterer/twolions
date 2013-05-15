@@ -2,6 +2,9 @@ package br.com.maboo.here.util;
 
 import br.com.maboo.here.overlay.ImagesOverlay;
 
+import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
+
 public class VerifyShowMarkets {
 
 	private MapView mapView;

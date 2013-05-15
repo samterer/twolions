@@ -6,6 +6,10 @@ import android.graphics.Point;
 import android.graphics.RectF;
 import android.widget.Toast;
 
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
+
 /**
  * Simples Overlay que recebe as coordenadas Latitude e Longitude
  * 
