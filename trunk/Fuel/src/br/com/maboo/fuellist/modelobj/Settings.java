@@ -1,7 +1,6 @@
 package br.com.maboo.fuellist.modelobj;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
 public class Settings {
 
@@ -40,7 +39,7 @@ public class Settings {
 	}
 
 	public Settings(SharedPreferences sharedPrefs) {
-		Log.i("appLog", "## charge SharedPreferences ##");
+		// Log.i("appLog", "## charge SharedPreferences ##");
 
 		setMoeda(sharedPrefs.getString("pref_currency", "$"));
 

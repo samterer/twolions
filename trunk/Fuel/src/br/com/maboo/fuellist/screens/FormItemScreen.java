@@ -63,6 +63,11 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private EditText subject;
 	private EditText text;
 
+	// titulo dos campos
+	private TextView tName;
+	private TextView tPlate;
+	private TextView tType;
+
 	private static Long id_item = null;
 	private static Long id_car = null;
 	private static String name_car;
@@ -804,18 +809,17 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
 		public void onTimeSet(TimePicker view, int selectedHour,
 				int selectedMinute) {
+
 			hour_time = selectedHour;
 			min_time = selectedMinute;
 
-			// set current time into textview
+			// set current hour into textview
 			hour.setText(new StringBuilder().append(pad(hour_time)).append(":")
 					.append(pad(min_time)));
-
 		}
 	};
 
 	private DatePickerDialog.OnDateSetListener myDateSetListener = new DatePickerDialog.OnDateSetListener() {
-
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
 
@@ -823,10 +827,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			month_time = monthOfYear;
 			year_time = year;
 
-			// set current time into textview
+			// set current date into textview
 			date.setText(new StringBuilder().append(pad(day_time)).append("/")
 					.append(pad(month_time)).append("/").append(pad(year_time)));
-
 		}
 	};
 

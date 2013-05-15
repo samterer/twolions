@@ -5,7 +5,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ public class ListItemAdapter extends BaseAdapter {
 	private Settings set;
 
 	public ListItemAdapter(Activity context, List<ItemLog> itens, Settings set) {
-		Log.i(TAG, "## charge ListItemAdapter ##");
+		// Log.i(TAG, "## charge ListItemAdapter ##");
 
 		try {
 			this.itens = itens;

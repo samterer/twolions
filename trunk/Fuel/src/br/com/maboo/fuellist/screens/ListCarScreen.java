@@ -20,7 +20,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.adapters.ListCarAdapter;
 import br.com.maboo.fuellist.core.FuelListActivity;
@@ -91,9 +90,7 @@ public class ListCarScreen extends FuelListActivity implements
 
 		carros = (List<Carro>) getLastNonConfigurationInstance();
 
-		// effect(); // efeito alpha
-
-		Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
+		// Log.i(TAG, "Lendo estado: getLastNonConfigurationInstance()");
 
 		if (icicle != null) {
 
@@ -102,7 +99,7 @@ public class ListCarScreen extends FuelListActivity implements
 			ListCarros lista = (ListCarros) icicle
 					.getSerializable(ListCarros.KEY);
 
-			Log.i(TAG, "Lendo estado: savedInstanceState(carros)");
+			// Log.i(TAG, "Lendo estado: savedInstanceState(carros)");
 
 			this.carros = lista.carros;
 		}
@@ -122,7 +119,7 @@ public class ListCarScreen extends FuelListActivity implements
 
 	public Object onRetainNonConfigurationInstance() {
 
-		Log.i(TAG, "Salvando Estado: onRetainNonConfigurationInstance()");
+		// Log.i(TAG, "Salvando Estado: onRetainNonConfigurationInstance()");
 
 		return carros;
 	}
@@ -130,7 +127,7 @@ public class ListCarScreen extends FuelListActivity implements
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
-		Log.i(TAG, "Salvando Estado: onSaveInstanceState(bundle)");
+		// Log.i(TAG, "Salvando Estado: onSaveInstanceState(bundle)");
 
 		// Salvar o estado da tela
 		outState.putSerializable(ListCarros.KEY, new ListCarros(carros));
@@ -161,12 +158,7 @@ public class ListCarScreen extends FuelListActivity implements
 			final Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
 
-		// Quando a activity EditarCarro retornar, seja se foi para adicionar
-		// vamos atualizar a lista
-		// if (codigoRetorno == RESULT_OK) {
-		// atualiza a lista na tela
 		update();
-		// }
 	}
 
 	/******************************************************************************
@@ -182,12 +174,10 @@ public class ListCarScreen extends FuelListActivity implements
 	}
 
 	public void update() {
-		// Pega a lista de carros e exibe na tela
+
 		carros = getCars();
 
 		listview_car.setAdapter(new ListCarAdapter(this, carros));
-
-		// effect(); // efeito alpha
 
 		confListForLongClick();
 
@@ -210,6 +200,11 @@ public class ListCarScreen extends FuelListActivity implements
 
 	}
 
+	/**
+	 * Recupera a lista de carros
+	 * 
+	 * @return
+	 */
 	private List<Carro> getCars() {
 		List<Carro> list = null;
 
@@ -218,9 +213,7 @@ public class ListCarScreen extends FuelListActivity implements
 			list = dao.listarCarros();
 
 		} catch (NullPointerException e) {
-
 			e.printStackTrace();
-
 		}
 
 		return list;
@@ -432,9 +425,9 @@ public class ListCarScreen extends FuelListActivity implements
 	}
 
 	public void btBarLeft(final View v) {
-			startActivity(new Intent(this, AboutScreen.class));
-			
-			overridePendingTransition(R.anim.scale_in, R.anim.scale_out);			
+		startActivity(new Intent(this, AboutScreen.class));
+
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
 
 	public void btBarRight(final View v) {
@@ -449,7 +442,6 @@ public class ListCarScreen extends FuelListActivity implements
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
-	
 
 	public void organizeBt() {
 
