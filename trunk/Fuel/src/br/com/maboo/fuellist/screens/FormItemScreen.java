@@ -524,12 +524,13 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// type of itemRequest
 		itemLog4Save.setType(type);
 
-		// hour
-		// get date for save
+		// date/hour
 		StringBuffer sbDate = new StringBuffer();
 		sbDate.append(date.getText().toString() + "-" + hour.getText());
 
-		itemLog4Save.setDate(sbDate.toString());
+		if (!itemRequest.getDate().equals(sbDate.toString())) {
+			cont++;
+		}
 
 		// subject
 		if (type == EXPENSE || type == REPAIR || type == NOTE) {
@@ -575,6 +576,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				return;
 			}
 		}
+
+		// date/hour
+		itemLog4Save.setDate(sbDate.toString());
 
 		// subject
 		if (type == EXPENSE || type == REPAIR || type == NOTE) {
@@ -779,42 +783,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			}
 
 		});
-
-		/*
-		 * if (value_p != null) { // aplica regra de decimal
-		 * 
-		 * value_p.addTextChangedListener(new TextWatcher() {
-		 * 
-		 * public void onTextChanged(CharSequence s, int start, int before, int
-		 * count) {
-		 * 
-		 * }
-		 * 
-		 * public void beforeTextChanged(CharSequence s, int start, int count,
-		 * int after) { // TODO Auto-generated method stub
-		 * 
-		 * }
-		 * 
-		 * public void afterTextChanged(Editable s) { try { // } catch
-		 * (StackOverflowError e) { e.printStackTrace(); }
-		 * 
-		 * } }); }
-		 * 
-		 * if (value_u != null) { // aplica regra de decimal
-		 * 
-		 * value_u.addTextChangedListener(new TextWatcher() {
-		 * 
-		 * public void onTextChanged(CharSequence s, int start, int before, int
-		 * count) { }
-		 * 
-		 * public void beforeTextChanged(CharSequence s, int start, int count,
-		 * int after) { }
-		 * 
-		 * public void afterTextChanged(Editable s) { try { // } catch
-		 * (StackOverflowError e) { e.printStackTrace(); }
-		 * 
-		 * } }); }
-		 */
 
 	}
 
