@@ -5,7 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import br.com.maboo.here.screen.LongMarketActivity;
+import br.com.maboo.here.activity.LongMarketActivity;
 
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapView;

@@ -1,4 +1,4 @@
-package br.com.maboo.here.screen;
+package br.com.maboo.here.activity;
 
 import android.content.Context;
 import android.view.View;

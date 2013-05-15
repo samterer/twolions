@@ -11,12 +11,11 @@ import android.view.WindowManager;
 import br.com.maboo.here.util.Coordinate;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 
-public class MapActivityCircle extends MapActivity implements LocationListener {
+public class MapActivityCircle extends ActivityCircle implements LocationListener {
 
 	private MapController controller;
 
@@ -33,19 +32,6 @@ public class MapActivityCircle extends MapActivity implements LocationListener {
 	// Ciclo de vida da atividade
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-
-		if (icicle == null) {
-
-			Log.i(getTAG_LOG(), "Activity " + getTAG_LOG() + " begin.");
-
-		} else {
-
-			Log.i(getTAG_LOG(), getTAG_LOG() + ".onCreate() called: " + icicle);
-
-		}
-
-		// mout screen
-		initScreen();
 
 	}
 
@@ -134,24 +120,6 @@ public class MapActivityCircle extends MapActivity implements LocationListener {
 	/*********************************************************************************
 	 * CIRCLE ACTIVITY
 	 *********************************************************************************/
-
-	// retorna o nome da classe sem o pacote
-	private String getClassName() {
-
-		String s = getClass().getName();
-
-		return s.substring(s.lastIndexOf("."));
-	}
-
-	private void initScreen() {
-
-		// retira o titulo da tela
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-		// making it full screen
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	}
 
 	protected void onStart() {
 		super.onStart();
@@ -258,5 +226,5 @@ public class MapActivityCircle extends MapActivity implements LocationListener {
 	public void setCurrentGeoPoint(GeoPoint currentGeoPoint) {
 		this.currentGeoPoint = currentGeoPoint;
 	}
-
+	
 }
