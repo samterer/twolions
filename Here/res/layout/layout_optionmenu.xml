@@ -1,0 +1,35 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/icontypeview"
+        android:icon="@drawable/icontypeview"
+        android:title="@string/typeView">
+
+        <menu>
+
+            <item
+                android:id="@+id/streetview"
+                android:title="@string/streetView"/>
+
+            <item
+                android:id="@+id/satelliteview"
+                android:title="@string/satellite"/>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/iconabout"
+        android:icon="@drawable/iconabout"
+        android:title="@string/aboutOption"/>
+
+    <item
+        android:id="@+id/iconrefresh"
+        android:icon="@drawable/iconrefresh"
+        android:title="@string/refresh"/>
+
+    <item
+        android:id="@+id/iconexit"
+        android:icon="@drawable/iconexit"
+        android:title="@string/exit"/>
+
+</menu>

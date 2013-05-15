@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+
+    <string name="hello">Hello World, ZaqueuActivity!</string>
+    <string name="app_name">Dont Stay Here</string>
+    <string name="aboutOption">About</string>
+    <string name="typeView">Type View</string>
+    <string name="streetView">Street View</string>
+    <string name="satellite">Satellite</string>
+    <string name="exit">Exit</string>
+    <string name="refresh">Refresh</string>
+    
+    <string name="erro_conexao_indisponivel">Conexão com a Internet ou GPS indisponível, por favor ative-os.</string>
+
+</resources>
+
