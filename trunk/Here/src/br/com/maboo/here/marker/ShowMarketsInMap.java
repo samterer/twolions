@@ -11,6 +11,8 @@ import br.com.maboo.here.dao.VectorMarketsForTest;
 import br.com.maboo.here.overlay.ImagesOverlay;
 import br.com.maboo.here.overlay.MarketOverlayItem;
 
+import com.google.android.maps.MapView;
+
 public class ShowMarketsInMap {
 
 	private Vector<Market> vMarket;

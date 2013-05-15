@@ -10,6 +10,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import br.com.maboo.here.util.Coordinate;
 
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
+
 public class MapActivityCircle extends MapActivity implements LocationListener {
 
 	private MapController controller;

@@ -22,6 +22,9 @@ import br.com.maboo.here.marker.ShowMarketsInMap;
 import br.com.maboo.here.util.Coordinate;
 import br.com.maboo.here.util.ZoomOverlay;
 
+import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
+
 public class ShowMapActivity extends MapActivityCircle {
 
 	ViewFlipper flipper;

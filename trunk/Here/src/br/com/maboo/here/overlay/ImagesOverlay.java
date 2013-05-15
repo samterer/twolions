@@ -7,6 +7,10 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import br.com.maboo.here.screen.LongMarketActivity;
 
+import com.google.android.maps.ItemizedOverlay;
+import com.google.android.maps.MapView;
+import com.google.android.maps.OverlayItem;
+
 public class ImagesOverlay extends ItemizedOverlay<OverlayItem> {
 
 	// private final List<OverlayItem> overlays;

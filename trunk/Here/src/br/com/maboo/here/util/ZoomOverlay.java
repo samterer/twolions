@@ -4,6 +4,9 @@ import android.content.Context;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
+import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
+
 public class ZoomOverlay extends Overlay {
 	private GestureDetector gestureDetector = null;
 

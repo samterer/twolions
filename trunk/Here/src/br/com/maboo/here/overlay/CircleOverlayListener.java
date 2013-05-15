@@ -5,6 +5,8 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import br.com.maboo.here.util.Coordinate;
 
+import com.google.android.maps.GeoPoint;
+
 /**
  * Simples Overlay que recebe as coordenadas Latitude e Longitude
  * 
