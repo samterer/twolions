@@ -4,12 +4,11 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-
     <com.google.android.maps.MapView
         android:id="@+id/map"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:apiKey="07q0_0sIyHcjktMYganlRCBzj8dI8OEm7H2M7Zw"
+        android:apiKey="AIzaSyDwrjCd2xM8ys6Of0wWofs4Paw9UQDWxCg"
         android:clickable="true"
         android:enabled="true" >
     </com.google.android.maps.MapView>

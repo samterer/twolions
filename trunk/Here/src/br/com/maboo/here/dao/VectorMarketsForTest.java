@@ -1,6 +1,6 @@
 package br.com.maboo.here.dao;
 
-import br.com.maboo.here.marker.Market;
+import br.com.maboo.here.marker.Point;
 import br.com.maboo.here.marker.VectorMarket;
 import br.com.maboo.here.util.Coordinate;
 
@@ -44,7 +44,7 @@ public class VectorMarketsForTest {
 
 		for (int i = 0; i < name.length; i++) {
 
-			Market m = new Market();
+			Point m = new Point();
 
 			m.setId(id[i]);
 

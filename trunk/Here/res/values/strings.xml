@@ -2,7 +2,7 @@
 <resources>
 
     <string name="hello">Hello World, ZaqueuActivity!</string>
-    <string name="app_name">Dont Stay Here</string>
+    <string name="app_name">Here</string>
     <string name="aboutOption">About</string>
     <string name="typeView">Type View</string>
     <string name="streetView">Street View</string>
