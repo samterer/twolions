@@ -1,18 +1,16 @@
 package br.com.maboo.here.activity;
 
 
+
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.ViewFlipper;
 import br.com.maboo.here.R;
 import br.com.maboo.here.core.MapActivityCircle;
-import br.com.maboo.here.marker.ShowMarketsInMap;
+import br.com.maboo.here.marker.ShowPoints;
 import br.com.maboo.here.util.Coordinate;
 import br.com.maboo.here.util.ZoomOverlay;
 
@@ -22,21 +20,25 @@ import com.google.android.maps.MyLocationOverlay;
 public class ShowMapActivity extends MapActivityCircle {
 
 	
-	public Context context;
+	private Context context;
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+		this.context = getApplicationContext();
+		
 		// recupera o mapa
 		setContentView(R.layout.animate);
 
 		// recebe o mapa
-		setMapView(((MapView) findViewById(R.id.map)));
+		if(getMapView() == null) {
+			setMapView(((MapView) findViewById(R.id.map)));
+		}
 		
-		this.context = getApplicationContext();
-
 		// map controller
-		setController(getMapView().getController());
+		if(getController() == null) {
+			setController(getMapView().getController());
+		}
 		
 		// marca o ponto onde esta o dispositivo
 		mapBrandWithCircle();
@@ -121,8 +123,17 @@ public class ShowMapActivity extends MapActivityCircle {
 
 	public void prepareMarktInMap() {
 		// show markets in map
-		new ShowMarketsInMap(this, getMapView());
+		new ShowPoints(this, getMapView());
+	}
+
+	public Context getContext() {
+		return context;
+	}
+
+	public void setContext(Context context) {
+		this.context = context;
 	}
 	
 
+	
 }

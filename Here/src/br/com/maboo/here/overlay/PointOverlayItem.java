@@ -1,27 +1,27 @@
 package br.com.maboo.here.overlay;
 
-import br.com.maboo.here.marker.Market;
+import br.com.maboo.here.marker.Point;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.OverlayItem;
 
-public class MarketOverlayItem extends OverlayItem {
+public class PointOverlayItem extends OverlayItem {
 
-	private Market market;
+	private Point market;
 
-	public MarketOverlayItem(GeoPoint point, String title, String snippet) {
+	public PointOverlayItem(GeoPoint point, String title, String snippet) {
 		super(point, title, snippet);
 		// TODO Auto-generated constructor stub
 	}
 
-	public MarketOverlayItem(Market market) {
+	public PointOverlayItem(Point market) {
 		super(new GeoPoint(market.getLatitude(), market.getLongitude()), market
 				.getNome(), "ALERTA");
 
 		this.market = market;
 	}
 
-	public Market getMarket() {
+	public Point getMarket() {
 		return market;
 	}
 

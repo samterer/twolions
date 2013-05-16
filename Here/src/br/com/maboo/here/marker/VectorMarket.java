@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Vector;
 
 
-public class VectorMarket extends Vector<Market> implements Serializable {
+public class VectorMarket extends Vector<Point> implements Serializable {
 
 	/**
 	 * 

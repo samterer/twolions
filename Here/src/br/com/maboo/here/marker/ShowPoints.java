@@ -9,16 +9,16 @@ import android.graphics.drawable.Drawable;
 import br.com.maboo.here.R;
 import br.com.maboo.here.dao.VectorMarketsForTest;
 import br.com.maboo.here.overlay.ImagesOverlay;
-import br.com.maboo.here.overlay.MarketOverlayItem;
+import br.com.maboo.here.overlay.PointOverlayItem;
 
 import com.google.android.maps.MapView;
 
-public class ShowMarketsInMap {
+public class ShowPoints {
 
-	private Vector<Market> vMarket;
+	private Vector<Point> vPoint;
 
 	// private List<OverlayItem> overlays;
-	private List<MarketOverlayItem> overlays;
+	private List<PointOverlayItem> overlays;
 
 	private Drawable dMarcMarket = null;
 
@@ -26,7 +26,7 @@ public class ShowMarketsInMap {
 
 	private MapView mapView;
 
-	public ShowMarketsInMap(Context context, MapView mapView) {
+	public ShowPoints(Context context, MapView mapView) {
 
 		this.context = context;
 
@@ -50,7 +50,7 @@ public class ShowMarketsInMap {
 
 	private void initOverlaysMarket() {
 
-		overlays = new ArrayList<MarketOverlayItem>();
+		overlays = new ArrayList<PointOverlayItem>();
 	}
 
 	private void createFakeBase() {
@@ -59,21 +59,21 @@ public class ShowMarketsInMap {
 		baseFake = new VectorMarketsForTest();
 
 		// list from fake base
-		vMarket = baseFake.getvListaMarket();
+		vPoint = baseFake.getvListaMarket();
 	}
 
 	private void configOverlayItem() {
 
 		// gerate the list overlays
 
-		Vector<Market> aux = vMarket;
-		for (int i = 0; i < vMarket.size(); i++) {
-			Market m = (Market) aux.elementAt(i);
+		Vector<Point> aux = vPoint;
+		for (int i = 0; i < vPoint.size(); i++) {
+			Point m = (Point) aux.elementAt(i);
 
 			// overlays.add(new MarketOverlayItem(new GeoPoint(m.getLatitude(),
 			// m.getLongitude()), m.getNome(), "ALERTA"));
 
-			overlays.add(new MarketOverlayItem(m));
+			overlays.add(new PointOverlayItem(m));
 		}
 
 	}

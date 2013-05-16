@@ -1,6 +1,6 @@
 package br.com.maboo.here.marker;
 
-public class Market {
+public class Point {
 
 	private int id = 0;
 
