@@ -43,7 +43,7 @@
         <activity
             android:name=".screens.ListItemScreen"
             android:label="ListLogScreen"
-            android:configChanges="orientation|keyboardHidden"
+            android:configChanges="orientation"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
