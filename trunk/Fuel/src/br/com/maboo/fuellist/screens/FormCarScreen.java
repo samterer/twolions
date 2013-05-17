@@ -110,13 +110,13 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				"fonts/DroidSansFallback.ttf");
 
-		TextView tv1 = (TextView) findViewById(R.id.text1);
+		TextView tv1 = (TextView) findViewById(R.id.tName);
 		vTextView.add(tv1);
 
-		TextView tv2 = (TextView) findViewById(R.id.text2);
+		TextView tv2 = (TextView) findViewById(R.id.tPlate);
 		vTextView.add(tv2);
 
-		TextView tv3 = (TextView) findViewById(R.id.text3);
+		TextView tv3 = (TextView) findViewById(R.id.tType);
 		vTextView.add(tv3);
 
 		EditTextTools.insertFontInAllFields(vEditText, tf); // change font
@@ -126,18 +126,15 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 
 	}
 
-	// public void onPause() {
-	// super.onPause();
-	// // Cancela para não ficar nada na tela pendente
-	// // setResult(RESULT_CANCELED);
-	//
-	// // Fecha a tela
-	// finish();
-	// }
-
 	/******************************************************************************
 	 * SERVICES
 	 ******************************************************************************/
+
+	private void renomeiaCampos() {
+		// verifica o idiota da vez
+
+		// passa o idiota da vez e o vector de vTextView
+	}
 
 	public void salvar() {
 
