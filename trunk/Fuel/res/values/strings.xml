@@ -64,11 +64,10 @@
     <string name="h_click">"click here"</string>
     <string name="h_n_vehicle">"insert a name"</string>
     <string name="h_p_vehicle">"insert a place"</string>
-
-    <!-- Menu -->
-    <string name="m_about">"About"</string>
-    <string name="m_set">"Settings"</string>
-    <string name="m_exit">"Exit"</string>
+    
+    <!-- Bar down -->
+    <string name="t_bt_down_report">"Report"</string>
+    <string name="t_bt_down_settings">"Settings"</string>
 
     <!-- Settings -->
     <string name="s_t">Set your preferences here</string>

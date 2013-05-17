@@ -6,7 +6,7 @@ import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.core.ActivityReport;
 import br.com.maboo.fuellist.util.Constants;
 
-public class ViewReportScreen extends ActivityReport {
+public class ReportScreen extends ActivityReport {
 
 	private String TAG = Constants.LOG_APP;
 

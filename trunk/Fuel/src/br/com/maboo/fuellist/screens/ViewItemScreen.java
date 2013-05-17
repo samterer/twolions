@@ -401,14 +401,14 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		screen_item.setOnLongClickListener(new OnLongClickListener() {
 			public boolean onLongClick(View v) {
 
-				btBarRight(v);
+				btBarUpRight(v);
 
 				return true;
 			}
 		});
 	}
 
-	public void btBarLeft(final View v) {
+	public void btBarUpLeft(final View v) {
 
 		setResult(RESULT_OK);
 
@@ -418,7 +418,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	/**
 	 * Edita item
 	 */
-	public void btBarRight(final View v) {
+	public void btBarUpRight(final View v) {
 
 		// Cria a intent para abrir a tela de editar
 		Intent it = new Intent(this, FormItemScreen.class);
@@ -444,6 +444,11 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		setResult(RESULT_OK);
 
 		super.onBackPressed();
+
+	}
+
+	public void btBarDown(View v) {
+		// TODO Auto-generated method stub
 
 	}
 

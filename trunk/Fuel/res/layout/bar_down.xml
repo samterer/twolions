@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bt_center"
     android:layout_width="fill_parent"
     android:layout_height="40dp"
     android:background="@color/azul_maboo"
     android:orientation="vertical" 
-    android:onClick="openSettings">
+    android:onClick="btBarDown">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/title_bt_down"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
-        android:text="@string/m_set"
         android:textColor="@color/branco"
         android:textSize="20dp" />
 

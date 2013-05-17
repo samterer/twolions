@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.adapters.ListCarAdapter;
 import br.com.maboo.fuellist.core.FuelListActivity;
@@ -147,11 +148,6 @@ public class ListCarScreen extends FuelListActivity implements
 		}
 
 		confListForLongClick();
-	}
-
-	protected void onResume() {
-
-		super.onResume();
 	}
 
 	protected void onActivityResult(final int codigo, final int codigoRetorno,
@@ -297,7 +293,7 @@ public class ListCarScreen extends FuelListActivity implements
 	 */
 	private void openScreenListItemLog() {
 
-		Log.i(TAG, "OPEN LIST CAR [" + id_car + "]");
+		// Log.i(TAG, "OPEN LIST CAR [" + id_car + "]");
 
 		// abre lista de logs do carro
 		final Intent it = new Intent(this, ListItemScreen.class);
@@ -424,20 +420,20 @@ public class ListCarScreen extends FuelListActivity implements
 
 	}
 
-	public void btBarLeft(final View v) {
+	public void btBarUpLeft(final View v) {
 		startActivity(new Intent(this, AboutScreen.class));
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
 
-	public void btBarRight(final View v) {
+	public void btBarUpRight(final View v) {
 
 		startActivityForResult(new Intent(this, FormCarScreen.class),
 				INSERIR_EDITAR);
 
 	}
 
-	public void openSettings(View v) {
+	public void btBarDown(View v) {
 		startActivity(new Intent(this, SettingsScreen.class));
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
@@ -445,14 +441,16 @@ public class ListCarScreen extends FuelListActivity implements
 
 	public void organizeBt() {
 
-		// bt left
+		// bt up left
 		final ImageView bt_left = (ImageView) findViewById(R.id.bt_left);
 		bt_left.setImageResource(R.drawable.bt_about);
 
-		// bt rigt
+		// bt up rigt
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
 		bt_right.setImageResource(R.drawable.bt_add);
 
+		// bt down
+		final TextView title_bt_down = (TextView) findViewById(R.id.title_bt_down);
+		title_bt_down.setText(R.string.t_bt_down_settings);
 	}
-
 }
