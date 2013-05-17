@@ -22,46 +22,61 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <!-- Tela de About -->
         <activity
             android:name=".screens.AboutScreen"
             android:label="AboutScreen"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
+        
+        <!-- Tela de edição\adição do carro -->
         <activity
             android:name=".screens.FormCarScreen"
             android:label="FormCarScreen"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
+        
+        <!-- Tela de edição dos itens -->
         <activity
             android:name=".screens.FormItemScreen"
             android:label="FormItemScreen"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
+        
+        <!-- Lista de itens -->
         <activity
             android:name=".screens.ListItemScreen"
             android:label="ListLogScreen"
-            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
+        
+        <!-- Tela de visualização do item -->
         <activity
             android:name=".screens.ViewItemScreen"
             android:label="ViewItemScreen"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
+        
+        <!-- Tela de relatório -->
         <activity
-            android:name=".screens.ViewReportScreen"
+            android:name=".screens.ReportScreen"
             android:label="ViewGraphicScreen"
-            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
+        
+        <!-- Tela de configurações -->
         <activity
             android:name=".screens.SettingsScreen"
             android:label="Settings"
-            android:configChanges="orientation">
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
     </application>
 

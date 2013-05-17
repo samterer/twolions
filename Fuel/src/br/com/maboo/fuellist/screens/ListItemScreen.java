@@ -16,10 +16,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
@@ -177,15 +175,6 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	}
 
 	public void onConfigurationChanged(Configuration newConfig) {
-
-		Display display = ((WindowManager) getSystemService(WINDOW_SERVICE))
-				.getDefaultDisplay();
-		int myOrientation = display.getOrientation();
-
-		if (newConfig.orientation != myOrientation) {
-			Log.v("appLog", "rotated");
-		}
-
 		super.onConfigurationChanged(newConfig);
 	}
 
@@ -477,7 +466,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 	}
 
-	public void btBarLeft(View v) {
+	public void btBarUpLeft(View v) {
 
 		finish(); // go next screen
 
@@ -494,6 +483,10 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 		// bt rigt
 		ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
 		bt_right.setImageResource(R.drawable.bt_add);
+
+		// bt down
+		final TextView title_bt_down = (TextView) findViewById(R.id.title_bt_down);
+		title_bt_down.setText(R.string.t_bt_down_report);
 
 	}
 
@@ -527,17 +520,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 	}
 
-	public void openSettings(View v) {
-		startActivity(new Intent(this, SettingsScreen.class));
-
-		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
-	}
-
-	/******************************************************************************
-	 * BARRA DE ITENS
-	 ******************************************************************************/
-
-	public void btBarRight(View v) {
+	public void btBarUpRight(View v) {
 
 		if (customMenuDialog == null) { // instancia o menu apenas uma vez
 
@@ -550,6 +533,16 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 		}
 
 	}
+
+	public void btBarDown(View v) {
+		startActivity(new Intent(this, ReportScreen.class));
+
+		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+	}
+
+	/******************************************************************************
+	 * BARRA DE ITENS
+	 ******************************************************************************/
 
 	private class MenuDialog extends AlertDialog {
 		public MenuDialog(Context context) {

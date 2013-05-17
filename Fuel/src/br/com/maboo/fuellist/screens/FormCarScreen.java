@@ -259,7 +259,7 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 
 	}
 
-	public void btBarLeft(final View v) {
+	public void btBarUpLeft(final View v) {
 		setResult(RESULT_CANCELED);
 
 		// Fecha a tela
@@ -269,7 +269,7 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 
 	}
 
-	public void btBarRight(final View v) {
+	public void btBarUpRight(final View v) {
 
 		if (EditTextTools.isEmptyEdit(vEditText, this, "alert")) {
 			return;
@@ -287,6 +287,11 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 		}
 
 		super.onBackPressed();
+	}
+
+	public void btBarDown(View v) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

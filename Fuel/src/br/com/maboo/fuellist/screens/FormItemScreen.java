@@ -742,14 +742,14 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	}
 
-	public void btBarLeft(final View v) {
+	public void btBarUpLeft(final View v) {
 
 		// Fecha a tela
 		finish();
 
 	}
 
-	public void btBarRight(final View v) {
+	public void btBarUpRight(final View v) {
 
 		if (EditTextTools.isEmptyEdit(vEditText, this, "alert")) {
 			return;
@@ -832,5 +832,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 					.append(pad(month_time)).append("/").append(pad(year_time)));
 		}
 	};
+
+	public void btBarDown(View v) {
+		// TODO Auto-generated method stub
+
+	}
 
 }
