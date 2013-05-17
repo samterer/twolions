@@ -1,9 +1,9 @@
 package br.com.maboo.here.dao;
 
-import br.com.maboo.here.marker.Point;
-import br.com.maboo.here.marker.VectorMarket;
-import br.com.maboo.here.util.Coordinate;
+import java.util.Vector;
 
+import br.com.maboo.here.marker.Point;
+import br.com.maboo.here.util.Coordinate;
 
 /**
  * Classe de teste para imitar a base de dados
@@ -26,7 +26,7 @@ public class VectorMarketsForTest {
 			-47.086930 };
 
 	// vector (padrao que sera incluido na base)
-	private VectorMarket vListaMarket;
+	private Vector<Point> vListaMarket;
 
 	public VectorMarketsForTest() {
 		init();
@@ -34,7 +34,7 @@ public class VectorMarketsForTest {
 
 	public void init() {
 
-		vListaMarket = new VectorMarket();
+		vListaMarket = new Vector<Point>();
 
 		criaLista();
 
@@ -66,7 +66,7 @@ public class VectorMarketsForTest {
 	 * GET\SET
 	 ****************************************/
 
-	public VectorMarket getvListaMarket() {
+	public Vector<Point> getvListaMarket() {
 		return vListaMarket;
 	}
 

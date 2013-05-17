@@ -1,6 +1,4 @@
-package br.com.maboo.here.activity;
-
-
+package br.com.maboo.here.screen;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -8,9 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ViewFlipper;
 import br.com.maboo.here.R;
-import br.com.maboo.here.core.ActivityCircle;
+import br.com.maboo.here.core.MapActivityCircle;
 
-public class AboutActivity extends ActivityCircle {
+public class AboutScreen extends MapActivityCircle {
 	ViewFlipper flipper;
 
 	public void onCreate(Bundle icicle) {
@@ -36,9 +34,6 @@ public class AboutActivity extends ActivityCircle {
 		setContentView(R.layout.layout_about);
 
 	}
-
-
-	
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 

@@ -70,9 +70,6 @@ public class ShowPoints {
 		for (int i = 0; i < vPoint.size(); i++) {
 			Point m = (Point) aux.elementAt(i);
 
-			// overlays.add(new MarketOverlayItem(new GeoPoint(m.getLatitude(),
-			// m.getLongitude()), m.getNome(), "ALERTA"));
-
 			overlays.add(new PointOverlayItem(m));
 		}
 

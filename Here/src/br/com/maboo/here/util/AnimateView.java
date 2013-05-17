@@ -1,6 +1,5 @@
 package br.com.maboo.here.util;
 
-
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +15,6 @@ public class AnimateView extends View {
 
 	public AnimateView(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void doSlideDown(View view) {

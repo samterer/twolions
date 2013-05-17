@@ -1,133 +1,41 @@
 package br.com.maboo.here.screen;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.ViewFlipper;
 import br.com.maboo.here.R;
-import br.com.maboo.here.activity.ShowMapActivity;
 
-public class MapScreen extends ShowMapActivity{
+public class MapScreen extends Activity {
+	static final LatLng HAMBURG = new LatLng(53.558, 9.927);
+	static final LatLng KIEL = new LatLng(53.551, 9.993);
+	private GoogleMap map;
 
-	public MapScreen() {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
+				.getMap();
+		Marker hamburg = map.addMarker(new MarkerOptions().position(HAMBURG)
+				.title("Hamburg"));
+		Marker kiel = map.addMarker(new MarkerOptions()
+				.position(KIEL)
+				.title("Kiel")
+				.snippet("Kiel is cool")
+				.icon(BitmapDescriptorFactory
+						.fromResource(R.drawable.ic_launcher)));
 
-		// preapre buttons to animate
-	//	prepareButtons();
+		// Move the camera instantly to hamburg with a zoom of 15.
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 15));
 
+		// Zoom in, animating the camera.
+		map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 	}
 
-	/*********************************************************************************
-	 * MENU
-	 *********************************************************************************/
-
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.layout_optionmenu, menu);
-
+		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 
-	public boolean onMenuItemSelected(int featuredId, MenuItem item) {
-
-		// Log.i(getTAG_LOG(), "onMenuItemClick.");
-
-		int itemSelec = item.getItemId();
-
-		switch (itemSelec) {
-		case R.id.iconabout:
-
-			// screen with information about me and my office
-			// Log.i(getTAG_LOG(),"screen with information about me and my office.");
-
-			about();
-
-			return true;
-		case R.id.iconrefresh:
-
-			// refresh all information from web and gps connection
-			// Log.i(getTAG_LOG(),"refresh all information from web and gps connection.");
-
-			refresh();
-
-			return true;
-		case R.id.iconexit:
-
-			// quit app
-			// Log.i(getTAG_LOG(), "quit app.");
-
-			quit();
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private void about() {
-
-		// Toast.makeText(this, "open about", Toast.LENGTH_SHORT).show();
-
-		// startActivity(new Intent(getMapView().getContext(),
-		// AboutActivity.class));
-
-		flipper.setInAnimation(inFromRightAnimation());
-		flipper.setOutAnimation(outToLeftAnimation());
-		flipper.showNext();
-
-	}
-
-	private void refresh() {
-		// 
-	}
-
-	private void quit() {
-
-		finish();
-
-	}
-
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-		// Log.i(getTAG_LOG(), "item.getItemId(): " + item.getItemId());
-
-		switch (item.getItemId()) {
-		case R.id.streetview:
-
-			getMapView().setStreetView(true);
-
-			getMapView().setSatellite(false);
-
-			return true;
-
-		case R.id.satelliteview:
-
-			getMapView().setSatellite(true);
-
-			getMapView().setStreetView(false);
-
-			return true;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-	
-	public ViewFlipper flipper;	
-	public void prepareButtons() {
-		flipper = (ViewFlipper) getContext().getResources().getLayout(R.id.flipper);
-		
-		TextView text = (TextView) findViewById(R.id.textPri);
-		
-		text.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				flipper.setInAnimation(inFromLeftAnimation());
-				flipper.setOutAnimation(outToRightAnimation());
-				flipper.showPrevious();
-			}
-		});
-	}
-	
 }
