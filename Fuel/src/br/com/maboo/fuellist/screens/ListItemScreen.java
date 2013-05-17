@@ -16,8 +16,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
@@ -104,6 +106,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 		organizeBt();
 
 		getSharedPrefs();
+
 	}
 
 	/******************************************************************************
@@ -174,20 +177,16 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	}
 
 	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
 
-		// Log.i(TAG,"O Estado da Tela foi Mudado: onConfigurationChanged(landscape)");
+		Display display = ((WindowManager) getSystemService(WINDOW_SERVICE))
+				.getDefaultDisplay();
+		int myOrientation = display.getOrientation();
 
-		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			if (customMenuDialog != null) {
-				if (customMenuDialog.isShowing())
-					customMenuDialog.dismiss();
-			}
-
-			startActivity(new Intent(this, ViewReportScreen.class));
-
-			overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+		if (newConfig.orientation != myOrientation) {
+			Log.v("appLog", "rotated");
 		}
+
+		super.onConfigurationChanged(newConfig);
 	}
 
 	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
@@ -195,15 +194,6 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		update(); // re-carrega a lista
 
-	}
-
-	protected void onStart() {
-		super.onStart();
-	}
-
-	protected void onResume() {
-
-		super.onResume();
 	}
 
 	private void getSharedPrefs() {
