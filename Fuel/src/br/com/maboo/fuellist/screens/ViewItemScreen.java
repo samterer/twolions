@@ -10,10 +10,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnLongClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.maboo.fuellist.R;
@@ -75,7 +73,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 		actionBt(this);
 
-		addListenerOnButton();
 	}
 
 	/******************************************************************************
@@ -380,7 +377,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	 ******************************************************************************/
 
 	public void actionBt(final Context context) {
-
+		//
 	}
 
 	public void organizeBt() {
@@ -393,19 +390,6 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
 		bt_right.setImageResource(R.drawable.bt_bar_edit);
 
-	}
-
-	public void addListenerOnButton() {
-
-		TableLayout screen_item = (TableLayout) findViewById(R.id.screen_item);
-		screen_item.setOnLongClickListener(new OnLongClickListener() {
-			public boolean onLongClick(View v) {
-
-				btBarUpRight(v);
-
-				return true;
-			}
-		});
 	}
 
 	public void btBarUpLeft(final View v) {
