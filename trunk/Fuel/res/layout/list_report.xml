@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/cinza_claro"
-    android:gravity="center"
     android:orientation="vertical" >
 
     <include layout="@layout/bar_up" />
 
-    <!-- DATE -->
-
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="right"
-        android:paddingRight="15dp"
-        android:paddingTop="25dp" >
-
-        <include layout="@layout/date" />
-    </TableRow>
-    
     <!-- LIST DE ELEMENTOS -->
+
+    <TextView
+        android:id="@+id/title_report"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/azul_maboo"
+        android:gravity="center"
+        android:text="Report"
+        android:textColor="@color/branco"
+        android:textSize="18dp"
+        android:textStyle="normal" />
 
     <ListView
         android:id="@+id/listreport"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:cacheColorHint="#00000000"
         android:divider="#00000000"

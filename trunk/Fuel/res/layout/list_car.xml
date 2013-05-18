@@ -8,12 +8,6 @@
 
     <include layout="@layout/bar_up" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
     <ListView
         android:id="@+id/listview_car"
         android:layout_width="fill_parent"

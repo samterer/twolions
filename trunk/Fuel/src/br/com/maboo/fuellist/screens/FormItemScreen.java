@@ -743,10 +743,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	}
 
 	public void btBarUpLeft(final View v) {
-
 		// Fecha a tela
 		finish();
-
 	}
 
 	public void btBarUpRight(final View v) {

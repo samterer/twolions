@@ -104,12 +104,20 @@ public class ListItemAdapter extends BaseAdapter {
 		} else {
 			// Ja existe no cache, bingo entao pega!
 			try {
-				holder = (ViewHolder) view.getTag();
-			} catch (NullPointerException e) {
-				e.printStackTrace();
-			}
-		}
 
+				holder = (ViewHolder) view.getTag();
+
+			} catch (NullPointerException e) {
+
+				e.printStackTrace();
+
+			} catch (ClassCastException e) {
+
+				e.printStackTrace();
+
+			}
+
+		}
 		// Log.i(TAG, "************************************************");
 		// Log.i(TAG, "type [" + itemRequest.getType() + "]");
 		// value u (valor unitario. Ex: litros)
