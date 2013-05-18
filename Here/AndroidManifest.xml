@@ -52,7 +52,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCrqNjWHs38cliKLBZ-E3UpbsXZOEi9ABA" />
+            android:value="AIzaSyCEhteV0h7zAIQdhuAFNqZaQIEmJTab7O4" />
     </application>
 
 </manifest>
