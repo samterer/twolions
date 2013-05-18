@@ -4,24 +4,35 @@
     android:layout_height="fill_parent"
     android:background="@color/cinza_claro"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    <include layout="@layout/bar_up" />
 
-        <TextView
-            style="@style/texto34Negrito"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:cacheColorHint="#00000000"
-            android:divider="#00000000"
-            android:fadingEdge="none"
-            android:gravity="center_vertical|center_horizontal"
-            android:scrollbars="none"
-            android:text="Hi, i&apos;m another test." />
-    </RelativeLayout>
+    <!-- DATE -->
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="right"
+        android:paddingRight="15dp"
+        android:paddingTop="25dp" >
+
+        <include layout="@layout/date" />
+    </TableRow>
+    
+    <!-- LIST DE ELEMENTOS -->
+
+    <ListView
+        android:id="@+id/listreport"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:cacheColorHint="#00000000"
+        android:divider="#00000000"
+        android:fadingEdge="none"
+        android:scrollbars="none" >
+    </ListView>
+
+    <include layout="@layout/bar_down" />
 
 </LinearLayout>
