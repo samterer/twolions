@@ -5,12 +5,13 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.TextView;
 import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.modelobj.ItemLog;
 import br.com.maboo.fuellist.modelobj.Settings;
@@ -27,6 +28,9 @@ public class ListReportAdapter extends BaseAdapter {
 	private Typeface tf; // font
 
 	private Settings set;
+
+	private Double valorTotalColuna = 0.0;
+	private Double totalUnidade = 0.0;
 
 	public ListReportAdapter(Activity context, List<ItemLog> itens, Settings set) {
 		// Log.i(TAG, "## charge ListItemAdapter ##");
@@ -60,25 +64,40 @@ public class ListReportAdapter extends BaseAdapter {
 		return position;
 	}
 
+	public Double getValorTotalColuna() {
+		return valorTotalColuna;
+	}
+
+	public Double getTotalUnidade() {
+		return totalUnidade;
+	}
+
+	private ItemLog itemRequest;
+
 	public View getView(int position, View view, ViewGroup parent) {
 		ViewHolder holder = null;
 
-		ItemLog itemRequest = itens.get(position);
+		itemRequest = itens.get(position);
+
+		Log.i("appLog", "posicao da vez: " + position);
 
 		if (view == null) {
 			// Nao existe a View no cache para esta linha então cria um novo
 			holder = new ViewHolder();
 
-			// Busca o layout para cada carro com a foto
+			// Busca o layout para cada item
 			int layout = R.layout.item_report;
 			view = inflater.inflate(layout, null);
 			view.setTag(holder); // seta a tag
 			view.setId(position);
 
-			holder.icone = (ImageView) view.findViewById(R.id.imgLeftCenter);
+			holder.icone = (ImageView) view.findViewById(R.id.icone);
 
-			holder.listIncludeItemAdapter = (ListView) view
-					.findViewById(R.id.listreport_item);
+			holder.det = (TextView) view.findViewById(R.id.det);
+			holder.val = (TextView) view.findViewById(R.id.val);
+			holder.uni = (TextView) view.findViewById(R.id.uni);
+
+			holder.line = (View) view.findViewById(R.id.line);
 
 		} else {
 			// Ja existe no cache, bingo entao pega!
@@ -87,6 +106,41 @@ public class ListReportAdapter extends BaseAdapter {
 			} catch (NullPointerException e) {
 				e.printStackTrace();
 			}
+		}
+
+		// subject
+		if (itemRequest.getType() == Constants.EXPENSE
+				|| itemRequest.getType() == Constants.REPAIR
+				|| itemRequest.getType() == Constants.NOTE) {
+
+			holder.det.setText(String.valueOf(itemRequest.getSubject()));
+		}
+
+		// value p (valor total que pagou)
+		if (itemRequest.getType() == Constants.EXPENSE
+				|| itemRequest.getType() == Constants.REPAIR
+				|| itemRequest.getType() == Constants.FUEL) {
+
+			holder.val.setText(set.getMoeda() + " "
+					+ String.valueOf(itemRequest.getValue_p()));
+
+			// incrementa valor
+			valorTotalColuna += itemRequest.getValue_p();
+
+		}
+
+		// calcula qtd de litro abastecido
+		Double totalUnid = null;
+		if (itemRequest.getType() == Constants.FUEL) {
+
+			totalUnid = Math.floor(itemRequest.getValue_p()
+					/ itemRequest.getValue_u());
+
+			holder.uni.setText(String.valueOf(totalUnid.intValue()) + " "
+					+ set.getVolume());
+
+			totalUnidade += totalUnid;
+
 		}
 
 		// icon
@@ -105,12 +159,23 @@ public class ListReportAdapter extends BaseAdapter {
 			break;
 		}
 
+		// verifica se deve inserir a visualização
+		if (position > 0) {
+			ItemLog itemOld = itens.get(position - 1);
+			if (itemOld.getType() != itemRequest.getType()) {
+				holder.line.setVisibility(View.VISIBLE);
+			}
+		}
+
 		return view;
 	}
 
 	// Design Patter "ViewHolder" para Android
 	class ViewHolder {
-		ListView listIncludeItemAdapter;
-		ImageView icone;
+		ImageView icone; // icone do tipo
+		TextView det; // detalhe do campo (subject)
+		TextView val; // valor do item
+		TextView uni; // unidade de medida (litros)
+		View line;
 	}
 }

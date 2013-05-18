@@ -451,6 +451,6 @@ public class ListCarScreen extends FuelListActivity implements
 
 		// bt down
 		final TextView title_bt_down = (TextView) findViewById(R.id.title_bt_down);
-		title_bt_down.setText(R.string.t_bt_down_settings);
+		title_bt_down.setText(R.string.t_bar_down_set);
 	}
 }

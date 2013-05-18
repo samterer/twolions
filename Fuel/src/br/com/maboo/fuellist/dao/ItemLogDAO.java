@@ -331,6 +331,55 @@ public class ItemLogDAO extends DBConnection {
 		return itemLogs;
 	}
 
+	/**
+	 * Retorna uma lista de itens pelo carro ordenado pelo tipo
+	 * 
+	 * @param id_car
+	 * @return
+	 */
+	public List<ItemLog> listarItemLogsOrderByTipo(final long id_car) {
+		final Cursor c = db.query(table_name, ItemLog.colunas, ItemLog.ID_CAR
+				+ "='" + id_car + "'", null, null, null, ItemLog.TYPE);
+
+		final List<ItemLog> itemLogs = new ArrayList<ItemLog>();
+
+		if (c.moveToFirst()) {
+
+			// Recupera os índices das colunas
+			final int idxId = c.getColumnIndex(ItemLog._ID);
+			final int idxIdCar = c.getColumnIndex(ItemLog.ID_CAR);
+			final int idxIdDate = c.getColumnIndex(ItemLog.DATE);
+			final int idxIdType = c.getColumnIndex(ItemLog.TYPE);
+			final int idxIdSubject = c.getColumnIndex(ItemLog.SUBJECT);
+			final int idxIdValueP = c.getColumnIndex(ItemLog.VALUE_P);
+			final int idxIdValueU = c.getColumnIndex(ItemLog.VALUE_U);
+			final int idxIdOdometer = c.getColumnIndex(ItemLog.ODOMETER);
+			final int idxIdText = c.getColumnIndex(ItemLog.TEXT);
+
+			// Loop até o final
+			do {
+				final ItemLog itemLog = new ItemLog();
+				itemLogs.add(itemLog);
+
+				// recupera os atributos de carro
+				itemLog.setId(c.getLong(idxId));
+				itemLog.setId_car(c.getLong(idxIdCar));
+				itemLog.setDate(c.getString(idxIdDate));
+				itemLog.setType(c.getInt(idxIdType));
+				itemLog.setSubject(c.getString(idxIdSubject));
+				itemLog.setValue_p(c.getDouble(idxIdValueP));
+				itemLog.setValue_u(c.getDouble(idxIdValueU));
+				itemLog.setOdometer(c.getLong(idxIdOdometer));
+				itemLog.setText(c.getString(idxIdText));
+
+				Log.i(CATEGORIA, "ItemLog: " + itemLog.toString());
+
+			} while (c.moveToNext());
+		}
+
+		return itemLogs;
+	}
+
 	// Fecha o banco
 	public void fechar() {
 		// fecha o banco de dados

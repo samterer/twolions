@@ -1,5 +1,6 @@
 package br.com.maboo.fuellist.screens;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
@@ -15,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import br.com.maboo.fuellist.R;
-import br.com.maboo.fuellist.adapters.ListItemAdapter;
+import br.com.maboo.fuellist.adapters.ListReportAdapter;
 import br.com.maboo.fuellist.core.FuelListActivity;
 import br.com.maboo.fuellist.dao.ItemLogDAO;
 import br.com.maboo.fuellist.interfaces.InterfaceBar;
@@ -38,7 +39,8 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	private static final int REPAIR = Constants.REPAIR;
 
 	Vector<EditText> vEditText; // vetor de editText
-	Vector<TextView> vTextView; // vetor de TextViews
+	Vector<TextView> vTextView; // vetor de TextViewsMulher Maravilha - A
+								// Paródia
 
 	public static ItemLogDAO dao;
 
@@ -58,7 +60,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 			dao = new ItemLogDAO(this);
 
-			setContentView(R.layout.view_report);
+			setContentView(R.layout.list_report);
 
 		} catch (SQLException e) {
 			// erro caricato
@@ -89,9 +91,22 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 	}
 
+	/******************************************************************************
+	 * ESTADOS
+	 ******************************************************************************/
+	@SuppressWarnings("unchecked")
 	public void montaTela(Bundle icicle) {
 
 		listreport = (ListView) findViewById(R.id.listreport);
+
+		// cria title
+		TextView title = (TextView) findViewById(R.id.title);
+		title.setText(name_car);
+
+		// tamanho da fonte, para não estourar o espaço
+		if (title.getText().length() > 10) {
+			title.setTextSize(15);
+		}
 
 		// salva itens na memoria
 		itens = (List<ItemLog>) getLastNonConfigurationInstance();
@@ -113,32 +128,13 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		if (itens != null) { // Atualiza o ListView diretamente
 
-			listreport.setAdapter(new ListItemAdapter(this, itens, set));
+			listreport.setAdapter(new ListReportAdapter(this, itens, set));
 
 		} else {
 
 			startTransaction(this); // incia tela
 
 		}
-
-	}
-
-	/******************************************************************************
-	 * ESTADOS
-	 ******************************************************************************/
-
-	public void execute() throws Exception {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void update() {
-
-		getSharedPrefs();
-
-		itens = getItens();
-
-		listreport.setAdapter(new ListItemAdapter(this, itens, set));
 
 	}
 
@@ -156,6 +152,10 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		// Salvar o estado da tela
 		outState.putSerializable(ListItemLog.KEY, new ListItemLog(itens));
+	}
+
+	public void execute() throws Exception {
+		this.itens = getItens();
 	}
 
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -182,6 +182,16 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	 * SERVICES
 	 ******************************************************************************/
 
+	public void update() {
+
+		getSharedPrefs();
+
+		itens = getItens();
+
+		listreport.setAdapter(new ListReportAdapter(this, itens, set));
+
+	}
+
 	/**
 	 * Recupera a lista de itens
 	 */
@@ -189,7 +199,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		List<ItemLog> list = null;
 
 		try {
-			list = dao.listarItemLogs(id_car);
+			list = dao.listarItemLogsOrderByTipo(id_car);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
@@ -208,27 +218,48 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		// bt rigt
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
-		bt_right.setImageResource(R.drawable.bt_bar_edit);
+		bt_right.setVisibility(View.INVISIBLE);
 
-		// bt down
+		// bar down
 		final TextView title_bt_down = (TextView) findViewById(R.id.title_bt_down);
-		title_bt_down.setText("ainda nao sei");
+		title_bt_down.setText(R.string.t_bar_down_fil);
 
+		// titulo do report
+		final TextView title_report = (TextView) findViewById(R.id.title_report);
+
+		// calendar
+		final Calendar c = Calendar.getInstance();
+		// date
+		int day_time = c.get(Calendar.DAY_OF_MONTH);
+		int month_time = c.get(Calendar.MONTH);
+		int year_time = c.get(Calendar.YEAR);
+		String dateCurrent = new StringBuilder().append(pad(day_time))
+				.append("/").append(pad(month_time)).append("/")
+				.append(pad(year_time)).toString();
+
+		String titulo = "Report";
+		title_report.setText(titulo + " " + dateCurrent);
+
+	}
+
+	private static String pad(int c) {
+		if (c >= 10)
+			return String.valueOf(c);
+		else
+			return "0" + String.valueOf(c);
 	}
 
 	public void btBarUpLeft(View v) {
-		// TODO Auto-generated method stub
-
+		// Fecha a tela
+		finish();
 	}
 
 	public void btBarUpRight(View v) {
-		// TODO Auto-generated method stub
-
+		//
 	}
 
 	public void btBarDown(View v) {
-		// TODO Auto-generated method stub
-
+		//
 	}
 
 }

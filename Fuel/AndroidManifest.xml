@@ -66,7 +66,7 @@
         <!-- Tela de relatório -->
         <activity
             android:name=".screens.ReportScreen"
-            android:label="ViewGraphicScreen"
+            android:label="ReportScreen"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>

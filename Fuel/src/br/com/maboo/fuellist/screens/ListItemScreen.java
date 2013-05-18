@@ -486,7 +486,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		// bt down
 		final TextView title_bt_down = (TextView) findViewById(R.id.title_bt_down);
-		title_bt_down.setText(R.string.t_bt_down_report);
+		title_bt_down.setText(R.string.t_bar_up_report);
 
 	}
 
@@ -535,7 +535,18 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	}
 
 	public void btBarDown(View v) {
-		startActivity(new Intent(this, ReportScreen.class));
+
+		// abre lista de logs do carro
+		final Intent it = new Intent(this, ReportScreen.class);
+
+		// Passa o id do carro como parâmetro
+		it.putExtra(Carro._ID, id_car);
+
+		// Passa também o nome do carro para ser usado no titulo
+		it.putExtra(Carro.NOME, name_car);
+
+		// Abre a tela de edição
+		startActivity(it);
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
