@@ -131,7 +131,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		if (icicle != null) {
 
-			// Recuperamos a lista de carros salva pelo
+			// Recuperamos a lista de itens salva pelo
 			// onSaveInstanceState(bundle)
 			ListItemLog lista = (ListItemLog) icicle
 					.getSerializable(ListItemLog.KEY);
