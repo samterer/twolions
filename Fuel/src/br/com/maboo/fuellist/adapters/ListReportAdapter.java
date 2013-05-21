@@ -29,9 +29,6 @@ public class ListReportAdapter extends BaseAdapter {
 
 	private Settings set;
 
-	private Double valorTotalColuna = 0.0;
-	private Double totalUnidade = 0.0;
-
 	public ListReportAdapter(Activity context, List<ItemLog> itens, Settings set) {
 		// Log.i(TAG, "## charge ListItemAdapter ##");
 
@@ -62,14 +59,6 @@ public class ListReportAdapter extends BaseAdapter {
 
 	public long getItemId(int position) {
 		return position;
-	}
-
-	public Double getValorTotalColuna() {
-		return valorTotalColuna;
-	}
-
-	public Double getTotalUnidade() {
-		return totalUnidade;
 	}
 
 	private ItemLog itemRequest;
@@ -114,6 +103,7 @@ public class ListReportAdapter extends BaseAdapter {
 				|| itemRequest.getType() == Constants.NOTE) {
 
 			holder.det.setText(String.valueOf(itemRequest.getSubject()));
+			holder.det.setTypeface(tf);
 		}
 
 		// value p (valor total que pagou)
@@ -123,9 +113,7 @@ public class ListReportAdapter extends BaseAdapter {
 
 			holder.val.setText(set.getMoeda() + " "
 					+ String.valueOf(itemRequest.getValue_p()));
-
-			// incrementa valor
-			valorTotalColuna += itemRequest.getValue_p();
+			holder.val.setTypeface(tf);
 
 		}
 
@@ -138,8 +126,7 @@ public class ListReportAdapter extends BaseAdapter {
 
 			holder.uni.setText(String.valueOf(totalUnid.intValue()) + " "
 					+ set.getVolume());
-
-			totalUnidade += totalUnid;
+			holder.uni.setTypeface(tf);
 
 		}
 
@@ -159,7 +146,7 @@ public class ListReportAdapter extends BaseAdapter {
 			break;
 		}
 
-		// verifica se deve inserir a visualização
+		// verifica se deve inserir a linha
 		if (position > 0) {
 			ItemLog itemOld = itens.get(position - 1);
 			if (itemOld.getType() != itemRequest.getType()) {

@@ -13,7 +13,6 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.adapters.ListReportAdapter;
@@ -23,6 +22,7 @@ import br.com.maboo.fuellist.interfaces.InterfaceBar;
 import br.com.maboo.fuellist.modelobj.Carro;
 import br.com.maboo.fuellist.modelobj.ItemLog;
 import br.com.maboo.fuellist.modelobj.ListItemLog;
+import br.com.maboo.fuellist.modelobj.ListViewReport;
 import br.com.maboo.fuellist.modelobj.Settings;
 import br.com.maboo.fuellist.transaction.Transaction;
 import br.com.maboo.fuellist.util.AndroidUtils;
@@ -46,7 +46,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 	private List<ItemLog> itens;
 
-	private ListView listreport;
+	private ListViewReport listreport;
 
 	private Long id_car;
 	private String name_car;
@@ -97,7 +97,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	@SuppressWarnings("unchecked")
 	public void montaTela(Bundle icicle) {
 
-		listreport = (ListView) findViewById(R.id.listreport);
+		listreport = (ListViewReport) findViewById(R.id.listreport);
 
 		// cria title
 		TextView title = (TextView) findViewById(R.id.title);
@@ -188,7 +188,19 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		itens = getItens();
 
+		View header = (View) getLayoutInflater().inflate(R.layout.item_report,
+				null);
+		listreport.addFooterView(header, null, false);
+
 		listreport.setAdapter(new ListReportAdapter(this, itens, set));
+
+		setValoresReport();
+
+		TextView totalunidadecategoria = (TextView) findViewById(R.id.totalunidadecategoria);
+		totalunidadecategoria.setText("" + listreport.getTotalUnidade());
+
+		TextView totalvalorcategoria = (TextView) findViewById(R.id.totalvalorcategoria);
+		totalvalorcategoria.setText("" + listreport.getValorTotal());
 
 	}
 
@@ -205,6 +217,33 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		}
 
 		return list;
+	}
+
+	private Double valorTotal = 0.0;
+	private Double totalUnidade = 0.0;
+
+	/**
+	 * Recupera o valor total e de unidade da lista (por coluna ou tipo)
+	 */
+	private void setValoresReport() {
+		// recupera valor de unidade e valor total
+		for (int i = 0; i < itens.size(); i++) {
+			ItemLog item = itens.get(i);
+
+			// verifica se não é uma nota
+			if (item.getType() != NOTE) {
+				// incrementa valor
+				valorTotal += item.getValue_p();
+
+				// incrementa valor da unidade
+				if (item.getType() == FUEL) {
+					totalUnidade += totalUnidade;
+				}
+			}
+		}
+
+		listreport.setValorTotal(valorTotal);
+		listreport.setTotalUnidade(totalUnidade);
 	}
 
 	/******************************************************************************
