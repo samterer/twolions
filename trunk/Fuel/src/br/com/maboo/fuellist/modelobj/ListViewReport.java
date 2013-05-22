@@ -7,7 +7,7 @@ public class ListViewReport extends ListView {
 
 	public ListViewReport(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	private Double valorTotal = 0.0;

@@ -1,25 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/cinza_claro"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:shrinkColumns="*"
+    android:stretchColumns="*" >
 
     <include layout="@layout/bar_up" />
 
-    <!-- LIST DE ELEMENTOS -->
+    <!-- header -->
 
-    <TextView
-        android:id="@+id/title_report"
-        android:layout_width="fill_parent"
+    <TableRow
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/azul_maboo"
-        android:gravity="center"
-        android:text="Report"
-        android:textColor="@color/branco"
-        android:textSize="18dp"
-        android:textStyle="normal" />
+        android:background="@color/preto" >
+
+        <TextView
+            android:layout_marginRight="20dp"
+            android:layout_weight="2"
+            android:gravity="right"
+            android:text="Detail"
+            android:textColor="@color/branco"
+            android:textSize="18dp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_marginRight="25dp"
+            android:layout_weight="2"
+            android:gravity="right"
+            android:text="Values and Units"
+            android:textColor="@color/branco"
+            android:textSize="18dp"
+            android:textStyle="normal" />
+    </TableRow>
+
+    <!-- LIST DE ELEMENTOS -->
 
     <ListView
         android:id="@+id/listreport"
@@ -31,7 +48,5 @@
         android:fadingEdge="none"
         android:scrollbars="none" >
     </ListView>
-
-    <include layout="@layout/bar_down" />
 
 </LinearLayout>

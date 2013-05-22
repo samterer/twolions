@@ -102,7 +102,17 @@ public class ListReportAdapter extends BaseAdapter {
 				|| itemRequest.getType() == Constants.REPAIR
 				|| itemRequest.getType() == Constants.NOTE) {
 
-			holder.det.setText(String.valueOf(itemRequest.getSubject()));
+			int LIMITE = 8;
+			if (itemRequest.getSubject().toString().length() > LIMITE) {
+				StringBuffer sbSubjec = new StringBuffer();
+				for (int i = 0; i < LIMITE; i++) {
+					sbSubjec.append(itemRequest.getSubject().charAt(i));
+				}
+				holder.det.setText(sbSubjec.toString() + "[...]");
+			} else {
+				holder.det.setText(String.valueOf(itemRequest.getSubject()));
+			}
+
 			holder.det.setTypeface(tf);
 		}
 
