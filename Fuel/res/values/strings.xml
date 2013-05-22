@@ -2,14 +2,13 @@
 <resources>
 
     <string name="app_name">Fuel List</string>
-
     <string name="name">Name Car</string>
     <string name="aguarde">Loading...</string>
-    
+
     <!-- About -->
     <string name="app_copywrite">© 2012-2013 @maboobr</string>
     <string name="app_allrights">All rights reserved.</string>
-    
+
     <!-- Version -->
     <string name="app_version">1.0.0</string>
 
@@ -21,9 +20,9 @@
     <!-- Error msg user -->
     <string name="erro_conexao_db_indisponivel">Bad, bad app! No donut for you. Please, re-start.</string>
     <string name="t_e_c">Connection</string>
-    
+
     <!-- titulo da tela -->
-	<string name="t_exp">EXPENSE</string>
+    <string name="t_exp">EXPENSE</string>
     <string name="t_rep">REPAIR</string>
     <string name="t_not">NOTE</string>
     <string name="t_ful">FUEL</string>
@@ -64,10 +63,10 @@
     <string name="h_click">"click here"</string>
     <string name="h_n_vehicle">"insert a name"</string>
     <string name="h_p_vehicle">"insert a place"</string>
-    
+
     <!-- Bar up -->
     <string name="t_bar_up_report">"Report"</string>
-    
+
     <!-- Bar down -->
     <string name="t_bar_down_set">"Settings"</string>
     <string name="t_bar_down_fil">"Filter"</string>
@@ -80,33 +79,27 @@
     <string name="s_d_2">"Select units used to input odometer distance"</string>
     <string name="s_t_3">"Currency"</string>
     <string name="s_d_3">"Select currency used to represent fuel coast"</string>
-    
+
     <!-- Edit Settings Inicio -->
-    <string name="settings">Settings</string>    
+    <string name="settings">Settings</string>
     <string name="units">Units</string>
-    
+
     <string-array name="volume">
         <item>Litro</item>
-        <item>US Gallon</item>
-        <item>Imperial Gallon</item>
+        <item>Gallon</item>
     </string-array>
-    
     <string-array name="volume_values">
         <item>ℓ</item>
-        <item>US gal</item>
-        <item>UK gal</item>
+        <item>gal</item>
     </string-array>
-    
     <string-array name="distance">
         <item>Kilometros</item>
         <item>Miles</item>
     </string-array>
-    
     <string-array name="distance_values">
         <item>Km</item>
         <item>mi</item>
     </string-array>
-    
     <string-array name="currency">
         <item>Dollar</item>
         <item>Euro</item>
@@ -115,7 +108,6 @@
         <item>Real</item>
         <item>Hong Kong Dollar</item>
     </string-array>
-    
     <string-array name="currency_values">
         <item>$</item>
         <item>€</item>

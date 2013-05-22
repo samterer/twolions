@@ -3,40 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/cinza_claro"
-    android:orientation="vertical" >
+    android:background="@color/preto"
+    android:orientation="vertical"
+    android:shrinkColumns="*"
+    android:stretchColumns="*" >
 
     <!-- header -->
 
     <TableRow
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/preto"
-        android:gravity="right" >
-
+        android:layout_marginTop="5dp"
+        android:gravity="center" >
 
         <TextView
             android:id="@+id/totalvalorcategoria"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="-85dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="R$ 456,34"
+            android:gravity="center_horizontal"
             android:textColor="@color/branco"
-            android:textSize="18dp"
+            android:layout_marginLeft="65dp"
+            android:textSize="20sp"
             android:textStyle="normal" />
-        
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:gravity="center" >
+
         <TextView
             android:id="@+id/totalunidadecategoria"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_weight="1"
             android:gravity="right"
-            android:text="3456 L"
+            android:text="2736.0 US gal"
             android:textColor="@color/branco"
-            android:textSize="18dp"
+            android:textSize="20sp"
             android:textStyle="normal" />
     </TableRow>
 

@@ -4,14 +4,14 @@
 
     <PreferenceCategory android:title="@string/units" >
         <ListPreference
-            android:defaultValue="mi"
+            android:defaultValue="gal"
             android:entries="@array/volume"
             android:entryValues="@array/volume_values"
             android:key="pref_volume"
             android:summary="Select units used to input fuel volume"
             android:title="Input Volume" />
         <ListPreference
-            android:defaultValue="gal"
+            android:defaultValue="mi"
             android:entries="@array/distance"
             android:entryValues="@array/distance_values"
             android:key="pref_distance"

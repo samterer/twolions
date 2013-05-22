@@ -9,7 +9,7 @@ public class SettingsScreen extends PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		addPreferencesFromResource(R.xml.edit_settings);
+		addPreferencesFromResource(R.xml.settings);
 
 	}
 
