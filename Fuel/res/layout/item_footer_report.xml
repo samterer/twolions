@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/cinza_claro"
+    android:orientation="vertical" >
+
+    <!-- header -->
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/preto"
+        android:gravity="right" >
+
+
+        <TextView
+            android:id="@+id/totalvalorcategoria"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="-85dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="R$ 456,34"
+            android:textColor="@color/branco"
+            android:textSize="18dp"
+            android:textStyle="normal" />
+        
+        <TextView
+            android:id="@+id/totalunidadecategoria"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="3456 L"
+            android:textColor="@color/branco"
+            android:textSize="18dp"
+            android:textStyle="normal" />
+    </TableRow>
+
+</LinearLayout>

@@ -1,6 +1,5 @@
 package br.com.maboo.fuellist.screens;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
@@ -13,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.adapters.ListReportAdapter;
@@ -22,7 +22,6 @@ import br.com.maboo.fuellist.interfaces.InterfaceBar;
 import br.com.maboo.fuellist.modelobj.Carro;
 import br.com.maboo.fuellist.modelobj.ItemLog;
 import br.com.maboo.fuellist.modelobj.ListItemLog;
-import br.com.maboo.fuellist.modelobj.ListViewReport;
 import br.com.maboo.fuellist.modelobj.Settings;
 import br.com.maboo.fuellist.transaction.Transaction;
 import br.com.maboo.fuellist.util.AndroidUtils;
@@ -46,7 +45,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 	private List<ItemLog> itens;
 
-	private ListViewReport listreport;
+	private ListView listreport;
 
 	private Long id_car;
 	private String name_car;
@@ -97,7 +96,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	@SuppressWarnings("unchecked")
 	public void montaTela(Bundle icicle) {
 
-		listreport = (ListViewReport) findViewById(R.id.listreport);
+		listreport = (ListView) findViewById(R.id.listreport);
 
 		// cria title
 		TextView title = (TextView) findViewById(R.id.title);
@@ -188,19 +187,19 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		itens = getItens();
 
-		View header = (View) getLayoutInflater().inflate(R.layout.item_report,
-				null);
-		listreport.addFooterView(header, null, false);
+		// header
+		// View header = (View)
+		// getLayoutInflater().inflate(R.layout.item_header_report_1, null);
+		// listreport.addHeaderView(header);
+
+		// footer
+		View footer = (View) getLayoutInflater().inflate(
+				R.layout.item_footer_report, null);
+		listreport.addFooterView(footer);
 
 		listreport.setAdapter(new ListReportAdapter(this, itens, set));
 
 		setValoresReport();
-
-		TextView totalunidadecategoria = (TextView) findViewById(R.id.totalunidadecategoria);
-		totalunidadecategoria.setText("" + listreport.getTotalUnidade());
-
-		TextView totalvalorcategoria = (TextView) findViewById(R.id.totalvalorcategoria);
-		totalvalorcategoria.setText("" + listreport.getValorTotal());
 
 	}
 
@@ -242,8 +241,14 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 			}
 		}
 
-		listreport.setValorTotal(valorTotal);
-		listreport.setTotalUnidade(totalUnidade);
+		// listreport.setValorTotal(valorTotal);
+		// listreport.setTotalUnidade(totalUnidade);
+
+		TextView totalunidadecategoria = (TextView) findViewById(R.id.totalunidadecategoria);
+		// totalunidadecategoria.setText("" + listreport.getTotalUnidade());
+
+		TextView totalvalorcategoria = (TextView) findViewById(R.id.totalvalorcategoria);
+		// totalvalorcategoria.setText("" + listreport.getValorTotal());
 	}
 
 	/******************************************************************************
@@ -260,24 +265,24 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		bt_right.setVisibility(View.INVISIBLE);
 
 		// bar down
-		final TextView title_bt_down = (TextView) findViewById(R.id.title_bt_down);
-		title_bt_down.setText(R.string.t_bar_down_fil);
+		// final TextView title_bt_down = (TextView)
+		// findViewById(R.id.title_bt_down);
+		// title_bt_down.setText(R.string.t_bar_down_fil);
 
-		// titulo do report
-		final TextView title_report = (TextView) findViewById(R.id.title_report);
-
-		// calendar
-		final Calendar c = Calendar.getInstance();
-		// date
-		int day_time = c.get(Calendar.DAY_OF_MONTH);
-		int month_time = c.get(Calendar.MONTH);
-		int year_time = c.get(Calendar.YEAR);
-		String dateCurrent = new StringBuilder().append(pad(day_time))
-				.append("/").append(pad(month_time)).append("/")
-				.append(pad(year_time)).toString();
-
-		String titulo = "Report";
-		title_report.setText(titulo + " " + dateCurrent);
+		/*
+		 * // titulo do report final TextView title_report = (TextView)
+		 * findViewById(R.id.title_report);
+		 * 
+		 * // calendar final Calendar c = Calendar.getInstance(); // date int
+		 * day_time = c.get(Calendar.DAY_OF_MONTH); int month_time =
+		 * c.get(Calendar.MONTH); int year_time = c.get(Calendar.YEAR); String
+		 * dateCurrent = new StringBuilder().append(pad(day_time))
+		 * .append("/").append(pad(month_time)).append("/")
+		 * .append(pad(year_time)).toString();
+		 * 
+		 * String titulo = "Report"; title_report.setText(titulo + " " +
+		 * dateCurrent);
+		 */
 
 	}
 
