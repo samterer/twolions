@@ -5,17 +5,17 @@ import java.util.Vector;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import br.com.maboo.fuellist.R;
-import br.com.maboo.fuellist.adapters.ListReportAdapter;
+import br.com.maboo.fuellist.adapters.ReportAdapter;
 import br.com.maboo.fuellist.core.FuelListActivity;
 import br.com.maboo.fuellist.dao.ItemLogDAO;
 import br.com.maboo.fuellist.interfaces.InterfaceBar;
@@ -127,7 +127,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		if (itens != null) { // Atualiza o ListView diretamente
 
-			listreport.setAdapter(new ListReportAdapter(this, itens, set));
+			listreport.setAdapter(new ReportAdapter(this, itens, set));
 
 		} else {
 
@@ -157,10 +157,6 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		this.itens = getItens();
 	}
 
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-	}
-
 	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
 
@@ -187,17 +183,12 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		itens = getItens();
 
-		// header
-		// View header = (View)
-		// getLayoutInflater().inflate(R.layout.item_header_report_1, null);
-		// listreport.addHeaderView(header);
-
 		// footer
 		View footer = (View) getLayoutInflater().inflate(
 				R.layout.item_footer_report, null);
 		listreport.addFooterView(footer);
 
-		listreport.setAdapter(new ListReportAdapter(this, itens, set));
+		listreport.setAdapter(new ReportAdapter(this, itens, set));
 
 		setValoresReport();
 
@@ -236,19 +227,23 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 				// incrementa valor da unidade
 				if (item.getType() == FUEL) {
-					totalUnidade += totalUnidade;
+					// calcula qtd de litro abastecido
+					Double total = Math.floor(item.getValue_p()
+							/ item.getValue_u());
+
+					totalUnidade += total;
+					Log.d("appLog", "## incrementa: (totalUnidade): "
+							+ totalUnidade);
 				}
 			}
 		}
 
-		// listreport.setValorTotal(valorTotal);
-		// listreport.setTotalUnidade(totalUnidade);
+		TextView totalvalorcategoria = (TextView) findViewById(R.id.totalvalorcategoria);
+		totalvalorcategoria.setText(set.getMoeda() + "" + valorTotal);
 
 		TextView totalunidadecategoria = (TextView) findViewById(R.id.totalunidadecategoria);
-		// totalunidadecategoria.setText("" + listreport.getTotalUnidade());
-
-		TextView totalvalorcategoria = (TextView) findViewById(R.id.totalvalorcategoria);
-		// totalvalorcategoria.setText("" + listreport.getValorTotal());
+		totalunidadecategoria.setText(totalUnidade.intValue() + " "
+				+ set.getVolume());
 	}
 
 	/******************************************************************************

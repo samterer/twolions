@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     android:background="@color/cinza_claro"
     android:orientation="vertical"
-    android:shrinkColumns="*"
-    android:stretchColumns="*" >
+    android:shrinkColumns="4"
+    android:stretchColumns="4" >
 
     <include layout="@layout/bar_up" />
 
-    <!-- header -->
+    <!--CABEÇALHO DA LISTA -->
 
     <TableRow
         android:layout_width="match_parent"
@@ -18,19 +18,35 @@
         android:background="@color/preto" >
 
         <TextView
+            android:layout_weight="1"
+            android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:text="Type"
+            android:textColor="@color/branco"
+            android:textSize="18dp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:layout_marginRight="20dp"
-            android:layout_weight="2"
-            android:gravity="right"
             android:text="Detail"
             android:textColor="@color/branco"
             android:textSize="18dp"
             android:textStyle="normal" />
 
         <TextView
-            android:layout_marginRight="25dp"
-            android:layout_weight="2"
-            android:gravity="right"
-            android:text="Values and Units"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Values"
+            android:textColor="@color/branco"
+            android:textSize="18dp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Units"
             android:textColor="@color/branco"
             android:textSize="18dp"
             android:textStyle="normal" />

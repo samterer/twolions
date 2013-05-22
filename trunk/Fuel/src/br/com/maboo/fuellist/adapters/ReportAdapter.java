@@ -5,7 +5,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import br.com.maboo.fuellist.modelobj.ItemLog;
 import br.com.maboo.fuellist.modelobj.Settings;
 import br.com.maboo.fuellist.util.Constants;
 
-public class ListReportAdapter extends BaseAdapter {
+public class ReportAdapter extends BaseAdapter {
 
 	protected static final String TAG = "appLog";
 
@@ -29,7 +28,7 @@ public class ListReportAdapter extends BaseAdapter {
 
 	private Settings set;
 
-	public ListReportAdapter(Activity context, List<ItemLog> itens, Settings set) {
+	public ReportAdapter(Activity context, List<ItemLog> itens, Settings set) {
 		// Log.i(TAG, "## charge ListItemAdapter ##");
 
 		try {
@@ -67,8 +66,6 @@ public class ListReportAdapter extends BaseAdapter {
 		ViewHolder holder = null;
 
 		itemRequest = itens.get(position);
-
-		Log.i("appLog", "posicao da vez: " + position);
 
 		if (view == null) {
 			// Nao existe a View no cache para esta linha então cria um novo

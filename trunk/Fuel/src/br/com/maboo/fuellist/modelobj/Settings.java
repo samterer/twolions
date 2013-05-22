@@ -45,7 +45,7 @@ public class Settings {
 
 		setDist(sharedPrefs.getString("pref_distance", "mi"));
 
-		setVolume(sharedPrefs.getString("pref_volume", "US gal"));
+		setVolume(sharedPrefs.getString("pref_volume", "gal"));
 
 		// teste do settings
 		// Log.i("appLog", "## moeda = " + getMoeda() + " ##");
