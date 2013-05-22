@@ -1,10 +1,12 @@
 package br.com.maboo.fuellist.adapters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,11 @@ import br.com.maboo.fuellist.util.Constants;
 public class ReportAdapter extends BaseAdapter {
 
 	protected static final String TAG = "appLog";
+	
+	private static final int FUEL = Constants.FUEL;
+	private static final int EXPENSE = Constants.EXPENSE;
+	private static final int NOTE = Constants.NOTE;
+	private static final int REPAIR = Constants.REPAIR;
 
 	private LayoutInflater inflater;
 
@@ -28,11 +35,12 @@ public class ReportAdapter extends BaseAdapter {
 
 	private Settings set;
 
-	public ReportAdapter(Activity context, List<ItemLog> itens, Settings set) {
+	public ReportAdapter(Activity context, List<ItemLog> itensForAdapter, Settings set) {
 		// Log.i(TAG, "## charge ListItemAdapter ##");
 
 		try {
-			this.itens = itens;
+			
+			this.itens = filter(itensForAdapter);
 
 			this.inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -46,6 +54,30 @@ public class ReportAdapter extends BaseAdapter {
 			e.printStackTrace();
 		}
 
+	}
+	
+	/**
+	 * Filtra a lista
+	 * No caso, retira todos os itens do tipo NOTE da lista
+	 * @param itens
+	 * @return
+	 */
+	@SuppressWarnings("null")
+	public List<ItemLog> filter(List<ItemLog> itensForAdapter) {
+		List<ItemLog> newList = new ArrayList<ItemLog>();
+		
+		for (int i = 0; i < itensForAdapter.size(); i++) {
+			
+			ItemLog item = itensForAdapter.get(i);
+			
+			if(item.getType() != NOTE) {		
+				//Log.i("appLog","inserindo na lista o item >> "+item.getId());
+				newList.add(item);
+			}
+			
+		}
+		
+		return newList;
 	}
 
 	public int getCount() {
@@ -131,8 +163,8 @@ public class ReportAdapter extends BaseAdapter {
 			totalUnid = Math.floor(itemRequest.getValue_p()
 					/ itemRequest.getValue_u());
 
-			holder.uni.setText(String.valueOf(totalUnid.intValue()) + " "
-					+ set.getVolume());
+			//holder.uni.setText(String.valueOf(totalUnid.intValue()) + " " + set.getVolume());
+			holder.uni.setText(String.valueOf(totalUnid.intValue()));
 			holder.uni.setTypeface(tf);
 
 		}

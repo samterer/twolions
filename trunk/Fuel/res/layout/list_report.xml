@@ -10,59 +10,25 @@
 
     <include layout="@layout/bar_up" />
 
-    <!--CABEÇALHO DA LISTA -->
+    <!-- CABEÇALHO DA LISTA -->
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/preto" >
-
-        <TextView
-            android:layout_weight="1"
-            android:gravity="left"
-            android:layout_marginLeft="10dp"
-            android:text="Type"
-            android:textColor="@color/branco"
-            android:textSize="18dp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:layout_marginRight="20dp"
-            android:text="Detail"
-            android:textColor="@color/branco"
-            android:textSize="18dp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="Values"
-            android:textColor="@color/branco"
-            android:textSize="18dp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="Units"
-            android:textColor="@color/branco"
-            android:textSize="18dp"
-            android:textStyle="normal" />
-    </TableRow>
+    <include layout="@layout/item_header_report" />
 
     <!-- LIST DE ELEMENTOS -->
 
     <ListView
         android:id="@+id/listreport"
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:cacheColorHint="#00000000"
         android:divider="#00000000"
         android:fadingEdge="none"
         android:scrollbars="none" >
     </ListView>
+
+    <!-- RODAPÉ -->
+
+    <include layout="@layout/item_footer_report" />
 
 </LinearLayout>

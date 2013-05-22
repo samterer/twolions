@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:background="@color/preto"
     android:orientation="vertical"
     android:shrinkColumns="*"
@@ -14,13 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:gravity="center" >
+        android:background="@color/preto" >
 
         <TextView
-            android:id="@+id/totalvalorcategoria"
-            android:gravity="center_horizontal"
+            android:id="@+id/totalunidadecategoria"
+            android:layout_marginLeft="60dp"
+            android:gravity="left"
+            android:text="522"
             android:textColor="@color/branco"
-            android:layout_marginLeft="65dp"
             android:textSize="20sp"
             android:textStyle="normal" />
     </TableRow>
@@ -28,14 +29,13 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:gravity="center" >
+        android:background="@color/preto" >
 
         <TextView
-            android:id="@+id/totalunidadecategoria"
+            android:id="@+id/totalvalorcategoria"
             android:layout_marginRight="10dp"
             android:gravity="right"
-            android:text="2736.0 US gal"
+            android:text="R$ 522.56"
             android:textColor="@color/branco"
             android:textSize="20sp"
             android:textStyle="normal" />
