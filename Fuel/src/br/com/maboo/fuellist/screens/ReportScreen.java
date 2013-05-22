@@ -184,9 +184,8 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		itens = getItens();
 
 		// footer
-		View footer = (View) getLayoutInflater().inflate(
-				R.layout.item_footer_report, null);
-		listreport.addFooterView(footer);
+	//	View footer = (View) getLayoutInflater().inflate(R.layout.item_footer_report, null);
+	//	listreport.addFooterView(footer);
 
 		listreport.setAdapter(new ReportAdapter(this, itens, set));
 
@@ -244,6 +243,11 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		TextView totalunidadecategoria = (TextView) findViewById(R.id.totalunidadecategoria);
 		totalunidadecategoria.setText(totalUnidade.intValue() + " "
 				+ set.getVolume());
+		
+		// seta o titpo da unidade
+		TextView tipoUnidade = (TextView) findViewById(R.id.tipoUnidade);
+		tipoUnidade.setText("Unit("
+				+ set.getVolume()+")");
 	}
 
 	/******************************************************************************
