@@ -35,7 +35,7 @@ public class SqlScript extends DBConnection {
 			sqlScript[1] + " " + TB_CARRO
 					+ "(nome,placa,tipo) values('Fiesta','JUH-8266','carro');",
 			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('YBR','DAY-1206','carro');" };
+					+ "(nome,placa,tipo) values('YBR','DAY-1206','moto');" };
 
 	// ///////////////
 	// TABLE ITEM LOG
@@ -61,7 +61,7 @@ public class SqlScript extends DBConnection {
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,value_p,value_u,odometer) values('1','25/06/2012-20:30','0','60.00','2.39','81456');",
+					+ "(id_car,date,type,subject,value_p,value_u,odometer) values('1','25/06/2012-20:30','0','etanol','60.00','2.39','81456');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG

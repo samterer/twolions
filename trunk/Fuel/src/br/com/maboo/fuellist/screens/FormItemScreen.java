@@ -13,6 +13,7 @@ import android.database.SQLException;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -216,16 +217,27 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				.append(AndroidUtils.pad(min_time)));
 
 		// subject
-		if (type == EXPENSE || type == REPAIR || type == NOTE) {
+	//	if (type == EXPENSE || type == REPAIR || type == NOTE) {
 
 			tv = (TextView) findViewById(R.id.t_subject);
 			vTextView.add(tv);
+			
+			// insere um titulo diferente para o caso de ser combustivel(fuel)
+			if(type == FUEL) {
+				tv.setText("TYPE");
+			}
 
 			subject = (EditText) findViewById(R.id.subject);
 			subject.setTypeface(tf);
 
+			// insere um limite de caracteres bem restrito para o caso de ser um combustivel
+			if(type == FUEL) {
+			//	subject.set
+				subject.setFilters(new InputFilter[] { new InputFilter.LengthFilter(8) });
+			}
+			
 			vEditText.add(subject);
-		}
+	//	}
 
 		// value u
 		if (type == FUEL) {
@@ -377,9 +389,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			}
 
 			// subject
-			if (type == EXPENSE || type == REPAIR || type == NOTE) {
-				subject.setText(String.valueOf((itemRequest.getSubject())));
-			}
+	//		if (type == EXPENSE || type == REPAIR || type == NOTE) {
+				subject.setText(String.valueOf((itemRequest.getSubject().toString().trim())));
+	//		}
 
 			// value u
 			if (type == FUEL) {
@@ -455,9 +467,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		itemLog4Save.setDate(sbDate.toString());
 
 		// subject
-		if (type == EXPENSE || type == REPAIR || type == NOTE) {
-			itemLog4Save.setSubject(subject.getText().toString());
-		}
+	//	if (type == EXPENSE || type == REPAIR || type == NOTE) {
+			itemLog4Save.setSubject(subject.getText().toString().toString().trim());
+	//	}
 
 		// value u
 		if (type == FUEL) {
@@ -538,11 +550,11 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		}
 
 		// subject
-		if (type == EXPENSE || type == REPAIR || type == NOTE) {
+	//	if (type == EXPENSE || type == REPAIR || type == NOTE) {
 			if (!itemRequest.getSubject().equals(subject.getText().toString())) {
 				cont++;
 			}
-		}
+	//	}
 
 		// value u
 		if (type == FUEL) {
@@ -586,9 +598,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		itemLog4Save.setDate(sbDate.toString());
 
 		// subject
-		if (type == EXPENSE || type == REPAIR || type == NOTE) {
+	//	if (type == EXPENSE || type == REPAIR || type == NOTE) {
 			itemLog4Save.setSubject(subject.getText().toString());
-		}
+	//	}
 
 		// value u
 		if (type == FUEL) {
@@ -628,6 +640,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// Salvar
 		if (cont > 0) { // confirma se o item vai realmente ser atualizado
 						// (significa que o user mudou parametros na tela)
+			
 			// Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
 			try {
 				id_item = ItemModel.salvarItemLog(itemLog4Save); // no caso de

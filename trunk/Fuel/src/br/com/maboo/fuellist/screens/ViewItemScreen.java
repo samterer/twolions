@@ -149,7 +149,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		hour = (TextView) findViewById(R.id.hour);
 
 		// subject
-		if (type == EXPENSE || type == REPAIR || type == NOTE) {
+	//	if (type == EXPENSE || type == REPAIR || type == NOTE) {
 
 			tv = (TextView) findViewById(R.id.t_subject);
 			vTextView.add(tv);
@@ -157,7 +157,7 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			subject = (EditText) findViewById(R.id.subject);
 
 			vEditText.add(subject);
-		}
+	//	}
 
 		// value u
 		if (type == FUEL) {
@@ -307,10 +307,10 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			}
 
 			// subject
-			if (type == EXPENSE || type == REPAIR || type == NOTE) {
+	//		if (type == EXPENSE || type == REPAIR || type == NOTE) {
 				subject.setText(String.valueOf((itemRequest.getSubject())));
 				subject.setFocusable(false);
-			}
+	//		}
 
 			// value u
 			if (type == FUEL) {

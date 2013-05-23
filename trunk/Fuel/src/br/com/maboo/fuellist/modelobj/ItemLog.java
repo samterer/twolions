@@ -9,7 +9,7 @@ public class ItemLog implements BaseColumns, Serializable {
 
 	public static String[] colunas = new String[] { ItemLog._ID,
 			ItemLog.ID_CAR, ItemLog.DATE, ItemLog.TYPE, ItemLog.SUBJECT,
-			ItemLog.VALUE_P, ItemLog.VALUE_U, ItemLog.ODOMETER, Note.TEXT };
+			ItemLog.VALUE_P, ItemLog.VALUE_U, ItemLog.ODOMETER, ItemLog.TEXT };
 
 	/**
 	 * Pacote do Content Provider. Precisa ser único.

@@ -142,23 +142,21 @@ public class ReportAdapter extends BaseAdapter {
 		}
 
 		// detail
-		if (itemRequest.getType() == Constants.EXPENSE
-				|| itemRequest.getType() == Constants.REPAIR
-				|| itemRequest.getType() == Constants.NOTE) {
+	//	if (itemRequest.getType() == Constants.EXPENSE|| itemRequest.getType() == Constants.REPAIR|| itemRequest.getType() == Constants.NOTE) {
 
-			int LIMITE = 6;
+			int LIMITE = 8;
 			if (itemRequest.getSubject().toString().length() > LIMITE) {
 				StringBuffer sbSubjec = new StringBuffer();
 				for (int i = 0; i < LIMITE; i++) {
 					sbSubjec.append(itemRequest.getSubject().charAt(i));
 				}
-				holder.det.setText(sbSubjec.toString() + "...");
+				holder.det.setText((sbSubjec.toString() + "...").toLowerCase());
 			} else {
 				holder.det.setText(String.valueOf(itemRequest.getSubject()).toLowerCase());
 			}
 
 			holder.det.setTypeface(tf);
-		}
+	//	}
 
 		// value p (valor total que pagou)
 		if (itemRequest.getType() == Constants.EXPENSE
