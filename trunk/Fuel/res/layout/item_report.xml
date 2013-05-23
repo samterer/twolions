@@ -37,21 +37,21 @@
             style="@style/texto16cinzaDark"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="--------------" />
+            android:text="--" />
 
         <TextView
             android:id="@+id/det"
             style="@style/texto16cinzaDark"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="--------------" />
+            android:text="etanol" />
 
         <TextView
             android:id="@+id/val"
             style="@style/texto16cinzaDark"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="--------------" />
+            android:text="*" />
     </TableRow>
 
 </TableLayout>

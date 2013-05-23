@@ -204,16 +204,16 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		month_time = c.get(Calendar.MONTH);
 		year_time = c.get(Calendar.YEAR);
 
-		date.setText(new StringBuilder().append(pad(day_time)).append("/")
-				.append(pad(month_time)).append("/").append(pad(year_time)));
+		date.setText(new StringBuilder().append(AndroidUtils.pad(day_time)).append("/")
+				.append(AndroidUtils.pad(month_time)).append("/").append(AndroidUtils.pad(year_time)));
 
 		// hour
 		hour = (TextView) findViewById(R.id.hour);
 		hour_time = c.get(Calendar.HOUR_OF_DAY);
 		min_time = c.get(Calendar.MINUTE);
 
-		hour.setText(new StringBuilder().append(pad(hour_time)).append(":")
-				.append(pad(min_time)));
+		hour.setText(new StringBuilder().append(AndroidUtils.pad(hour_time)).append(":")
+				.append(AndroidUtils.pad(min_time)));
 
 		// subject
 		if (type == EXPENSE || type == REPAIR || type == NOTE) {
@@ -717,13 +717,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		toast.show();
 	}
 
-	private static String pad(int c) {
-		if (c >= 10)
-			return String.valueOf(c);
-		else
-			return "0" + String.valueOf(c);
-	}
-
 	/******************************************************************************
 	 * CLICK\TOUCH
 	 ******************************************************************************/
@@ -812,8 +805,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			min_time = selectedMinute;
 
 			// set current hour into textview
-			hour.setText(new StringBuilder().append(pad(hour_time)).append(":")
-					.append(pad(min_time)));
+			hour.setText(new StringBuilder().append(AndroidUtils.pad(hour_time)).append(":")
+					.append(AndroidUtils.pad(min_time)));
 		}
 	};
 
@@ -826,8 +819,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			year_time = year;
 
 			// set current date into textview
-			date.setText(new StringBuilder().append(pad(day_time)).append("/")
-					.append(pad(month_time)).append("/").append(pad(year_time)));
+			date.setText(new StringBuilder().append(AndroidUtils.pad(day_time)).append("/")
+					.append(AndroidUtils.pad(month_time)).append("/").append(AndroidUtils.pad(year_time)));
 		}
 	};
 

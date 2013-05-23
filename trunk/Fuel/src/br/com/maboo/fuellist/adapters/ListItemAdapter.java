@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,8 +77,7 @@ public class ListItemAdapter extends BaseAdapter {
 			view.setId(position);
 
 			if (itemRequest.getType() == Constants.FUEL) {
-				holder.textRightDown = (TextView) view
-						.findViewById(R.id.textRightDown);
+				holder.textRightDown = (TextView) view.findViewById(R.id.textRightDown);
 
 				holder.textRightDown.setTypeface(tf);
 			}
@@ -122,7 +122,7 @@ public class ListItemAdapter extends BaseAdapter {
 		// Log.i(TAG, "type [" + itemRequest.getType() + "]");
 		// value u (valor unitario. Ex: litros)
 		if (itemRequest.getType() == Constants.FUEL) {
-			// Log.i(TAG, "valor getValue_u[" + itemRequest.getValue_u() + "]");
+			//Log.i(TAG, "valor getValue_u[" + itemRequest.getValue_u() + "]");
 
 			holder.textRightDown.setText(set.getMoeda() + " "
 					+ String.valueOf(itemRequest.getValue_u()));

@@ -16,37 +16,29 @@
         android:background="@color/preto" >
 
         <TextView
+            style="@style/texto18branco"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Type"
-            android:textColor="@color/branco"
-            android:textSize="18dp"
-            android:textStyle="normal" />
+            android:text="Type" />
 
         <TextView
             android:id="@+id/tipoUnidade"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:text="Units(gal)"
-            android:textColor="@color/branco"
-            android:textSize="18dp"
-            android:textStyle="normal" />
-
-        <TextView
+            style="@style/texto18branco"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Detail"
-            android:textColor="@color/branco"
-            android:textSize="18dp"
-            android:textStyle="normal" />
+            android:text="Units(gal)" />
 
         <TextView
+            style="@style/texto18branco"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Values"
-            android:textColor="@color/branco"
-            android:textSize="18dp"
-            android:textStyle="normal" />
+            android:text="Detail" />
+
+        <TextView
+            style="@style/texto18branco"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Values" />
     </TableRow>
 
 </LinearLayout>

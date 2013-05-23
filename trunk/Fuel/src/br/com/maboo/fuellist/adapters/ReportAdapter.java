@@ -16,6 +16,7 @@ import android.widget.TextView;
 import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.modelobj.ItemLog;
 import br.com.maboo.fuellist.modelobj.Settings;
+import br.com.maboo.fuellist.util.AndroidUtils;
 import br.com.maboo.fuellist.util.Constants;
 
 public class ReportAdapter extends BaseAdapter {
@@ -126,20 +127,34 @@ public class ReportAdapter extends BaseAdapter {
 			}
 		}
 
-		// subject
+		
+		// calcula qtd de litro abastecido
+		Double totalUnid = null;
+		if (itemRequest.getType() == Constants.FUEL) {
+			
+			totalUnid = Math.floor(itemRequest.getValue_p()
+					/ itemRequest.getValue_u());
+			
+			//holder.uni.setText(String.valueOf(totalUnid.intValue()) + " " + set.getVolume());
+			holder.uni.setText(AndroidUtils.pad(totalUnid.intValue()));
+			holder.uni.setTypeface(tf);
+			
+		}
+
+		// detail
 		if (itemRequest.getType() == Constants.EXPENSE
 				|| itemRequest.getType() == Constants.REPAIR
 				|| itemRequest.getType() == Constants.NOTE) {
 
-			int LIMITE = 8;
+			int LIMITE = 6;
 			if (itemRequest.getSubject().toString().length() > LIMITE) {
 				StringBuffer sbSubjec = new StringBuffer();
 				for (int i = 0; i < LIMITE; i++) {
 					sbSubjec.append(itemRequest.getSubject().charAt(i));
 				}
-				holder.det.setText(sbSubjec.toString() + "[...]");
+				holder.det.setText(sbSubjec.toString() + "...");
 			} else {
-				holder.det.setText(String.valueOf(itemRequest.getSubject()));
+				holder.det.setText(String.valueOf(itemRequest.getSubject()).toLowerCase());
 			}
 
 			holder.det.setTypeface(tf);
@@ -153,19 +168,6 @@ public class ReportAdapter extends BaseAdapter {
 			holder.val.setText(set.getMoeda() + " "
 					+ String.valueOf(itemRequest.getValue_p()));
 			holder.val.setTypeface(tf);
-
-		}
-
-		// calcula qtd de litro abastecido
-		Double totalUnid = null;
-		if (itemRequest.getType() == Constants.FUEL) {
-
-			totalUnid = Math.floor(itemRequest.getValue_p()
-					/ itemRequest.getValue_u());
-
-			//holder.uni.setText(String.valueOf(totalUnid.intValue()) + " " + set.getVolume());
-			holder.uni.setText(String.valueOf(totalUnid.intValue()));
-			holder.uni.setTypeface(tf);
 
 		}
 
