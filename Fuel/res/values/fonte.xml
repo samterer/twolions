@@ -1,5 +1,6 @@
 <resources>
-  	<!-- Texto com Fonte 10 -->
+
+    <!-- Texto com Fonte 10 -->
     <style name="texto10Branco">
         <item name="android:textColor">@color/branco</item>
         <item name="android:textSize">10sp</item>
@@ -49,6 +50,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Texto com Fonte 18 -->
+    <style name="texto18branco">
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <!-- Texto com Fonte 20 -->
     <style name="texto20">
         <item name="android:textColor">@color/preto</item>
@@ -58,7 +65,12 @@
     <style name="texto20pretoNegrito" parent="texto20">
         <item name="android:textStyle">bold</item>
     </style>
-    
+
+    <style name="texto20branco">
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <!-- Texto com Fonte 24 -->
     <style name="texto24cinzaDark">
         <item name="android:textColor">@color/preto</item>
@@ -69,9 +81,19 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="texto24branco">
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
     <!-- Texto com Fonte 28 -->
     <style name="texto28">
         <item name="android:textColor">@color/preto</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="texto28branco">
+        <item name="android:textColor">@color/branco</item>
         <item name="android:textSize">28sp</item>
     </style>
 
@@ -88,7 +110,7 @@
     <style name="texto34Negrito" parent="texto34">
         <item name="android:textStyle">bold</item>
     </style>
-    
+
     <!-- Texto com Fonte 40 -->
     <style name="texto40">
         <item name="android:textColor">@color/preto</item>

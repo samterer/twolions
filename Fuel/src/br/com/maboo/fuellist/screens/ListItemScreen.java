@@ -72,6 +72,8 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+		getSharedPrefs();
+		
 		try {
 
 			dao = new ItemLogDAO(this);
@@ -103,7 +105,6 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		organizeBt();
 
-		getSharedPrefs();
 
 	}
 

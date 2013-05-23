@@ -96,6 +96,8 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	@SuppressWarnings("unchecked")
 	public void montaTela(Bundle icicle) {
 
+		getSharedPrefs();
+		
 		listreport = (ListView) findViewById(R.id.listreport);
 
 		// cria title
