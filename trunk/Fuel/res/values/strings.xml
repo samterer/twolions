@@ -58,8 +58,8 @@
     <string name="font_default">"fonts/DroidSansFallback.ttf"</string>
 
     <!-- hint -->
-    <string name="h_subject">"insert a type here"</string>
-    <string name="h_text">"insert a text here"</string>
+    <string name="h_subject">"type here"</string>
+    <string name="h_text">"text here"</string>
     <string name="h_click">"click here"</string>
     <string name="h_n_vehicle">"insert a name"</string>
     <string name="h_p_vehicle">"insert a place"</string>

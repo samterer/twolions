@@ -27,8 +27,12 @@
         android:scrollbars="none" >
     </ListView>
 
-    <!-- RODAPÉ -->
+    <!-- RODAPÉ RESULTADOS -->
 
     <include layout="@layout/item_footer_report" />
+
+    <!-- RODAPÉ -->
+
+    <include layout="@layout/bar_down" />
 
 </LinearLayout>
