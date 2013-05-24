@@ -1,8 +1,11 @@
 package br.com.maboo.fuellist.screens;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.SQLException;
@@ -10,10 +13,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.adapters.ReportAdapter;
 import br.com.maboo.fuellist.core.FuelListActivity;
@@ -87,6 +93,8 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		organizeBt();
 
 		getSharedPrefs();
+		
+		initDate();
 
 	}
 
@@ -267,7 +275,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		// bar down
 		final TextView title_bt_down = (TextView) findViewById(R.id.title_bt_down);
-		title_bt_down.setText("filter by date");
+		title_bt_down.setText("Filter by date");
 
 		/*
 		 * // titulo do report final TextView title_report = (TextView)
@@ -303,7 +311,118 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	}
 
 	public void btBarDown(View v) {
-		//
+		// TODO Auto-generated method stub
+		
 	}
+
+	/******************************************************************************
+	 * DATES
+	 ******************************************************************************/
+	// spinner value
+	private static final int DATE_DIALOG_ID_LEFT = 998;
+	private static final int DATE_DIALOG_ID_RIGHT = 999;
+
+	private int dl_day_time;
+	private int dl_month_time;
+	private int dl_year_time;
+	
+	private int dr_day_time;
+	private int dr_month_time;
+	private int dr_year_time;
+	
+	private TextView date_left;
+	private TextView date_right;
+
+	private void initDate() {
+
+		// calendar
+		final Calendar c = Calendar.getInstance();
+		// date
+		date_left = (TextView) findViewById(R.id.date_left);
+		
+		dl_day_time = c.get(Calendar.DAY_OF_MONTH);
+		dl_month_time = c.get(Calendar.MONTH);
+		dl_year_time = c.get(Calendar.YEAR);
+		
+		date_left.setText(new StringBuilder().append(AndroidUtils.pad(dl_day_time))
+				.append("/").append(AndroidUtils.pad(dl_month_time)).append("/")
+				.append(AndroidUtils.pad(dl_year_time)));
+
+		// date
+		date_right = (TextView) findViewById(R.id.date_right);
+		
+		dr_day_time = c.get(Calendar.DAY_OF_MONTH);
+		dr_month_time = c.get(Calendar.MONTH);
+		dr_year_time = c.get(Calendar.YEAR);
+		
+		date_right.setText(new StringBuilder().append(AndroidUtils.pad(dr_day_time))
+				.append("/").append(AndroidUtils.pad(dr_month_time)).append("/")
+				.append(AndroidUtils.pad(dr_year_time)));
+	
+	}
+
+	public void onDateLeft(View v) {
+		
+		Toast.makeText(this, "data da esquerda", Toast.LENGTH_SHORT).show();
+
+		showDialog(DATE_DIALOG_ID_LEFT);
+
+	}
+
+	public void onDateRight(View v) {
+
+		Toast.makeText(this, "data da direita", Toast.LENGTH_SHORT).show();
+		
+		showDialog(DATE_DIALOG_ID_RIGHT);
+
+	}
+	
+	/******************************************************************************
+	 * DATE LEFT
+	 ******************************************************************************/
+
+
+	protected Dialog onCreateDialog() {
+			return new DatePickerDialog(this, myDateSetListener, dl_year_time,
+					dl_month_time, dl_day_time);
+	}
+
+	private DatePickerDialog.OnDateSetListener myDateSetListener = new DatePickerDialog.OnDateSetListener() {
+		public void onDateSet(DatePicker view, int year, int monthOfYear,
+				int dayOfMonth) {
+			
+			if(date_left.isClickable()) {				
+				dl_day_time = dayOfMonth;
+				dl_month_time = monthOfYear;
+				dl_year_time = year;
+				
+				// set current date into textview
+				date_left.setText("from:"+new StringBuilder().append(AndroidUtils.pad(dl_day_time))
+						.append("/").append(AndroidUtils.pad(dl_month_time))
+						.append("/").append(AndroidUtils.pad(dl_year_time)));
+			}
+			
+			if(date_right.isClickable()) {
+				dr_day_time = dayOfMonth;
+				dr_month_time = monthOfYear;
+				dr_year_time = year;
+
+				// set current date into textview
+				date_right.setText("to:"+new StringBuilder().append(AndroidUtils.pad(dr_day_time))
+						.append("/").append(AndroidUtils.pad(dr_month_time))
+						.append("/").append(AndroidUtils.pad(dr_year_time)));
+			}
+
+		}
+	};
+
+	/******************************************************************************
+	 * DATE RIGHT
+	 ******************************************************************************/
+	protected Dialog onCreateDialog(int id) {
+			return new DatePickerDialog(this, myDateSetListener, dr_year_time,
+					dr_month_time, dr_day_time);
+	}
+
 
 }

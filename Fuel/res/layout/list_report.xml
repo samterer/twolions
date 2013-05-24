@@ -10,6 +10,14 @@
 
     <include layout="@layout/bar_up" />
 
+    <!-- RODAPÉ (aqui em cima para usar como filtro)-->
+
+    <include layout="@layout/bar_down" />
+    
+    <!-- FILTRO POR DATA -->
+
+    <include layout="@layout/item_filter_date_report" />    
+    
     <!-- CABEÇALHO DA LISTA -->
 
     <include layout="@layout/item_header_report" />
@@ -30,9 +38,5 @@
     <!-- RODAPÉ RESULTADOS -->
 
     <include layout="@layout/item_footer_report" />
-
-    <!-- RODAPÉ -->
-
-    <include layout="@layout/bar_down" />
 
 </LinearLayout>

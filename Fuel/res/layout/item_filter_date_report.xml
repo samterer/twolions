@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bt_center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/preto"
+    android:orientation="horizontal"
+    android:shrinkColumns="4"
+    android:stretchColumns="4" >
+
+    <TextView
+        android:id="@+id/date_left"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="from: 01/05/2012"
+        android:textColor="@color/branco"
+        android:textSize="16dp"
+        android:onClick="onDateLeft" />
+
+    <TextView
+        android:id="@+id/date_right"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="to: 21/03/2013"
+        android:textColor="@color/branco"
+        android:textSize="16dp"
+        android:onClick="onDateRight" />
+
+</FrameLayout>
