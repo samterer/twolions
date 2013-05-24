@@ -97,7 +97,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	public void montaTela(Bundle icicle) {
 
 		getSharedPrefs();
-		
+
 		listreport = (ListView) findViewById(R.id.listreport);
 
 		// cria title
@@ -186,8 +186,9 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		itens = getItens();
 
 		// footer
-	//	View footer = (View) getLayoutInflater().inflate(R.layout.item_footer_report, null);
-	//	listreport.addFooterView(footer);
+		// View footer = (View)
+		// getLayoutInflater().inflate(R.layout.item_footer_report, null);
+		// listreport.addFooterView(footer);
 
 		listreport.setAdapter(new ReportAdapter(this, itens, set));
 
@@ -245,11 +246,10 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		TextView totalunidadecategoria = (TextView) findViewById(R.id.totalunidadecategoria);
 		totalunidadecategoria.setText(totalUnidade.intValue() + " "
 				+ set.getVolume());
-		
+
 		// seta o titpo da unidade
 		TextView tipoUnidade = (TextView) findViewById(R.id.tipoUnidade);
-		tipoUnidade.setText("Unit("
-				+ set.getVolume()+")");
+		tipoUnidade.setText("Unit(" + set.getVolume() + ")");
 	}
 
 	/******************************************************************************
@@ -266,9 +266,8 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		bt_right.setVisibility(View.INVISIBLE);
 
 		// bar down
-		// final TextView title_bt_down = (TextView)
-		// findViewById(R.id.title_bt_down);
-		// title_bt_down.setText(R.string.t_bar_down_fil);
+		final TextView title_bt_down = (TextView) findViewById(R.id.title_bt_down);
+		title_bt_down.setText("filter by date");
 
 		/*
 		 * // titulo do report final TextView title_report = (TextView)

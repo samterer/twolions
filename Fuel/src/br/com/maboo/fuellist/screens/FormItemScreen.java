@@ -205,39 +205,43 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		month_time = c.get(Calendar.MONTH);
 		year_time = c.get(Calendar.YEAR);
 
-		date.setText(new StringBuilder().append(AndroidUtils.pad(day_time)).append("/")
-				.append(AndroidUtils.pad(month_time)).append("/").append(AndroidUtils.pad(year_time)));
+		date.setText(new StringBuilder().append(AndroidUtils.pad(day_time))
+				.append("/").append(AndroidUtils.pad(month_time)).append("/")
+				.append(AndroidUtils.pad(year_time)));
 
 		// hour
 		hour = (TextView) findViewById(R.id.hour);
 		hour_time = c.get(Calendar.HOUR_OF_DAY);
 		min_time = c.get(Calendar.MINUTE);
 
-		hour.setText(new StringBuilder().append(AndroidUtils.pad(hour_time)).append(":")
-				.append(AndroidUtils.pad(min_time)));
+		hour.setText(new StringBuilder().append(AndroidUtils.pad(hour_time))
+				.append(":").append(AndroidUtils.pad(min_time)));
 
 		// subject
-	//	if (type == EXPENSE || type == REPAIR || type == NOTE) {
+		// if (type == EXPENSE || type == REPAIR || type == NOTE) {
 
-			tv = (TextView) findViewById(R.id.t_subject);
-			vTextView.add(tv);
-			
-			// insere um titulo diferente para o caso de ser combustivel(fuel)
-			if(type == FUEL) {
-				tv.setText("TYPE");
-			}
+		tv = (TextView) findViewById(R.id.t_subject);
+		vTextView.add(tv);
 
-			subject = (EditText) findViewById(R.id.subject);
-			subject.setTypeface(tf);
+		// insere um titulo diferente para o caso de ser combustivel(fuel)
+		if (type == FUEL) {
+			tv.setText("TYPE");
+		}
 
-			// insere um limite de caracteres bem restrito para o caso de ser um combustivel
-			if(type == FUEL) {
-			//	subject.set
-				subject.setFilters(new InputFilter[] { new InputFilter.LengthFilter(8) });
-			}
-			
-			vEditText.add(subject);
-	//	}
+		subject = (EditText) findViewById(R.id.subject);
+		subject.setTypeface(tf);
+
+		// insere um limite de caracteres bem restrito para o caso de ser um
+		// combustivel
+		if (type == FUEL) {
+			// limita os campos
+			subject.setFilters(new InputFilter[] { new InputFilter.LengthFilter(
+					8) });
+
+		}
+
+		vEditText.add(subject);
+		// }
 
 		// value u
 		if (type == FUEL) {
@@ -389,9 +393,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			}
 
 			// subject
-	//		if (type == EXPENSE || type == REPAIR || type == NOTE) {
-				subject.setText(String.valueOf((itemRequest.getSubject().toString().trim())));
-	//		}
+			// if (type == EXPENSE || type == REPAIR || type == NOTE) {
+			subject.setText(String.valueOf((itemRequest.getSubject().toString()
+					.trim())));
+			// }
 
 			// value u
 			if (type == FUEL) {
@@ -442,18 +447,31 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	 * Regra de save do item - verifica se é um update - verifica se é um novo
 	 * item que esta sendo salvo
 	 */
+	ItemLog itemLog4Save;
+
 	public void ruleSave() {
+
+		itemLog4Save = new ItemLog();
+
 		if (id_item != null) {// atualização
+
 			updateItem(); // atualiza item
+
+			showToast("Updated!");
+
 		} else {
+
 			saveNewItem(); // cria novo item no banco
+
+			showToast("Saved!"); // mensagem para o usuario de que o item foi
+									// salvo
 		}
 	}
 
 	public void saveNewItem() {
-		ItemLog itemLog4Save = new ItemLog();
 
 		// id_car
+		// sempre salva o ID do carro
 		itemLog4Save.setId_car(id_car);
 
 		// type of itemRequest
@@ -467,9 +485,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		itemLog4Save.setDate(sbDate.toString());
 
 		// subject
-	//	if (type == EXPENSE || type == REPAIR || type == NOTE) {
-			itemLog4Save.setSubject(subject.getText().toString().toString().trim());
-	//	}
+		// if (type == EXPENSE || type == REPAIR || type == NOTE) {
+		itemLog4Save.setSubject(subject.getText().toString().toString().trim());
+		// }
 
 		// value u
 		if (type == FUEL) {
@@ -507,11 +525,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		}
 
 		try {
-			id_item = ItemModel.salvarItemLog(itemLog4Save); // no caso de
-																// ser a
+			id_item = ItemModel.salvarItemLog(itemLog4Save); // no caso
+			// de
+			// ser a
 
-			showToast("Saved!"); // mensagem para o usuario de que o item foi
-									// salvo
 			// primeira inserção
 			// já devolve o id
 			// do novo item
@@ -525,15 +542,11 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		}
 
 		backToViewItemScreen();
+
 	}
 
 	public void updateItem() {
 		int cont = 0; // se esse valor for maior que zero o item sera
-		// atualizado\criado
-		ItemLog itemLog4Save = new ItemLog();
-
-		// id_car
-		itemLog4Save.setId_car(id_car);
 
 		// id_item
 		itemLog4Save.setId(id_item);
@@ -550,11 +563,11 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		}
 
 		// subject
-	//	if (type == EXPENSE || type == REPAIR || type == NOTE) {
-			if (!itemRequest.getSubject().equals(subject.getText().toString())) {
-				cont++;
-			}
-	//	}
+		// if (type == EXPENSE || type == REPAIR || type == NOTE) {
+		if (!itemRequest.getSubject().equals(subject.getText().toString())) {
+			cont++;
+		}
+		// }
 
 		// value u
 		if (type == FUEL) {
@@ -587,82 +600,16 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			}
 		}
 
-		// regra de negocio
-		if (type == FUEL) { // regras de fuel
-			if (!Rules.ruleFuel(itemLog4Save, this)) {
-				return;
-			}
-		}
-
-		// date/hour
-		itemLog4Save.setDate(sbDate.toString());
-
-		// subject
-	//	if (type == EXPENSE || type == REPAIR || type == NOTE) {
-			itemLog4Save.setSubject(subject.getText().toString());
-	//	}
-
-		// value u
-		if (type == FUEL) {
-
-			itemLog4Save.setValue_u(Double
-					.valueOf(value_u.getText().toString()));
-		}
-
-		// value p
-		if (type == EXPENSE || type == REPAIR || type == FUEL) {
-
-			itemLog4Save.setValue_p(Double
-					.valueOf(value_p.getText().toString()));
-		}
-
-		// text
-		if (type == NOTE) {
-			itemLog4Save.setText(text.getText().toString());
-		}
-
-		// odemeter
-		if (type == FUEL) {
-
-			// get last odometer
-
-			itemLog4Save.setOdometer(Long
-					.valueOf(odometer.getText().toString()));
-		}
-
-		// regra de negocio
-		if (type == FUEL) { // regras de fuel
-			if (!Rules.ruleFuel(itemLog4Save, this)) {
-				return; // não passou na regra
-			}
-		}
-
 		// Salvar
-		if (cont > 0) { // confirma se o item vai realmente ser atualizado
-						// (significa que o user mudou parametros na tela)
-			
-			// Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
-			try {
-				id_item = ItemModel.salvarItemLog(itemLog4Save); // no caso de
-																	// ser a
-				// primeira inserção
-				// já devolve o id
-				// do novo item
-			} catch (SQLException e) {
+		if (cont > 0) { // confirma se o item vai realmente ser
+						// atualizado
+						// (significa que o user mudou parametros na
+						// tela)
 
-				// erro caricato
-				AndroidUtils
-						.alertDialog(this,
-								"Sorry, please... soooorry. And now, re-start the app.");
-
-				e.printStackTrace();
-			}
-
-			showToast("Updated!");
+			saveNewItem();
 
 		}
 
-		backToViewItemScreen();
 	}
 
 	/**
@@ -749,26 +696,24 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	}
 
 	public void btBarUpLeft(final View v) {
-		// Fecha a tela
+		// força o fechamento da tela
 		finish();
 	}
 
 	public void btBarUpRight(final View v) {
 
-		if (EditTextTools.isEmptyEdit(vEditText, this, "alert")) {
-			return;
-		}
+		onBackPressed();
 
-		ruleSave();
 	}
 
 	public void onBackPressed() { // do call my back button method when
 
 		if (!EditTextTools.isEmptyEdit(vEditText, this, "noalert")) {
 			ruleSave();
+
+			super.onBackPressed();
 		}
 
-		super.onBackPressed();
 	}
 
 	public void addListenerOnButton() {
@@ -818,7 +763,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			min_time = selectedMinute;
 
 			// set current hour into textview
-			hour.setText(new StringBuilder().append(AndroidUtils.pad(hour_time)).append(":")
+			hour.setText(new StringBuilder()
+					.append(AndroidUtils.pad(hour_time)).append(":")
 					.append(AndroidUtils.pad(min_time)));
 		}
 	};
@@ -832,8 +778,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			year_time = year;
 
 			// set current date into textview
-			date.setText(new StringBuilder().append(AndroidUtils.pad(day_time)).append("/")
-					.append(AndroidUtils.pad(month_time)).append("/").append(AndroidUtils.pad(year_time)));
+			date.setText(new StringBuilder().append(AndroidUtils.pad(day_time))
+					.append("/").append(AndroidUtils.pad(month_time))
+					.append("/").append(AndroidUtils.pad(year_time)));
 		}
 	};
 
