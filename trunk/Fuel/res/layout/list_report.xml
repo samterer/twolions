@@ -10,9 +10,9 @@
 
     <include layout="@layout/bar_up" />
 
-    <!-- RODAPÉ (aqui em cima para usar como filtro)-->
+    <!-- RODAPÉ (usado como titulo do filtro)-->
 
-    <include layout="@layout/bar_down" />
+    <include layout="@layout/item_filter_title_report" />
     
     <!-- FILTRO POR DATA -->
 

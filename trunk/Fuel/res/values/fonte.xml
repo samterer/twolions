@@ -50,6 +50,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="texto16branco">
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <!-- Texto com Fonte 18 -->
     <style name="texto18branco">
         <item name="android:textColor">@color/branco</item>
