@@ -4,15 +4,14 @@
     android:layout_width="fill_parent"
     android:layout_height="40dp"
     android:background="@color/azul_maboo"
-    android:orientation="vertical" 
-    android:onClick="btBarDown">
+    android:onClick="btBarDown"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/title_bt_down"
+        style="@style/texto20branco"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="center"
-        android:textColor="@color/branco"
-        android:textSize="20dp" />
+        android:gravity="center" />
 
 </LinearLayout>

@@ -19,7 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.adapters.ReportAdapter;
 import br.com.maboo.fuellist.core.FuelListActivity;
@@ -63,6 +62,8 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		try {
 
+			getSharedPrefs();
+
 			dao = new ItemLogDAO(this);
 
 			setContentView(R.layout.list_report);
@@ -92,8 +93,6 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		organizeBt();
 
-		getSharedPrefs();
-		
 		initDate();
 
 	}
@@ -104,11 +103,9 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	@SuppressWarnings("unchecked")
 	public void montaTela(Bundle icicle) {
 
-		getSharedPrefs();
-
 		listreport = (ListView) findViewById(R.id.listreport);
 
-		// cria title
+		// cria title da tela(nome do carro)
 		TextView title = (TextView) findViewById(R.id.title);
 		title.setText(name_car);
 
@@ -193,11 +190,6 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		itens = getItens();
 
-		// footer
-		// View footer = (View)
-		// getLayoutInflater().inflate(R.layout.item_footer_report, null);
-		// listreport.addFooterView(footer);
-
 		listreport.setAdapter(new ReportAdapter(this, itens, set));
 
 		setValoresReport();
@@ -274,23 +266,8 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		bt_right.setVisibility(View.INVISIBLE);
 
 		// bar down
-		final TextView title_bt_down = (TextView) findViewById(R.id.title_bt_down);
-		title_bt_down.setText("Filter by date");
-
-		/*
-		 * // titulo do report final TextView title_report = (TextView)
-		 * findViewById(R.id.title_report);
-		 * 
-		 * // calendar final Calendar c = Calendar.getInstance(); // date int
-		 * day_time = c.get(Calendar.DAY_OF_MONTH); int month_time =
-		 * c.get(Calendar.MONTH); int year_time = c.get(Calendar.YEAR); String
-		 * dateCurrent = new StringBuilder().append(pad(day_time))
-		 * .append("/").append(pad(month_time)).append("/")
-		 * .append(pad(year_time)).toString();
-		 * 
-		 * String titulo = "Report"; title_report.setText(titulo + " " +
-		 * dateCurrent);
-		 */
+		final TextView title_filter = (TextView) findViewById(R.id.title_filter);
+		title_filter.setText("Filter by date");
 
 	}
 
@@ -312,7 +289,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 	public void btBarDown(View v) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/******************************************************************************
@@ -321,15 +298,16 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	// spinner value
 	private static final int DATE_DIALOG_ID_LEFT = 998;
 	private static final int DATE_DIALOG_ID_RIGHT = 999;
+	private static int id_date = 0;
 
 	private int dl_day_time;
 	private int dl_month_time;
 	private int dl_year_time;
-	
+
 	private int dr_day_time;
 	private int dr_month_time;
 	private int dr_year_time;
-	
+
 	private TextView date_left;
 	private TextView date_right;
 
@@ -339,78 +317,93 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		final Calendar c = Calendar.getInstance();
 		// date
 		date_left = (TextView) findViewById(R.id.date_left);
-		
+
 		dl_day_time = c.get(Calendar.DAY_OF_MONTH);
 		dl_month_time = c.get(Calendar.MONTH);
 		dl_year_time = c.get(Calendar.YEAR);
-		
-		date_left.setText(new StringBuilder().append(AndroidUtils.pad(dl_day_time))
-				.append("/").append(AndroidUtils.pad(dl_month_time)).append("/")
-				.append(AndroidUtils.pad(dl_year_time)));
+
+		date_left.setText("from: "
+				+ new StringBuilder().append(AndroidUtils.pad(dl_day_time))
+						.append("/").append(AndroidUtils.pad(dl_month_time))
+						.append("/").append(AndroidUtils.pad(dl_year_time)));
 
 		// date
 		date_right = (TextView) findViewById(R.id.date_right);
-		
+
 		dr_day_time = c.get(Calendar.DAY_OF_MONTH);
 		dr_month_time = c.get(Calendar.MONTH);
 		dr_year_time = c.get(Calendar.YEAR);
-		
-		date_right.setText(new StringBuilder().append(AndroidUtils.pad(dr_day_time))
-				.append("/").append(AndroidUtils.pad(dr_month_time)).append("/")
-				.append(AndroidUtils.pad(dr_year_time)));
-	
-	}
 
-	public void onDateLeft(View v) {
-		
-		Toast.makeText(this, "data da esquerda", Toast.LENGTH_SHORT).show();
+		date_right.setText("to: "
+				+ new StringBuilder().append(AndroidUtils.pad(dr_day_time))
+						.append("/").append(AndroidUtils.pad(dr_month_time))
+						.append("/").append(AndroidUtils.pad(dr_year_time)));
 
-		showDialog(DATE_DIALOG_ID_LEFT);
+		addListenerOnButton();
 
 	}
 
-	public void onDateRight(View v) {
+	public void addListenerOnButton() {
 
-		Toast.makeText(this, "data da direita", Toast.LENGTH_SHORT).show();
-		
-		showDialog(DATE_DIALOG_ID_RIGHT);
+		date_left.setOnClickListener(new OnClickListener() { // change hour
+
+					public void onClick(View v) {
+
+						showDialog(DATE_DIALOG_ID_LEFT);
+
+					}
+
+				});
+
+		date_right.setOnClickListener(new OnClickListener() { // change date
+
+					public void onClick(View v) {
+
+						showDialog(DATE_DIALOG_ID_RIGHT);
+
+					}
+
+				});
 
 	}
-	
+
 	/******************************************************************************
 	 * DATE LEFT
 	 ******************************************************************************/
-
-
-	protected Dialog onCreateDialog() {
-			return new DatePickerDialog(this, myDateSetListener, dl_year_time,
-					dl_month_time, dl_day_time);
-	}
-
 	private DatePickerDialog.OnDateSetListener myDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
-			
-			if(date_left.isClickable()) {				
+
+			switch (id_date) {
+			case DATE_DIALOG_ID_LEFT:
 				dl_day_time = dayOfMonth;
 				dl_month_time = monthOfYear;
 				dl_year_time = year;
-				
+
 				// set current date into textview
-				date_left.setText("from:"+new StringBuilder().append(AndroidUtils.pad(dl_day_time))
-						.append("/").append(AndroidUtils.pad(dl_month_time))
-						.append("/").append(AndroidUtils.pad(dl_year_time)));
-			}
-			
-			if(date_right.isClickable()) {
+				date_left.setText("from: "
+						+ new StringBuilder()
+								.append(AndroidUtils.pad(dl_day_time))
+								.append("/")
+								.append(AndroidUtils.pad(dl_month_time))
+								.append("/")
+								.append(AndroidUtils.pad(dl_year_time)));
+				break;
+
+			case DATE_DIALOG_ID_RIGHT:
 				dr_day_time = dayOfMonth;
 				dr_month_time = monthOfYear;
 				dr_year_time = year;
 
 				// set current date into textview
-				date_right.setText("to:"+new StringBuilder().append(AndroidUtils.pad(dr_day_time))
-						.append("/").append(AndroidUtils.pad(dr_month_time))
-						.append("/").append(AndroidUtils.pad(dr_year_time)));
+				date_right.setText("to: "
+						+ new StringBuilder()
+								.append(AndroidUtils.pad(dr_day_time))
+								.append("/")
+								.append(AndroidUtils.pad(dr_month_time))
+								.append("/")
+								.append(AndroidUtils.pad(dr_year_time)));
+				break;
 			}
 
 		}
@@ -420,9 +413,20 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	 * DATE RIGHT
 	 ******************************************************************************/
 	protected Dialog onCreateDialog(int id) {
+
+		id_date = id;
+
+		switch (id_date) {
+		case DATE_DIALOG_ID_LEFT:
+			return new DatePickerDialog(this, myDateSetListener, dl_year_time,
+					dl_month_time, dl_day_time);
+
+		case DATE_DIALOG_ID_RIGHT:
 			return new DatePickerDialog(this, myDateSetListener, dr_year_time,
 					dr_month_time, dr_day_time);
-	}
 
+		}
+		return null;
+	}
 
 }
