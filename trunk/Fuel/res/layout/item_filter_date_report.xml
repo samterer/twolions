@@ -13,15 +13,13 @@
         style="@style/texto18branco"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="left"
-        android:onClick="onDateLeft" />
+        android:gravity="left" />
 
     <TextView
         android:id="@+id/date_right"
         style="@style/texto18branco"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="right"
-        android:onClick="onDateRight" />
+        android:gravity="right" />
 
 </FrameLayout>

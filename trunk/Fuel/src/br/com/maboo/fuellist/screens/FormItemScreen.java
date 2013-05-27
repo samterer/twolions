@@ -457,8 +457,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			updateItem(); // atualiza item
 
-			showToast("Updated!");
-
 		} else {
 
 			saveNewItem(); // cria novo item no banco
@@ -607,6 +605,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 						// tela)
 
 			saveNewItem();
+			
+
+			showToast("Updated!");
 
 		}
 
@@ -645,6 +646,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	 * @param c
 	 * @return
 	 */
+	private Toast toast;
 	private void showToast(String msg) {
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.custom_toast,
@@ -670,8 +672,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			break;
 		}
 
-		Toast toast = new Toast(getApplicationContext());
-		toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM, 0, 0);
+		toast = new Toast(getApplicationContext());
+		toast.setGravity(Gravity.BOTTOM, Gravity.CENTER, 60);
 		toast.setDuration(Toast.LENGTH_SHORT);
 		toast.setView(layout);
 		toast.show();
@@ -696,8 +698,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	}
 
 	public void btBarUpLeft(final View v) {
+		
 		// força o fechamento da tela
-		finish();
+		 finish();
 	}
 
 	public void btBarUpRight(final View v) {
@@ -710,6 +713,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		if (!EditTextTools.isEmptyEdit(vEditText, this, "noalert")) {
 			ruleSave();
+			
+			// verifica se o Toast esta na tela e cancela a exibição dele
+			
 
 			super.onBackPressed();
 		}

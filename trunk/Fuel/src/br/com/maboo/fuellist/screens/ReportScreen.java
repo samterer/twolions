@@ -33,7 +33,7 @@ import br.com.maboo.fuellist.util.AndroidUtils;
 import br.com.maboo.fuellist.util.Constants;
 
 public class ReportScreen extends FuelListActivity implements InterfaceBar,
-		Transaction {
+		Transaction, OnClickListener {
 
 	private final String TAG = Constants.LOG_APP;
 
@@ -296,10 +296,6 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	 * DATES
 	 ******************************************************************************/
 	// spinner value
-	private static final int DATE_DIALOG_ID_LEFT = 998;
-	private static final int DATE_DIALOG_ID_RIGHT = 999;
-	private static int id_date = 0;
-
 	private int dl_day_time;
 	private int dl_month_time;
 	private int dl_year_time;
@@ -317,7 +313,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		final Calendar c = Calendar.getInstance();
 		// date
 		date_left = (TextView) findViewById(R.id.date_left);
-
+		date_left.setOnClickListener(this);
 		dl_day_time = c.get(Calendar.DAY_OF_MONTH);
 		dl_month_time = c.get(Calendar.MONTH);
 		dl_year_time = c.get(Calendar.YEAR);
@@ -329,7 +325,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		// date
 		date_right = (TextView) findViewById(R.id.date_right);
-
+		date_right.setOnClickListener(this);
 		dr_day_time = c.get(Calendar.DAY_OF_MONTH);
 		dr_month_time = c.get(Calendar.MONTH);
 		dr_year_time = c.get(Calendar.YEAR);
@@ -339,43 +335,45 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 						.append("/").append(AndroidUtils.pad(dr_month_time))
 						.append("/").append(AndroidUtils.pad(dr_year_time)));
 
-		addListenerOnButton();
-
 	}
-
-	public void addListenerOnButton() {
-
-		date_left.setOnClickListener(new OnClickListener() { // change hour
-
-					public void onClick(View v) {
-
-						showDialog(DATE_DIALOG_ID_LEFT);
-
-					}
-
-				});
-
-		date_right.setOnClickListener(new OnClickListener() { // change date
-
-					public void onClick(View v) {
-
-						showDialog(DATE_DIALOG_ID_RIGHT);
-
-					}
-
-				});
-
+	
+	private int datePickerInput = 0; 
+	private static final int        DIALOG_DATE_PICKER_L  = 100;
+	private static final int        DIALOG_DATE_PICKER_R  = 111;
+	
+	
+	public void onClick(View v) {
+		
+		datePickerInput = v.getId();
+		
+		if(v == findViewById(R.id.date_left)){
+			showDialog(DIALOG_DATE_PICKER_L);
+        }else if (v == findViewById(R.id.date_right)){
+			showDialog(DIALOG_DATE_PICKER_R);
+        }
+		
 	}
-
-	/******************************************************************************
-	 * DATE LEFT
-	 ******************************************************************************/
+	
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case DIALOG_DATE_PICKER_L:
+			return new DatePickerDialog(this, myDateSetListener, dl_year_time,
+					dl_month_time, dl_day_time);
+		case DIALOG_DATE_PICKER_R:
+			return new DatePickerDialog(this, myDateSetListener, dr_year_time,
+					dr_month_time, dr_day_time);
+		}
+		return null;
+	}
+	
 	private DatePickerDialog.OnDateSetListener myDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
+			
+			Log.i("appLog","## id: "+view.getId());
 
-			switch (id_date) {
-			case DATE_DIALOG_ID_LEFT:
+			switch (datePickerInput) {
+			case R.id.date_left:
 				dl_day_time = dayOfMonth;
 				dl_month_time = monthOfYear;
 				dl_year_time = year;
@@ -390,7 +388,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 								.append(AndroidUtils.pad(dl_year_time)));
 				break;
 
-			case DATE_DIALOG_ID_RIGHT:
+			case R.id.date_right:
 				dr_day_time = dayOfMonth;
 				dr_month_time = monthOfYear;
 				dr_year_time = year;
@@ -408,25 +406,5 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		}
 	};
-
-	/******************************************************************************
-	 * DATE RIGHT
-	 ******************************************************************************/
-	protected Dialog onCreateDialog(int id) {
-
-		id_date = id;
-
-		switch (id_date) {
-		case DATE_DIALOG_ID_LEFT:
-			return new DatePickerDialog(this, myDateSetListener, dl_year_time,
-					dl_month_time, dl_day_time);
-
-		case DATE_DIALOG_ID_RIGHT:
-			return new DatePickerDialog(this, myDateSetListener, dr_year_time,
-					dr_month_time, dr_day_time);
-
-		}
-		return null;
-	}
 
 }
