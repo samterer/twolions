@@ -181,7 +181,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
-
+		
 		update(); // re-carrega a lista
 
 	}
@@ -503,7 +503,11 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 		ItemLog item = itens.get(pos);
 		id_item = item.getId();
 
-		showBtsEditDelete(view, true);
+		try {
+			showBtsEditDelete(view, true);			
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 
 	}
 
