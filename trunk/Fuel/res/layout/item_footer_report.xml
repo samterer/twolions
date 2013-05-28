@@ -16,18 +16,15 @@
         android:layout_marginTop="5dp"
         android:background="@color/preto" >
 
-        <TextView android:layout_weight="1" />
-
         <TextView
             android:id="@+id/totalunidadecategoria"
             style="@style/texto20branco"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
+            android:gravity="left"
+            android:layout_marginLeft="25dp"
             android:text="522" />
 
-        <TextView android:layout_weight="1" />
 
-        <TextView android:layout_weight="1" />
     </TableRow>
 
     <TableRow
@@ -35,17 +32,12 @@
         android:layout_height="wrap_content"
         android:background="@color/preto" >
 
-        <TextView android:layout_weight="1" />
-
-        <TextView android:layout_weight="1" />
-        
-        <TextView android:layout_weight="1" />
-
         <TextView
             android:id="@+id/totalvalorcategoria"
             style="@style/texto20branco"
             android:layout_weight="1"
-            android:gravity="left"
+            android:layout_marginRight="5dp"
+            android:gravity="right"
             android:text="R$ 522.56" />
     </TableRow>
 
