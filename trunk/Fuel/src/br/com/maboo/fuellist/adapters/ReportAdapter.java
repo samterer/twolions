@@ -58,7 +58,8 @@ public class ReportAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * Filtra a lista No caso, retira todos os itens do tipo NOTE da lista
+	 * Filtra a lista 
+	 * No caso, retira todos os itens do tipo NOTE da lista (apenas para exibição do adapter)
 	 * 
 	 * @param itens
 	 * @return

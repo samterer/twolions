@@ -160,4 +160,5 @@ public class ItemLog implements BaseColumns, Serializable {
 				+ value_p + ", Value_u: " + value_u + ", Odometer: " + odometer
 				+ ", Text: " + text;
 	}
+
 }
