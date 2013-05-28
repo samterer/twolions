@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.SQLException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -263,7 +264,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		// bt rigt
 		final ImageView bt_right = (ImageView) findViewById(R.id.bt_right);
-		bt_right.setVisibility(View.INVISIBLE);
+		bt_right.setImageResource(R.drawable.bt_share);
 
 		// bar down
 		final TextView title_filter = (TextView) findViewById(R.id.title_filter);
@@ -284,7 +285,9 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	}
 
 	public void btBarUpRight(View v) {
-		//
+		
+		shareReport();
+		
 	}
 
 	public void btBarDown(View v) {
@@ -406,5 +409,152 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		}
 	};
+	
+	/******************************************************************************
+	 * REPORT
+	 ******************************************************************************/
+	private void shareReport() {
+		Intent i = new Intent(Intent.ACTION_SEND);
+		i.setType("text/plain");
+		i.putExtra(Intent.EXTRA_SUBJECT, "FuelReport ("+name_car.toUpperCase()+") "+date_left.getText().toString()+"- "+date_right.getText().toString());
+		
+		
+		i.putExtra(Intent.EXTRA_TEXT, getReport());
+		
+		Uri uri = Uri.parse("android.resource://" + getPackageName() 
+                + "/" + R.drawable.ic_launcher);
 
+		i.putExtra(Intent.EXTRA_STREAM, uri);
+		
+		startActivity(Intent.createChooser(i, "FuelReport"));
+	}
+	
+	private String getReport() {
+		StringBuffer sb = new StringBuffer();
+		
+		// cria o cabeçalho do relatorio
+		sb.append("                                             Filter by date                          \n\n");
+		sb.append("                        "+date_left.getText().toString()+"     -      "+date_right.getText().toString()+"\n\n\n\n");
+		for (int i = 0; i < itens.size(); i++) {
+			// recupera o item da vez
+			ItemLog item = itens.get(i);
+			
+			// cabeçalho da lista
+			if(i == 0){ 
+				sb.append("Date                           Type"+getSpace(8)+"Unit("+set.getVolume()+")"+getSpace(6)+"Detail"+getSpace(14)+"Values \n\n");
+			}
+			
+			// não imprime itens do tipo de note
+			if(item.getType() == NOTE) {
+				continue;
+			}
+			
+			// data
+			sb.append(item.getDate()+getSpace());
+			// tipo
+			sb.append(getType(item.getType()).toLowerCase()+getSpace());
+			// unidade
+			if (item.getType() == FUEL) {
+				// calcula qtd de litro abastecido
+				Double total = Math
+						.floor(item.getValue_p() / item.getValue_u());
+				sb.append(AndroidUtils.pad(total.intValue())+getSpace()+"      ");
+			} else {
+				sb.append("   "+getSpace()); // insere um espaço pra formatação
+			}
+			// detail
+			// regra de espaço do repair
+			if(item.getType() == REPAIR) {
+				sb.append("    ");
+			}
+			
+			if (item.getSubject().toString().length() > limiteSpace) {
+				StringBuffer sbSubjec = new StringBuffer();
+				for (int j = 0; j < (limiteSpace-2); j++) {
+					sbSubjec.append(item.getSubject().charAt(j));
+				}
+				sb.append((sbSubjec.toString() + "...").toLowerCase());
+			} else {
+				sb.append(String.valueOf(item.getSubject())
+						.toLowerCase());
+			}
+			
+			//regras de espaço para a formatação
+			switch (item.getType()) {
+			case FUEL:
+				if(item.getSubject().length() >= limiteSpace) {
+					sb.append(getSpace());
+				} else {
+					sb.append(getSpace()+getDefineSpace(item.getSubject().length())+" ");
+				}				
+				break;
+			case EXPENSE:
+				if(item.getSubject().length() >= limiteSpace) {
+					sb.append(getSpace(9));
+				} else {
+					sb.append(getSpace()+getDefineSpace(item.getSubject().length()));
+				}	
+				break;
+			case NOTE:
+				if(item.getSubject().length() >= limiteSpace) {
+					sb.append(getSpace());
+				} else {
+					sb.append(getSpace()+getDefineSpace(item.getSubject().length()));
+				}	
+				break;
+			case REPAIR:
+				if(item.getSubject().length() >= limiteSpace) {
+					sb.append(getSpace(9));
+				} else {
+					sb.append(getSpace()+getDefineSpace(item.getSubject().length())+" ");
+				}	
+				break;
+			}
+			
+			// values
+			//formata o espaço antes do item
+			sb.append(set.getMoeda() + " " + item.getValue_p());
+
+			// line
+			sb.append("\n");
+			sb.append("______________________________________________________________");
+			sb.append("\n\n");
+		}
+		
+		// cria o rodape
+		sb.append("                                       "+getSpace()+AndroidUtils.pad(totalUnidade.intValue())+getSpace()+"                 "+getSpace()+""+set.getMoeda() + " "+valorTotal);
+		
+		return sb.toString();
+	}
+	
+	private int limiteSpace = 8;
+	private String getSpace() {
+		return getSpace(10);
+	}
+	private String getSpace(int tam) {
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < tam; i++) {
+			sb.append(" ");
+		}
+		return sb.toString();
+	}
+	
+	private String getDefineSpace(int tamCurrent) {
+		return getSpace(limiteSpace - tamCurrent); 
+	}
+	
+	
+
+	private String getType(int tipo) {
+		switch (tipo) {
+		case FUEL:
+			return "FUEL";
+		case EXPENSE:
+			return "EXPENSE";
+		case NOTE:
+			return "NOTE";
+		default:
+			return "REPAIR";
+		}
+	}
 }
