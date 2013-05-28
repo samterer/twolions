@@ -12,6 +12,7 @@ import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -415,34 +416,36 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	 ******************************************************************************/
 	private void shareReport() {
 		Intent i = new Intent(Intent.ACTION_SEND);
-		i.setType("text/plain");
-		i.putExtra(Intent.EXTRA_SUBJECT, "FuelReport ("+name_car.toUpperCase()+") "+date_left.getText().toString()+"- "+date_right.getText().toString());
-		
-		
-		i.putExtra(Intent.EXTRA_TEXT, getReport());
-		
-		Uri uri = Uri.parse("android.resource://" + getPackageName() 
-                + "/" + R.drawable.ic_launcher);
+		i.setType("text/html");
+		i.putExtra(Intent.EXTRA_SUBJECT,
+				"FuelReport (" + name_car.toUpperCase() + ") "
+						+ date_left.getText().toString() + " - "
+						+ date_right.getText().toString());
 
-		i.putExtra(Intent.EXTRA_STREAM, uri);
-		
-		startActivity(Intent.createChooser(i, "FuelReport"));
+		i.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(getReport()));
+
+		startActivity(Intent.createChooser(i, "Choose an Email client :"));
 	}
 	
 	private String getReport() {
 		StringBuffer sb = new StringBuffer();
 		
 		// cria o cabeçalho do relatorio
-		sb.append("                                             Filter by date                          \n\n");
-		sb.append("                        "+date_left.getText().toString()+"     -      "+date_right.getText().toString()+"\n\n\n\n");
+		sb.append(getSpace(45)+"<b>Filter by date<br /><br />");
+		sb.append(getSpace(24)+date_left.getText().toString()+getSpace(5)+"-"+getSpace(5)+date_right.getText().toString()+"<br /><br /><br /><br />");
 		for (int i = 0; i < itens.size(); i++) {
 			// recupera o item da vez
 			ItemLog item = itens.get(i);
 			
 			// cabeçalho da lista
 			if(i == 0){ 
-				sb.append("Date                           Type"+getSpace(8)+"Unit("+set.getVolume()+")"+getSpace(6)+"Detail"+getSpace(14)+"Values \n\n");
+				sb.append("Date"+getSpace(28)+"Type"+getSpace(12)+"Unit("+set.getVolume()+")"+getSpace(12)+"Detail"+getSpace(14)+"Values</b><br /><br />");
+				// line
+				sb.append("_________________________________________________________________");
+				sb.append("<br /><br />");
 			}
+			
+			sb.append("<strong>");
 			
 			// não imprime itens do tipo de note
 			if(item.getType() == NOTE) {
@@ -451,21 +454,24 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 			
 			// data
 			sb.append(item.getDate()+getSpace());
+			
 			// tipo
-			sb.append(getType(item.getType()).toLowerCase()+getSpace());
+			sb.append(getType(item.getType()).toLowerCase()+getSpace(16));
+			
 			// unidade
 			if (item.getType() == FUEL) {
 				// calcula qtd de litro abastecido
 				Double total = Math
 						.floor(item.getValue_p() / item.getValue_u());
-				sb.append(AndroidUtils.pad(total.intValue())+getSpace()+"      ");
+				sb.append(AndroidUtils.pad(total.intValue())+getSpace(18));
 			} else {
-				sb.append("   "+getSpace()); // insere um espaço pra formatação
+				sb.append(getSpace(15)); // insere um espaço pra formatação
 			}
+			
 			// detail
 			// regra de espaço do repair
 			if(item.getType() == REPAIR) {
-				sb.append("    ");
+				sb.append(getSpace(4));
 			}
 			
 			if (item.getSubject().toString().length() > limiteSpace) {
@@ -511,18 +517,23 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 				break;
 			}
 			
+			sb.append("<div align=left>");
+			
 			// values
 			//formata o espaço antes do item
 			sb.append(set.getMoeda() + " " + item.getValue_p());
 
+			sb.append("</div>");
+			
 			// line
-			sb.append("\n");
-			sb.append("______________________________________________________________");
-			sb.append("\n\n");
+			sb.append("<br />");
+			sb.append("_________________________________________________________________");
+			sb.append("<br /><br />");
+			sb.append("</strong>");
 		}
 		
 		// cria o rodape
-		sb.append("                                       "+getSpace()+AndroidUtils.pad(totalUnidade.intValue())+getSpace()+"                 "+getSpace()+""+set.getMoeda() + " "+valorTotal);
+		sb.append("<b>"+getSpace(54)+AndroidUtils.pad(totalUnidade.intValue())+getSpace(42)+""+set.getMoeda()+getSpace(1)+valorTotal+"</b>");
 		
 		return sb.toString();
 	}
@@ -534,7 +545,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	private String getSpace(int tam) {
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < tam; i++) {
-			sb.append(" ");
+			sb.append("&nbsp;");
 		}
 		return sb.toString();
 	}
