@@ -129,9 +129,9 @@ public class ReportAdapter extends BaseAdapter {
 		}
 
 		// calcula qtd de litro abastecido
-		Double totalUnid = null;
+		
 		if (itemRequest.getType() == Constants.FUEL) {
-
+			Double totalUnid = null;
 			totalUnid = Math.floor(itemRequest.getValue_p()
 					/ itemRequest.getValue_u());
 

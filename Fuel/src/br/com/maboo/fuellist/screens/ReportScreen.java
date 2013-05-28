@@ -441,7 +441,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 			if(i == 0){ 
 				sb.append("Date"+getSpace(28)+"Type"+getSpace(12)+"Unit("+set.getVolume()+")"+getSpace(12)+"Detail"+getSpace(14)+"Values</b><br /><br />");
 				// line
-				sb.append("_________________________________________________________________");
+				sb.append("_____________________________________________________________________");
 				sb.append("<br /><br />");
 			}
 			
@@ -517,17 +517,13 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 				break;
 			}
 			
-			sb.append("<div align=left>");
-			
 			// values
 			//formata o espaço antes do item
-			sb.append(set.getMoeda() + " " + item.getValue_p());
-
-			sb.append("</div>");
+			sb.append(getSpace(8)+set.getMoeda() + " " + item.getValue_p());
 			
 			// line
 			sb.append("<br />");
-			sb.append("_________________________________________________________________");
+			sb.append("_____________________________________________________________________");
 			sb.append("<br /><br />");
 			sb.append("</strong>");
 		}
