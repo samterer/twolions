@@ -260,20 +260,16 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 		// prepara animação (left to right)
 		LayoutAnimationController controller = AnimationUtils
 				.loadLayoutAnimation(this, R.anim.anime_slide_to_right);
+		
+		final RelativeLayout item = (RelativeLayout) itemSelectView
+		.findViewById(R.id.r_item_log);
+		
+		final LinearLayout tb_edicao = (LinearLayout) itemSelectView
+		.findViewById(R.id.tb_edicao);
 
-		if (exibe) {
+		if (exibe) { // exibe botoes de edição
 
-			RelativeLayout item = (RelativeLayout) itemSelectView
-					.findViewById(R.id.r_item_log);
-
-			// if (item.getVisibility() == View.GONE) { // para que ele não
-			// // repita a animação
-			// return;
-			// }
 			item.setVisibility(View.GONE);
-
-			LinearLayout tb_edicao = (LinearLayout) itemSelectView
-					.findViewById(R.id.tb_edicao);
 
 			tb_edicao.setLayoutAnimation(controller);
 			tb_edicao.setVisibility(View.VISIBLE);
@@ -281,53 +277,38 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 			// prepara animação (right to left)
 			controller = AnimationUtils.loadLayoutAnimation(this,
 					R.anim.anime_slide_to_left);
-
 			item.setLayoutAnimation(controller);
 
-			hideOtherItens(view);
+			// esconde o outro item que esta sendo exibido
+			hideOtherItens(itemSelectView); 
+			
+			final Handler handler = new Handler();
+			Timer t = new Timer();
+			t.schedule(new TimerTask() {
+				public void run() {
+					handler.post(new Runnable() {
+						public void run() {
+							try {							
+								
+								item.setVisibility(View.VISIBLE);
+								
+								tb_edicao.setVisibility(View.GONE);
+								
+							} catch (NullPointerException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				}
+			}, 3000);
 
-		} else {
-
-			RelativeLayout item = (RelativeLayout) itemSelectView
-					.findViewById(R.id.r_item_log);
-
-			// if (item.getVisibility() == View.VISIBLE) { // para que ele não
-			// repita a animação
-			// return;
-			// }
+		} else { // esconde botoes de edição
 
 			item.setVisibility(View.VISIBLE);
-
-			LinearLayout tb_edicao = (LinearLayout) itemSelectView
-					.findViewById(R.id.tb_edicao);
+			
 			tb_edicao.setVisibility(View.GONE);
 
 		}
-
-		final Handler handler = new Handler();
-		Timer t = new Timer();
-		t.schedule(new TimerTask() {
-			public void run() {
-				handler.post(new Runnable() {
-					public void run() {
-						RelativeLayout item = (RelativeLayout) itemSelectView
-								.findViewById(R.id.r_item_log);
-						// if (item.getVisibility() == View.VISIBLE) { // para
-						// que
-						// ele não
-						// repita a animação
-						// return;
-						// }
-
-						item.setVisibility(View.VISIBLE);
-
-						LinearLayout tb_edicao = (LinearLayout) itemSelectView
-								.findViewById(R.id.tb_edicao);
-						tb_edicao.setVisibility(View.GONE);
-					}
-				});
-			}
-		}, 3000);
 
 	}
 
@@ -338,7 +319,6 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 		for (int i = 0; i < listview_log.getCount(); i++) {
 			View item = (View) listview_log.getChildAt(i);
 			if (item != currentView) {
-				// item.setVisibility(View.INVISIBLE);
 				showBtsEditDelete(item, false);
 			}
 		}
@@ -505,7 +485,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		try {
 			showBtsEditDelete(view, true);			
-		} catch (NullPointerException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

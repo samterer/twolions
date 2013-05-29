@@ -1,5 +1,6 @@
 package br.com.maboo.fuellist.screens;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
@@ -9,7 +10,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.SQLException;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -243,7 +243,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		}
 
 		TextView totalvalorcategoria = (TextView) findViewById(R.id.totalvalorcategoria);
-		totalvalorcategoria.setText(set.getMoeda() + "" + valorTotal);
+		totalvalorcategoria.setText(set.getMoeda() + "" + String.format("%.2f", valorTotal));
 
 		TextView totalunidadecategoria = (TextView) findViewById(R.id.totalunidadecategoria);
 		totalunidadecategoria.setText(totalUnidade.intValue() + " "
@@ -439,13 +439,14 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 			
 			// cabeçalho da lista
 			if(i == 0){ 
-				sb.append("Date"+getSpace(28)+"Type"+getSpace(12)+"Unit("+set.getVolume()+")"+getSpace(12)+"Detail"+getSpace(14)+"Values</b><br /><br />");
+				sb.append("Date"+getSpace(28)+"Type"+getSpace(12)+"Unit("+set.getVolume()+")"+getSpace(12)+"Detail"+getSpace(14)+"Values</b><br />");
 				// line
-				sb.append("_____________________________________________________________________");
+				sb.append("__________________________________________________________________________");
 				sb.append("<br /><br />");
 			}
 			
 			sb.append("<strong>");
+			sb.append("<div>");
 			
 			// não imprime itens do tipo de note
 			if(item.getType() == NOTE) {
@@ -489,30 +490,23 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 			switch (item.getType()) {
 			case FUEL:
 				if(item.getSubject().length() >= limiteSpace) {
-					sb.append(getSpace());
+					sb.append(getSpace(8));
 				} else {
-					sb.append(getSpace()+getDefineSpace(item.getSubject().length())+" ");
+					sb.append(getSpace()+getDefineSpace(item.getSubject().length()));
 				}				
 				break;
 			case EXPENSE:
 				if(item.getSubject().length() >= limiteSpace) {
-					sb.append(getSpace(9));
-				} else {
-					sb.append(getSpace()+getDefineSpace(item.getSubject().length()));
-				}	
-				break;
-			case NOTE:
-				if(item.getSubject().length() >= limiteSpace) {
-					sb.append(getSpace());
+					sb.append(getSpace(8));
 				} else {
 					sb.append(getSpace()+getDefineSpace(item.getSubject().length()));
 				}	
 				break;
 			case REPAIR:
 				if(item.getSubject().length() >= limiteSpace) {
-					sb.append(getSpace(9));
+					sb.append(getSpace(8));
 				} else {
-					sb.append(getSpace()+getDefineSpace(item.getSubject().length())+" ");
+					sb.append(getSpace()+getDefineSpace(item.getSubject().length()));
 				}	
 				break;
 			}
@@ -523,13 +517,14 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 			
 			// line
 			sb.append("<br />");
-			sb.append("_____________________________________________________________________");
+			sb.append("__________________________________________________________________________");
 			sb.append("<br /><br />");
-			sb.append("</strong>");
+			sb.append("</div></strong>");
 		}
 		
 		// cria o rodape
-		sb.append("<b>"+getSpace(54)+AndroidUtils.pad(totalUnidade.intValue())+getSpace(42)+""+set.getMoeda()+getSpace(1)+valorTotal+"</b>");
+		
+		sb.append("<b>"+getSpace(54)+AndroidUtils.pad(totalUnidade.intValue())+getSpace(42)+""+set.getMoeda()+getSpace(1)+String.format("%.2f", valorTotal)+"</b>");
 		
 		return sb.toString();
 	}
