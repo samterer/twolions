@@ -106,8 +106,7 @@ public class ReportAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 
 			// Busca o layout para cada item
-			int layout = R.layout.item_report;
-			view = inflater.inflate(layout, null);
+			view = inflater.inflate(R.layout.item_report, null);
 			view.setTag(holder); // seta a tag
 			view.setId(position);
 
@@ -150,7 +149,7 @@ public class ReportAdapter extends BaseAdapter {
 		int LIMITE = 8;
 		if (itemRequest.getSubject().toString().length() > LIMITE) {
 			StringBuffer sbSubjec = new StringBuffer();
-			for (int i = 0; i < LIMITE; i++) {
+			for (int i = 0; i < LIMITE-2; i++) {
 				sbSubjec.append(itemRequest.getSubject().charAt(i));
 			}
 			holder.det.setText((sbSubjec.toString() + "...").toLowerCase());
