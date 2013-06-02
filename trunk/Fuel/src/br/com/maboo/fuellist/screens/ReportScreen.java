@@ -1,6 +1,5 @@
 package br.com.maboo.fuellist.screens;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
@@ -35,7 +34,7 @@ import br.com.maboo.fuellist.util.AndroidUtils;
 import br.com.maboo.fuellist.util.Constants;
 
 public class ReportScreen extends FuelListActivity implements InterfaceBar,
-		Transaction, OnClickListener {
+		Transaction {
 
 	private final String TAG = Constants.LOG_APP;
 
@@ -94,8 +93,10 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		}
 
 		organizeBt();
-
+		
 		initDate();
+		
+		addListenerOnButton();
 
 	}
 
@@ -273,13 +274,6 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 	}
 
-	private static String pad(int c) {
-		if (c >= 10)
-			return String.valueOf(c);
-		else
-			return "0" + String.valueOf(c);
-	}
-
 	public void btBarUpLeft(View v) {
 		// Fecha a tela
 		finish();
@@ -315,13 +309,17 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		// calendar
 		final Calendar c = Calendar.getInstance();
+		
 		// date
 		date_left = (TextView) findViewById(R.id.date_left);
-		date_left.setOnClickListener(this);
-		dl_day_time = c.get(Calendar.DAY_OF_MONTH);
+		
+/*		dl_day_time = c.get(Calendar.DAY_OF_MONTH);
 		dl_month_time = c.get(Calendar.MONTH);
-		dl_year_time = c.get(Calendar.YEAR);
-
+		dl_year_time = c.get(Calendar.YEAR);*/
+		
+		//recupera data inicial
+		recuperaDataMaisAntiga();
+		
 		date_left.setText("from: "
 				+ new StringBuilder().append(AndroidUtils.pad(dl_day_time))
 						.append("/").append(AndroidUtils.pad(dl_month_time))
@@ -329,7 +327,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		// date
 		date_right = (TextView) findViewById(R.id.date_right);
-		date_right.setOnClickListener(this);
+		
 		dr_day_time = c.get(Calendar.DAY_OF_MONTH);
 		dr_month_time = c.get(Calendar.MONTH);
 		dr_year_time = c.get(Calendar.YEAR);
@@ -341,29 +339,109 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 	}
 	
+	// recupera data do item mais antigo da lista
+	private void recuperaDataMaisAntiga() {
+
+		StringBuffer sbDate = new StringBuffer();
+		
+		if(itens == null) {
+			itens = getItens();
+		}
+		
+		for (int i = 0; i < itens.size(); i++) {
+			ItemLog item = itens.get(i);
+			
+			// não contabiliza itens do tipo de note
+			if(item.getType() == NOTE) {
+				continue;
+			}
+			
+			// formata date
+			String dateFromBase = item.getDate();
+			for (int j = 0; j < dateFromBase.length(); j++) {
+
+				// dia
+				if(j < 2) {
+					sbDate.append(dateFromBase.charAt(j));
+				} else if (j == 2) { // barra
+					dl_day_time = Integer.valueOf(sbDate.toString()).intValue();
+					sbDate = new StringBuffer();
+				}
+				
+				// mes
+				if(j > 2 && j < 5) {
+					sbDate.append(dateFromBase.charAt(j));
+				} else if (j == 5) { // barra
+					dl_month_time = Integer.valueOf(sbDate.toString()).intValue();
+					sbDate = new StringBuffer();
+				}
+				
+				// ano
+				if(j > 5 && j < 10) {
+					sbDate.append(dateFromBase.charAt(j));
+				}
+				
+				// fim da capitação da data
+				if (dateFromBase.charAt(j) == '-') {
+					dl_year_time = Integer.valueOf(sbDate.toString()).intValue();
+					break;
+				}
+
+				//sbDate.append(dateFromBase.charAt(j));
+			}
+			
+			
+			//TODO
+			// recupera apenas um item
+			break; 
+		}
+	}
+	
+	
 	private int datePickerInput = 0; 
 	private static final int        DIALOG_DATE_PICKER_L  = 100;
 	private static final int        DIALOG_DATE_PICKER_R  = 111;
 	
-	
-	public void onClick(View v) {
-		
-		datePickerInput = v.getId();
-		
-		if(v == findViewById(R.id.date_left)){
-			showDialog(DIALOG_DATE_PICKER_L);
-        }else if (v == findViewById(R.id.date_right)){
-			showDialog(DIALOG_DATE_PICKER_R);
-        }
-		
-	}
+	public void addListenerOnButton() {
+
+		date_left.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+
+				datePickerInput = DIALOG_DATE_PICKER_L;
+				
+				showDialog(DIALOG_DATE_PICKER_L);
+
+			}
+
+		});
+
+		date_right.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+
+				datePickerInput = DIALOG_DATE_PICKER_R;
+				
+				showDialog(DIALOG_DATE_PICKER_R);
+
+			}
+
+		});
+
+	}		
 	
 	protected Dialog onCreateDialog(int id) {
+
+		Log.i("appLog", "## set date no id: "
+				+ id);		
+		
 		switch (id) {
 		case DIALOG_DATE_PICKER_L:
+			
 			return new DatePickerDialog(this, myDateSetListener, dl_year_time,
 					dl_month_time, dl_day_time);
 		case DIALOG_DATE_PICKER_R:
+
 			return new DatePickerDialog(this, myDateSetListener, dr_year_time,
 					dr_month_time, dr_day_time);
 		}
@@ -373,11 +451,12 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	private DatePickerDialog.OnDateSetListener myDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
-			
-			Log.i("appLog","## id: "+view.getId());
+
+			Log.i("appLog", "## set date no datePickerInput: "
+					+ datePickerInput);
 
 			switch (datePickerInput) {
-			case R.id.date_left:
+			case DIALOG_DATE_PICKER_L:
 				dl_day_time = dayOfMonth;
 				dl_month_time = monthOfYear;
 				dl_year_time = year;
@@ -392,7 +471,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 								.append(AndroidUtils.pad(dl_year_time)));
 				break;
 
-			case R.id.date_right:
+			case DIALOG_DATE_PICKER_R:
 				dr_day_time = dayOfMonth;
 				dr_month_time = monthOfYear;
 				dr_year_time = year;
@@ -409,7 +488,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 			}
 
 		}
-	};
+	};	
 	
 	/******************************************************************************
 	 * REPORT
