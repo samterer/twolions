@@ -392,6 +392,25 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				sb.append(dateFromBase.charAt(i));
 			}
 
+			//TODO
+			// prepara campo de data 
+			// date
+			date = (TextView) findViewById(R.id.date);
+			day_time = c.get(Calendar.DAY_OF_MONTH);
+			month_time = c.get(Calendar.MONTH);
+			year_time = c.get(Calendar.YEAR);
+
+			date.setText(new StringBuilder().append(AndroidUtils.pad(day_time))
+					.append("/").append(AndroidUtils.pad(month_time)).append("/")
+					.append(AndroidUtils.pad(year_time)));
+
+			// hour
+			hour = (TextView) findViewById(R.id.hour);
+			hour_time = c.get(Calendar.HOUR_OF_DAY);
+			min_time = c.get(Calendar.MINUTE);
+
+			
+			
 			// subject
 			// if (type == EXPENSE || type == REPAIR || type == NOTE) {
 			subject.setText(String.valueOf((itemRequest.getSubject().toString()
