@@ -1,6 +1,9 @@
 package br.com.maboo.fuellist.screens;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -186,7 +189,6 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	/******************************************************************************
 	 * SERVICES
 	 ******************************************************************************/
-
 	public void update() {
 
 		getSharedPrefs();
@@ -199,6 +201,63 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 	}
 
+	/*
+	 * Atualiza a lista, de acordo com um limite entre datas definidas pelo usuarios nos campos
+	 * from: e to:
+	 */
+	@SuppressWarnings("unused")
+	private Date currenteDateItem;
+	private SimpleDateFormat sdf;
+
+	@SuppressWarnings("null")
+	private void updateListWithDate() {
+
+		List<ItemLog> itensNew = null;
+
+		// pattern
+		sdf = new SimpleDateFormat("dd/mm/yyyy");
+
+		// date from
+		Date dateFrom = null;
+		try {
+			dateFrom = sdf.parse(date_left.toString());
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+
+		// date to
+		Date dateTo = null;
+		try {
+			dateTo = sdf.parse(date_right.toString());
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+
+		// organiza a lista de acordo com as datas iniciais e finais
+		for (int i = 0; i < itens.size(); i++) {
+			ItemLog item = itens.get(i);
+			try {
+				currenteDateItem = sdf.parse(item.getDate().substring(0, 10));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+			// verifica se a data é igual ou maior que a inicial
+			if (currenteDateItem.after(dateFrom)
+					&& currenteDateItem.before(dateTo)
+					|| currenteDateItem.equals(dateFrom)
+					|| currenteDateItem.equals(dateTo)) {
+				itensNew.add(item);
+			}
+
+		}
+
+		listreport.setAdapter(new ReportAdapter(this, itensNew, set));
+
+		setValoresReport();
+
+	}
+	
 	/**
 	 * Recupera a lista de itens
 	 */
@@ -392,7 +451,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 			
 			
 			//TODO
-			// recupera apenas um item
+			// recupera apenas um item, mas deve recuperar o mais antigo
 			break; 
 		}
 	}
@@ -487,7 +546,11 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 				break;
 			}
 
+			// atualiza lista
+			updateListWithDate();
+			
 		}
+		
 	};	
 	
 	/******************************************************************************
