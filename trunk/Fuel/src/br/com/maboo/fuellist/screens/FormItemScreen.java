@@ -100,6 +100,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	private Settings set;
 
+	private Calendar c; // calendario
+	
 	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
 
@@ -197,12 +199,12 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				"fonts/DroidSansFallback.ttf"); // modifica as fontes
 
 		// calendar
-		final Calendar c = Calendar.getInstance();
+		c = Calendar.getInstance();
 
 		// date
 		date = (TextView) findViewById(R.id.date);
 		day_time = c.get(Calendar.DAY_OF_MONTH);
-		month_time = c.get(Calendar.MONTH);
+		month_time = c.get(Calendar.MONTH)+1;
 		year_time = c.get(Calendar.YEAR);
 
 		date.setText(new StringBuilder().append(AndroidUtils.pad(day_time))
@@ -344,7 +346,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		Log.i(TAG, "Data for edit");
 		Log.i(TAG, itemRequest.toString());
-		// }
 
 		try {
 
@@ -392,24 +393,58 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				sb.append(dateFromBase.charAt(i));
 			}
 
-			//TODO
-			// prepara campo de data 
-			// date
-			date = (TextView) findViewById(R.id.date);
-			day_time = c.get(Calendar.DAY_OF_MONTH);
-			month_time = c.get(Calendar.MONTH);
-			year_time = c.get(Calendar.YEAR);
+			// prepara campo de data
+			sb = new StringBuffer();
+			// formata date para os campos do Dialog
+			for (int j = 0; j < dateFromBase.length(); j++) {
+				// dia
+				if (j < 2) {
+					sb.append(dateFromBase.charAt(j));
+				} else if (j == 2) { // barra
+					day_time = Integer.valueOf(sb.toString()).intValue();
+					sb = new StringBuffer();
+				}
+				// mes
+				if (j > 2 && j < 5) {
+					sb.append(dateFromBase.charAt(j));
+				} else if (j == 5) { // barra
+					month_time = Integer.valueOf(sb.toString())
+							.intValue();
+					sb = new StringBuffer();
+				}
+				// ano
+				if (j > 5 && j < 10) {
+					sb.append(dateFromBase.charAt(j));
+				}
+				// fim da capitação da data
+				if (dateFromBase.charAt(j) == '-') {
+					year_time = Integer.valueOf(sb.toString())
+							.intValue();
+					break;
+				}
+			}
 
-			date.setText(new StringBuilder().append(AndroidUtils.pad(day_time))
-					.append("/").append(AndroidUtils.pad(month_time)).append("/")
-					.append(AndroidUtils.pad(year_time)));
-
-			// hour
-			hour = (TextView) findViewById(R.id.hour);
-			hour_time = c.get(Calendar.HOUR_OF_DAY);
-			min_time = c.get(Calendar.MINUTE);
-
-			
+			// prepara o campo hora
+			sb = new StringBuffer();
+			// formata date para os campos do Dialog
+			for (int j = 0; j < dateFromBase.length(); j++) {
+				// hora
+				if (j > 10 && j < 13) {
+					sb.append(dateFromBase.charAt(j));
+				} else if (j == 13) { // barra
+					hour_time = Integer.valueOf(sb.toString()).intValue();
+					sb = new StringBuffer();
+				}
+				// minuto
+				if (j > 13 && j < dateFromBase.length()) { 
+					sb.append(dateFromBase.charAt(j));
+				}
+				
+				if (j == 15) {
+					min_time = Integer.valueOf(sb.toString()).intValue();
+					sb = new StringBuffer();
+				}
+			}
 			
 			// subject
 			// if (type == EXPENSE || type == REPAIR || type == NOTE) {
@@ -773,7 +808,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 					min_time, false);
 		case DATE_DIALOG_ID:
 			return new DatePickerDialog(this, myDateSetListener, year_time,
-					month_time, day_time);
+					month_time-1, day_time);
 		}
 
 		return null;
@@ -804,7 +839,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			// set current date into textview
 			date.setText(new StringBuilder().append(AndroidUtils.pad(day_time))
-					.append("/").append(AndroidUtils.pad(month_time))
+					.append("/").append(AndroidUtils.pad(month_time+1))
 					.append("/").append(AndroidUtils.pad(year_time)));
 		}
 	};
