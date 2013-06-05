@@ -2,6 +2,7 @@ package br.com.maboo.fuellist.screens;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -205,22 +206,22 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	 * Atualiza a lista, de acordo com um limite entre datas definidas pelo usuarios nos campos
 	 * from: e to:
 	 */
-	@SuppressWarnings("unused")
 	private Date currenteDateItem;
 	private SimpleDateFormat sdf;
 
-	@SuppressWarnings("null")
 	private void updateListWithDate() {
 
-		List<ItemLog> itensNew = null;
+		List<ItemLog> itensNew = new ArrayList<ItemLog>();
 
 		// pattern
-		sdf = new SimpleDateFormat("dd/mm/yyyy");
+		sdf = new SimpleDateFormat("dd-mm-yyyy");
 
 		// date from
 		Date dateFrom = null;
 		try {
-			dateFrom = sdf.parse(date_left.toString());
+			String date = date_left.toString().substring(6, date_left.toString().length());
+			Log.i("appLog","## date from: "+date);
+			dateFrom = sdf.parse(date);
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
@@ -228,7 +229,9 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		// date to
 		Date dateTo = null;
 		try {
-			dateTo = sdf.parse(date_right.toString());
+			String date = date_right.toString().substring(4, date_right.toString().length());
+			Log.i("appLog","## date to: "+date);
+			dateTo = sdf.parse(date);
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
@@ -236,9 +239,10 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		// organiza a lista de acordo com as datas iniciais e finais
 		for (int i = 0; i < itens.size(); i++) {
 			ItemLog item = itens.get(i);
+			
 			try {
 				currenteDateItem = sdf.parse(item.getDate().substring(0, 10));
-			} catch (ParseException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
@@ -252,7 +256,10 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		}
 
+		
 		listreport.setAdapter(new ReportAdapter(this, itensNew, set));
+		
+		itens = itensNew;
 
 		setValoresReport();
 
