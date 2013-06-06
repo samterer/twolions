@@ -206,32 +206,41 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	 * Atualiza a lista, de acordo com um limite entre datas definidas pelo usuarios nos campos
 	 * from: e to:
 	 */
-	private Date currenteDateItem;
+	private Date dateItem;
 	private SimpleDateFormat sdf;
-
+	// lista definida pela data
+	private List<ItemLog> itensNew;
+	
 	private void updateListWithDate() {
 
-		List<ItemLog> itensNew = new ArrayList<ItemLog>();
+		itensNew = new ArrayList<ItemLog>();
 
 		// pattern
-		sdf = new SimpleDateFormat("dd-mm-yyyy");
+		sdf = new SimpleDateFormat("dd/mm/yyyy");
 
 		// date from
 		Date dateFrom = null;
-		try {
-			String date = date_left.toString().substring(6, date_left.toString().length());
-			Log.i("appLog","## date from: "+date);
-			dateFrom = sdf.parse(date);
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
 
 		// date to
 		Date dateTo = null;
+		
+		// salva data temporaria
+		String dateTemp;
+		
 		try {
-			String date = date_right.toString().substring(4, date_right.toString().length());
-			Log.i("appLog","## date to: "+date);
-			dateTo = sdf.parse(date);
+
+			dateTemp = date_left.getText().toString().substring(6, 16).toString();
+			sysout("## date from: "+dateTemp);
+			dateFrom = sdf.parse(dateTemp.trim());			
+			
+			dateTemp = "";
+			
+			dateTemp = date_right.getText().toString().substring(4, 14).toString();
+			sysout("## date to: "+dateTemp);
+			dateTo = sdf.parse(dateTemp.trim());
+			
+			dateTemp = "";
+			
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
@@ -241,28 +250,47 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 			ItemLog item = itens.get(i);
 			
 			try {
-				currenteDateItem = sdf.parse(item.getDate().substring(0, 10));
-			} catch (Exception e) {
+				dateTemp = item.getDate().substring(0, 10).toString().trim();
+				dateItem = sdf.parse(dateTemp);
+				sysout("## verificando se o item ["+item.getId()+"] esta dentro da regra, sua data é ["+dateItem+"]");
+			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 
-			// verifica se a data é igual ou maior que a inicial
-			if (currenteDateItem.after(dateFrom)
-					&& currenteDateItem.before(dateTo)
-					|| currenteDateItem.equals(dateFrom)
-					|| currenteDateItem.equals(dateTo)) {
+			// verifica se a data é igual ao 'from' ou ao 'to'
+			if (dateItem.equals(dateFrom) || dateItem.equals(dateTo)) {
 				itensNew.add(item);
+				
+				sysout("## o item ["+item.getId()+"] esta dentro da regra de 'equal'");
+				
+				continue;
+			} else {
+				sysout("## "+dateItem+" não é igual a ["+dateFrom+"] ou ["+dateTo+"]");
+			}
+			
+			// verifica se a data é maior que a 'from' e menor que a 'to'
+			if (dateItem.after(dateFrom)
+					&& dateItem.before(dateTo)) {
+				itensNew.add(item);
+				
+				sysout("## o item ["+item.getId()+"] esta dentro da regra 'entre'");
+				
+				continue;
+			} else {
+				sysout("## "+dateItem+" não esta entre ["+dateFrom+"] e ["+dateTo+"]");
 			}
 
 		}
 
-		
-		listreport.setAdapter(new ReportAdapter(this, itensNew, set));
-		
-		itens = itensNew;
+		// verifica se deve atualizar a tela
+		if(itensNew.size() > 0) {			
 
-		setValoresReport();
-
+			listreport.setAdapter(new ReportAdapter(this, itensNew, set));
+			
+			setValoresReport();
+		}
+		
+		
 	}
 	
 	/**
@@ -395,7 +423,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		date_right = (TextView) findViewById(R.id.date_right);
 		
 		dr_day_time = c.get(Calendar.DAY_OF_MONTH);
-		dr_month_time = c.get(Calendar.MONTH);
+		dr_month_time = c.get(Calendar.MONTH)+1;
 		dr_year_time = c.get(Calendar.YEAR);
 
 		date_right.setText("to: "
@@ -408,8 +436,6 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	// recupera data do item mais antigo da lista
 	private void recuperaDataMaisAntiga() {
 
-		StringBuffer sbDate = new StringBuffer();
-		
 		if(itens == null) {
 			itens = getItens();
 		}
@@ -423,42 +449,12 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 			}
 			
 			// formata date
-			String dateFromBase = item.getDate();
-			for (int j = 0; j < dateFromBase.length(); j++) {
-
-				// dia
-				if(j < 2) {
-					sbDate.append(dateFromBase.charAt(j));
-				} else if (j == 2) { // barra
-					dl_day_time = Integer.valueOf(sbDate.toString()).intValue();
-					sbDate = new StringBuffer();
-				}
-				
-				// mes
-				if(j > 2 && j < 5) {
-					sbDate.append(dateFromBase.charAt(j));
-				} else if (j == 5) { // barra
-					dl_month_time = Integer.valueOf(sbDate.toString()).intValue();
-					sbDate = new StringBuffer();
-				}
-				
-				// ano
-				if(j > 5 && j < 10) {
-					sbDate.append(dateFromBase.charAt(j));
-				}
-				
-				// fim da capitação da data
-				if (dateFromBase.charAt(j) == '-') {
-					dl_year_time = Integer.valueOf(sbDate.toString()).intValue();
-					break;
-				}
-
-				//sbDate.append(dateFromBase.charAt(j));
-			}
-			
-			
+			dl_day_time = Integer.valueOf(item.getDate().substring(0, 2).toString()).intValue();
+			dl_month_time = Integer.valueOf(item.getDate().substring(3, 5).toString()).intValue();
+			dl_year_time = Integer.valueOf(item.getDate().substring(6, 10).toString()).intValue();
+						
 			//TODO
-			// recupera apenas um item, mas deve recuperar o mais antigo
+			// recupera apenas um item, mas deve recuperar o com a data mais antiga
 			break; 
 		}
 	}
@@ -505,11 +501,11 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		case DIALOG_DATE_PICKER_L:
 			
 			return new DatePickerDialog(this, myDateSetListener, dl_year_time,
-					dl_month_time, dl_day_time);
+					dl_month_time-1, dl_day_time);
 		case DIALOG_DATE_PICKER_R:
 
 			return new DatePickerDialog(this, myDateSetListener, dr_year_time,
-					dr_month_time, dr_day_time);
+					dr_month_time-1, dr_day_time);
 		}
 		return null;
 	}
@@ -532,7 +528,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 						+ new StringBuilder()
 								.append(AndroidUtils.pad(dl_day_time))
 								.append("/")
-								.append(AndroidUtils.pad(dl_month_time))
+								.append(AndroidUtils.pad(dl_month_time+1))
 								.append("/")
 								.append(AndroidUtils.pad(dl_year_time)));
 				break;
@@ -547,7 +543,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 						+ new StringBuilder()
 								.append(AndroidUtils.pad(dr_day_time))
 								.append("/")
-								.append(AndroidUtils.pad(dr_month_time))
+								.append(AndroidUtils.pad(dr_month_time+1))
 								.append("/")
 								.append(AndroidUtils.pad(dr_year_time)));
 				break;
@@ -578,6 +574,10 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	
 	private String getReport() {
 		StringBuffer sb = new StringBuffer();
+		
+		//TODO
+		// lista usada para gerar o report
+		
 		
 		// cria o cabeçalho do relatorio
 		sb.append(getSpace(45)+"<b>Filter by date<br /><br />");
@@ -707,5 +707,9 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		default:
 			return "REPAIR";
 		}
+	}
+	
+	private void sysout(String text){
+		Log.i(TAG,text);
 	}
 }
