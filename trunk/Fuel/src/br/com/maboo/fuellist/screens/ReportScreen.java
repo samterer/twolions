@@ -100,7 +100,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		
 		initDate();
 		
-		addListenerOnButton();
+		//addListenerOnButton();
 
 	}
 
@@ -463,41 +463,24 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	private int datePickerInput = 0; 
 	private static final int        DIALOG_DATE_PICKER_L  = 100;
 	private static final int        DIALOG_DATE_PICKER_R  = 111;
+
+	public void onL(View v) {
+		
+		datePickerInput = DIALOG_DATE_PICKER_L;
+		
+		showDialog(DIALOG_DATE_PICKER_L);
+	}
 	
-	public void addListenerOnButton() {
-
-		date_left.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View v) {
-
-				datePickerInput = DIALOG_DATE_PICKER_L;
-				
-				showDialog(DIALOG_DATE_PICKER_L);
-
-			}
-
-		});
-
-		date_right.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View v) {
-
-				datePickerInput = DIALOG_DATE_PICKER_R;
-				
-				showDialog(DIALOG_DATE_PICKER_R);
-
-			}
-
-		});
-
-	}		
+	public void onR(View v){
+		
+		datePickerInput = DIALOG_DATE_PICKER_R;
+		
+		showDialog(DIALOG_DATE_PICKER_R);
+	}
 	
 	protected Dialog onCreateDialog(int id) {
-
-		Log.i("appLog", "## set date no id: "
-				+ id);		
 		
-		switch (id) {
+		switch (datePickerInput) {
 		case DIALOG_DATE_PICKER_L:
 			
 			return new DatePickerDialog(this, myDateSetListener, dl_year_time,
@@ -513,9 +496,6 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	private DatePickerDialog.OnDateSetListener myDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
-
-			Log.i("appLog", "## set date no datePickerInput: "
-					+ datePickerInput);
 
 			switch (datePickerInput) {
 			case DIALOG_DATE_PICKER_L:
