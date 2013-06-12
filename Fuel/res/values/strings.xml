@@ -28,9 +28,9 @@
     <string name="t_ful">FUEL</string>
 
     <!-- titulo de campos -->
-    <string name="tv_vr">VEHICLE REGISTRATION</string>
-    <string name="tv_pr">PLATE REGISTRATION</string>
-    <string name="tv_tv">TYPE VEHICLE</string>
+    <string name="tv_vr">VEHICLE NAME</string>
+    <string name="tv_pr">PLATE</string>
+    <string name="tv_tv">TYPE</string>
     <string name="tv_s">SUBJECT</string>
     <string name="tv_v">VALUE</string>
     <string name="tv_gp">GALLON PRICE</string>

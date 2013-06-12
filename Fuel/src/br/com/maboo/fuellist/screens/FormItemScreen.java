@@ -101,7 +101,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	private Settings set;
 
 	private Calendar c; // calendario
-	
+
 	public void onCreate(final Bundle icicle) {
 		super.onCreate(icicle);
 
@@ -204,7 +204,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// date
 		date = (TextView) findViewById(R.id.date);
 		day_time = c.get(Calendar.DAY_OF_MONTH);
-		month_time = c.get(Calendar.MONTH)+1;
+		month_time = c.get(Calendar.MONTH) + 1;
 		year_time = c.get(Calendar.YEAR);
 
 		date.setText(new StringBuilder().append(AndroidUtils.pad(day_time))
@@ -344,108 +344,30 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		getSharedPrefs(); // carrega preferencias
 
-		Log.i(TAG, "Data for edit");
 		Log.i(TAG, itemRequest.toString());
 
 		try {
 
+			Log.i(TAG, "Data for edit");
+			// prepara campo de data
 			// formata date
 			String dateFromBase = itemRequest.getDate();
 
-			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < dateFromBase.length(); i++) {
+			// date
+			String result = dateFromBase.substring(0, 10);
+			Log.i(TAG, "date [" + result + "]");
+			date.setText(result.substring(0, 10));
+			day_time = Integer.valueOf(result.substring(0, 2)).intValue();
+			month_time = Integer.valueOf(result.substring(3, 5)).intValue();
+			year_time = Integer.valueOf(result.substring(6, 10)).intValue();
 
-				if (dateFromBase.charAt(i) == '-') { // insere valor da
-														// data
+			// hora
+			result = dateFromBase.substring(11, 16);
+			Log.i(TAG, "hour [" + result + "]");
+			hour.setText(result.substring(0, 5));
+			hour_time = Integer.valueOf(result.substring(0, 2)).intValue();
+			min_time = Integer.valueOf(result.substring(3, 5)).intValue();
 
-					Log.i(TAG, "date [" + sb.toString() + "]");
-
-					date.setText(sb.toString());
-
-					// insere os valores nas variaveis de classe
-					day_time = Integer.valueOf(
-							String.valueOf(sb.toString().subSequence(0, 1)))
-							.intValue();
-
-					sb = new StringBuffer();
-
-					i++;
-
-				} else if (i == 15) { // insere
-										// valor
-										// da hora
-										// o numero dessa linha é comparado a
-										// 16, pois esse é o tamanho maximo
-										// correto de uma data, de acordo com a
-										// inserção dela 'dd/mm/aaaa - hh:mm'
-					sb.append(dateFromBase.charAt(i));
-
-					Log.i(TAG, "hour [" + sb.toString() + "]");
-
-					hour.setText(sb.toString()); // hora
-
-					break;
-
-				}
-
-				// Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
-
-				sb.append(dateFromBase.charAt(i));
-			}
-
-			// prepara campo de data
-			sb = new StringBuffer();
-			// formata date para os campos do Dialog
-			for (int j = 0; j < dateFromBase.length(); j++) {
-				// dia
-				if (j < 2) {
-					sb.append(dateFromBase.charAt(j));
-				} else if (j == 2) { // barra
-					day_time = Integer.valueOf(sb.toString()).intValue();
-					sb = new StringBuffer();
-				}
-				// mes
-				if (j > 2 && j < 5) {
-					sb.append(dateFromBase.charAt(j));
-				} else if (j == 5) { // barra
-					month_time = Integer.valueOf(sb.toString())
-							.intValue();
-					sb = new StringBuffer();
-				}
-				// ano
-				if (j > 5 && j < 10) {
-					sb.append(dateFromBase.charAt(j));
-				}
-				// fim da capitação da data
-				if (dateFromBase.charAt(j) == '-') {
-					year_time = Integer.valueOf(sb.toString())
-							.intValue();
-					break;
-				}
-			}
-
-			// prepara o campo hora
-			sb = new StringBuffer();
-			// formata date para os campos do Dialog
-			for (int j = 0; j < dateFromBase.length(); j++) {
-				// hora
-				if (j > 10 && j < 13) {
-					sb.append(dateFromBase.charAt(j));
-				} else if (j == 13) { // barra
-					hour_time = Integer.valueOf(sb.toString()).intValue();
-					sb = new StringBuffer();
-				}
-				// minuto
-				if (j > 13 && j < dateFromBase.length()) { 
-					sb.append(dateFromBase.charAt(j));
-				}
-				
-				if (j == 15) {
-					min_time = Integer.valueOf(sb.toString()).intValue();
-					sb = new StringBuffer();
-				}
-			}
-			
 			// subject
 			// if (type == EXPENSE || type == REPAIR || type == NOTE) {
 			subject.setText(String.valueOf((itemRequest.getSubject().toString()
@@ -659,7 +581,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 						// tela)
 
 			saveNewItem();
-			
 
 			showToast("Updated!");
 
@@ -701,6 +622,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	 * @return
 	 */
 	private Toast toast;
+
 	private void showToast(String msg) {
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.custom_toast,
@@ -752,9 +674,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	}
 
 	public void btBarUpLeft(final View v) {
-		
+
 		// força o fechamento da tela
-		 finish();
+		finish();
 	}
 
 	public void btBarUpRight(final View v) {
@@ -767,9 +689,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		if (!EditTextTools.isEmptyEdit(vEditText, this, "noalert")) {
 			ruleSave();
-			
+
 			// verifica se o Toast esta na tela e cancela a exibição dele
-			
 
 			super.onBackPressed();
 		}
@@ -808,7 +729,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 					min_time, false);
 		case DATE_DIALOG_ID:
 			return new DatePickerDialog(this, myDateSetListener, year_time,
-					month_time-1, day_time);
+					month_time - 1, day_time);
 		}
 
 		return null;
@@ -839,7 +760,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 			// set current date into textview
 			date.setText(new StringBuilder().append(AndroidUtils.pad(day_time))
-					.append("/").append(AndroidUtils.pad(month_time+1))
+					.append("/").append(AndroidUtils.pad(month_time + 1))
 					.append("/").append(AndroidUtils.pad(year_time)));
 		}
 	};

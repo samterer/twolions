@@ -60,6 +60,7 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 		changeFont(); // modifica as fontes
 
 		actionBt(this);
+
 	}
 
 	/******************************************************************************
@@ -90,7 +91,7 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 				// é uma edição, busca o carro...
 				final Carro c = buscarCarro(id);
 				campoNome.setText(c.getNome());
-				campoPlaca.setText(c.getPlaca());
+				campoPlaca.setText(c.getPlaca().toUpperCase());
 				// tipo
 				if (c.getTipo().equals("moto")) {
 					tipo = "moto";
@@ -129,13 +130,6 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 	/******************************************************************************
 	 * SERVICES
 	 ******************************************************************************/
-
-	private void renomeiaCampos() {
-		// verifica o idiota da vez
-
-		// passa o idiota da vez e o vector de vTextView
-	}
-
 	public void salvar() {
 
 		final Carro carro = new Carro();
@@ -144,9 +138,9 @@ public class FormCarScreen extends FormCarActivity implements InterfaceBar {
 			carro.setId(id);
 		}
 
-		carro.setNome(campoNome.getText().toString());
+		carro.setNome(campoNome.getText().toString().trim());
 
-		carro.setPlaca(campoPlaca.getText().toString());
+		carro.setPlaca(campoPlaca.getText().toString().toUpperCase().trim());
 
 		if (tipo.equals("")) {
 			tipo = "carro";

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cinza_claro"
+    android:gravity="center_horizontal"
+    android:shrinkColumns="4"
+    android:stretchColumns="4" >
 
     <!-- NAME VEHICLE -->
 
@@ -15,24 +18,21 @@
         <TextView
             android:id="@+id/tName"
             style="@style/texto16cinzaDark"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="@string/tv_vr" />
-    </TableRow>
 
-    <!-- EDIT NAME VEHICLE -->
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:gravity="center" >
+        <!-- EDIT NAME VEHICLE -->
 
         <EditText
             android:id="@+id/campoNome"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
             android:hint="@string/h_n_vehicle"
-            android:maxLength="20"
-            android:tag="campoNome"
-            android:width="240px" />
+            android:maxLength="13"
+            android:singleLine="true"
+            android:tag="campoNome" />
     </TableRow>
 
     <include
@@ -51,24 +51,22 @@
         <TextView
             android:id="@+id/tPlate"
             style="@style/texto16cinzaDark"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
             android:gravity="center"
+            android:lines="1"
             android:text="@string/tv_pr" />
-    </TableRow>
 
-    <!-- EDIT PLATE -->
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:gravity="center" >
+        <!-- EDIT PLATE -->
 
         <EditText
             android:id="@+id/campoPlaca"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
             android:hint="@string/h_p_vehicle"
-            android:maxLength="20"
-            android:tag="campoPlate"
-            android:width="240px" />
+            android:maxLength="13"
+            android:singleLine="true"
+            android:tag="campoPlate" />
     </TableRow>
 
     <include
@@ -87,31 +85,32 @@
         <TextView
             android:id="@+id/tType"
             style="@style/texto16cinzaDark"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="@string/tv_tv" />
-    </TableRow>
 
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center" >
-
-        <Button
-            android:id="@+id/campoTipoCar"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:background="@null"
-            android:drawableTop="@drawable/bt_car" />
+            android:layout_weight="2"
+            android:gravity="center" >
 
-        <Button
-            android:id="@+id/campoTipoMoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:background="@null"
-            android:drawableTop="@drawable/bt_moto" />
+            <Button
+                android:id="@+id/campoTipoCar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
+                android:background="@null"
+                android:drawableTop="@drawable/bt_car" />
+
+            <Button
+                android:id="@+id/campoTipoMoto"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:background="@null"
+                android:drawableTop="@drawable/bt_moto" />
+        </LinearLayout>
     </TableRow>
 
 </TableLayout>

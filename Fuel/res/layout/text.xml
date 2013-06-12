@@ -25,7 +25,7 @@
 
         <EditText
             android:id="@+id/text"
-            style="@style/texto14cinza"
+            style="@style/texto16cinzaDark"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="2"
