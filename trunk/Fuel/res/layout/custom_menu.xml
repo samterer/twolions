@@ -3,33 +3,35 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="bottom"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:shrinkColumns="4"
+    android:stretchColumns="4" >
 
     <ImageButton
         android:id="@+id/btFuel"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_weight="1"
         android:src="@drawable/fuel" />
 
     <ImageButton
         android:id="@+id/btExpense"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_weight="1"
         android:src="@drawable/expense" />
 
     <ImageButton
         android:id="@+id/btNote"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_weight="1"
         android:src="@drawable/note" />
 
     <ImageButton
         android:id="@+id/btRepair"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_weight="1"
         android:src="@drawable/repair" />
 

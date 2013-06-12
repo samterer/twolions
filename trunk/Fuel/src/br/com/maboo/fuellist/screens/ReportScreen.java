@@ -1,5 +1,6 @@
 package br.com.maboo.fuellist.screens;
 
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -225,6 +226,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		try {
 
+			sysout("## date_left: " + date_left);
 			dateTemp = date_left.getText().toString().substring(6, 16)
 					.toString();
 			sysout("## date from: " + dateTemp);
@@ -490,19 +492,20 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 			if (valor.before(dateMenor)) {
 				dateMenor = valor;
-				sysout("## valor: " + dateMenor);
+				sysout("## dateMenor: " + dateMenor);
 			}
 		}
 
-		// formata date
-		dl_day_time = dateMenor.getDay();
-		dl_month_time = dateMenor.getMonth();
-		dl_year_time = dateMenor.getYear();
+		Format formatter = new SimpleDateFormat("dd-MM-yyyy");
+		String s = formatter.format(dateMenor);
 
-		sysout(("dateMenor: " + new StringBuilder()
-				.append(AndroidUtils.pad(dl_day_time)).append("/")
-				.append(AndroidUtils.pad(dl_month_time)).append("/")
-				.append(AndroidUtils.pad(dl_year_time))));
+		sysout("## dateMenor(final): " + s);
+
+		// formata date
+		dl_day_time = Integer.valueOf(s.substring(0, 2)).intValue();
+		dl_month_time = Integer.valueOf(s.substring(3, 5)).intValue();
+		dl_year_time = Integer.valueOf(s.substring(6, 10)).intValue();
+
 	}
 
 	private int datePickerInput = 0;

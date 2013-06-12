@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -66,14 +67,11 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 	private Settings set;
 
-	// item selecionado
-	private View itemSelectView;
-
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
 		getSharedPrefs();
-		
+
 		try {
 
 			dao = new ItemLogDAO(this);
@@ -105,7 +103,6 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 		organizeBt();
 
-
 	}
 
 	/******************************************************************************
@@ -123,6 +120,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 		// tamanho da fonte, para não estourar o espaço
 		if (title.getText().length() > 10) {
 			title.setTextSize(15);
+			title.setGravity(Gravity.CENTER);
 		}
 
 		// salva itens na memoria
@@ -181,7 +179,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 
 	protected void onActivityResult(int codigo, int codigoRetorno, Intent it) {
 		super.onActivityResult(codigo, codigoRetorno, it);
-		
+
 		update(); // re-carrega a lista
 
 	}
@@ -255,17 +253,16 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 	}
 
 	public void showBtsEditDelete(View view, boolean exibe) {
-		itemSelectView = view;
 
 		// prepara animação (left to right)
 		LayoutAnimationController controller = AnimationUtils
 				.loadLayoutAnimation(this, R.anim.anime_slide_to_right);
-		
-		final RelativeLayout item = (RelativeLayout) itemSelectView
-		.findViewById(R.id.r_item_log);
-		
-		final LinearLayout tb_edicao = (LinearLayout) itemSelectView
-		.findViewById(R.id.tb_edicao);
+
+		final RelativeLayout item = (RelativeLayout) view
+				.findViewById(R.id.r_item_log);
+
+		final LinearLayout tb_edicao = (LinearLayout) view
+				.findViewById(R.id.tb_edicao);
 
 		if (exibe) { // exibe botoes de edição
 
@@ -280,20 +277,20 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 			item.setLayoutAnimation(controller);
 
 			// esconde o outro item que esta sendo exibido
-			hideOtherItens(itemSelectView); 
-			
+			hideOtherItens(view);
+
 			final Handler handler = new Handler();
 			Timer t = new Timer();
 			t.schedule(new TimerTask() {
 				public void run() {
 					handler.post(new Runnable() {
 						public void run() {
-							try {							
-								
+							try {
+
 								item.setVisibility(View.VISIBLE);
-								
+
 								tb_edicao.setVisibility(View.GONE);
-								
+
 							} catch (NullPointerException e) {
 								e.printStackTrace();
 							}
@@ -305,7 +302,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 		} else { // esconde botoes de edição
 
 			item.setVisibility(View.VISIBLE);
-			
+
 			tb_edicao.setVisibility(View.GONE);
 
 		}
@@ -484,7 +481,7 @@ public class ListItemScreen extends FuelListActivity implements InterfaceBar,
 		id_item = item.getId();
 
 		try {
-			showBtsEditDelete(view, true);			
+			showBtsEditDelete(view, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -221,15 +221,16 @@ public class ListCarScreen extends FuelListActivity implements
 		LayoutAnimationController controller = AnimationUtils
 				.loadLayoutAnimation(this, R.anim.anime_slide_to_right);
 
-		if (exibe) {
+		final LinearLayout item = (LinearLayout) view
+				.findViewById(R.id.l_item_car);
 
-			LinearLayout item = (LinearLayout) view
-					.findViewById(R.id.l_item_car);
+		final LinearLayout tb_edicao = (LinearLayout) view
+				.findViewById(R.id.tb_edicao);
+
+		if (exibe) {
 
 			item.setVisibility(View.GONE);
 
-			LinearLayout tb_edicao = (LinearLayout) view
-					.findViewById(R.id.tb_edicao);
 			tb_edicao.setLayoutAnimation(controller);
 			tb_edicao.setVisibility(View.VISIBLE);
 
@@ -241,37 +242,32 @@ public class ListCarScreen extends FuelListActivity implements
 
 			hideOtherItens(view);
 
+			final Handler handler = new Handler();
+			Timer t = new Timer();
+			t.schedule(new TimerTask() {
+				public void run() {
+					handler.post(new Runnable() {
+						public void run() {
+							try {
+
+								item.setVisibility(View.VISIBLE);
+
+								tb_edicao.setVisibility(View.GONE);
+
+							} catch (NullPointerException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				}
+			}, 3000);
+
 		} else {
 
-			LinearLayout item = (LinearLayout) view
-					.findViewById(R.id.l_item_car);
 			item.setVisibility(View.VISIBLE);
-
-			LinearLayout tb_edicao = (LinearLayout) view
-					.findViewById(R.id.tb_edicao);
 
 			tb_edicao.setVisibility(View.GONE);
 		}
-
-		final Handler handler = new Handler();
-		Timer t = new Timer();
-		t.schedule(new TimerTask() {
-			public void run() {
-				handler.post(new Runnable() {
-					public void run() {
-
-						LinearLayout item = (LinearLayout) view
-								.findViewById(R.id.l_item_car);
-						item.setVisibility(View.VISIBLE);
-
-						LinearLayout tb_edicao = (LinearLayout) view
-								.findViewById(R.id.tb_edicao);
-
-						tb_edicao.setVisibility(View.GONE);
-					}
-				});
-			}
-		}, 4500);
 
 	}
 
@@ -282,7 +278,6 @@ public class ListCarScreen extends FuelListActivity implements
 		for (int i = 0; i < listview_car.getCount(); i++) {
 			View item = (View) listview_car.getChildAt(i);
 			if (item != currentView) {
-				// item.setVisibility(View.INVISIBLE);
 				showBtsEditDelete(item, false);
 			}
 		}
@@ -416,7 +411,11 @@ public class ListCarScreen extends FuelListActivity implements
 		Carro carro = carros.get(pos);
 		id_car = carro.getId();
 
-		showBtsEditDelete(view, true);
+		try {
+			showBtsEditDelete(view, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

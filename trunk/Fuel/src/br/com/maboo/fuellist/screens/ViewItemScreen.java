@@ -278,42 +278,12 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
 			// formata date
 			String dateFromBase = itemRequest.getDate();
-
-			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < dateFromBase.length(); i++) {
-
-				if (dateFromBase.charAt(i) == '-') { // insere valor da
-														// data
-
-					Log.i(TAG, "date [" + sb.toString() + "]");
-
-					date.setText(sb.toString());
-
-					sb = new StringBuffer();
-
-					i++;
-
-				} else if (i == 15) { // insere
-										// valor
-										// da hora
-										// o numero dessa linha é comparado a
-										// 16, pois esse é o tamanho maximo
-										// correto de uma data, de acordo com a
-										// inserção dela 'dd/mm/aaaa - hh:mm'
-					sb.append(dateFromBase.charAt(i));
-
-					Log.i(TAG, "hour [" + sb.toString() + "]");
-
-					hour.setText(sb.toString()); // hora
-
-					break;
-
-				}
-
-				// Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
-
-				sb.append(dateFromBase.charAt(i));
-			}
+			// date
+			Log.i(TAG, "date [" + dateFromBase.substring(0, 10) + "]");
+			date.setText(dateFromBase.substring(0, 10));
+			// hora
+			Log.i(TAG, "hour [" + dateFromBase.substring(11, 16) + "]");
+			hour.setText(dateFromBase.substring(11, 16));
 
 			// subject
 			// if (type == EXPENSE || type == REPAIR || type == NOTE) {

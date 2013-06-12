@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_gravity="center"
-    android:shrinkColumns="3" >
+    android:layout_height="wrap_content" >
 
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:shrinkColumns="4"
+        android:stretchColumns="4" >
 
-        <!-- TITLE SUBJECT -->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
 
-        <TextView
-            android:id="@+id/t_subject"
-            style="@style/texto16cinzaDark"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="0"
-            android:gravity="center"
-            android:padding="5dip"
-            android:text="@string/tv_s" />
+            <!-- TITLE SUBJECT -->
 
-        <!-- EDIT SUBJECT -->
+            <TextView
+                android:id="@+id/t_subject"
+                style="@style/texto16cinzaDark"
+                android:layout_weight="2"
+                android:gravity="center|left"
+                android:padding="5dip"
+                android:text="@string/tv_s" />
 
-        <EditText
-            android:id="@+id/subject"
-            style="@style/texto14cinza"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:hint="@string/h_subject"
-            android:width="20dp"
-            android:maxLength="20"
-            android:tag="subject" />
-    </TableRow>
+            <!-- EDIT SUBJECT -->
 
-</TableLayout>
+            <EditText
+                android:id="@+id/subject"
+                style="@style/texto14cinza"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="@string/h_subject"
+                android:singleLine="true"
+                android:maxLength="20"
+                android:tag="subject" />
+        </TableRow>
+    </TableLayout>
+
+</FrameLayout>
