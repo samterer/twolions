@@ -32,7 +32,7 @@ public class ToastUtil {
 		
 	}
 
-	public void create(int TIPO, String texto) {
+	public void show(int TIPO, String texto) {
 
 		// set a dummy image
 		// icon
@@ -62,6 +62,20 @@ public class ToastUtil {
 		toast.setView(view);
 		toast.show();
 
+	}
+	
+	public void show(String texto) {
+		// set a message
+		TextView text = (TextView) view.findViewById(R.id.text);
+		text.setText(texto);
+
+		// Toast...
+		Toast toast = new Toast(context.getApplicationContext());
+		toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+		toast.setDuration(Toast.LENGTH_LONG);
+		toast.setView(view);
+		toast.show();
+		
 	}
 
 }

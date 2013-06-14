@@ -36,6 +36,7 @@ import br.com.maboo.fuellist.modelobj.Settings;
 import br.com.maboo.fuellist.transaction.Transaction;
 import br.com.maboo.fuellist.util.AndroidUtils;
 import br.com.maboo.fuellist.util.Constants;
+import br.com.maboo.fuellist.util.ToastUtil;
 
 public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		Transaction {
@@ -191,6 +192,10 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	 * SERVICES
 	 ******************************************************************************/
 	public void update() {
+		
+	    // reseta valores dos totais
+		valorTotal = 0.0;
+		totalUnidade = 0.0;
 
 		getSharedPrefs();
 
@@ -211,15 +216,15 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	// lista definida pela data
 	private List<ItemLog> itensNew;
 
+	// date from
+	Date dateFrom = null;
+
+	// date to
+	Date dateTo = null;
+	
 	private void updateListWithDate() {
 
 		itensNew = new ArrayList<ItemLog>();
-
-		// date from
-		Date dateFrom = null;
-
-		// date to
-		Date dateTo = null;
 
 		// salva data temporaria
 		String dateTemp;
@@ -324,9 +329,6 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	 * Recupera o valor total e de unidade da lista (por coluna ou tipo)
 	 */
 	private void setValoresReport() {
-
-		valorTotal = 0.0;
-		totalUnidade = 0.0;
 
 		// recupera valor de unidade e valor total
 		for (int i = 0; i < itens.size(); i++) {
@@ -575,6 +577,17 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 								.append("/")
 								.append(AndroidUtils.pad(dr_year_time)));
 				break;
+			}
+			
+			// a data do 'to' é menor do que a data do 'from'
+			try {
+				if(dateFrom.after(dateTo)) { 
+					ToastUtil toast = new ToastUtil(ReportScreen.this);
+					toast.show("'Date to' less than 'Date from'");
+					return;
+				}
+			} catch (NullPointerException e) {
+				e.printStackTrace();
 			}
 
 			// atualiza lista
