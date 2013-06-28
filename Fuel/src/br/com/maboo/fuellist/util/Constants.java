@@ -6,7 +6,7 @@ public class Constants {
 	public static final String AUTHORITY = "br.com.maboo.fuellist";
 
 	// version of current data base
-	public static final int DB_VERSION = 5;
+	public static final int DB_VERSION = 7;
 
 	// db
 	public static final String DB_NAME = "bd_fuellist";

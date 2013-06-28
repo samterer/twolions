@@ -33,7 +33,7 @@ public class SqlScript extends DBConnection {
 					+ " ( _id integer primary key autoincrement, nome text not null,placa text not null,tipo text not null);",
 
 			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('Fiesta','JUH-8266','carro');",
+					+ "(nome,placa,tipo) values('Fiesta','SKP-1730','carro');",
 			sqlScript[1] + " " + TB_CARRO
 					+ "(nome,placa,tipo) values('YBR','DAY-1206','moto');" };
 
@@ -61,19 +61,27 @@ public class SqlScript extends DBConnection {
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,value_p,value_u,odometer) values('1','25/06/2012-20:30','0','etanol','60.00','2.39','81456');",
+					+ "(id_car,date,type,subject,value_p,value_u,odometer) values('1','25/06/2013-22:30','0','etanol','60.00','2.39','81456');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,text) values('1','25/06/2012-20:30','2','Pagar seguro','Não posso esquecer de pagar a merda do seguro. Valor R$178.');",
+					+ "(id_car,date,type,subject,text) values('1','15/06/2013-21:30','2','Pagar seguro','Não posso esquecer de pagar a merda do seguro. Valor R$178.');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,value_p) values('2','25/06/2012-20:30','1','Troca de oleo','25.00');",
+					+ "(id_car,date,type,subject,value_p) values('2','05/04/2013-16:30','1','Troca de oleo','125.00');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,value_p) values('2','25/06/2012-20:30','3','Troca de pneu','677.00');" };
+					+ "(id_car,date,type,subject,value_p) values('1','23/04/2013-21:30','3','Amassado','93.30');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p) values('1','22/03/2013-23:30','3','Seta','65.00');",
+			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p) values('2','12/02/2013-20:30','1','Troca de pneu','677.00');" };
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(final Context ctx) {
@@ -91,7 +99,9 @@ public class SqlScript extends DBConnection {
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[1],
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[2],
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[3],
-				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[4] };
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[4],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[5],
+				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[6]};
 		// delete
 		final String[] script_tables_delete = {
 				// delete table car

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
     <TableLayout
@@ -20,16 +20,15 @@
             <TextView
                 android:id="@+id/t_value_p"
                 style="@style/texto16cinzaDark"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingRight="5dip"
+                android:layout_weight="2"
+                android:gravity="left"
                 android:text="@string/tv_ap" />
 
             <!-- EDIT VALUE P -->
 
             <EditText
                 android:id="@+id/value_p"
-                style="@style/texto14cinza"
+                style="@style/texto16cinzaDark"
                 android:layout_weight="1"
                 android:gravity="right"
                 android:hint="@string/h_click"
@@ -42,7 +41,7 @@
 
             <TextView
                 android:id="@+id/t_value_p_desc"
-                style="@style/texto14cinza"
+                style="@style/texto16cinzaDark"
                 android:layout_weight="1"
                 android:gravity="right" />
         </TableRow>
