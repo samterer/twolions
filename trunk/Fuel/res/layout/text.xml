@@ -1,40 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_gravity="center"
-    android:shrinkColumns="3" >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:shrinkColumns="4"
+        android:stretchColumns="4" >
 
-        <!-- TITLE NOTE -->
-
-        <TextView
-            android:id="@+id/t_text"
-            style="@style/texto16cinzaDark"
+        <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:gravity="top|left"
-            android:padding="5dip"
-            android:text="@string/tv_n" />
+            android:layout_height="fill_parent" >
 
-        <!-- EDIT NOTE -->
+            <!-- TITLE NOTE -->
 
-        <EditText
-            android:id="@+id/text"
-            style="@style/texto16cinzaDark"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="2"
-            android:gravity="top"
-            android:hint="@string/h_text"
-            android:lines="14"
-            android:maxLength="240"
-            android:maxWidth="200dp"
-            android:tag="text" />
-    </TableRow>
+            <TextView
+                android:id="@+id/t_text"
+                style="@style/texto16cinzaDark"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="2"
+                android:gravity="top|left"
+                android:padding="5dip"
+                android:text="@string/tv_n" />
 
-</TableLayout>
+            <!-- EDIT NOTE -->
+
+            <EditText
+                android:id="@+id/text"
+                style="@style/texto16cinzaDark"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="2"
+                android:gravity="top"
+                android:hint="@string/h_text"
+                android:lines="14"
+                android:maxLength="240"
+                android:maxWidth="200dp"
+                android:tag="text" />
+        </TableRow>
+    </TableLayout>
+
+</FrameLayout>
