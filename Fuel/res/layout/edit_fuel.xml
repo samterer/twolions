@@ -75,7 +75,8 @@
     <TableRow
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="center" >
+        android:layout_marginRight="10dp"
+        android:gravity="right" >
 
         <include layout="@layout/value_u" />
     </TableRow>
@@ -95,7 +96,8 @@
     <TableRow
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="center" >
+        android:layout_marginRight="10dp"
+        android:gravity="right" >
 
         <include layout="@layout/value_p" />
     </TableRow>
@@ -115,7 +117,8 @@
     <TableRow
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="center" >
+        android:layout_marginRight="10dp"
+        android:gravity="right" >
 
         <include layout="@layout/odometer" />
     </TableRow>
