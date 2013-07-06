@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import br.com.maboo.fuellist.R;
 import br.com.maboo.fuellist.adapters.ReportAdapter;
 import br.com.maboo.fuellist.core.FuelListActivity;
@@ -36,7 +37,6 @@ import br.com.maboo.fuellist.modelobj.Settings;
 import br.com.maboo.fuellist.transaction.Transaction;
 import br.com.maboo.fuellist.util.AndroidUtils;
 import br.com.maboo.fuellist.util.Constants;
-import br.com.maboo.fuellist.util.ToastUtil;
 
 public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		Transaction {
@@ -62,6 +62,36 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	private String name_car;
 
 	private Settings set;
+
+	// valor total de despesas
+	private Double totalValor = 0.0;
+
+	// valor total de combustivel
+	private Double totalCombustivel = 0.0;
+
+	// spinner value
+	private int dl_day_time;
+	private int dl_month_time;
+	private int dl_year_time;
+
+	private int dr_day_time;
+	private int dr_month_time;
+	private int dr_year_time;
+
+	private TextView date_left;
+	private TextView date_right;
+
+	// calendar (unico)
+	private Calendar c;
+
+	// quantidade do combustivel
+	TextView t_totalCombustivel;
+
+	// titpo da unidade (combustivel)
+	TextView t_totalValor;
+
+	// unidade de combustivel no cabeçalho
+	TextView tipoUnidade;
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -99,7 +129,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		organizeBt();
 
-		initDate();
+		init();
 
 		// addListenerOnButton();
 
@@ -192,10 +222,6 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	 * SERVICES
 	 ******************************************************************************/
 	public void update() {
-		
-	    // reseta valores dos totais
-		valorTotal = 0.0;
-		totalUnidade = 0.0;
 
 		getSharedPrefs();
 
@@ -203,7 +229,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		listreport.setAdapter(new ReportAdapter(this, itens, set));
 
-		setValoresReport();
+		createReport(itens);
 
 	}
 
@@ -221,7 +247,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 	// date to
 	Date dateTo = null;
-	
+
 	private void updateListWithDate() {
 
 		itensNew = new ArrayList<ItemLog>();
@@ -231,17 +257,17 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 		try {
 
-			sysout("## date_left: " + date_left);
+			// sysout("## date_left: " + date_left);
 			dateTemp = date_left.getText().toString().substring(6, 16)
 					.toString();
-			sysout("## date from: " + dateTemp);
+			// sysout("## date from: " + dateTemp);
 			dateFrom = sdf.parse(dateTemp.trim());
 
 			dateTemp = "";
 
 			dateTemp = date_right.getText().toString().substring(4, 14)
 					.toString();
-			sysout("## date to: " + dateTemp);
+			// sysout("## date to: " + dateTemp);
 			dateTo = sdf.parse(dateTemp.trim());
 
 			dateTemp = "";
@@ -262,9 +288,8 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 			try {
 				dateTemp = item.getDate().substring(0, 10).toString().trim();
 				dateItem = sdf.parse(dateTemp);
-				sysout("## verificando se o item [" + item.getId()
-						+ "] esta dentro da regra, sua data é [" + dateItem
-						+ "]");
+				// sysout("## verificando se o item [" + item.getId()+
+				// "] esta dentro da regra, sua data é [" + dateItem+ "]");
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -273,26 +298,26 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 			if (dateItem.equals(dateFrom) || dateItem.equals(dateTo)) {
 				itensNew.add(item);
 
-				sysout("## o item [" + item.getId()
-						+ "] esta dentro da regra de 'equal'");
+				// sysout("## o item [" + item.getId()+
+				// "] esta dentro da regra de 'equal'");
 
 				continue;
 			} else {
-				sysout("## " + dateItem + " não é igual a [" + dateFrom
-						+ "] ou [" + dateTo + "]");
+				// sysout("## " + dateItem + " não é igual a [" + dateFrom+
+				// "] ou [" + dateTo + "]");
 			}
 
 			// verifica se a data é maior que a 'from' e menor que a 'to'
 			if (dateItem.after(dateFrom) && dateItem.before(dateTo)) {
 				itensNew.add(item);
 
-				sysout("## o item [" + item.getId()
-						+ "] esta dentro da regra 'entre'");
+				// sysout("## o item [" + item.getId()+
+				// "] esta dentro da regra 'entre'");
 
 				continue;
 			} else {
-				sysout("## " + dateItem + " não esta entre [" + dateFrom
-						+ "] e [" + dateTo + "]");
+				// sysout("## " + dateItem + " não esta entre [" + dateFrom+
+				// "] e [" + dateTo + "]");
 			}
 
 		}
@@ -302,7 +327,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 
 			listreport.setAdapter(new ReportAdapter(this, itensNew, set));
 
-			setValoresReport();
+			createReport(itensNew);
 		}
 
 	}
@@ -322,22 +347,32 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		return list;
 	}
 
-	private Double valorTotal = 0.0;
-	private Double totalUnidade = 0.0;
-
 	/**
-	 * Recupera o valor total e de unidade da lista (por coluna ou tipo)
+	 * Recupera o **valor total** e de **unidade da lista de combustivel** (por
+	 * coluna ou tipo)
 	 */
-	private void setValoresReport() {
+	private void createReport(List<ItemLog> itensNew) {
+
+		// Toast.makeText(this, "carregando lista", Toast.LENGTH_SHORT).show();
+
+		// reseta valores dos totais
+		totalCombustivel = 0.0;
+		t_totalCombustivel.setText("");
+
+		totalValor = 0.0;
+		t_totalValor.setText("");
+
+		// cabeçalho - seta o titpo da unidade (combustivel)
+		tipoUnidade.setText("Unit(" + set.getVolume() + ")");
 
 		// recupera valor de unidade e valor total
-		for (int i = 0; i < itens.size(); i++) {
-			ItemLog item = itens.get(i);
+		for (int i = 0; i < itensNew.size(); i++) {
+			ItemLog item = itensNew.get(i);
 
 			// verifica se não é uma nota
 			if (item.getType() != NOTE) {
 				// incrementa valor
-				valorTotal += item.getValue_p();
+				totalValor += item.getValue_p();
 
 				// incrementa valor da unidade
 				if (item.getType() == FUEL) {
@@ -345,24 +380,27 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 					Double total = Math.floor(item.getValue_p()
 							/ item.getValue_u());
 
-					totalUnidade += total;
-					Log.d("appLog", "## incrementa: (totalUnidade): "
-							+ totalUnidade);
+					totalCombustivel += total;
+					// Log.d("appLog", "## incrementa: (totalCombustivel): "+
+					// totalCombustivel);
 				}
 			}
 		}
 
-		TextView totalvalorcategoria = (TextView) findViewById(R.id.totalvalorcategoria);
-		totalvalorcategoria.setText(set.getMoeda() + ""
-				+ String.format("%.2f", valorTotal));
-
-		TextView totalunidadecategoria = (TextView) findViewById(R.id.totalunidadecategoria);
-		totalunidadecategoria.setText(totalUnidade.intValue() + " "
+		// recupera a quantidade do combustivel
+		t_totalCombustivel.setText(totalCombustivel.intValue() + " "
 				+ set.getVolume());
 
-		// seta o titpo da unidade
-		TextView tipoUnidade = (TextView) findViewById(R.id.tipoUnidade);
-		tipoUnidade.setText("Unit(" + set.getVolume() + ")");
+		// seta o valor total de gastos (combustivel)
+		t_totalValor.setText(set.getMoeda() + ""
+				+ String.format("%.2f", totalValor));
+
+		// Toast.makeText(
+		// this,
+		// "## totalCombustivel: " + totalCombustivel.intValue() + "||"
+		// + "totalValor: " + totalValor, Toast.LENGTH_SHORT)
+		// .show();
+
 	}
 
 	/******************************************************************************
@@ -403,28 +441,13 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	/******************************************************************************
 	 * DATES
 	 ******************************************************************************/
-	// spinner value
-	private int dl_day_time;
-	private int dl_month_time;
-	private int dl_year_time;
-
-	private int dr_day_time;
-	private int dr_month_time;
-	private int dr_year_time;
-
-	private TextView date_left;
-	private TextView date_right;
-
-	// calendar (unico)
-	private Calendar c;
-
-	private void initDate() {
+	private void init() {
 
 		// calendar
 		c = Calendar.getInstance();
 
 		// pattern
-		sdf = new SimpleDateFormat("dd/mm/yyyy");
+		sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		// date
 		date_left = (TextView) findViewById(R.id.date_left);
@@ -452,6 +475,22 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 				+ new StringBuilder().append(AndroidUtils.pad(dr_day_time))
 						.append("/").append(AndroidUtils.pad(dr_month_time))
 						.append("/").append(AndroidUtils.pad(dr_year_time)));
+
+		// recupera a quantidade do combustivel
+		t_totalCombustivel = (TextView) findViewById(R.id.totalunidadecategoria);
+
+		// seta o titpo da unidade (combustivel)
+		t_totalValor = (TextView) findViewById(R.id.totalvalorcategoria);
+
+		// tipo de unidade de combustivel no cabeçalho
+		tipoUnidade = (TextView) findViewById(R.id.tipoUnidade);
+
+		// reseta valores dos totais
+		totalCombustivel = 0.0;
+		t_totalCombustivel.setText("");
+
+		totalValor = 0.0;
+		t_totalValor.setText("");
 
 	}
 
@@ -487,21 +526,21 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 			try {
 				valor = sdf.parse(item.getDate().substring(0, 10).toString()
 						.trim());
-				sysout("## valor: " + valor);
+				// sysout("## valor: " + valor);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 
 			if (valor.before(dateMenor)) {
 				dateMenor = valor;
-				sysout("## dateMenor: " + dateMenor);
+				// sysout("## dateMenor: " + dateMenor);
 			}
 		}
 
 		Format formatter = new SimpleDateFormat("dd-MM-yyyy");
 		String s = formatter.format(dateMenor);
 
-		sysout("## dateMenor(final): " + s);
+		// sysout("## dateMenor(final): " + s);
 
 		// formata date
 		dl_day_time = Integer.valueOf(s.substring(0, 2)).intValue();
@@ -578,15 +617,15 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 								.append(AndroidUtils.pad(dr_year_time)));
 				break;
 			}
-			
+
 			// a data do 'to' é menor do que a data do 'from'
 			try {
-				if(dateFrom.after(dateTo)) { 
-					ToastUtil toast = new ToastUtil(ReportScreen.this);
-					toast.show("'Date to' less than 'Date from'");
+				if (dateFrom.after(dateTo)) {
+					Toast.makeText(ReportScreen.this, "Incorrect date form.",
+							Toast.LENGTH_SHORT).show();
 					return;
 				}
-			} catch (NullPointerException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
@@ -598,7 +637,7 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 	};
 
 	/******************************************************************************
-	 * REPORT
+	 * REPORT (ENVIO POR EMAIL)
 	 ******************************************************************************/
 	private void shareReport() {
 		Intent i = new Intent(Intent.ACTION_SEND);
@@ -726,9 +765,9 @@ public class ReportScreen extends FuelListActivity implements InterfaceBar,
 		// cria o rodape
 
 		sb.append("<b>" + getSpace(54)
-				+ AndroidUtils.pad(totalUnidade.intValue()) + getSpace(42) + ""
-				+ set.getMoeda() + getSpace(1)
-				+ String.format("%.2f", valorTotal) + "</b>");
+				+ AndroidUtils.pad(totalCombustivel.intValue()) + getSpace(42)
+				+ "" + set.getMoeda() + getSpace(1)
+				+ String.format("%.2f", totalValor) + "</b>");
 
 		return sb.toString();
 	}
