@@ -18,18 +18,23 @@ public class ToastUtil {
 
 	Context context;
 
-
+	@SuppressWarnings("null")
 	public ToastUtil(Context context) {
 		this.context = context;
-		
+
 		// get your custom_toast.xml ayout
-		LayoutInflater inflater = null;//getLayoutInflater();
+		LayoutInflater inflater = null;// getLayoutInflater();
 
-		view = inflater.inflate(R.layout.custom_toast,
-		  (ViewGroup) context.getResources().getLayout(R.id.custom_toast_layout_id));
+		try {
+			view = inflater.inflate(R.layout.custom_toast, (ViewGroup) context
+					.getResources().getLayout(R.id.custom_toast_layout_id));
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 
-		image_toast = (ImageView) context.getResources().getLayout(R.id.image_toast);
-		
+		image_toast = (ImageView) context.getResources().getLayout(
+				R.id.image_toast);
+
 	}
 
 	public void show(int TIPO, String texto) {
@@ -63,7 +68,7 @@ public class ToastUtil {
 		toast.show();
 
 	}
-	
+
 	public void show(String texto) {
 		// set a message
 		TextView text = (TextView) view.findViewById(R.id.text);
@@ -75,7 +80,7 @@ public class ToastUtil {
 		toast.setDuration(Toast.LENGTH_LONG);
 		toast.setView(view);
 		toast.show();
-		
+
 	}
 
 }
