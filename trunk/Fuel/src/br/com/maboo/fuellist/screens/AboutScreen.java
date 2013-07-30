@@ -1,5 +1,7 @@
 package br.com.maboo.fuellist.screens;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import br.com.maboo.fuellist.R;
@@ -39,6 +41,20 @@ public class AboutScreen extends ActivityCircle {
 		finish();
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+	}
+	
+	public void linkTwitter(View v) {
+		
+		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/maboobr"));
+        startActivity(intent);
+		
+	}
+	
+	public void link(View v) {
+		
+		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maboobr.wix.com/maboobr"));
+        startActivity(intent);
+		
 	}
 
 }
