@@ -34,8 +34,10 @@ public class SqlScript extends DBConnection {
 
 			sqlScript[1] + " " + TB_CARRO
 					+ "(nome,placa,tipo) values('Fiesta','SKP-1730','carro');",
-			sqlScript[1] + " " + TB_CARRO
-					+ "(nome,placa,tipo) values('YBR','DAY-1206','moto');" };
+	//		sqlScript[1] + " " + TB_CARRO
+	//				+ "(nome,placa,tipo) values('YBR','DAY-1206','moto');" 
+					
+	};
 
 	// ///////////////
 	// TABLE ITEM LOG
@@ -61,27 +63,58 @@ public class SqlScript extends DBConnection {
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,value_p,value_u,odometer) values('1','25/06/2013-22:30','0','etanol','60.00','2.39','81456');",
+					+ "(id_car,date,type,subject,value_p,value_u,odometer) values('1','25/06/2013-22:30','0','alcohol','20.00','1.49','81456');",
+
+//			sqlScript[1]
+//					+ " "
+//					+ TB_ITEM_LOG
+//					+ "(id_car,date,type,subject,value_p,value_u,odometer) values('1','15/06/2013-22:30','0','gasolina','40.00','2.39','81556');",
+//			sqlScript[1]
+//					+ " "
+//					+ TB_ITEM_LOG
+//					+ "(id_car,date,type,subject,value_p,value_u,odometer) values('1','05/06/2013-22:30','0','gasolina','30.00','2.47,'81756');",
+/*			sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p,value_u,odometer) values('1','03/06/2013-22:30','0','gasolina','18.00','2.30','81956');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,text) values('1','15/06/2013-21:30','2','Pagar seguro','Não posso esquecer de pagar a merda do seguro. Valor R$178.');",
+					+ "(id_car,date,type,subject,value_p,value_u,odometer) values('1','02/04/2013-22:30','0','gasolina','36.00','2.57','92056');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,value_p) values('2','05/04/2013-16:30','1','Troca de oleo','125.00');",
+					+ "(id_car,date,type,subject,value_p,value_u,odometer) values('1','20/04/2013-22:30','0','gasolina','25.00','2.35','92256');",
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,value_p) values('1','23/04/2013-21:30','3','Amassado','93.30');",
+					+ "(id_car,date,type,subject,value_p,value_u,odometer) values('1','15/04/2013-22:30','0','gasolina','20.00','2.49','92456');",
+*/
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,value_p) values('1','22/03/2013-23:30','3','Seta','65.00');",
+					+ "(id_car,date,type,subject,text) values('1','15/06/2013-21:30','2','Gate repair','I cannot forget. U$ 178.00');",
+
+	//		sqlScript[1]
+	//				+ " "
+	//				+ TB_ITEM_LOG
+	//				+ "(id_car,date,type,subject,value_p) values('2','05/04/2013-16:30','1','Troca de oleo','125.00');",
+
 			sqlScript[1]
 					+ " "
 					+ TB_ITEM_LOG
-					+ "(id_car,date,type,subject,value_p) values('2','12/02/2013-20:30','1','Troca de pneu','677.00');" };
+					+ "(id_car,date,type,subject,value_p) values('1','23/04/2013-21:30','3','left light','40.00');",
+		    sqlScript[1]
+					+ " "
+					+ TB_ITEM_LOG
+					+ "(id_car,date,type,subject,value_p) values('1','22/03/2013-23:30','1','spoiler','125.00');",
+
+	//		sqlScript[1]
+	//				+ " "
+	//				+ TB_ITEM_LOG
+	//				+ "(id_car,date,type,subject,value_p) values('2','12/02/2013-20:30','1','Troca de pneu','677.00');" 
+					
+	};
 
 	// Cria o banco de dados com um script SQL
 	public SqlScript(final Context ctx) {
@@ -92,7 +125,7 @@ public class SqlScript extends DBConnection {
 				// create table car and 1 register
 				SqlScript.SCRIPT_CREATE_TB_CAR[0],
 				SqlScript.SCRIPT_CREATE_TB_CAR[1],
-				SqlScript.SCRIPT_CREATE_TB_CAR[2],
+		//		SqlScript.SCRIPT_CREATE_TB_CAR[2],
 
 				// create fuel car and 1 register
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[0],
@@ -100,8 +133,15 @@ public class SqlScript extends DBConnection {
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[2],
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[3],
 				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[4],
-				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[5],
-				SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[6]};
+		//		SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[5],
+		//		SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[6],
+		//		SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[7],
+		//		SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[8],
+		//		SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[9],
+		//		SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[10],
+		//		SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[11],
+		//		SqlScript.SCRIPT_CREATE_TB_ITEM_LOG[12] 
+						};
 		// delete
 		final String[] script_tables_delete = {
 				// delete table car
