@@ -37,24 +37,62 @@ public class AboutScreen extends ActivityCircle {
 	 * TOUCH
 	 ****************************************************************/
 
-	public void hideAbout(View v) {
-		
-		callRakingPage(v);
-		
-		//finish();
+//	public void hideAbout(View v) {
+//		
+//		callRakingPage(v);
+//		
+//		//finish();
+//
+//		//overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+//	}
 
-		//overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+//	public void callRakingPage(View v) {
+//		Intent intent = new Intent(
+//				Intent.ACTION_VIEW,
+//				Uri.parse("https://play.google.com/store/apps/details?id=br.com.maboo.neext&feature=more_from_developer#?t=W251bGwsMSwyLDEwMiwiYnIuY29tLm1hYm9vLm5lZXh0Il0."));
+//		startActivity(Intent.createChooser(intent, "Chose browser"));
+//
+//		finish();
+//
+//		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+//	}
+	
+	/****************************************************************
+	 * LINKS
+	 ****************************************************************/
+	private Intent intent = null;
+	private String url = "";
+	
+	public void openTwitter(View v) {
+		url = "https://twitter.com/maboobr";
+		
+		openUrl();
 	}
 
-	public void callRakingPage(View v) {
-		Intent intent = new Intent(
-				Intent.ACTION_VIEW,
-				Uri.parse("https://play.google.com/store/apps/details?id=br.com.maboo.neext&feature=more_from_developer#?t=W251bGwsMSwyLDEwMiwiYnIuY29tLm1hYm9vLm5lZXh0Il0."));
-		startActivity(Intent.createChooser(intent, "Chose browser"));
+	public void openFacebook(View v) {
+		url = "https://www.facebook.com/maboobr";
+	
+		openUrl();
+	}
 
-		finish();
-
-		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+	public void openPage(View v) {
+		url = "http://maboobr.wix.com/maboobr";
+	
+		openUrl();
+	}
+	
+	public void openMarket(View v) {
+		url = "https://play.google.com/store/apps/developer?id=MABOOBR&hl=pt_BR";
+	
+		openUrl();
+	}
+	
+	private void openUrl(){
+		
+		intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+	
+		startActivity(intent);
+		
 	}
 
 }
