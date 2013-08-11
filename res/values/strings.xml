@@ -3,8 +3,8 @@
 
     <string name="hello">Hello World, CoobActivity!</string>
     <string name="app_name">Coob Colors</string>
-    <string name="app_version">1.2.3</string>
-    <string name="app_copywrite">© 2012-2012 @maboobr</string>
+    <string name="app_version">1.3.3</string>
+    <string name="app_copywrite">© 2012-2013 Maboo Brasil</string>
     <string name="app_allrights">All rights reserved.</string>
 
 </resources>

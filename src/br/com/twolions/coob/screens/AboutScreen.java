@@ -1,5 +1,7 @@
 package br.com.twolions.coob.screens;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import br.com.twolions.coob.R;
@@ -40,5 +42,42 @@ public class AboutScreen extends ActivityCircle {
 
 		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
+	
+	/****************************************************************
+	 * LINKS
+	 ****************************************************************/
+	private Intent intent = null;
+	private String url = "";
+	
+	public void openTwitter(View v) {
+		url = "https://twitter.com/maboobr";
+		
+		openUrl();
+	}
 
+	public void openFacebook(View v) {
+		url = "https://www.facebook.com/maboobr";
+	
+		openUrl();
+	}
+
+	public void openPage(View v) {
+		url = "http://maboobr.wix.com/maboobr";
+	
+		openUrl();
+	}
+	
+	public void openMarket(View v) {
+		url = "https://play.google.com/store/apps/developer?id=MABOOBR&hl=pt_BR";
+	
+		openUrl();
+	}
+	
+	private void openUrl(){
+		
+		intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+	
+		startActivity(intent);
+		
+	}
 }
