@@ -1,5 +1,6 @@
 package br.com.maboo.fuellist.screens;
 
+
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import br.com.maboo.fuellist.R;
