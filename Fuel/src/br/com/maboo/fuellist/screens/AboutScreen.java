@@ -38,22 +38,46 @@ public class AboutScreen extends ActivityCircle {
 	 ****************************************************************/
 
 	public void hideAbout(View v) {
-		finish();
+	//	finish();
 
-		overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
+	//	overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
 	}
 	
-	public void linkTwitter(View v) {
+	/****************************************************************
+	 * LINKS
+	 ****************************************************************/
+	private Intent intent = null;
+	private String url = "";
+	
+	public void openTwitter(View v) {
+		url = "https://twitter.com/maboobr";
 		
-		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/maboobr"));
-        startActivity(intent);
-		
+		openUrl();
+	}
+
+	public void openFacebook(View v) {
+		url = "https://www.facebook.com/maboobr";
+	
+		openUrl();
+	}
+
+	public void openPage(View v) {
+		url = "http://maboobr.wix.com/maboobr";
+	
+		openUrl();
 	}
 	
-	public void link(View v) {
+	public void openMarket(View v) {
+		url = "https://play.google.com/store/apps/developer?id=MABOOBR&hl=pt_BR";
+	
+		openUrl();
+	}
+	
+	private void openUrl(){
 		
-		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maboobr.wix.com/maboobr"));
-        startActivity(intent);
+		intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+	
+		startActivity(intent);
 		
 	}
 

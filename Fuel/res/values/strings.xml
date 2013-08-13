@@ -6,11 +6,11 @@
     <string name="aguarde">Loading...</string>
 
     <!-- About -->
-    <string name="app_copywrite">© 2012-2013 @maboobr</string>
+    <string name="app_copywrite">© 2012-2013 Maboo Brasil</string>
     <string name="app_allrights">All rights reserved.</string>
 
     <!-- Version -->
-    <string name="app_version">1.0.0</string>
+    <string name="app_version">1.0.1</string>
 
     <!-- BASE -->
     <string name="dbname">bd_itsmycar</string>

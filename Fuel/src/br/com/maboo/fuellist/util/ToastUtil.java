@@ -1,5 +1,6 @@
 package br.com.maboo.fuellist.util;
 
+
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
