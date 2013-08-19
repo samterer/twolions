@@ -8,8 +8,6 @@
         android:id="@+id/text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:gravity="top"
         android:maxLength="250"
         android:lines="20"

@@ -12,8 +12,8 @@
 
     <!-- DATE -->
 
-    <TableRow
-        >
+    <TableRow>
+
         <include layout="@layout/date" />
     </TableRow>
 
@@ -27,15 +27,19 @@
 
     <TableRow
         android:layout_marginTop="3dp"
-        android:gravity="center" >
+        android:gravity="center" >
+
         <include
             android:layout_width="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             layout="@layout/text" />
-
     </TableRow>
-    
-     <!-- BAR INF -->
-    
-    <include android:layout_gravity="bottom" layout="@layout/bar_down" />
+
+    <!-- BAR INF -->
+
+    <include
+        android:layout_gravity="bottom"
+        layout="@layout/bar_down" />
 
 </TableLayout>
