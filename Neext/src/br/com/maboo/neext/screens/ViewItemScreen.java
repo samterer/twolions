@@ -24,7 +24,6 @@ import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.util.AndroidUtils;
 import br.com.maboo.neext.util.Constants;
 import br.com.maboo.neext.util.EditTextTools;
-import br.com.maboo.neext.util.TextViewTools;
 
 public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 
@@ -266,10 +265,10 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 				sb.append(dateFromBase.charAt(i));
 			}
 			
+			//TODO cabecalho retirado até acertas das datas
 			// escreve no cabeçalho qnd foi a ultima edição
-			type_edit.setText(TextViewTools.getLastEdit(hour.getText()
-					.toString(), date.getText().toString(), this));
-			//type_edit.setText("");
+			//type_edit.setText(TextViewTools.getLastEdit(hour.getText().toString(), date.getText().toString(), this));
+			type_edit.setText("");
 
 			// subject
 			subject.setText(String.valueOf((itemRequest.getSubject())));
