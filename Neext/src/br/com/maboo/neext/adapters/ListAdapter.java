@@ -12,12 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.util.Constants;
@@ -196,13 +194,13 @@ public class ListAdapter extends BaseAdapter implements AnimationListener{
 	}
 	
 	public void onAnimationStart(Animation animation) {		
-		Toast.makeText(context, "Animation started", Toast.LENGTH_SHORT).show();
+	//	Toast.makeText(context, "Animation started", Toast.LENGTH_SHORT).show();
 	}
 	public void onAnimationEnd(Animation animation) {		
-		Toast.makeText(context, "Animation ended", Toast.LENGTH_SHORT).show();
+	//	Toast.makeText(context, "Animation ended", Toast.LENGTH_SHORT).show();
 	}
 	public void onAnimationRepeat(Animation animation) {
-		Toast.makeText(context, "Animation rep", Toast.LENGTH_SHORT).show();
+	//	Toast.makeText(context, "Animation rep", Toast.LENGTH_SHORT).show();
 	}
 
 	// Design Patter "ViewHolder" para Android

@@ -18,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -332,10 +334,21 @@ public class ListScreen extends NeextActivity implements InterfaceBar, OnItemCli
 		
 		// insere a imagem no bt
 		// bt de criação de item
-		ImageView bt = (ImageView) findViewById(R.id.bt_right_down);
-		bt.setImageDrawable(getResources().getDrawable(R.drawable.bt_add));
+		ImageView btAdd = (ImageView) findViewById(R.id.bt_right_down);
+		btAdd.setImageDrawable(getResources().getDrawable(R.drawable.bt_add));
 		// align pandding
 		// bt.setPadding(175, 0, 0, 0);
+		
+		// animação dos botoes de baixo
+		Animation animationBtDown = AnimationUtils.loadAnimation(this,R.anim.anime_bt_down);
+		btAdd.startAnimation(animationBtDown);
+		
+		// bt about
+		ImageView btAbout = (ImageView) findViewById(R.id.bt_right_up);
+		
+		// animação dos botoes de cima
+		Animation animationBtUp = AnimationUtils.loadAnimation(this,R.anim.anime_bt_up);		
+		btAbout.startAnimation(animationBtUp);
 
 		listeningGesture();
 
