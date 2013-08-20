@@ -10,15 +10,19 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import br.com.maboo.neext.R;
 import br.com.maboo.neext.modelobj.ItemNote;
 import br.com.maboo.neext.util.Constants;
 
-public class ListAdapter extends BaseAdapter {
+public class ListAdapter extends BaseAdapter implements AnimationListener{
 
 	protected static final String TAG = Constants.LOG_APP;
 
@@ -27,11 +31,15 @@ public class ListAdapter extends BaseAdapter {
 	private List<ItemNote> itens;
 
 	private Typeface tf; // font
+	
+	private Context context;
 
 	public ListAdapter(Activity context, List<ItemNote> itens) {
 
 	//	Log.i(TAG, "ListAdapter....");
 
+		this.context = context;
+		
 		this.itens = itens;
 
 		this.inflater = (LayoutInflater) context
@@ -128,16 +136,22 @@ public class ListAdapter extends BaseAdapter {
 		// subject
 		// verifica se o subject é muito grande, se for, coloca reticencias no
 		// final
-		if (itemRequest.getSubject().length() > 10) {
+	/*	if (itemRequest.getSubject().length() > 10) {
 			StringBuffer sb = new StringBuffer();
 			for (int i = 0; i < 10; i++) {
 				sb.append(itemRequest.getSubject().toString().charAt(i));
 			}
 			holder.subject.setText(sb.toString() + "[...]");
-		} else {
+		} else { */
 			holder.subject.setText(String.valueOf(itemRequest.getSubject()));
-		}
-
+	/*	} */
+		
+		// animação do subject
+	//	Animation animation1 = AnimationUtils.loadAnimation(context,R.anim.anime_text);
+		
+		//TextView animatedView1 = holder.subject;
+	//	holder.subject.startAnimation(animation1);
+		
 		// formata a data
 		// formata date
 		String dateFromBase = itemRequest.getDate();
@@ -179,6 +193,16 @@ public class ListAdapter extends BaseAdapter {
 		}
 
 		return view;
+	}
+	
+	public void onAnimationStart(Animation animation) {		
+		Toast.makeText(context, "Animation started", Toast.LENGTH_SHORT).show();
+	}
+	public void onAnimationEnd(Animation animation) {		
+		Toast.makeText(context, "Animation ended", Toast.LENGTH_SHORT).show();
+	}
+	public void onAnimationRepeat(Animation animation) {
+		Toast.makeText(context, "Animation rep", Toast.LENGTH_SHORT).show();
 	}
 
 	// Design Patter "ViewHolder" para Android
