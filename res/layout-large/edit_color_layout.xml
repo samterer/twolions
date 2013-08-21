@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/cinza_coob_c" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <!-- grupo superior de imagem e campo de texto -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5" >
+
+            <LinearLayout
+                android:id="@+id/l_sup_esq"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.50"
+                android:gravity="bottom"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_vertical"
+                    android:paddingTop="3dp" >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="410dp"
+                        android:background="@drawable/slot" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="46dp"
+                    android:layout_gravity="center|center_vertical"
+                    android:gravity="bottom|center|center_vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="bottom"
+                        android:background="@color/cinza_coob_c"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:text="#"
+                        android:textColor="@color/cinza_default"
+                        android:textSize="23dp" />
+
+                    <EditText
+                        android:id="@+id/ed_sup_esq"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|center_vertical"
+                        android:background="@drawable/slot_edit"
+                        android:hint="hex value"
+                        android:maxLength="6"
+                        android:paddingLeft="23dp"
+                        android:tag="0" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:background="@color/cinza_coob" >
+            </View>
+
+            <LinearLayout
+                android:id="@+id/l_sup_dir"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.50"
+                android:gravity="bottom"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_vertical"
+                    android:paddingTop="3dp" >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="410dp"
+                        android:background="@drawable/slot" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="46dp"
+                    android:gravity="center|center_vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:background="@color/cinza_coob_c"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:text="#"
+                        android:textColor="@color/cinza_default"
+                        android:textSize="23dp" />
+
+                    <EditText
+                        android:id="@+id/ed_sup_dir"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|center_vertical"
+                        android:background="@drawable/slot_edit"
+                        android:hint="hex value"
+                        android:maxLength="6"
+                        android:paddingLeft="23dp"
+                        android:tag="1" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- grupo inferior de imagem e campo de texto -->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5" >
+
+            <LinearLayout
+                android:id="@+id/l_inf_esq"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.50"
+                android:gravity="bottom"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_vertical"
+                    android:paddingTop="3dp" >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="410dp"
+                        android:background="@drawable/slot" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="46dp"
+                    android:gravity="center|center_vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:background="@color/cinza_coob_c"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:text="#"
+                        android:textColor="@color/cinza_default"
+                        android:textSize="23dp" />
+
+                    <EditText
+                        android:id="@+id/ed_inf_esq"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|center_vertical"
+                        android:background="@drawable/slot_edit"
+                        android:hint="hex value"
+                        android:maxLength="6"
+                        android:paddingLeft="23dp"
+                        android:tag="2" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:background="@color/cinza_coob" >
+            </View>
+
+            <LinearLayout
+                android:id="@+id/l_inf_dir"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.50"
+                android:gravity="bottom"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_vertical"
+                    android:paddingTop="3dp" >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="410dp"
+                        android:background="@drawable/slot" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="46dp"
+                    android:gravity="center|center_vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:background="@color/cinza_coob_c"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:text="#"
+                        android:textColor="@color/cinza_default"
+                        android:textSize="23dp" />
+
+                    <EditText
+                        android:id="@+id/ed_inf_dir"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|center_vertical"
+                        android:background="@drawable/slot_edit"
+                        android:hint="hex value"
+                        android:maxLength="6"
+                        android:paddingLeft="23dp"
+                        android:tag="3" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
