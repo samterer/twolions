@@ -173,6 +173,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		
 		//type edit
 		title_edit = (TextView) findViewById(R.id.type_edit);
+		title_edit.setTextColor(defaultColor); // mantem cor padrao
 
 		// date
 		date = (TextView) findViewById(R.id.date);
