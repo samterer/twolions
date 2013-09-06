@@ -4,5 +4,6 @@
     <string name="app_name" translatable="false">rhino</string>
     <string name="action_settings" translatable="false">Settings</string>
     <string name="hello_world" translatable="false">Hello world!</string>
+    <string name="title_activity_facebook">FacebookActivity</string>
 
 </resources>
