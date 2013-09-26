@@ -1,4 +1,4 @@
-package br.com.maboo.node.view;
+package br.com.maboo.node.util;
 
 import android.app.Activity;
 import android.app.SearchManager;
