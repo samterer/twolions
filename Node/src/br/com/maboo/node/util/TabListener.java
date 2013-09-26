@@ -1,4 +1,4 @@
-package br.com.maboo.node.view;
+package br.com.maboo.node.util;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -6,7 +6,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 
-class TabListener<T extends Fragment> implements ActionBar.TabListener {
+public class TabListener<T extends Fragment> implements ActionBar.TabListener {
 
 	private final Activity myActivity;
 	private final String myTag;
