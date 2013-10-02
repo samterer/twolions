@@ -28,7 +28,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppBaseTheme" >
         <activity
-            android:name="br.com.maboo.node.view.ManagerView"
+            android:name="br.com.maboo.node.view.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
