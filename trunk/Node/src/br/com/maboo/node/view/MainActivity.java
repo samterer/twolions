@@ -1,3 +1,5 @@
+package br.com.maboo.node.view;
+
 /*
  * Copyright 2013 The Android Open Source Project
  *
@@ -13,8 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package br.com.maboo.node.view;
 
 import java.util.Locale;
 
@@ -243,6 +243,7 @@ public class MainActivity extends Activity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_planet,
 					container, false);
+
 			int i = getArguments().getInt(ARG_PLANET_NUMBER);
 			String planet = getResources()
 					.getStringArray(R.array.planets_array)[i];
