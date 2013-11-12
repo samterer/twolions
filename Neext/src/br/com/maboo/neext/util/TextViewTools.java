@@ -1,14 +1,7 @@
 package br.com.maboo.neext.util;
 
-import java.util.Calendar;
 import java.util.Vector;
 
-import org.joda.time.DateTime;
-import org.joda.time.Period;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
-import android.content.Context;
 import android.graphics.Typeface;
 import android.widget.TextView;
 
@@ -29,7 +22,7 @@ public class TextViewTools {
 	// [0][2] / [3][5] / [6][7][8][10]
 	// hh : mm : 00
 	// [0][2] : [3][5]
-	public static String getLastEdit(String hour, String date, Context context) {
+/*	public static String getLastEdit(String hour, String date, Context context) {
 
 		int year = Integer.valueOf(date.substring(6, 10)).intValue();
 		int mouth = Integer.valueOf(date.substring(3, 5)).intValue();
@@ -82,5 +75,5 @@ public class TextViewTools {
 			return "há algum tempo";
 		}
 
-	}
+	}*/
 }

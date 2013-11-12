@@ -163,5 +163,14 @@
     <style name="texto55Negrito" parent="texto55">
         <item name="android:textStyle">bold</item>
     </style>
+    
+     <style name="texto55Branco">
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:textSize">55sp</item>
+    </style>
+
+    <style name="texto55BrancoNegrito" parent="texto55Branco">
+        <item name="android:textStyle">bold</item>
+    </style>
 
 </resources>

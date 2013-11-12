@@ -141,4 +141,14 @@ public class AndroidUtils extends ActivityCircle {
 
 		return false;
 	}
+	
+	public static String getMonth(int month){
+		int indice = 0;
+		
+		// ajusta o retorno do mes
+		indice = month - 1;
+		
+	    String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+	    return monthNames[indice];
+	}
 }
