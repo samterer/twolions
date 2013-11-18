@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,7 +33,8 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 	// Campos texto
 	private LinearLayout bg_title;
 	private TextView type_edit;
-	private TextView date;
+	private TextView day_date;
+	private TextView month_date;
 	private TextView hour;
 	private EditText subject;
 	private EditText text;
@@ -143,8 +145,12 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			type_edit.setTextColor(defaultColor);
 			
 			// date
-			date = (TextView) findViewById(R.id.date);
-			date.setTextColor(defaultColor);
+			day_date = (TextView) findViewById(R.id.date);
+			day_date.setTextColor(defaultColor);
+			
+			// month
+			month_date = (TextView) findViewById(R.id.month);
+			month_date.setTextColor(defaultColor);
 
 			// hour
 			hour = (TextView) findViewById(R.id.hour);
@@ -227,43 +233,52 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 		try {
 
 			// formata date
+			// formata a data
+			// formata date
 			String dateFromBase = itemRequest.getDate();
 
 			StringBuffer sb = new StringBuffer();
+			String date_full = "";
+			int day = 0;
+			int month = 0;
+			int year = 0;
 			for (int i = 0; i < dateFromBase.length(); i++) {
 
 				if (dateFromBase.charAt(i) == '-') { // insere valor da
 														// data
-
-					// Log.i(TAG, "date [" + sb.toString() + "]");
-
-					date.setText(sb.toString());
-
+					date_full = sb.toString();
 					sb = new StringBuffer();
-
 					i++;
 
-				} else if (i == 15) { // insere
-										// valor
-										// da hora
-										// o numero dessa linha é comparado a
-										// 16, pois esse é o tamanho maximo
-										// correto de uma data, de acordo com a
-										// inserção dela 'dd/mm/aaaa - hh:mm'
+					// insere valor da hora o numero dessa linha é comparado a 16,
+					// pois esse é o tamanho maximo
+					// correto de uma data, de acordo com a inserção dela
+					// 'dd/mm/aaaa - hh:mm'
+				} else if (i == 15) {
 					sb.append(dateFromBase.charAt(i));
 
-					// Log.i(TAG, "hour [" + sb.toString() + "]");
-
 					hour.setText(sb.toString()); // hora
-
 					break;
 
 				}
 
-				//Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
-
 				sb.append(dateFromBase.charAt(i));
 			}
+			
+			/** aplicando data por extenso	**/
+			Log.i("appLog","titulo: "+date_full.toString());
+			Log.i("appLog","data completa: "+String.valueOf(itemRequest.getSubject()));
+			
+			day = Integer.valueOf(date_full.substring(0, 2)).intValue(); // get only day
+			month = Integer.valueOf(date_full.substring(3, 5)).intValue(); // get only month
+			
+			Log.i("appLog","2. day: "+day);		
+			Log.i("appLog","2. month: "+month);
+			
+			day_date.setText(""+day);	
+			
+			// seleciona primeiras 3 letras do mes
+			month_date.setText(AndroidUtils.getMonth(month).substring(0, 3));
 			
 			//TODO cabecalho retirado até acertas das datas
 			// escreve no cabeçalho qnd foi a ultima edição

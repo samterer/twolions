@@ -14,7 +14,9 @@
 
     <TableRow>
 
-        <include layout="@layout/date" />
+        <include
+            android:layout_height="70dp"
+            layout="@layout/date_edit_note" />
     </TableRow>
 
     <include
@@ -35,11 +37,5 @@
             android:layout_marginRight="10dp"
             layout="@layout/text" />
     </TableRow>
-
-    <!-- BAR INF -->
-
-    <include
-        android:layout_gravity="bottom"
-        layout="@layout/bar_down" />
 
 </TableLayout>
