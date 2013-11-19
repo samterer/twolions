@@ -266,19 +266,20 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			}
 			
 			/** aplicando data por extenso	**/
-			Log.i("appLog","titulo: "+date_full.toString());
-			Log.i("appLog","data completa: "+String.valueOf(itemRequest.getSubject()));
+			//Log.i("appLog","titulo: "+date_full.toString());
+			//Log.i("appLog","data completa: "+String.valueOf(itemRequest.getSubject()));
 			
 			day = Integer.valueOf(date_full.substring(0, 2)).intValue(); // get only day
-			month = Integer.valueOf(date_full.substring(3, 5)).intValue(); // get only month
+			month = Integer.valueOf(date_full.substring(3, 5)).intValue(); // get only month - 04/12/2013
+			year = Integer.valueOf(date_full.substring(6, 9)).intValue(); // get only month - 04/12/2013
 			
-			Log.i("appLog","2. day: "+day);		
-			Log.i("appLog","2. month: "+month);
+			//Log.i("appLog","2. day: "+day);		
+			//Log.i("appLog","2. month: "+month);
 			
 			day_date.setText(""+day);	
 			
 			// seleciona primeiras 3 letras do mes
-			month_date.setText(AndroidUtils.getMonth(month).substring(0, 3));
+			month_date.setText(AndroidUtils.getMonth(month).substring(0, 3)+year);
 			
 			//TODO cabecalho retirado até acertas das datas
 			// escreve no cabeçalho qnd foi a ultima edição

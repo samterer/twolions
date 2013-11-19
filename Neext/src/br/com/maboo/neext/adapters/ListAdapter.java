@@ -190,19 +190,20 @@ public class ListAdapter extends BaseAdapter implements AnimationListener {
 		}
 		
 		/** aplicando data por extenso	**/
-		Log.i("appLog","titulo: "+date_full.toString());
-		Log.i("appLog","data completa: "+String.valueOf(itemRequest.getSubject()));
+		//Log.i("appLog","titulo: "+date_full.toString());
+		//Log.i("appLog","data completa: "+String.valueOf(itemRequest.getSubject()));
 		
 		day = Integer.valueOf(date_full.substring(0, 2)).intValue(); // get only day
 		month = Integer.valueOf(date_full.substring(3, 5)).intValue(); // get only month
+		year = Integer.valueOf(date_full.substring(8, 10)).intValue(); // get only month - 04/12/2013
 		
-		Log.i("appLog","2. day: "+day);		
-		Log.i("appLog","2. month: "+month);
+		//Log.i("appLog","2. day: "+day);		
+		//Log.i("appLog","2. month: "+month);
 		
 		holder.day.setText(""+day);	
 		
 		// seleciona primeiras 3 letras do mes
-		holder.month.setText(AndroidUtils.getMonth(month).substring(0, 3));
+		holder.month.setText(AndroidUtils.getMonth(month).substring(0, 3)+"/"+year);
 
 		return view;
 	}
