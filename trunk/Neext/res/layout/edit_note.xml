@@ -15,7 +15,6 @@
     <TableRow>
 
         <include
-            android:layout_height="70dp"
             layout="@layout/date_edit_note" />
     </TableRow>
 
