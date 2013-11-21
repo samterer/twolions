@@ -23,9 +23,10 @@
 
     <!-- msg -->
     <string name="m_wait">Loading...</string>
-    <string name="m_edit">Editing</string>
+    <string name="m_edit">Edit - touch down for edit the text</string>
     <string name="m_save">Save!</string>
-
+	<string name="view">View - touch the pencil for edit note</string>
+	
     <!-- alertas -->
     <string name="a_dt_item">Are you sure you want to delete this item?</string>
 

@@ -13,6 +13,7 @@
         android:gravity="top"
         android:lines="100"
         android:tag="text"
-        android:hint="insert a text" />
+        android:hint="insert a text" 
+        android:background="@color/cinza_c"/>
 
 </LinearLayout>
