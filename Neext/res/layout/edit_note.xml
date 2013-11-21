@@ -12,9 +12,7 @@
 
     <!-- DATE -->
 
-
-        <include layout="@layout/date_edit_note" />
-
+    <include layout="@layout/date_edit_note" />
 
     <include
         android:layout_height="0dp"
@@ -24,15 +22,9 @@
 
     <!-- EDIT TEXT -->
 
-    <TableRow
-        android:layout_marginTop="3dp"
-        android:gravity="center" >
-
-        <include
-            android:layout_width="fill_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            layout="@layout/text" />
-    </TableRow>
+    <include
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        layout="@layout/text" />
 
 </TableLayout>

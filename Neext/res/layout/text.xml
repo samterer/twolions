@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:orientation="horizontal" >
+    android:layout_height="fill_parent"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:gravity="center" >
 
-    <EditText
+    <br.com.maboo.neext.util.LinedEditText
         android:id="@+id/text"
-        android:layout_width="315dp"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:background="@color/cinza_claro"
         android:gravity="top"
+        android:hint="insert a text"
         android:lines="100"
         android:tag="text"
-        android:hint="insert a text" 
-        android:background="@color/cinza_c"/>
+        style="@style/texto22"
+        android:lineSpacingExtra="8dp" />
 
 </LinearLayout>

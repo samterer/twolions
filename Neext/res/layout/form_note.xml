@@ -3,12 +3,11 @@
     android:id="@+id/main_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/cinza_c" >
+    android:background="@color/cinza_claro" >
 
     <!-- EDIT -->
 
-    <include
-        layout="@layout/edit_note" />
+    <include layout="@layout/edit_note" />
 
     <!-- BAR INF -->
 
