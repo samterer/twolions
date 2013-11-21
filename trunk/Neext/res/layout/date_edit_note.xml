@@ -29,17 +29,17 @@
             android:layout_gravity="right|top"
             android:layout_marginTop="2dp"
             android:paddingBottom="5dp"
-            android:text="sep" />
+            android:text="sep/2013" />
 
         <TextView
             android:id="@+id/day_date"
-            style="@style/texto28Branco"
+            style="@style/texto28Cinza"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="right|top"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:text="23" />
 
         <TextView
@@ -50,7 +50,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="right|top"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="42dp"
             android:text="12:23" />
     </FrameLayout>
 
