@@ -12,11 +12,9 @@
 
     <!-- DATE -->
 
-    <TableRow>
 
-        <include
-            layout="@layout/date_edit_note" />
-    </TableRow>
+        <include layout="@layout/date_edit_note" />
+
 
     <include
         android:layout_height="0dp"

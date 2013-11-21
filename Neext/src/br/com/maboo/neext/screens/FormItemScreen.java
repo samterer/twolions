@@ -45,8 +45,15 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	// Campos texto
 	private LinearLayout bg_title;
+	
+	// layout usado para editar data (invisivel ao usuario)
 	private TextView date;
 	private TextView hour;
+	
+	// layout visivel ao usuario
+	private TextView day_date;
+	private TextView month_date;
+	
 	private TextView title_edit;
 	private EditText subject;
 	private EditText text;
@@ -183,7 +190,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		date.setText(new StringBuilder().append(pad(day_time)).append("/")
 				.append(pad(month_time)).append("/").append(pad(year_time)));
-		date.setTextColor(defaultColor);
+		//date.setTextColor(defaultColor);
 
 		// hour
 		hour = (TextView) findViewById(R.id.hour);
@@ -192,8 +199,20 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		hour.setText(new StringBuilder().append(pad(hour_time)).append(":")
 				.append(pad(min_time)));
-		hour.setTextColor(defaultColor);
+		//hour.setTextColor(defaultColor);
+		
+		// carrega itens do layout para visualização
+		day_date = (TextView) findViewById(R.id.day_date);
+		day_time = c.get(Calendar.DAY_OF_MONTH);
+		month_time = c.get(Calendar.MONTH) + 1; // para que não aja o mês 00, muito obrigado java
+		year_time = c.get(Calendar.YEAR);
 
+		day_date.setText(new StringBuilder().append(pad(day_time)));
+		
+		//mês
+		month_date = (TextView) findViewById(R.id.month_date);
+		month_date.setText(AndroidUtils.getMonth(month_time).toLowerCase()+"/"+year_time);
+		
 		// subject
 		subject = (EditText) findViewById(R.id.subject);
 
@@ -256,7 +275,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			// change background title (barra superior)
 			bg_title.setBackgroundColor(color);
 			
-			/*// formata date
+			// formata date
 			String dateFromBase = itemRequest.getDate();
 
 			StringBuffer sb = new StringBuffer();
@@ -264,11 +283,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				if (dateFromBase.charAt(i) == '-') { // insere valor da
 														// data
-
-					// Log.i(TAG, "date [" + sb.toString() + "]");
-
 					date.setText(sb.toString());
-					date.setTextColor(defaultColor);
+					//date.setTextColor(defaultColor);
 
 					// insere os valores nas variaveis de classe
 					day_time = Integer.valueOf(
@@ -288,19 +304,57 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 										// inserção dela 'dd/mm/aaaa - hh:mm'
 					sb.append(dateFromBase.charAt(i));
 
-					// Log.i(TAG, "hour [" + sb.toString() + "]");
-
 					hour.setText(sb.toString()); // hora
-					hour.setTextColor(defaultColor);
+					//hour.setTextColor(defaultColor);
 
 					break;
 
 				}
 
-				//Log.i(TAG, "insert [" + dateFromBase.charAt(i) + "]");
+				sb.append(dateFromBase.charAt(i));
+			}
+			
+			// date visualizada pelo usuario
+			// formata date
+			// formata a data
+			// formata date
+			sb = new StringBuffer();
+			String date_full = "";
+			int day = 0;
+			int month = 0;
+			int year = 0;
+			for (int i = 0; i < dateFromBase.length(); i++) {
+
+				if (dateFromBase.charAt(i) == '-') { // insere valor da
+														// data
+					date_full = sb.toString();
+					sb = new StringBuffer();
+					i++;
+
+					// insere valor da hora o numero dessa linha é comparado a 16,
+					// pois esse é o tamanho maximo
+					// correto de uma data, de acordo com a inserção dela
+					// 'dd/mm/aaaa - hh:mm'
+				} else if (i == 15) {
+					sb.append(dateFromBase.charAt(i));
+
+					hour.setText(sb.toString()); // hora
+					break;
+
+				}
 
 				sb.append(dateFromBase.charAt(i));
-			}*/
+			}
+			
+			/** aplicando data por extenso	**/			
+			day = Integer.valueOf(date_full.substring(0, 2)).intValue(); // get only day
+			month = Integer.valueOf(date_full.substring(3, 5)).intValue(); // get only month - 04/12/2013
+			year = Integer.valueOf(date_full.substring(6, 10)).intValue(); // get only month - 04/12/2013
+			
+			day_date.setText(""+day);	
+			
+			// seleciona primeiras 3 letras do mes
+			month_date.setText(AndroidUtils.getMonth(month).substring(0, 3).toLowerCase()+"/"+year);		
 
 			// subject
 			subject.setText(String.valueOf((itemRequest.getSubject())));

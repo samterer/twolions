@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -145,16 +144,16 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			type_edit.setTextColor(defaultColor);
 			
 			// date
-			day_date = (TextView) findViewById(R.id.date);
-			day_date.setTextColor(defaultColor);
+			day_date = (TextView) findViewById(R.id.day_date);
+			//day_date.setTextColor(defaultColor);
 			
 			// month
-			month_date = (TextView) findViewById(R.id.month);
-			month_date.setTextColor(defaultColor);
+			month_date = (TextView) findViewById(R.id.month_date);
+			//month_date.setTextColor(defaultColor);
 
 			// hour
 			hour = (TextView) findViewById(R.id.hour);
-			hour.setTextColor(defaultColor);
+			//hour.setTextColor(defaultColor);
 
 			// subject
 			subject = (EditText) findViewById(R.id.subject);
@@ -265,26 +264,20 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 				sb.append(dateFromBase.charAt(i));
 			}
 			
-			/** aplicando data por extenso	**/
-			//Log.i("appLog","titulo: "+date_full.toString());
-			//Log.i("appLog","data completa: "+String.valueOf(itemRequest.getSubject()));
-			
+			/** aplicando data por extenso	**/			
 			day = Integer.valueOf(date_full.substring(0, 2)).intValue(); // get only day
 			month = Integer.valueOf(date_full.substring(3, 5)).intValue(); // get only month - 04/12/2013
-			year = Integer.valueOf(date_full.substring(6, 9)).intValue(); // get only month - 04/12/2013
-			
-			//Log.i("appLog","2. day: "+day);		
-			//Log.i("appLog","2. month: "+month);
+			year = Integer.valueOf(date_full.substring(6, 10)).intValue(); // get only month - 04/12/2013
 			
 			day_date.setText(""+day);	
 			
 			// seleciona primeiras 3 letras do mes
-			month_date.setText(AndroidUtils.getMonth(month).substring(0, 3)+year);
+			month_date.setText(AndroidUtils.getMonth(month).substring(0, 3).toLowerCase()+"/"+year);
 			
 			//TODO cabecalho retirado até acertas das datas
 			// escreve no cabeçalho qnd foi a ultima edição
 			//type_edit.setText(TextViewTools.getLastEdit(hour.getText().toString(), date.getText().toString(), this));
-			type_edit.setText("View");
+			type_edit.setText(R.string.view);
 
 			// subject
 			subject.setText(String.valueOf((itemRequest.getSubject())));
