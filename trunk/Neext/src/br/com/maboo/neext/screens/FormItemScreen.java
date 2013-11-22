@@ -697,10 +697,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		}
 		
 		// lista de cores
-		// 1 - laranja FFA500
-		// 2 - azul claro 45c4ff
-		// 3 - verde claro 39bf2b
-		// 4 - roxo a6a6ed
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 
