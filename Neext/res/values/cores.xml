@@ -26,7 +26,7 @@
     <color name="verde_light">#a5f5a5</color>
 
     <!-- cores paleta notificações -->
-    <color name="vermelho_note">#f15b40</color>
+    <color name="vermelho_note">#FF8961</color>
     <color name="roxo_note">#9a6db0</color>
     <color name="azul_note">#70c3ed</color>
     <color name="verde_note">#aed361</color>
