@@ -5,15 +5,9 @@
     android:layout_height="100dp"
     android:layout_gravity="left|center_vertical" >
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="20dp"
-        android:background="@color/cinza_c"
-        android:paddingBottom="20dp" />
-
     <RelativeLayout
         android:id="@+id/r_item_log"
-        android:layout_width="265dp"
+        android:layout_width="218dp"
         android:layout_height="fill_parent"
         android:paddingTop="20dp" >
 
@@ -23,7 +17,7 @@
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="-40dp"
+            android:layout_marginLeft="-50dp"
             android:layout_marginTop="15dp"
             android:src="@drawable/boxe"
             android:visibility="invisible" />
@@ -39,6 +33,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:paddingTop="20dp"
         android:layout_width="103dp"
         android:layout_height="fill_parent"
         android:layout_gravity="right|center_vertical"
@@ -47,7 +42,7 @@
 
     <TextView
         android:id="@+id/month"
-        style="@style/texto14Branco"
+        style="@style/texto10Branco"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -56,7 +51,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="8dp"
         android:paddingBottom="20dp"
-        android:text="April" />
+        android:text="" />
 
     <TextView
         android:id="@+id/day"
@@ -67,7 +62,7 @@
         android:layout_alignParentTop="true"
         android:layout_gravity="right|top"
         android:layout_marginTop="16dp"
-        android:text="28" />
+        android:text="" />
 
     <TextView
         android:id="@+id/hour"
@@ -78,6 +73,12 @@
         android:layout_gravity="right|bottom"
         android:layout_marginBottom="8dp"
         android:layout_marginRight="10dp"
-        android:text="12:45" />
+        android:text="" />
+    
+    <View 
+        android:background="@color/cinza_c"
+        android:layout_height="1dp"
+        android:layout_width="fill_parent"
+        />
 
 </FrameLayout>

@@ -5,12 +5,14 @@
     android:layout_height="fill_parent"
     android:background="@color/cinza_c" >
 
+    <!-- EDIT -->
+
     <include layout="@layout/edit_note" />
+
+    <!-- BAR INF -->
     
-       
-     <!-- BAR INF -->
-    
-    <include android:layout_gravity="bottom" layout="@layout/bar_down" />
-    
+    <include
+        android:layout_gravity="bottom"
+        layout="@layout/bar_down" />
 
 </FrameLayout>

@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/type_edit"
-        style="@style/texto14cinzaClaro"
+        style="@style/texto16cinzaDark"
         android:layout_width="275dp"
         android:layout_height="25dp"
         android:layout_gravity="left|center"
@@ -17,7 +17,7 @@
 
     <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="70dp"
+        android:layout_height="fill_parent"
         android:layout_marginRight="10dp" >
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_gravity="right|top"
             android:layout_marginTop="2dp"
             android:paddingBottom="5dp"
-            android:text="sep/13" />
+            android:text="sep/2013" />
 
         <TextView
             android:id="@+id/day_date"
@@ -50,7 +50,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="right|top"
-            android:layout_marginTop="46dp"
+            android:layout_marginTop="42dp"
             android:text="12:23" />
     </FrameLayout>
 
