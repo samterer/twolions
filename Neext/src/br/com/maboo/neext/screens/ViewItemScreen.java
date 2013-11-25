@@ -272,7 +272,8 @@ public class ViewItemScreen extends FormItemActivity implements InterfaceBar {
 			day_date.setText(""+day);	
 			
 			// seleciona primeiras 3 letras do mes
-			month_date.setText(AndroidUtils.getMonth(month).substring(0, 3).toLowerCase()+"/"+year);
+			//month_date.setText(AndroidUtils.getMonth(month).substring(0, 3).toLowerCase()+"/"+year);
+			month_date.setText(AndroidUtils.getMonth(month)+"/"+year);
 			
 			//TODO cabecalho retirado até acertas das datas
 			// escreve no cabeçalho qnd foi a ultima edição

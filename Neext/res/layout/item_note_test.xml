@@ -3,7 +3,8 @@
     android:id="@+id/frameLayout"
     android:layout_width="fill_parent"
     android:layout_height="100dp"
-    android:layout_gravity="left|center_vertical" >
+    android:layout_gravity="left|center_vertical"
+    android:background="@color/cinza_dark" >
 
     <RelativeLayout
         android:id="@+id/r_item_log"
@@ -33,11 +34,10 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:paddingTop="20dp"
         android:layout_width="103dp"
         android:layout_height="fill_parent"
         android:layout_gravity="right|center_vertical"
-        android:background="@color/cinza_dark" >
+        android:paddingTop="20dp" >
     </RelativeLayout>
 
     <TextView
@@ -58,6 +58,7 @@
         style="@style/texto55BrancoNegrito"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="14dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_gravity="right|top"
@@ -74,11 +75,10 @@
         android:layout_marginBottom="8dp"
         android:layout_marginRight="10dp"
         android:text="" />
-    
-    <View 
-        android:background="@color/cinza_c"
-        android:layout_height="1dp"
+
+    <View
         android:layout_width="fill_parent"
-        />
+        android:layout_height="1dp"
+        android:background="@color/cinza_c" />
 
 </FrameLayout>
