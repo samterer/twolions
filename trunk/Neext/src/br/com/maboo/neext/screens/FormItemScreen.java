@@ -21,8 +21,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.maboo.neext.R;
@@ -45,15 +47,15 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	// Campos texto
 	private LinearLayout bg_title;
-	
+
 	// layout usado para editar data (invisivel ao usuario)
 	private TextView date;
 	private TextView hour;
-	
+
 	// layout visivel ao usuario
 	private TextView day_date;
 	private TextView month_date;
-	
+
 	private TextView title_edit;
 	private EditText subject;
 	private EditText text;
@@ -65,7 +67,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	// itemRequest na tela
 	private ItemNote itemRequest;
-	
+
 	// color default para texto
 	private int defaultColor = Constants.defaultColor;
 
@@ -90,7 +92,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		listenerText();
 
-		//addListenerOnButton();
+		// addListenerOnButton();
 	}
 
 	/******************************************************************************
@@ -129,28 +131,30 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				id_item = extras.getLong(ItemNote._ID);
 
-				//Log.i(TAG, "searching itemRequest [" + id_item + "]");
-				try {					
+				// Log.i(TAG, "searching itemRequest [" + id_item + "]");
+				try {
 					itemRequest = ItemModel.buscarItemNote(id_item); // busca
 					// informações
 					// do
 				} catch (SQLException e) {
-					
+
 					// erro caricato
-					AndroidUtils.alertDialog(this,
-							"Sorry, please... soooorry. And now, re-start the app.");
-					
+					AndroidUtils
+							.alertDialog(this,
+									"Sorry, please... soooorry. And now, re-start the app.");
+
 					e.printStackTrace();
 				}
-				
-			//	try { // se retornar nulo é pq foi o ultimo valor inserido
-					
-			//	}
-				typeColor = itemRequest.getType(); // coloco a cor do item (pq ela já existe no banco)
-				
-				
-				check = itemRequest.isCheck(); // verifica se o item esta check ou uncheck
-				
+
+				// try { // se retornar nulo é pq foi o ultimo valor inserido
+
+				// }
+				typeColor = itemRequest.getType(); // coloco a cor do item (pq
+													// ela já existe no banco)
+
+				check = itemRequest.isCheck(); // verifica se o item esta check
+												// ou uncheck
+
 			}
 
 		}
@@ -160,10 +164,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// calendar
 		final Calendar c = Calendar.getInstance();
-		
-		
-		//color type
-		if(typeColor.toString().charAt(0) != '#') {
+
+		// color type
+		if (typeColor.toString().charAt(0) != '#') {
 			typeColor = "#" + typeColor;
 		}
 
@@ -177,20 +180,21 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// bt edit color
 		bt_right_up = (ImageView) findViewById(R.id.bt_right_up);
 		bt_right_up.setTag(typeColor);
-		
-		//type edit
+
+		// type edit
 		title_edit = (TextView) findViewById(R.id.type_edit);
 		title_edit.setTextColor(defaultColor); // mantem cor padrao
 
 		// date
 		date = (TextView) findViewById(R.id.date);
 		day_time = c.get(Calendar.DAY_OF_MONTH);
-		month_time = c.get(Calendar.MONTH) + 1; // para que não aja o mês 00, muito obrigado java
+		month_time = c.get(Calendar.MONTH) + 1; // para que não aja o mês 00,
+												// muito obrigado java
 		year_time = c.get(Calendar.YEAR);
 
 		date.setText(new StringBuilder().append(pad(day_time)).append("/")
 				.append(pad(month_time)).append("/").append(pad(year_time)));
-		//date.setTextColor(defaultColor);
+		// date.setTextColor(defaultColor);
 
 		// hour
 		hour = (TextView) findViewById(R.id.hour);
@@ -199,20 +203,22 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		hour.setText(new StringBuilder().append(pad(hour_time)).append(":")
 				.append(pad(min_time)));
-		//hour.setTextColor(defaultColor);
-		
+		// hour.setTextColor(defaultColor);
+
 		// carrega itens do layout para visualização
 		day_date = (TextView) findViewById(R.id.day_date);
 		day_time = c.get(Calendar.DAY_OF_MONTH);
-		month_time = c.get(Calendar.MONTH) + 1; // para que não aja o mês 00, muito obrigado java
+		month_time = c.get(Calendar.MONTH) + 1; // para que não aja o mês 00,
+												// muito obrigado java
 		year_time = c.get(Calendar.YEAR);
 
 		day_date.setText(new StringBuilder().append(pad(day_time)));
-		
-		//mês
+
+		// mês
 		month_date = (TextView) findViewById(R.id.month_date);
-		month_date.setText(AndroidUtils.getMonth(month_time).toLowerCase()+"/"+year_time);
-		
+		month_date.setText(AndroidUtils.getMonth(month_time).toLowerCase()
+				+ "/" + year_time);
+
 		// subject
 		subject = (EditText) findViewById(R.id.subject);
 
@@ -227,7 +233,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		text = (EditText) findViewById(R.id.text);
 
 		vEditText.add(text);
-		
+
 		// muda o button de edit por um bt de cor
 		bt_right_up.setImageResource(R.drawable.paint);
 		bt_right_up.setVisibility(View.VISIBLE);
@@ -236,13 +242,13 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 															// editText
 		if (itemRequest != null) { // edit itemRequest?
 
-			//Log.i(TAG, "Edição de itemRequest...");
+			// Log.i(TAG, "Edição de itemRequest...");
 
 			loadingEdit();
 
 		} else {// create a new itemRequest?
 
-			//Log.i(TAG, "Criação de itemRequest...");
+			// Log.i(TAG, "Criação de itemRequest...");
 
 		}
 
@@ -251,30 +257,29 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	// open screen with datas of object
 	public void loadingEdit() {
 
-	//	Log.i(TAG, "Data for edit");
-	//	Log.i(TAG, itemRequest.toString());
+		// Log.i(TAG, "Data for edit");
+		// Log.i(TAG, itemRequest.toString());
 		// }
 
 		try {
-			
-			//color type
-			if(itemRequest.getType().toString().charAt(0) != '#') {
+
+			// color type
+			if (itemRequest.getType().toString().charAt(0) != '#') {
 				itemRequest.setType("#" + itemRequest.getType());
 			}
 
 			// color of item
-			int color = Color
-					.parseColor(itemRequest.getType().toString());
-			
+			int color = Color.parseColor(itemRequest.getType().toString());
+
 			typeColor = itemRequest.getType().toString();
-			
+
 			// escreve no cabeçalho que esta em mode editing
 			title_edit.setText(R.string.m_edit);
 			title_edit.setTextColor(defaultColor);
 
 			// change background title (barra superior)
 			bg_title.setBackgroundColor(color);
-			
+
 			// formata date
 			String dateFromBase = itemRequest.getDate();
 
@@ -284,7 +289,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 				if (dateFromBase.charAt(i) == '-') { // insere valor da
 														// data
 					date.setText(sb.toString());
-					//date.setTextColor(defaultColor);
+					// date.setTextColor(defaultColor);
 
 					// insere os valores nas variaveis de classe
 					day_time = Integer.valueOf(
@@ -305,7 +310,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 					sb.append(dateFromBase.charAt(i));
 
 					hour.setText(sb.toString()); // hora
-					//hour.setTextColor(defaultColor);
+					// hour.setTextColor(defaultColor);
 
 					break;
 
@@ -313,7 +318,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				sb.append(dateFromBase.charAt(i));
 			}
-			
+
 			// date visualizada pelo usuario
 			// formata date
 			// formata a data
@@ -331,7 +336,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 					sb = new StringBuffer();
 					i++;
 
-					// insere valor da hora o numero dessa linha é comparado a 16,
+					// insere valor da hora o numero dessa linha é comparado a
+					// 16,
 					// pois esse é o tamanho maximo
 					// correto de uma data, de acordo com a inserção dela
 					// 'dd/mm/aaaa - hh:mm'
@@ -345,31 +351,43 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				sb.append(dateFromBase.charAt(i));
 			}
-			
-			/** aplicando data por extenso	**/			
-			day = Integer.valueOf(date_full.substring(0, 2)).intValue(); // get only day
-			month = Integer.valueOf(date_full.substring(3, 5)).intValue(); // get only month - 04/12/2013
-			year = Integer.valueOf(date_full.substring(6, 10)).intValue(); // get only month - 04/12/2013
-			
-			day_date.setText(""+day);	
-			
+
+			/** aplicando data por extenso **/
+			day = Integer.valueOf(date_full.substring(0, 2)).intValue(); // get
+																			// only
+																			// day
+			month = Integer.valueOf(date_full.substring(3, 5)).intValue(); // get
+																			// only
+																			// month
+																			// -
+																			// 04/12/2013
+			year = Integer.valueOf(date_full.substring(6, 10)).intValue(); // get
+																			// only
+																			// month
+																			// -
+																			// 04/12/2013
+
+			day_date.setText("" + day);
+
 			// seleciona primeiras 3 letras do mes
-			//month_date.setText(AndroidUtils.getMonth(month).substring(0, 3).toLowerCase()+"/"+year);		
-			month_date.setText(AndroidUtils.getMonth(month)+"/"+year);
-			
+			// month_date.setText(AndroidUtils.getMonth(month).substring(0,
+			// 3).toLowerCase()+"/"+year);
+			month_date.setText(AndroidUtils.getMonth(month) + "/" + year);
+
 			// subject
 			subject.setText(String.valueOf((itemRequest.getSubject())));
 
 			// text
 			text.setText(String.valueOf((itemRequest.getText())));
-			
-			//screen check ou uncheck
-			if(check) { // checka o item
+
+			// screen check ou uncheck
+			if (check) { // checka o item
 				// cria a linha no meio do item
-				subject.setPaintFlags(subject.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+				subject.setPaintFlags(subject.getPaintFlags()
+						| Paint.STRIKE_THRU_TEXT_FLAG);
 			} else { // tira o check do item
 				subject.setPaintFlags(subject.getPaintFlags()
-		                & ~Paint.STRIKE_THRU_TEXT_FLAG);
+						& ~Paint.STRIKE_THRU_TEXT_FLAG);
 			}
 
 		} catch (NullPointerException e) {
@@ -385,26 +403,30 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 	public void salvar() {
 
-		if (subject.getText().toString().length() < 1) { // se o campo subjet estiver fazio nao salva
-			
+		if (subject.getText().toString().length() < 1) { // se o campo subjet
+															// estiver fazio nao
+															// salva
+
 			Intent it = new Intent(this, ListScreen.class);
-			it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // mata a pilha de activitys 
+			it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // mata a pilha de
+															// activitys
 			// OK
 			startActivity(it);
 
-			overridePendingTransition(R.anim.scale_in, R.anim.anime_slide_to_right);
-			
+			overridePendingTransition(R.anim.scale_in,
+					R.anim.anime_slide_to_right);
+
 			return;
 		}
-		
-		if (id_item != null) { // atualização			
-			updateItem(); // atualiza item			
-		} else {			
-			saveNewItem(); // cria novo item no banco		
+
+		if (id_item != null) { // atualização
+			updateItem(); // atualiza item
+		} else {
+			saveNewItem(); // cria novo item no banco
 		}
 
 	}
-	
+
 	/**
 	 * Salva item recem criado
 	 */
@@ -429,18 +451,18 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// check ou uncheck
 		i4s.setCheck(check);
-		
+
 		try {
-			id_item = ItemModel.salvarItemNote(i4s);			
+			id_item = ItemModel.salvarItemNote(i4s);
 		} catch (SQLException e) {
-			
+
 			// erro caricato
 			AndroidUtils.alertDialog(this,
 					"Sorry, please... soooorry. And now, re-start the app.");
-			
+
 			e.printStackTrace();
 		}
-		
+
 		Toast.makeText(this, R.string.m_save, Toast.LENGTH_SHORT).show();
 
 		backToViewItemScreen();
@@ -483,7 +505,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		// get date for save
 		StringBuffer sbDate = new StringBuffer();
 		sbDate.append(date.getText().toString() + "-" + hour.getText());
-		
+
 		i4s.setDate(sbDate.toString());
 
 		// subject
@@ -494,12 +516,16 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 		// check ou uncheck
 		i4s.setCheck(check);
-		
-		// Salvar		
-		if(cont > 0) { // confirma se o item vai realmente ser atualizado (significa que o user mudou parametros na tela)
-			//Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
+
+		// Salvar
+		if (cont > 0) { // confirma se o item vai realmente ser atualizado
+						// (significa que o user mudou parametros na tela)
+			// Log.i(TAG, "save [" + itemLog4Save.toString() + "]");
 			try {
-				id_item = ItemModel.salvarItemNote(i4s);	// no caso de ser a primeira inserção já devolve o id do novo item
+				id_item = ItemModel.salvarItemNote(i4s); // no caso de ser a
+															// primeira inserção
+															// já devolve o id
+															// do novo item
 			} catch (SQLException e) {
 
 				// erro caricato
@@ -509,16 +535,17 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 				e.printStackTrace();
 			}
-			
+
 			Toast.makeText(this, R.string.m_save, Toast.LENGTH_SHORT).show();
-			
+
 		}
 
 		backToViewItemScreen();
 	}
-	
+
 	/**
 	 * Retorna pra tela de view item
+	 * 
 	 * @param c
 	 * @return
 	 */
@@ -540,23 +567,24 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		else
 			return "0" + String.valueOf(c);
 	}
-	
+
 	/******************************************************************************
 	 * BUTTONS
 	 ******************************************************************************/
 	public void actionBt(final Context context) {
 
 	}
-	
+
 	public void organizeBt() {
-		
+
 		// insere a imagem no bt central
 		ImageView bt = (ImageView) findViewById(R.id.bt_center_down);
 		bt.setImageDrawable(getResources().getDrawable(R.drawable.bt_save_off));
-		
+
 		// insere a imagem no bt right
 		ImageView bt1 = (ImageView) findViewById(R.id.bt_right_down);
-		bt1.setImageDrawable(getResources().getDrawable(R.drawable.bt_cancel_off));
+		bt1.setImageDrawable(getResources().getDrawable(
+				R.drawable.bt_cancel_off));
 
 	}
 
@@ -567,22 +595,22 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		super.onBackPressed(); // boolean==true
 
 	}
-	
+
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-	    if ((keyCode == KeyEvent.KEYCODE_HOME)) {
-	        //do nothing
-	        return false;
-	    }
-	    return super.onKeyDown(keyCode, event);
+		if ((keyCode == KeyEvent.KEYCODE_HOME)) {
+			// do nothing
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	public void btBarUpLeft(View v) {
 		// TODO Auto-generated method stub
 
 	}
 
 	public void btBarUpRight(View v) {
-		
+
 		if (customMenuDialog == null) { // instancia o menu apenas uma vez
 			customMenuDialog = new MenuDialog(this);
 		}
@@ -599,16 +627,15 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 	}
 
 	public void btBarDownRight(View v) {
-		
+
 		finish();
-		
 
 	}
-	
+
 	public void btBarDownCenter(View v) {
 
 		onBackPressed();
-		
+
 	}
 
 	/****************************************************************
@@ -626,6 +653,8 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 		if (e != null) {
 
 			if (e.isFocusable()) {
+
+				hideBars();
 
 				e.addTextChangedListener(new TextWatcher() {
 
@@ -651,39 +680,63 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 					}
 				});
+			} else {
+
 			}
 		}
 
 	}
-	
+
+	// esconde barrar
+	public void hideBars() {
+		// esconde a barra inferior e a barra de data
+		FrameLayout fl = (FrameLayout) findViewById(R.id.bg_date);
+		fl.setVisibility(View.GONE);
+
+		TableLayout tl = (TableLayout) findViewById(R.id.bar_down);
+		tl.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+	//	tl.setVisibility(View.GONE);
+	}
+
+	// exibe barrar
+	private void showBars() {
+		// esconde a barra inferior e a barra de data
+		FrameLayout fl = (FrameLayout) findViewById(R.id.bg_date);
+		fl.setVisibility(View.VISIBLE);
+
+		TableLayout tl = (TableLayout) findViewById(R.id.bar_down);
+		tl.setVisibility(View.VISIBLE);
+	}
+
 	/****************************************************************
 	 * CHANGE COLOR
 	 ****************************************************************/
-	
+
 	public void changeToColor(String color) {
-		
-		//Toast.makeText(this, "Change to color [#"+color+"]", Toast.LENGTH_SHORT).show();
-		
+
+		// Toast.makeText(this, "Change to color [#"+color+"]",
+		// Toast.LENGTH_SHORT).show();
+
 		// muda cor do item
 		typeColor = color;
-		
+
 		// muda cor da tela
 		// color of item
-		int newcolor = Color
-				.parseColor("#" + typeColor);
-		
+		int newcolor = Color.parseColor("#" + typeColor);
+
 		title_edit.setTextColor(defaultColor);
-		
+
 		bg_title.setBackgroundColor(newcolor);
-		
+
 		date.setTextColor(defaultColor);
-		
+
 		hour.setTextColor(defaultColor);
-		
+
 		// closed menu for select item
 		customMenuDialog.dismiss();
-		
+
 	}
+
 	private MenuDialog customMenuDialog;
 
 	private class MenuDialog extends AlertDialog {
@@ -696,7 +749,7 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			setView(cus_menu);
 
 		}
-		
+
 		// lista de cores
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -709,7 +762,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 					public void onClick(View v) {
 
-							changeToColor(imgV.getTag().toString().substring(1, imgV.getTag().toString().length()));	
+						changeToColor(imgV
+								.getTag()
+								.toString()
+								.substring(1, imgV.getTag().toString().length()));
 
 					}
 
@@ -743,9 +799,10 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 
 					// close the activity
 					customMenuDialog.dismiss();
-					
+
 					InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-				    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+					imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,
+							0);
 
 					// notify that we consumed this event
 					return true;
@@ -754,8 +811,6 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			// let the system handle the event
 			return super.onTouchEvent(event);
 		}
-		
-		
 
 	}
 }
