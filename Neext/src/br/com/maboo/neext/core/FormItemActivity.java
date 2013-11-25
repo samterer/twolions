@@ -22,11 +22,11 @@ public class FormItemActivity extends ActivityCircle {
 		super.onPause();
 
 		// fecha conexao
-	//	if (sqlScript != null) {
-	//		Log.i("base", this.getString(R.string.a_f_db));
+		// if (sqlScript != null) {
+		// Log.i("base", this.getString(R.string.a_f_db));
 
-	//		sqlScript.fechar(); // fecha a base
-	//	}
+		// sqlScript.fechar(); // fecha a base
+		// }
 	}
 
 	protected void onResume() {
