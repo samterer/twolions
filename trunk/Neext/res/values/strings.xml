@@ -5,7 +5,7 @@
 
     <!-- App -->
     <string name="app_name">NotesNote</string>
-    <string name="app_version">1.1.5</string>
+    <string name="app_version">1.1.6</string>
 
     <!-- msg code -->
     <string name="a_f_db">fechando conexão com o db...</string>

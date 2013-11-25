@@ -16,13 +16,13 @@ import br.com.maboo.neext.R;
  */
 public class NotificationCreate {
 
-	//private NotificationManager nm;
+	// private NotificationManager nm;
 	private Context context;
-	
+
 	private CharSequence tickerText;
 	private CharSequence titulo;
-	private CharSequence mensagem; 
-	
+	private CharSequence mensagem;
+
 	public NotificationCreate(final Context context,
 			final CharSequence tickerText, final CharSequence titulo,
 			final CharSequence mensagem) {
@@ -42,13 +42,16 @@ public class NotificationCreate {
 	public void criarNotificacao(Class<?> activity) {
 
 		// Recupera o serviço do NotificationManager
-		NotificationManager nm = (NotificationManager) context.getSystemService(Activity.NOTIFICATION_SERVICE);
-		
-		Notification n = new Notification(R.drawable.ic_launcher, tickerText, System.currentTimeMillis());
+		NotificationManager nm = (NotificationManager) context
+				.getSystemService(Activity.NOTIFICATION_SERVICE);
+
+		Notification n = new Notification(R.drawable.ic_launcher, tickerText,
+				System.currentTimeMillis());
 
 		// PendingIntent para executar a Activity se o usuário selecionar a
 		// notificação
-		PendingIntent p = PendingIntent.getActivity(context, 0, new Intent(context, activity), 0);
+		PendingIntent p = PendingIntent.getActivity(context, 0, new Intent(
+				context, activity), 0);
 
 		// Informações
 		n.setLatestEventInfo(context, titulo, mensagem, p);
