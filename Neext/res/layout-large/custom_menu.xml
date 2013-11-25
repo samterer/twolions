@@ -11,8 +11,8 @@
         android:layout_width="100dp"
         android:layout_height="90dp"
         android:layout_weight="1"
-        android:background="@color/vermelho_note"
-        android:tag="@color/vermelho_note" />
+        android:background="@color/laranja_note"
+        android:tag="@color/laranja_note" />
 
     <ImageView
         android:id="@+id/btAzulClaro"
