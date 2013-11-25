@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center" >
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:paddingBottom="5dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="5dp" >
 
-    <EditText
-        android:id="@+id/text"
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="top"
-        android:maxLength="250"
-        android:lines="20"
-        android:tag="text"
-        android:hint="insert a text"
-        android:onClick="btBarUpRight"
-        android:height="700dp" />
+        android:layout_height="fill_parent" >
+
+        <br.com.maboo.neext.util.LinedEditText
+            android:id="@+id/text"
+            style="@style/texto22"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/cinza_claro"
+            android:gravity="top"
+            android:hint="insert a text"
+            android:lineSpacingExtra="8dp"
+            android:lines="200"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:tag="text" />
+    </ScrollView>
 
 </LinearLayout>

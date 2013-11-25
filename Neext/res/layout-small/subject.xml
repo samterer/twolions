@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bg_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center" 
+    android:paddingTop="5dp">
+
+    <EditText
+        android:id="@+id/subject"
+        android:layout_width="fill_parent"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:layout_weight="5"
+        android:maxLength="18"
+        android:tag="subject"
+        android:textColor="@color/preto"
+        android:textSize="25dp"
+        android:hint="insert a subject"
+        android:typeface="monospace" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:background="@color/cinza_claro" />
+
+    <ImageView
+        android:id="@+id/bt_right_up"
+        android:layout_width="80dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:onClick="btBarUpRight"
+        android:src="@drawable/bt_edit_off" />
+
+</LinearLayout>
