@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:id="@+id/r_item_log"
-        android:layout_width="381dp"
+        android:layout_width="386dp"
         android:layout_height="fill_parent"
         android:paddingTop="20dp" >
 

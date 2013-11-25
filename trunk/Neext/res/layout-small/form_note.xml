@@ -10,9 +10,9 @@
     <include layout="@layout/edit_note" />
 
     <!-- BAR INF -->
-    
-    <include
+      <include
         android:layout_gravity="bottom"
         layout="@layout/bar_down" />
+    
 
 </FrameLayout>

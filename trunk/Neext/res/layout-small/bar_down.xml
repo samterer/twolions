@@ -3,6 +3,7 @@
     android:id="@+id/bar_down"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
     android:background="@color/cinza_c"
     android:shrinkColumns="3" >
 
