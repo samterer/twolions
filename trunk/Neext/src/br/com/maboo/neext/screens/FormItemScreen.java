@@ -354,8 +354,9 @@ public class FormItemScreen extends FormItemActivity implements InterfaceBar {
 			day_date.setText(""+day);	
 			
 			// seleciona primeiras 3 letras do mes
-			month_date.setText(AndroidUtils.getMonth(month).substring(0, 3).toLowerCase()+"/"+year);		
-
+			//month_date.setText(AndroidUtils.getMonth(month).substring(0, 3).toLowerCase()+"/"+year);		
+			month_date.setText(AndroidUtils.getMonth(month)+"/"+year);
+			
 			// subject
 			subject.setText(String.valueOf((itemRequest.getSubject())));
 

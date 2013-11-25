@@ -195,7 +195,7 @@ public class ListAdapter extends BaseAdapter implements AnimationListener {
 		
 		day = Integer.valueOf(date_full.substring(0, 2)).intValue(); // get only day
 		month = Integer.valueOf(date_full.substring(3, 5)).intValue(); // get only month
-		year = Integer.valueOf(date_full.substring(6, 10)).intValue(); // get only month - 04/12/2013
+		year = Integer.valueOf(date_full.substring(8, 10)).intValue(); // get only month - 04/12/2013
 		
 		//Log.i("appLog","2. day: "+day);		
 		//Log.i("appLog","2. month: "+month);
