@@ -1,5 +1,7 @@
-package com.androidbegin.menuviewpagertutorial;
+package br.com.maboo.node.nodemenubeta.adapter;
 
+import br.com.maboo.node.nodemenubeta.tab.FragmentTab1;
+import br.com.maboo.node.nodemenubeta.tab.FragmentTab2;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;

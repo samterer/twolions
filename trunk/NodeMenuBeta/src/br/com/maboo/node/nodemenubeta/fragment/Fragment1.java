@@ -1,4 +1,4 @@
-package com.androidbegin.menuviewpagertutorial;
+package br.com.maboo.node.nodemenubeta.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.androidbegin.menuviewpagertutorial.R;
+import com.androidbegin.menuviewpagertutorial.R.layout;
 
 public class Fragment1 extends SherlockFragment {
 	@Override

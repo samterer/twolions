@@ -31,7 +31,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock" >
-        <activity android:name=".MainActivity" >
+        <activity android:name="br.com.maboo.node.nodemenubeta.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

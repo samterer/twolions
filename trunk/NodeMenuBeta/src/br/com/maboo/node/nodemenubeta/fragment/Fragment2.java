@@ -1,7 +1,14 @@
-package com.androidbegin.menuviewpagertutorial;
+package br.com.maboo.node.nodemenubeta.fragment;
 
 import java.lang.reflect.Field;
+
+import br.com.maboo.node.nodemenubeta.adapter.ViewPagerAdapter;
+
 import com.actionbarsherlock.app.SherlockFragment;
+import com.androidbegin.menuviewpagertutorial.R;
+import com.androidbegin.menuviewpagertutorial.R.id;
+import com.androidbegin.menuviewpagertutorial.R.layout;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
