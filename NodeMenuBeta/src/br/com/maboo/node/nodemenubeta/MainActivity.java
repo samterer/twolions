@@ -1,7 +1,12 @@
-package com.androidbegin.menuviewpagertutorial;
+package br.com.maboo.node.nodemenubeta;
+
+import br.com.maboo.node.nodemenubeta.adapter.MenuListAdapter;
+import br.com.maboo.node.nodemenubeta.fragment.Fragment1;
+import br.com.maboo.node.nodemenubeta.fragment.Fragment2;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.androidbegin.menuviewpagertutorial.R;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;

@@ -1,4 +1,8 @@
-package com.androidbegin.menuviewpagertutorial;
+package br.com.maboo.node.nodemenubeta.adapter;
+
+import com.androidbegin.menuviewpagertutorial.R;
+import com.androidbegin.menuviewpagertutorial.R.id;
+import com.androidbegin.menuviewpagertutorial.R.layout;
 
 import android.content.Context;
 import android.view.LayoutInflater;
