@@ -7,5 +7,7 @@
     <string name="app_id">215562371957418</string>
     <string name="welcome">Welcome</string>
     <string name="title_activity_show_facebook">ShowFacebook</string>
+    <string name="action_people">With whom?</string>
+    <string name="action_people_default">Select friends</string>
 
 </resources>
