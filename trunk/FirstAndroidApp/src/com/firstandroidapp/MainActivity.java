@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -28,37 +28,48 @@ public class MainActivity extends Activity {
 			// callback when session changes state
 			@SuppressWarnings("deprecation")
 			@Override
-			public void call(Session session, SessionState state,
+			public void call(final Session session, SessionState state,
 					Exception exception) {
 				if (session.isOpened()) {
 
 					// make request to the /me API
-					Request.executeMeRequestAsync(session,
+					Request request = Request.newMeRequest(session,
 							new Request.GraphUserCallback() {
 
 								// callback after Graph API response with user
 								// object
 								public void onCompleted(GraphUser user,
 										Response response) {
-									if (user != null) {
-										facebook_id = user.getId();// user id
-										facebook_name = user.getName();
+									if (session == Session.getActiveSession()) {
 
-										Log.i("appLog", facebook_id);
-										Log.i("appLog", facebook_name);
+										if (user != null) {
+											facebook_id = user.getId();// user
+																		// id
+											facebook_name = user.getName();
 
-										Intent myIntent = new Intent(
-												MainActivity.this,
-												ShowFacebook.class);
-										myIntent.putExtra("name", facebook_name);
-										myIntent.putExtra("id", facebook_id);
-										startActivity(myIntent);
+											Log.i("appLog", facebook_id);
+											Log.i("appLog", facebook_name);
 
-									} else {
-										Log.i("appLog", "the user is null");
+											Intent myIntent = new Intent(
+													MainActivity.this,
+													ShowFacebook.class);
+											myIntent.putExtra("name",
+													facebook_name);
+											myIntent.putExtra("id", facebook_id);
+											startActivity(myIntent);
+			
+
+										} else {
+											Log.i("appLog", "the user is null");
+										}
+									} else if (response.getError() != null) {
+										Toast.makeText(MainActivity.this,
+												"Houve um erro com a sessão",
+												Toast.LENGTH_SHORT).show();
 									}
 								}
 							});
+					request.executeAsync();
 				}
 			}
 		});
