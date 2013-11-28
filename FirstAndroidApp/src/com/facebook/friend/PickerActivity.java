@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
 import com.facebook.FacebookException;
+import com.facebook.application.ScrumptiousApplication;
 import com.facebook.widget.FriendPickerFragment;
 import com.facebook.widget.PickerFragment;
 import com.firstandroidapp.R;
@@ -89,20 +90,26 @@ public class PickerActivity extends FragmentActivity {
 	}
 
 	private void finishActivity() {
+		ScrumptiousApplication app = (ScrumptiousApplication) getApplication();
+		if (FRIEND_PICKER.equals(getIntent().getData())) {
+			if (friendPickerFragment != null) {
+				app.setSelectedUsers(friendPickerFragment.getSelection());
+			}
+		}
 		setResult(RESULT_OK, null);
 		finish();
 	}
-	
+
 	@Override
 	protected void onStart() {
-	    super.onStart();
-	    if (FRIEND_PICKER.equals(getIntent().getData())) {
-	        try {
-	            friendPickerFragment.loadData(false);
-	        } catch (Exception ex) {
-	            onError(ex);
-	        }
-	    }
+		super.onStart();
+		if (FRIEND_PICKER.equals(getIntent().getData())) {
+			try {
+				friendPickerFragment.loadData(false);
+			} catch (Exception ex) {
+				onError(ex);
+			}
+		}
 	}
 
 }
