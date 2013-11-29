@@ -35,6 +35,7 @@ import com.facebook.application.ScrumptiousApplication;
 import com.facebook.friend.BaseListElement;
 import com.facebook.friend.PickerActivity;
 import com.facebook.model.GraphObject;
+import com.facebook.model.GraphPlace;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.ProfilePictureView;
 import com.firstandroidapp.R;
@@ -87,7 +88,10 @@ public class SelectionFragment extends Fragment {
 		// BaseListElement items
 		listElements = new ArrayList<BaseListElement>();
 		// Add an item for the friend picker
-		listElements.add(new PeopleListElement(0));
+		// Add an item for the place picker
+		listElements.add(new LocationListElement(0));
+		// Add an item for the friend picker
+		listElements.add(new PeopleListElement(1));
 
 		if (savedInstanceState != null) {
 			// Restore the state for each list element
@@ -363,6 +367,76 @@ public class SelectionFragment extends Fragment {
 			}
 			return null;
 		}
+	}
+	
+	private class LocationListElement extends BaseListElement {
+		
+		private static final String PLACE_KEY = "place";
+
+		private GraphPlace selectedPlace = null;
+		
+	    public LocationListElement(int requestCode) {
+	        super(getActivity().getResources()
+	              .getDrawable(R.drawable.action_location),
+	              getActivity().getResources()
+	              .getString(R.string.action_location),
+	              getActivity().getResources()
+	              .getString(R.string.action_location_default),
+	              requestCode);
+	    }
+
+	    @Override
+		public View.OnClickListener getOnClickListener() {
+	        return new View.OnClickListener() {
+	            @Override
+	            public void onClick(View view) {
+	            	startPickerActivity(PickerActivity.PLACE_PICKER, getRequestCode());
+	            }
+	        };
+	    }
+	    
+	    private void setPlaceText() {
+	        String text = null;
+	        if (selectedPlace != null) {
+	            text = selectedPlace.getName();
+	        }   
+	        if (text == null) {
+	            text = getResources().getString(R.string.action_location_default);
+	        }   
+	        setText2(text);
+	    }
+	    
+	    @Override
+	    public void onActivityResult(Intent data) {
+	        selectedPlace = ((ScrumptiousApplication) getActivity()
+	                .getApplication()).getSelectedPlace();
+	        setPlaceText();
+	        notifyDataChanged();
+	    }  
+	    
+	    @Override
+	    public void onSaveInstanceState(Bundle bundle) {
+	        if (selectedPlace != null) {
+	            bundle.putString(PLACE_KEY, 
+	                    selectedPlace.getInnerJSONObject().toString());
+	        }   
+	    }
+	    @Override
+	    public boolean restoreState(Bundle savedState) {
+	        String place = savedState.getString(PLACE_KEY);
+	        if (place != null) {
+	            try {
+	                selectedPlace = GraphObject.Factory.create(
+	                        new JSONObject(place), 
+	                        GraphPlace.class);
+	                setPlaceText();
+	                return true;
+	            } catch (JSONException e) {
+	                Log.e(TAG, "Unable to deserialize place.", e); 
+	            }   
+	        }   
+	        return false;
+	    }  
 	}
 
 }
