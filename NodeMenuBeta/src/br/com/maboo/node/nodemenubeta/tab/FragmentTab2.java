@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.androidbegin.menuviewpagertutorial.R;
-import com.androidbegin.menuviewpagertutorial.R.layout;
 
 public class FragmentTab2 extends SherlockFragment {
 

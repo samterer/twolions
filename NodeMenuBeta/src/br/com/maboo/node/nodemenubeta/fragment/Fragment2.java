@@ -2,19 +2,16 @@ package br.com.maboo.node.nodemenubeta.fragment;
 
 import java.lang.reflect.Field;
 
-import br.com.maboo.node.nodemenubeta.adapter.ViewPagerAdapter;
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.androidbegin.menuviewpagertutorial.R;
-import com.androidbegin.menuviewpagertutorial.R.id;
-import com.androidbegin.menuviewpagertutorial.R.layout;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import br.com.maboo.node.nodemenubeta.adapter.ViewPagerAdapter;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.androidbegin.menuviewpagertutorial.R;
 
 public class Fragment2 extends SherlockFragment {
 
