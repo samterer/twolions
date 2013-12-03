@@ -1,9 +1,5 @@
 package br.com.maboo.node.nodemenubeta.adapter;
 
-import com.androidbegin.menuviewpagertutorial.R;
-import com.androidbegin.menuviewpagertutorial.R.id;
-import com.androidbegin.menuviewpagertutorial.R.layout;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.androidbegin.menuviewpagertutorial.R;
 
 public class MenuListAdapter extends BaseAdapter {
 
