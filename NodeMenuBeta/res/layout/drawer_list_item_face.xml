@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
     style="?attr/spinnerDropDownItemStyle"
     android:layout_width="match_parent"
-    android:layout_height="?attr/dropdownListPreferredItemHeight"
-    android:background="?android:attr/activatedBackgroundIndicator"
+    android:layout_height="140dp"
+    android:background="@color/preto"
     android:orientation="horizontal" >
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:adjustViewBounds="true" />
-    
+    <com.facebook.widget.ProfilePictureView
+        android:id="@+id/selection_profile_pic"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="45dp"
+        android:adjustViewBounds="true"
+        facebook:preset_size="small" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginTop="45dp"
         android:gravity="center_vertical|left"
         android:orientation="vertical" >
 

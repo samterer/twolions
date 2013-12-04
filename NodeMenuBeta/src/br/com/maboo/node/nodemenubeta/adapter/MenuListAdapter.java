@@ -53,33 +53,39 @@ public class MenuListAdapter extends BaseAdapter {
 
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View itemView = inflater.inflate(R.layout.drawer_list_item, parent,
-				false);
-
+		
+		int id_layout = 0;
+		// muda o layout do menu se for para o "profile" do usuario
+		if(position == 0) {
+			id_layout = R.layout.drawer_list_item_face;
+		} else { // item comum do menu
+			id_layout = R.layout.drawer_list_item;
+		}
+		
+		View itemView = inflater.inflate(id_layout, parent,
+				false);	
+		
 		// Locate the TextViews in drawer_list_item.xml
 		txtTitle = (TextView) itemView.findViewById(R.id.title);
 		txtSubTitle = (TextView) itemView.findViewById(R.id.subtitle);
 
 		// Locate the ImageView in drawer_list_item.xml
 		imgIcon = (ImageView) itemView.findViewById(R.id.icon);
-		
-		// Find the user's profile picture custom view
-		profilePictureView = (ProfilePictureView) itemView
-				.findViewById(R.id.selection_profile_pic);
-		profilePictureView.setCropped(true);
 
 		// Set the results into TextViews
 		txtTitle.setText(mTitle[position]);
 		txtSubTitle.setText(mSubTitle[position]);
 
 		
-		// recupera profila do usuario
-		float a = mIcon[position];
-		float b = Float.valueOf(FaceUserVO.id_user);
-		if(a == b) {
+		// o primeiro item é sempre a foto do profile
+		// padrao do layout do app
+		if(position == 0) {
+			// recupera profila do usuario
+			profilePictureView = (ProfilePictureView) itemView
+					.findViewById(R.id.selection_profile_pic);
+			profilePictureView.setCropped(true);
+			
 			profilePictureView.setProfileId(FaceUserVO.id_user);
-			profilePictureView.setVisibility(View.VISIBLE);
-			imgIcon.setVisibility(View.GONE);
 		} else {
 			// Set the results into ImageView
 			imgIcon.setImageResource(mIcon[position]);
