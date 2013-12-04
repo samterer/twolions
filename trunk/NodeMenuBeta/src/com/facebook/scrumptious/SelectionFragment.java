@@ -17,6 +17,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
+import com.facebook.scrumptious.auxiliar.FaceUserVO;
 import com.facebook.widget.ProfilePictureView;
 
 public class SelectionFragment extends Fragment {
@@ -86,6 +87,11 @@ public class SelectionFragment extends Fragment {
 								profilePictureView.setProfileId(user.getId());
 								// Set the Textview's text to the user's name.
 								userNameView.setText(user.getName());
+								
+								// salva nome\id do usuario
+								FaceUserVO.user_name = user.getName().toString();
+								FaceUserVO.id_user = user.getId().toString();
+								FaceUserVO.profilePicture = profilePictureView.getImage();
 
 								// começa um tempo e chama a tela padrao do
 								// app(maps...)
