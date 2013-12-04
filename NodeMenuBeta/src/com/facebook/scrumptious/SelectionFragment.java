@@ -57,9 +57,11 @@ public class SelectionFragment extends Fragment {
 		profilePictureView = (ProfilePictureView) view
 				.findViewById(R.id.selection_profile_pic);
 		profilePictureView.setCropped(true);
+		//profilePictureView.setVisibility(View.GONE);
 
 		// Find the user's name view
 		userNameView = (TextView) view.findViewById(R.id.selection_user_name);
+		//userNameView.setVisibility(View.GONE);
 
 		// Check for an open session
 		Session session = Session.getActiveSession();
