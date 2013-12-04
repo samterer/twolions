@@ -136,8 +136,8 @@ public class MainActivity extends SherlockFragmentActivity {
 	}
 
 	private void selectItem(int position) {
-
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		FragmentManager fm = getSupportFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
 		// Locate Position
 		switch (position) {
 		case 0:
