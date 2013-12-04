@@ -29,7 +29,7 @@ public class SelectionFragment extends Fragment {
 	private static final int REAUTH_ACTIVITY_CODE = 100;
 
 	// Splash screen timer
-	private int SPLASH_TIME_OUT = 1500;
+	private int SPLASH_TIME_OUT = 100;
 
 	private UiLifecycleHelper uiHelper;
 	private Session.StatusCallback callback = new Session.StatusCallback() {

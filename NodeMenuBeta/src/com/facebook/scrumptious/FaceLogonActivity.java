@@ -7,8 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.Session;
@@ -19,16 +17,13 @@ public class FaceLogonActivity extends FragmentActivity {
 
 	private static final int SPLASH = 0;
 	private static final int SELECTION = 1;
-	private static final int SETTINGS = 2;
 	
 	//private static final int FRAGMENT_COUNT = SELECTION + 1;
-	private static final int FRAGMENT_COUNT = SETTINGS +1;
+	private static final int FRAGMENT_COUNT = SELECTION +1;
 	
 	private Fragment[] fragments = new Fragment[FRAGMENT_COUNT];
 
 	private boolean isResumed = false;
-	
-	private MenuItem settings;
 	
 	private UiLifecycleHelper uiHelper;
 	
@@ -48,11 +43,11 @@ public class FaceLogonActivity extends FragmentActivity {
 	    uiHelper.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_face_logon);
-
+		
 		FragmentManager fm = getSupportFragmentManager();
 		fragments[SPLASH] = fm.findFragmentById(R.id.splashFragment);
 		fragments[SELECTION] = fm.findFragmentById(R.id.selectionFragment);
-
+		
 		FragmentTransaction transaction = fm.beginTransaction();
 		for (int i = 0; i < fragments.length; i++) {
 			transaction.hide(fragments[i]);
@@ -139,27 +134,5 @@ public class FaceLogonActivity extends FragmentActivity {
 	protected void onSaveInstanceState(Bundle outState) {
 	    super.onSaveInstanceState(outState);
 	    uiHelper.onSaveInstanceState(outState);
-	}
-	
-	public boolean onPrepareOptionsMenu(Menu menu) {
-	    // only add the menu when the selection fragment is showing
-	    if (fragments[SELECTION].isVisible()) {
-	        if (menu.size() == 0) {
-	            settings = menu.add(R.string.settings);
-	        }
-	        return true;
-	    } else {
-	        menu.clear();
-	        settings = null;
-	    }
-	    return false;
-	}
-	
-	public boolean onOptionsItemSelected(MenuItem item) {
-	    if (item.equals(settings)) {
-	        showFragment(SETTINGS, true);
-	        return true;
-	    }
-	    return false;
 	}
 }
