@@ -18,6 +18,7 @@ import br.com.maboo.node.nodemenubeta.fragment.Fragment2;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.androidbegin.menuviewpagertutorial.R;
+import com.facebook.scrumptious.auxiliar.FaceUserVO;
 
 public class MainActivity extends SherlockFragmentActivity {
 
@@ -40,17 +41,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		// Get the view from drawer_main.xml
 		setContentView(R.layout.drawer_main);
 
-		// Get the Title
-		mTitle = mDrawerTitle = getTitle();
-
-		// Generate title
-		title = new String[] { "Title Fragment 1", "Title Fragment 2" };
-
-		// Generate subtitle
-		subtitle = new String[] { "Subtitle Fragment 1", "Subtitle Fragment 2" };
-
-		// Generate icon
-		icon = new int[] { R.drawable.action_about, R.drawable.action_settings };
+		initMenu();
 
 		// Locate DrawerLayout in drawer_main.xml
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -103,6 +94,22 @@ public class MainActivity extends SherlockFragmentActivity {
 		}
 	}
 
+	private void initMenu() {
+		// Get the Title
+		mTitle = mDrawerTitle = getTitle();
+
+		String name_user = FaceUserVO.user_name;
+		
+		// Generate title
+		title = new String[] { name_user, "Map" };
+
+		// Generate subtitle
+		subtitle = new String[] { "noob", "Node map" };
+
+		// Generate icon
+		icon = new int[] { R.drawable.action_about, R.drawable.action_settings };
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -134,10 +141,10 @@ public class MainActivity extends SherlockFragmentActivity {
 		// Locate Position
 		switch (position) {
 		case 0:
-			ft.replace(R.id.content_frame, fragment1);
+			ft.replace(R.id.content_frame, fragment2);
 			break;
 		case 1:
-			ft.replace(R.id.content_frame, fragment2);
+			ft.replace(R.id.content_frame, fragment1);
 			break;
 		}
 		ft.commit();

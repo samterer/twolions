@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.androidbegin.menuviewpagertutorial.R;
+import com.facebook.scrumptious.auxiliar.FaceUserVO;
+import com.facebook.widget.ProfilePictureView;
 
 public class MenuListAdapter extends BaseAdapter {
 
@@ -47,6 +49,7 @@ public class MenuListAdapter extends BaseAdapter {
 		TextView txtTitle;
 		TextView txtSubTitle;
 		ImageView imgIcon;
+		ProfilePictureView profilePictureView;
 
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -59,13 +62,28 @@ public class MenuListAdapter extends BaseAdapter {
 
 		// Locate the ImageView in drawer_list_item.xml
 		imgIcon = (ImageView) itemView.findViewById(R.id.icon);
+		
+		// Find the user's profile picture custom view
+		profilePictureView = (ProfilePictureView) itemView
+				.findViewById(R.id.selection_profile_pic);
+		profilePictureView.setCropped(true);
 
 		// Set the results into TextViews
 		txtTitle.setText(mTitle[position]);
 		txtSubTitle.setText(mSubTitle[position]);
 
-		// Set the results into ImageView
-		imgIcon.setImageResource(mIcon[position]);
+		
+		// recupera profila do usuario
+		float a = mIcon[position];
+		float b = Float.valueOf(FaceUserVO.id_user);
+		if(a == b) {
+			profilePictureView.setProfileId(FaceUserVO.id_user);
+			profilePictureView.setVisibility(View.VISIBLE);
+			imgIcon.setVisibility(View.GONE);
+		} else {
+			// Set the results into ImageView
+			imgIcon.setImageResource(mIcon[position]);
+		}
 
 		return itemView;
 	}

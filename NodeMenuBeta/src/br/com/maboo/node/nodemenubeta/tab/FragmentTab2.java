@@ -18,3 +18,4 @@ public class FragmentTab2 extends SherlockFragment {
 		return view;
 	}
 }
+
