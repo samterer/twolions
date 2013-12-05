@@ -69,8 +69,12 @@ public class FragmentTab2 extends TransactionCircle implements Transaction {
 					@Override
 					public void onCompleted(List<GraphUser> users,
 							Response response) {
+						
+						Log.i("appLog", "onCompleted...");
 
 						for (final GraphUser graphUser : users) {
+							
+							Log.i("appLog", "graphUser: "+graphUser.getFirstName());
 
 							URL bitmapURL;
 							Bitmap friendBitmap = null;
@@ -107,7 +111,7 @@ public class FragmentTab2 extends TransactionCircle implements Transaction {
 
 					}
 				});
-		request.executeAsync();
+		request.getCallback();
 
 	}
 
