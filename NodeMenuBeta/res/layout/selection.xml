@@ -2,38 +2,39 @@
 <RelativeLayout xmlns:facebook="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:layout_marginTop="20dp"
-    android:background="@color/azul_light"
+    android:background="#DB6B52"
     android:orientation="horizontal" >
+
+    <com.facebook.widget.ProfilePictureView
+        android:id="@+id/selection_profile_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/progressBar1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp"
+        android:gravity="center_horizontal"
+        facebook:preset_size="small" >
+    </com.facebook.widget.ProfilePictureView>
 
     <ProgressBar
         android:id="@+id/progressBar1"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="35dp"
         android:gravity="bottom" />
-
-    <com.facebook.widget.ProfilePictureView
-        android:id="@+id/selection_profile_pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center_horizontal"
-        android:visibility="gone"
-        facebook:preset_size="small" />
 
     <TextView
         android:id="@+id/selection_user_name"
+        style="@style/texto16Branco"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:textColor="#333"
-        android:textSize="18sp"
-        android:visibility="gone" />
+        android:layout_above="@+id/progressBar1"
+        android:layout_centerHorizontal="true"
+        android:text="Bem Vindo!" />
 
 </RelativeLayout>

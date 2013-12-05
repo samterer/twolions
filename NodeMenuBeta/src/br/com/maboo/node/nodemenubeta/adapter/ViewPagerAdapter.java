@@ -10,7 +10,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 	// Declare the number of ViewPager pages
 	final int PAGE_COUNT = 2;
-	private String titles[] = new String[] { "Tab1", "Tab2" };
+	private String titles[] = new String[] { "MyNode", "NodeFriends" };
 
 	public ViewPagerAdapter(FragmentManager fm) {
 		super(fm);

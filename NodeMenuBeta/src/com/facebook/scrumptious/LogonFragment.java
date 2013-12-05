@@ -20,7 +20,7 @@ import com.facebook.model.GraphUser;
 import com.facebook.scrumptious.auxiliar.FaceUserVO;
 import com.facebook.widget.ProfilePictureView;
 
-public class SelectionFragment extends Fragment {
+public class LogonFragment extends Fragment {
 
 	private static final String TAG = "SelectionFragment";
 
@@ -30,7 +30,7 @@ public class SelectionFragment extends Fragment {
 	private static final int REAUTH_ACTIVITY_CODE = 100;
 
 	// Splash screen timer
-	private int SPLASH_TIME_OUT = 100;
+	private int SPLASH_TIME_OUT = 450;
 
 	private UiLifecycleHelper uiHelper;
 	private Session.StatusCallback callback = new Session.StatusCallback() {
@@ -57,11 +57,9 @@ public class SelectionFragment extends Fragment {
 		profilePictureView = (ProfilePictureView) view
 				.findViewById(R.id.selection_profile_pic);
 		profilePictureView.setCropped(true);
-		//profilePictureView.setVisibility(View.GONE);
 
 		// Find the user's name view
 		userNameView = (TextView) view.findViewById(R.id.selection_user_name);
-		//userNameView.setVisibility(View.GONE);
 
 		// Check for an open session
 		Session session = Session.getActiveSession();
@@ -88,7 +86,7 @@ public class SelectionFragment extends Fragment {
 								// picture.
 								profilePictureView.setProfileId(user.getId());
 								// Set the Textview's text to the user's name.
-								userNameView.setText(user.getName());
+								userNameView.setText("Bem Vindo " + user.getName());
 								
 								// salva nome\id do usuario
 								FaceUserVO.user_name = user.getName().toString();
@@ -105,6 +103,8 @@ public class SelectionFragment extends Fragment {
 
 									public void run() {
 
+										onDestroy();
+										
 										// start the home screen if the back
 										// button wasn't pressed
 										// already
