@@ -15,6 +15,8 @@ public class FragmentTab1 extends SherlockFragment {
 			Bundle savedInstanceState) {
 		// Get the view from fragmenttab2.xml
 		View view = inflater.inflate(R.layout.fragmenttab1, container, false);
+
+
 		return view;
 	}
 }
