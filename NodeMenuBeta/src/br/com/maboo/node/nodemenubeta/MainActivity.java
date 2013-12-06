@@ -12,8 +12,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import br.com.maboo.node.nodemenubeta.adapter.MenuListAdapter;
-import br.com.maboo.node.nodemenubeta.fragment.Fragment1;
-import br.com.maboo.node.nodemenubeta.fragment.Fragment2;
+import br.com.maboo.node.nodemenubeta.fragment.FragmentMap;
+import br.com.maboo.node.nodemenubeta.fragment.FragmentProfile;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -30,8 +30,8 @@ public class MainActivity extends SherlockFragmentActivity {
 	String[] title;
 	String[] subtitle;
 	int[] icon;
-	Fragment fragment1 = new Fragment1();
-	Fragment fragment2 = new Fragment2();
+	Fragment fragment1 = new FragmentMap();
+	Fragment fragment2 = new FragmentProfile();
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
 
