@@ -52,7 +52,7 @@
         <!-- facebook -->
 
         <activity
-            android:name="com.facebook.scrumptious.FaceLogonActivity"
+            android:name="com.facebook.scrumptious.LogonActivity"
             android:label="FaceLogonActivity" >
         </activity>
         <activity

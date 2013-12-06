@@ -103,6 +103,8 @@ public class LogonFragment extends Fragment {
 
 									public void run() {
 
+										onDetach();
+										
 										onDestroy();
 										
 										// start the home screen if the back

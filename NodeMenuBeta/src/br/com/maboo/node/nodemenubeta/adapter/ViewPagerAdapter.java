@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import br.com.maboo.node.nodemenubeta.tab.FragmentTab1;
 import br.com.maboo.node.nodemenubeta.tab.FragmentTab2;
+import br.com.maboo.node.nodemenubeta.tab.ListViewAndroidExemple;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -27,7 +28,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 			// Open FragmentTab2.java
 		case 1:
-			FragmentTab2 fragmenttab2 = new FragmentTab2();
+			ListViewAndroidExemple fragmenttab2 = new ListViewAndroidExemple();
 			return fragmenttab2;
 		}
 		return null;
