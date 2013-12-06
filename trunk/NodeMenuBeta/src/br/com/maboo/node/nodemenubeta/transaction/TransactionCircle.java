@@ -1,11 +1,11 @@
 package br.com.maboo.node.nodemenubeta.transaction;
 
 import android.os.AsyncTask;
-import android.widget.Toast;
+import android.util.Log;
+import br.com.maboo.node.nodemenubeta.util.Util;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.androidbegin.menuviewpagertutorial.R;
-
 
 public class TransactionCircle extends SherlockFragment {
 
@@ -48,9 +48,10 @@ public class TransactionCircle extends SherlockFragment {
 	// Inicia a thread
 	public void startTransaction(Transaction transaction) {
 
-		boolean dbOk = true; // verifica internet e gps
+		boolean net = Util.isNetworkAvailable(getActivity());
+		boolean gps = true;
 
-		if (dbOk) {
+		if (net && gps) {
 
 			// Inicia a transção
 			task = new TransactionTask(this.getActivity(), transaction,
@@ -58,10 +59,20 @@ public class TransactionCircle extends SherlockFragment {
 			task.execute();
 
 		} else {
+			
+			Log.i("appLog","error!");
 
-			Toast.makeText(this.getActivity(),
-					"Sorry, please... soooorry. And now, re-start the app.",
-					Toast.LENGTH_SHORT).show();
+			if (net) {
+				Util.alertDialog(getActivity(),
+						"Verifique se o Wi-fi ou o plano de dados esta ativo.");
+			}
+
+			if (gps) {
+				Util.alertDialog(getActivity(),
+						"Verifique se o GPS esta ativo.");
+			}
+			
+			onDestroy();
 
 		}
 	}

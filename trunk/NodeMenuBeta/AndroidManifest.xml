@@ -34,7 +34,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock" >
         <activity
-            android:name="com.facebook.scrumptious.FaceLogonActivity"
+            android:name="br.com.maboo.node.nodemenubeta.InitNode"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -43,25 +43,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCPpY3AOkZKO60KnLZ-Z8w0nhhf65z6esE" >
-        </meta-data>
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/app_id" />
-
         <activity
             android:name="br.com.maboo.node.nodemenubeta.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- facebook -->
+
+        <activity
+            android:name="com.facebook.scrumptious.FaceLogonActivity"
+            android:label="FaceLogonActivity" >
         </activity>
         <activity
             android:name="com.facebook.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
+
+        <!-- maps -->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCPpY3AOkZKO60KnLZ-Z8w0nhhf65z6esE" >
+        </meta-data>
     </application>
 
 </manifest>

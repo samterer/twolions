@@ -4,16 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import br.com.maboo.node.nodemenubeta.transaction.Transaction;
+import br.com.maboo.node.nodemenubeta.transaction.TransactionCircle;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.androidbegin.menuviewpagertutorial.R;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.LatLng;
 
-public class Fragment1 extends SherlockFragment implements OnMapClickListener,
-		OnMapLongClickListener {
+public class Fragment1 extends TransactionCircle implements OnMapClickListener,
+		OnMapLongClickListener, Transaction {
 
 	private MapView m;
 
@@ -27,13 +28,16 @@ public class Fragment1 extends SherlockFragment implements OnMapClickListener,
 		m = (MapView) v.findViewById(R.id.map);
 		m.onCreate(savedInstanceState);
 
-		// mTapTextView = (TextView) findViewById(R.id.tap_text);
+		return v;
+	}
+	
+	@Override
+	public void execute() throws Exception {
 
 		initMap();
 		setListener();
-
-		return v;
 	}
+
 
 	public void initMap() {
 
