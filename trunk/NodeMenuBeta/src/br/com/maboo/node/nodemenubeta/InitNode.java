@@ -9,7 +9,7 @@ import android.os.Handler;
 import br.com.maboo.node.nodemenubeta.util.Util;
 
 import com.androidbegin.menuviewpagertutorial.R;
-import com.facebook.scrumptious.FaceLogonActivity;
+import com.facebook.scrumptious.LogonActivity;
 
 public class InitNode extends Activity {
 
@@ -42,7 +42,7 @@ public class InitNode extends Activity {
 			// start the home screen if the back
 			// button wasn't pressed
 			// already
-			Intent intent = new Intent(this, FaceLogonActivity.class);
+			Intent intent = new Intent(this, LogonActivity.class);
 
 			startActivity(intent);
 		}

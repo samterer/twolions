@@ -51,7 +51,7 @@ public class FragmentTab2 extends TransactionCircle implements Transaction {
 		// Get the view from fragmenttab2.xml
 		View view = inflater.inflate(R.layout.fragmenttab2, container, false);
 
-		listview_log = (ListView) view.findViewById(R.id.selection_list);
+		listview_log = (ListView) view.findViewById(R.id.list_friend);
 		listview_log.setAdapter(new ListAdapter(this, itens));
 
 		return view;
