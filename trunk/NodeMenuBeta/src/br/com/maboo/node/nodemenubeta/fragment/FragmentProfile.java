@@ -13,7 +13,7 @@ import br.com.maboo.node.nodemenubeta.adapter.ViewPagerAdapter;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.androidbegin.menuviewpagertutorial.R;
 
-public class Fragment2 extends SherlockFragment {
+public class FragmentProfile extends SherlockFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

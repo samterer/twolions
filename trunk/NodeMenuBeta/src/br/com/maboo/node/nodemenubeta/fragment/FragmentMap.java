@@ -13,7 +13,7 @@ import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.LatLng;
 
-public class Fragment1 extends TransactionCircle implements OnMapClickListener,
+public class FragmentMap extends TransactionCircle implements OnMapClickListener,
 		OnMapLongClickListener, Transaction {
 
 	private MapView m;
@@ -35,18 +35,13 @@ public class Fragment1 extends TransactionCircle implements OnMapClickListener,
 	public void execute() throws Exception {
 
 		initMap();
-		setListener();
+		
 	}
 
 
 	public void initMap() {
 
 		// bt my location
-		m.getMap().setMyLocationEnabled(true);
-	}
-
-	private void setListener() // If the setUpMapIfNeeded(); is needed then...
-	{
 		m.getMap().setMyLocationEnabled(true);
 	}
 
