@@ -18,20 +18,12 @@
 
         <TextView
             android:id="@+id/id"
-            android:layout_width="wrap_content"
+            android:layout_width="99dp"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/imageView1"
             android:layout_toRightOf="@+id/imageView1"
             android:text="TextView" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/text1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/linearLayout1"
-        android:layout_below="@+id/linearLayout1"
-        android:text="TextView" />
 
     <TextView
         android:id="@+id/text2"
@@ -40,6 +32,14 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="14dp"
         android:layout_toRightOf="@+id/linearLayout1"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text2"
+        android:layout_below="@+id/text2"
         android:text="TextView" />
 
 </RelativeLayout>

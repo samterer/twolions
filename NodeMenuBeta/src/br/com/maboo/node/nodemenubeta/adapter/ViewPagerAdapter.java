@@ -3,9 +3,9 @@ package br.com.maboo.node.nodemenubeta.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 import br.com.maboo.node.nodemenubeta.tab.FragmentTab1;
 import br.com.maboo.node.nodemenubeta.tab.FragmentTab2;
-import br.com.maboo.node.nodemenubeta.tab.ListViewAndroidExemple;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -19,6 +19,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public Fragment getItem(int position) {
+		
+		Log.i("ViewPagerAdapter", "Carregando tab: "+position);
+		
 		switch (position) {
 
 			// Open FragmentTab1.java
@@ -28,7 +31,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 			// Open FragmentTab2.java
 		case 1:
-			ListViewAndroidExemple fragmenttab2 = new ListViewAndroidExemple();
+			FragmentTab2 fragmenttab2 = new FragmentTab2();
 			return fragmenttab2;
 		}
 		return null;

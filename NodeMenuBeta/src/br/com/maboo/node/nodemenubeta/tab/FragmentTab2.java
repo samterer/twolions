@@ -15,10 +15,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import br.com.maboo.node.nodemenubeta.adapter.ListAdapter;
-import br.com.maboo.node.nodemenubeta.transaction.Transaction;
-import br.com.maboo.node.nodemenubeta.transaction.TransactionCircle;
+import br.com.maboo.node.nodemenubeta.adapter.ListFriendAdapter;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.Request;
 import com.facebook.Response;
@@ -26,7 +25,9 @@ import com.facebook.Session;
 import com.facebook.friend.BaseListElement;
 import com.facebook.model.GraphUser;
 
-public class FragmentTab2 extends TransactionCircle implements Transaction {
+public class FragmentTab2 extends SherlockFragment {
+
+	private String TAG = "FragmentTab2";
 
 	private ArrayList<BaseListElement> itens;
 
@@ -35,32 +36,20 @@ public class FragmentTab2 extends TransactionCircle implements Transaction {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		itens = new ArrayList<BaseListElement>();
+		Log.i(TAG, "onCreate...");
 
-		Log.i("appLog", "onCreate...");
-		
-		startTransaction(this);
+		itens = new ArrayList<BaseListElement>();
 
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		Log.i("appLog", "onCreateView...");
+		Log.i(TAG, "onCreateView...");
 
 		// Get the view from fragmenttab2.xml
-		View view = inflater.inflate(R.layout.fragmenttab2, container, false);
-
-		listview_log = (ListView) view.findViewById(R.id.list_friend);
-		listview_log.setAdapter(new ListAdapter(this, itens));
-
-		return view;
-	}
-
-	@Override
-	public void execute() throws Exception {
-		
-		Log.i("appLog", "execute...");
+		final View view = inflater.inflate(R.layout.fragmenttab2, container,
+				false);
 
 		Request request = Request.newMyFriendsRequest(
 				Session.getActiveSession(),
@@ -69,19 +58,17 @@ public class FragmentTab2 extends TransactionCircle implements Transaction {
 					@Override
 					public void onCompleted(List<GraphUser> users,
 							Response response) {
-						
-						Log.i("appLog", "onCompleted...");
 
-						for (final GraphUser graphUser : users) {
-							
-							Log.i("appLog", "graphUser: "+graphUser.getFirstName());
+						Log.i(TAG, "onCompleted...");
+
+						for (final GraphUser g : users) {
 
 							URL bitmapURL;
 							Bitmap friendBitmap = null;
 							try {
 								bitmapURL = new URL(
 										"https://graph.facebook.com/"
-												+ graphUser.getId()
+												+ g.getId()
 												+ "/picture?width=" + 40
 												+ "&height=" + 40);
 								friendBitmap = BitmapFactory
@@ -89,30 +76,42 @@ public class FragmentTab2 extends TransactionCircle implements Transaction {
 												.openConnection()
 												.getInputStream());
 							} catch (Exception e) {
-								Log.i("appLog", e.toString());
+								// Log.i(TAG, e.toString());
 							}
 
 							// convert bitmap into imageView
 							Drawable d = new BitmapDrawable(getResources(),
 									friendBitmap);
 
-							itens.add(new BaseListElement(d, graphUser
-									.getName(), graphUser.getUsername(),
-									Integer.valueOf(2).intValue()) {
+							itens.add(new BaseListElement(d, g.getId(),
+									g.getName(), g
+											.getBirthday()) {
 
 								public OnClickListener getOnClickListener() {
-									Log.i("appLog",
+									Log.i(TAG,
 											"click in -> "
-													+ graphUser.getName());
+													+ g.getName());
 									return null;
 								}
 							});
 						}
 
+						// Log.i(TAG, "verificando a lista...");
+						// for (final BaseListElement b : itens) {
+						//
+						// Log.i(TAG, "graphUser: " + b.getText1());
+						// }
+
+						listview_log = (ListView) view
+								.findViewById(R.id.list_friend);
+						listview_log.setAdapter(new ListFriendAdapter(
+								FragmentTab2.this, itens));
+
 					}
 				});
-		request.getCallback();
+		request.executeAsync();
 
+		return view;
 	}
 
 }
