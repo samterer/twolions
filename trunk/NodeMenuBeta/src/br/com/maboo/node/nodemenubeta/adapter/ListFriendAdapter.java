@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,9 @@ import android.widget.TextView;
 import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.friend.BaseListElement;
 
-public class ListAdapter extends BaseAdapter {
+public class ListFriendAdapter extends BaseAdapter {
+
+	private String TAG = "ListFriendAdapter";
 
 	private LayoutInflater inflater;
 
@@ -24,13 +27,21 @@ public class ListAdapter extends BaseAdapter {
 
 	private Typeface tf; // font
 
-	public ListAdapter(Fragment context, List<BaseListElement> itens) {
-
+	public ListFriendAdapter(Fragment context, List<BaseListElement> itens) {
 
 		this.itens = itens;
 
-		this.inflater = (LayoutInflater) context
-				.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		Log.i(TAG, "verificando a lista...");
+		for (final BaseListElement b : itens) {
+
+			Log.i(TAG, "graphUser: " + b.getText1());
+
+			b.setAdapter(this);
+
+		}
+
+		this.inflater = (LayoutInflater) context.getActivity()
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		tf = Typeface.createFromAsset(context.getActivity().getAssets(),
 				"fonts/DroidSansFallback.ttf"); // font
@@ -66,8 +77,7 @@ public class ListAdapter extends BaseAdapter {
 			view.setTag(holder); // seta a tag
 			view.setId(position);
 
-			holder.icon = (ImageView) view
-					.findViewById(R.id.icon);
+			holder.icon = (ImageView) view.findViewById(R.id.icon);
 
 			holder.id = (TextView) view.findViewById(R.id.id);
 			holder.id.setTypeface(tf);
@@ -94,15 +104,20 @@ public class ListAdapter extends BaseAdapter {
 		}
 
 		// set background no fundo do item
-		//holder.bgItem.setBackgroundColor(Color.parseColor("#aa55aa"));
+		// holder.bgItem.setBackgroundColor(Color.parseColor("#aa55aa"));
 
 		// profile pic
-		holder.icon.setImageDrawable(itemRequest.getIcon());
+		// holder.icon.setImageDrawable(itemRequest.getIcon());
 		
+		//onclick		
+		view.setOnClickListener(itemRequest.getOnClickListener());
+
 		// subject
-		holder.id.setText(String.valueOf(itemRequest.getText1()));
+		holder.id.setText(String.valueOf(itemRequest.getId()));
 		holder.text1.setText(String.valueOf(itemRequest.getText1()));
-		holder.text2.setText(String.valueOf(itemRequest.getText1()));
+		holder.text2.setText(String.valueOf(itemRequest.getText2()));
+
+		Log.i(TAG, "exibindo item: " + position);
 
 		return view;
 	}

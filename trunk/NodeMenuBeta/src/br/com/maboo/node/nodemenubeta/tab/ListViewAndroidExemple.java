@@ -39,7 +39,7 @@ public class ListViewAndroidExemple extends SherlockFragment {
 		// Forth - the Array of data
 
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-				android.R.layout.simple_list_item_1, android.R.id.text1, values);
+				android.R.layout.list_content, android.R.id.text1, values);
 
 		// Assign adapter to ListView
 		listView.setAdapter(adapter);

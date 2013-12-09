@@ -13,18 +13,29 @@ import android.widget.BaseAdapter;
 public abstract class BaseListElement {
 
 	private Drawable icon;
+	private String id;
 	private String text1;
 	private String text2;
-
-	private int requestCode;
 
 	private BaseAdapter adapter;
 
 	public abstract View.OnClickListener getOnClickListener();
-	
+
 	public List<GraphUser> selectedUsers;
-	
+
 	public static final String FRIENDS_KEY = "friends";
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+
+		if (adapter != null) {
+			adapter.notifyDataSetChanged();
+		}
+	}
 
 	public String getText1() {
 		return text1;
@@ -50,14 +61,6 @@ public abstract class BaseListElement {
 		}
 	}
 
-	public int getRequestCode() {
-		return requestCode;
-	}
-
-	public void setRequestCode(int requestCode) {
-		this.requestCode = requestCode;
-	}
-
 	public Drawable getIcon() {
 		return icon;
 	}
@@ -70,13 +73,12 @@ public abstract class BaseListElement {
 		this.adapter = adapter;
 	}
 
-	public BaseListElement(Drawable icon, String text1, String text2,
-			int requestCode) {
+	public BaseListElement(Drawable icon, String id, String text1, String text2) {
 		super();
 		this.icon = icon;
+		this.id = id;
 		this.text1 = text1;
 		this.text2 = text2;
-		this.requestCode = requestCode;
 	}
 
 	public void onActivityResult(Intent data) {
