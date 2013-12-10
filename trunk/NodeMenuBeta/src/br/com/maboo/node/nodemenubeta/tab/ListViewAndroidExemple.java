@@ -20,7 +20,7 @@ public class ListViewAndroidExemple extends SherlockFragment {
 			Bundle savedInstanceState) {
 
 		// Get the view from fragmenttab2.xml
-		View view = inflater.inflate(R.layout.fragmenttab2, container, false);
+		View view = inflater.inflate(R.layout.fragmentfriend, container, false);
 
 		// Get ListView object from xml
 		listView = (ListView) view.findViewById(R.id.list_friend);

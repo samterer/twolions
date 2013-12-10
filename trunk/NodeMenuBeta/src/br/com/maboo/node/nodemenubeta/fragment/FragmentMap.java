@@ -18,8 +18,6 @@ public class FragmentMap extends TransactionCircle implements OnMapClickListener
 
 	private MapView m;
 
-	// private TextView mTapTextView;
-
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 

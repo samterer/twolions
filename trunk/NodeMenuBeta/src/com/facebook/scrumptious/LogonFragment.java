@@ -51,7 +51,7 @@ public class LogonFragment extends Fragment {
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 
-		View view = inflater.inflate(R.layout.selection, container, false);
+		View view = inflater.inflate(R.layout.login, container, false);
 
 		// Find the user's profile picture custom view
 		profilePictureView = (ProfilePictureView) view

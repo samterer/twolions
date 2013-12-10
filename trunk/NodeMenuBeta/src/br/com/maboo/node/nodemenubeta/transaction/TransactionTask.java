@@ -44,6 +44,21 @@ public class TransactionTask extends AsyncTask<Void, Void, Boolean> {
 		openProgress();
 	}
 
+	public void openProgress() {
+
+		try {
+			progress = ProgressDialog.show(context, "",
+					context.getString(aguardeMsg));
+
+			progress.getWindow().setBackgroundDrawableResource(
+					R.color.transparente);
+
+		} catch (Throwable e) {
+			Log.e(TAG, e.getMessage(), e);
+		}
+
+	}
+
 	@Override
 	protected Boolean doInBackground(Void... params) {
 
@@ -71,6 +86,9 @@ public class TransactionTask extends AsyncTask<Void, Void, Boolean> {
 		}
 
 		// OK
+		//TODO
+		onPostExecute(true);
+		
 		return true;
 	}
 
@@ -88,20 +106,6 @@ public class TransactionTask extends AsyncTask<Void, Void, Boolean> {
 		}
 	}
 
-	public void openProgress() {
-
-		try {
-			progress = ProgressDialog.show(context, "",
-					context.getString(aguardeMsg));
-
-			progress.getWindow().setBackgroundDrawableResource(
-					R.color.transparente);
-
-		} catch (Throwable e) {
-			Log.e(TAG, e.getMessage(), e);
-		}
-
-	}
 
 	public void closedProgress() {
 		try {
