@@ -9,6 +9,8 @@ import com.androidbegin.menuviewpagertutorial.R;
 
 public class TransactionCircle extends SherlockFragment {
 
+	private static final String TAG = "TransactionCircle";
+	
 	private TransactionTask task;
 
 	/******************************************************************************
@@ -47,6 +49,8 @@ public class TransactionCircle extends SherlockFragment {
 
 	// Inicia a thread
 	public void startTransaction(Transaction transaction) {
+		
+		Log.i(TAG, "startTransaction...");
 
 		boolean net = Util.isNetworkAvailable(getActivity());
 		boolean gps = true;
@@ -72,7 +76,7 @@ public class TransactionCircle extends SherlockFragment {
 						"Verifique se o GPS esta ativo.");
 			}
 			
-			onDestroy();
+			//onDestroy();
 
 		}
 	}

@@ -13,7 +13,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 
-public class LogonActivity extends FragmentActivity {
+public class FacebookLoginActivity extends FragmentActivity {
 
 	private static final int SPLASH = 0;
 	private static final int SELECTION = 1;

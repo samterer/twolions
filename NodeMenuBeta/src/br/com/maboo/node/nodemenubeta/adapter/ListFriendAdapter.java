@@ -104,10 +104,10 @@ public class ListFriendAdapter extends BaseAdapter {
 		}
 
 		// set background no fundo do item
-		// holder.bgItem.setBackgroundColor(Color.parseColor("#aa55aa"));
+		//holder.bgItem.setBackgroundColor(Color.parseColor("#aa55aa"));
 
 		// profile pic
-		// holder.icon.setImageDrawable(itemRequest.getIcon());
+		//holder.icon.setImageDrawable(itemRequest.getIcon());
 		
 		//onclick		
 		view.setOnClickListener(itemRequest.getOnClickListener());

@@ -15,9 +15,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import br.com.maboo.node.nodemenubeta.adapter.ListFriendAdapter;
+import br.com.maboo.node.nodemenubeta.transaction.TransactionCircle;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.Request;
 import com.facebook.Response;
@@ -25,7 +26,7 @@ import com.facebook.Session;
 import com.facebook.friend.BaseListElement;
 import com.facebook.model.GraphUser;
 
-public class FragmentTab2 extends SherlockFragment {
+public class FragmentFriend extends TransactionCircle {
 
 	private String TAG = "FragmentTab2";
 
@@ -33,13 +34,11 @@ public class FragmentTab2 extends SherlockFragment {
 
 	private ListView listview_log;
 
+	private View view;
+
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-
-		Log.i(TAG, "onCreate...");
-
-		itens = new ArrayList<BaseListElement>();
-
+		//
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,9 +46,35 @@ public class FragmentTab2 extends SherlockFragment {
 
 		Log.i(TAG, "onCreateView...");
 
+		itens = new ArrayList<BaseListElement>();
+
 		// Get the view from fragmenttab2.xml
-		final View view = inflater.inflate(R.layout.fragmenttab2, container,
-				false);
+		view = inflater.inflate(R.layout.fragmentfriend, container, false);
+
+		montaTela(savedInstanceState);
+
+		return view;
+	}
+
+	public void montaTela(Bundle savedInstanceState) {
+
+		Log.i(TAG, "montaTela...");
+
+		listview_log = (ListView) view.findViewById(R.id.list_friend);
+		listview_log.setVisibility(View.INVISIBLE);
+
+		Log.i(TAG, "startTransaction...");
+
+		update();
+
+
+	}
+
+	public void update() {
+
+		Log.i(TAG, "update...");
+
+		Log.i(TAG, "execute...");
 
 		Request request = Request.newMyFriendsRequest(
 				Session.getActiveSession(),
@@ -68,9 +93,8 @@ public class FragmentTab2 extends SherlockFragment {
 							try {
 								bitmapURL = new URL(
 										"https://graph.facebook.com/"
-												+ g.getId()
-												+ "/picture?width=" + 40
-												+ "&height=" + 40);
+												+ g.getId() + "/picture?width="
+												+ 40 + "&height=" + 40);
 								friendBitmap = BitmapFactory
 										.decodeStream(bitmapURL
 												.openConnection()
@@ -80,38 +104,34 @@ public class FragmentTab2 extends SherlockFragment {
 							}
 
 							// convert bitmap into imageView
-							Drawable d = new BitmapDrawable(getResources(),
-									friendBitmap);
+							Drawable d = null;
+							d = new BitmapDrawable(getResources(), friendBitmap);
 
-							itens.add(new BaseListElement(d, g.getId(),
-									g.getName(), g
-											.getBirthday()) {
+							// Log.i(TAG, d.toString());
+
+							itens.add(new BaseListElement(d, g.getId(), g
+									.getName(), g.getBirthday()) {
 
 								public OnClickListener getOnClickListener() {
-									Log.i(TAG,
-											"click in -> "
-													+ g.getName());
+									//Log.i(TAG, "click in -> " + g.getName());
 									return null;
 								}
 							});
+							
+
+							listview_log
+									.setAdapter(new ListFriendAdapter(FragmentFriend.this, itens));
+							listview_log.setVisibility(View.VISIBLE);
+							
+							ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+							progressBar.setVisibility(View.INVISIBLE);
+
 						}
-
-						// Log.i(TAG, "verificando a lista...");
-						// for (final BaseListElement b : itens) {
-						//
-						// Log.i(TAG, "graphUser: " + b.getText1());
-						// }
-
-						listview_log = (ListView) view
-								.findViewById(R.id.list_friend);
-						listview_log.setAdapter(new ListFriendAdapter(
-								FragmentTab2.this, itens));
 
 					}
 				});
 		request.executeAsync();
 
-		return view;
 	}
 
 }

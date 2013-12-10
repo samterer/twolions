@@ -16,7 +16,7 @@ import br.com.maboo.node.nodemenubeta.transaction.TransactionCircle;
 import com.androidbegin.menuviewpagertutorial.R;
 
 public class Util extends TransactionCircle {
-	protected static final String TAG = "appLog";
+	protected static final String TAG = "Util";
 
 	// verifica se possui conexao com a internet
 	public static boolean isNetworkAvailable(Context context) {
@@ -66,15 +66,18 @@ public class Util extends TransactionCircle {
 
 		if (!net) {
 			//msg = "Sem conexão com a internet baby";
+			Log.i(TAG,"Sem conexão com a internet.");
 		}
 
 		if (!gps) {
 			//msg = "O gps não esta ativo.";
+			Log.i(TAG,"O gps não esta ativo.");
 		}
 
 		if (!net || !gps) {
 			//toast(context, "Verifique o acesso a internet e o GPS");
-
+			Log.i(TAG,"Verifique o acesso a internet e o GPS.");
+			
 			return false;
 		}
 

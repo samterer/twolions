@@ -9,9 +9,9 @@ import android.os.Handler;
 import br.com.maboo.node.nodemenubeta.util.Util;
 
 import com.androidbegin.menuviewpagertutorial.R;
-import com.facebook.scrumptious.LogonActivity;
+import com.facebook.scrumptious.FacebookLoginActivity;
 
-public class InitNode extends Activity {
+public class LoadingActivity extends Activity {
 
 	// Splash screen timer
 	private int SPLASH_TIME_OUT = 1000;
@@ -42,7 +42,7 @@ public class InitNode extends Activity {
 			// start the home screen if the back
 			// button wasn't pressed
 			// already
-			Intent intent = new Intent(this, LogonActivity.class);
+			Intent intent = new Intent(this, FacebookLoginActivity.class);
 
 			startActivity(intent);
 		}

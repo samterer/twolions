@@ -34,7 +34,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock" >
         <activity
-            android:name="br.com.maboo.node.nodemenubeta.InitNode"
+            android:name="br.com.maboo.node.nodemenubeta.LoadingActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -52,7 +52,7 @@
         <!-- facebook -->
 
         <activity
-            android:name="com.facebook.scrumptious.LogonActivity"
+            android:name="com.facebook.scrumptious.FacebookLoginActivity"
             android:label="FaceLogonActivity" >
         </activity>
         <activity
