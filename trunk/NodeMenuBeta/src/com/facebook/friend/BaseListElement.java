@@ -19,8 +19,6 @@ public abstract class BaseListElement {
 
 	private BaseAdapter adapter;
 
-	public abstract View.OnClickListener getOnClickListener();
-
 	public List<GraphUser> selectedUsers;
 
 	public static final String FRIENDS_KEY = "friends";

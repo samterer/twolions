@@ -4,63 +4,69 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import br.com.maboo.node.nodemenubeta.transaction.Transaction;
-import br.com.maboo.node.nodemenubeta.transaction.TransactionCircle;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.androidbegin.menuviewpagertutorial.R;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.LatLng;
 
-public class FragmentMap extends TransactionCircle implements OnMapClickListener,
-		OnMapLongClickListener, Transaction {
+public class FragmentMap extends SherlockFragment implements
+		OnMapClickListener, OnMapLongClickListener {
 
-	private MapView m;
+	private View v;
+	private MapView mapView;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
 		// inflat and return the layout
-		View v = inflater.inflate(R.layout.map_layout, container, false);
-		m = (MapView) v.findViewById(R.id.map);
-		m.onCreate(savedInstanceState);
+		v = inflater.inflate(R.layout.map_layout, container, false);
+		mapView = (MapView) v.findViewById(R.id.map);
+		mapView.onCreate(savedInstanceState);
+
+		initMap();
 
 		return v;
 	}
-	
-	@Override
-	public void execute() throws Exception {
-
-		initMap();
-		
-	}
-
 
 	public void initMap() {
 
-		// bt my location
-		m.getMap().setMyLocationEnabled(true);
+		// Do a null check to confirm that we have not already instantiated the
+		// map.
+		if (mapView == null) {
+
+		} else
+		// Check if we were successful in obtaining the map.
+		if (mapView != null) {
+			// bt my location
+			mapView.getMap().setMyLocationEnabled(true);
+			
+			mapView.getMap().isMyLocationEnabled();
+
+		}
+
 	}
 
 	public void onResume() {
 		super.onResume();
-		m.onResume();
+		mapView.onResume();
 	}
 
 	public void onPause() {
 		super.onPause();
-		m.onPause();
+		mapView.onPause();
 	}
 
 	public void onDestroy() {
 		super.onDestroy();
-		m.onDestroy();
+		mapView.onDestroy();
 	}
 
 	public void onLowMemory() {
 		super.onLowMemory();
-		m.onLowMemory();
+		mapView.onLowMemory();
 	}
 
 	public void onMapClick(LatLng point) {
