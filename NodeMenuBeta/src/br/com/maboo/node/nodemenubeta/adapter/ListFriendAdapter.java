@@ -8,11 +8,13 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.friend.BaseListElement;
@@ -35,8 +37,6 @@ public class ListFriendAdapter extends BaseAdapter {
 		for (final BaseListElement b : itens) {
 
 			Log.i(TAG, "graphUser: " + b.getText1());
-
-			b.setAdapter(this);
 
 		}
 
@@ -104,10 +104,10 @@ public class ListFriendAdapter extends BaseAdapter {
 		}
 
 		// set background no fundo do item
-		//holder.bgItem.setBackgroundColor(Color.parseColor("#aa55aa"));
+		// holder.bgItem.setBackgroundColor(Color.parseColor("#aa55aa"));
 
 		// profile pic
-		//holder.icon.setImageDrawable(itemRequest.getIcon());
+		// holder.icon.setImageDrawable(itemRequest.getIcon());
 
 		// subject
 		holder.id.setText(String.valueOf(itemRequest.getId()));

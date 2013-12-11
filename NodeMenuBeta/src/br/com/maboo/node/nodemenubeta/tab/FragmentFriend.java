@@ -3,14 +3,20 @@ package br.com.maboo.node.nodemenubeta.tab;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 import br.com.maboo.node.nodemenubeta.adapter.ListFriendAdapter;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -56,8 +62,26 @@ public class FragmentFriend extends SherlockFragment {
 		listview_log = (ListView) view.findViewById(R.id.list_friend);
 		listview_log.setVisibility(View.INVISIBLE);
 
+		// Bind onclick event handler
+		listview_log.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				TextView t = (TextView) view.findViewById(R.id.id);
+
+				sendToProfilePage(t.getText().toString());
+			}
+		});
+
 		montaLista();
 
+	}
+
+	private void sendToProfilePage(String id) {
+		String url = "http://www.facebook.com/" + id;
+		Intent i = new Intent(Intent.ACTION_VIEW);
+		i.setData(Uri.parse(url));
+		startActivity(i);
 	}
 
 	private void montaLista() {
@@ -120,4 +144,5 @@ public class FragmentFriend extends SherlockFragment {
 		progressBar.setVisibility(View.GONE);
 
 	}
+
 }
