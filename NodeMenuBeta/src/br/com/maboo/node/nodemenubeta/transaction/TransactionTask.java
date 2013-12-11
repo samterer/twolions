@@ -97,7 +97,12 @@ public class TransactionTask extends AsyncTask<Void, Void, Boolean> {
 		if (ok) {
 
 			// Transação executou com sucesso
-			transaction.update();
+			try {
+				transaction.execute();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		} else {
 

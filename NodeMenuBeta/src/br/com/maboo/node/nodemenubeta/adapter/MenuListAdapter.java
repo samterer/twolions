@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import br.com.maboo.node.nodemenubeta.util.RoundedShape;
 
 import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.scrumptious.auxiliar.FaceUserVO;
@@ -49,7 +50,6 @@ public class MenuListAdapter extends BaseAdapter {
 		TextView txtTitle;
 		TextView txtSubTitle;
 		ImageView imgIcon;
-		ProfilePictureView profilePictureView;
 
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -81,11 +81,12 @@ public class MenuListAdapter extends BaseAdapter {
 		// padrao do layout do app
 		if(position == 0) {
 			// recupera profila do usuario
-			profilePictureView = (ProfilePictureView) itemView
-					.findViewById(R.id.selection_profile_pic);
-			profilePictureView.setCropped(true);
+			imgIcon = (ImageView) itemView
+					.findViewById(R.id.icon);
 			
-			profilePictureView.setProfileId(FaceUserVO.id_user);
+			RoundedShape rs = new RoundedShape(FaceUserVO.profilePicture);
+			imgIcon.setImageBitmap(rs.getTargetBitmap());
+			
 		} else {
 			// Set the results into ImageView
 			imgIcon.setImageResource(mIcon[position]);

@@ -32,14 +32,8 @@ public class TransactionCircle extends SherlockFragment {
 				task.cancel(true);
 				task.closedProgress();
 
-				update();
-
 			}
 		}
-
-	}
-
-	public void update() {
 
 	}
 

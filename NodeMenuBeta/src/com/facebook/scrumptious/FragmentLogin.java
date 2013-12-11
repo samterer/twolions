@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.maboo.node.nodemenubeta.MainActivity;
+import br.com.maboo.node.nodemenubeta.util.RoundedShape;
 
 import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.Request;
@@ -20,7 +22,7 @@ import com.facebook.model.GraphUser;
 import com.facebook.scrumptious.auxiliar.FaceUserVO;
 import com.facebook.widget.ProfilePictureView;
 
-public class LogonFragment extends Fragment {
+public class FragmentLogin extends Fragment {
 
 	private static final String TAG = "SelectionFragment";
 
@@ -30,7 +32,7 @@ public class LogonFragment extends Fragment {
 	private static final int REAUTH_ACTIVITY_CODE = 100;
 
 	// Splash screen timer
-	private int SPLASH_TIME_OUT = 450;
+	private int SPLASH_TIME_OUT = 15;
 
 	private UiLifecycleHelper uiHelper;
 	private Session.StatusCallback callback = new Session.StatusCallback() {
@@ -51,7 +53,10 @@ public class LogonFragment extends Fragment {
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 
-		View view = inflater.inflate(R.layout.login, container, false);
+		// esconde a actionBar
+		getActivity().getActionBar().hide();
+
+		View view = inflater.inflate(R.layout.fragmentlogon, container, false);
 
 		// Find the user's profile picture custom view
 		profilePictureView = (ProfilePictureView) view
@@ -77,52 +82,14 @@ public class LogonFragment extends Fragment {
 		Request request = Request.newMeRequest(session,
 				new Request.GraphUserCallback() {
 					@Override
-					public void onCompleted(GraphUser user, Response response) {
+					public void onCompleted(GraphUser g, Response response) {
 						// If the response is successful
 						if (session == Session.getActiveSession()) {
-							if (user != null) {
-								// Set the id for the ProfilePictureView
-								// view that in turn displays the profile
-								// picture.
-								profilePictureView.setProfileId(user.getId());
-								// Set the Textview's text to the user's name.
-								userNameView.setText("Bem Vindo " + user.getName());
-								
-								// salva nome\id do usuario
-								FaceUserVO.user_name = user.getName().toString();
-								FaceUserVO.id_user = user.getId().toString();
-								FaceUserVO.profilePicture = profilePictureView.getImage();
+							if (g != null) {
 
-								// começa um tempo e chama a tela padrao do
-								// app(maps...)
-								Handler handler = new Handler();
+								createProfile(g.getId().toString(), g.getName()
+										.toString());
 
-								// run a thread after 2 seconds to start the
-								// home screen
-								handler.postDelayed(new Runnable() {
-
-									public void run() {
-
-										onDetach();
-										
-										onDestroy();
-										
-										// start the home screen if the back
-										// button wasn't pressed
-										// already
-										Intent intent = new Intent(
-												getActivity(),
-												MainActivity.class);
-
-										startActivity(intent);
-									}
-								}, SPLASH_TIME_OUT * 3); // time in milliseconds
-															// (1 second = 1000
-															// milliseconds)
-															// until the run()
-															// method will
-															// be
-															// called
 							}
 						}
 						if (response.getError() != null) {
@@ -131,6 +98,55 @@ public class LogonFragment extends Fragment {
 					}
 				});
 		request.executeAsync();
+	}	
+		
+	private void createProfile(String id, String name) {
+		// Set the id for the ProfilePictureView
+		// view that in turn displays the profile
+		// picture.
+		profilePictureView.setProfileId(id);
+		
+		// Set the Textview's text to the user's name.
+		userNameView.setText("Bem Vindo " + name);
+		
+		// salva nome\id do usuario
+		FaceUserVO.user_name = name;
+		FaceUserVO.id_user = id;
+		FaceUserVO.profilePicture = profilePictureView.getImage();
+		
+		startMap();
+		
+	}	
+		
+	private void startMap() {
+		// começa um tempo e chama a tela padrao do
+		// app(maps...)
+		Handler handler = new Handler();
+
+		// run a thread after 2 seconds to start the
+		// home screen
+		handler.postDelayed(new Runnable() {
+
+			public void run() {
+
+				onDetach();
+
+				onDestroy();
+
+				// start the home screen if the back
+				// button wasn't pressed
+				// already
+				Intent intent = new Intent(getActivity(), MainActivity.class);
+
+				startActivity(intent);
+			}
+		}, SPLASH_TIME_OUT); // time in milliseconds
+								// (1 second = 1000
+								// milliseconds)
+								// until the run()
+								// method will
+								// be
+								// called
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -150,22 +166,30 @@ public class LogonFragment extends Fragment {
 
 	public void onResume() {
 		super.onResume();
-		uiHelper.onResume();
+		if (uiHelper != null) {
+			uiHelper.onResume();
+		}
 	}
 
 	public void onSaveInstanceState(Bundle bundle) {
 		super.onSaveInstanceState(bundle);
-		uiHelper.onSaveInstanceState(bundle);
+		if (uiHelper != null) {
+			uiHelper.onSaveInstanceState(bundle);
+		}
 	}
 
 	public void onPause() {
 		super.onPause();
-		uiHelper.onPause();
+		if (uiHelper != null) {
+			uiHelper.onPause();
+		}
 	}
 
 	public void onDestroy() {
 		super.onDestroy();
-		uiHelper.onDestroy();
+		if (uiHelper != null) {
+			uiHelper.onDestroy();
+		}
 	}
 
 }

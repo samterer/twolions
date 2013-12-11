@@ -108,9 +108,6 @@ public class ListFriendAdapter extends BaseAdapter {
 
 		// profile pic
 		//holder.icon.setImageDrawable(itemRequest.getIcon());
-		
-		//onclick		
-		view.setOnClickListener(itemRequest.getOnClickListener());
 
 		// subject
 		holder.id.setText(String.valueOf(itemRequest.getId()));
