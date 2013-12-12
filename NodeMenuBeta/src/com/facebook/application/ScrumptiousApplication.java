@@ -4,17 +4,17 @@ import java.util.List;
 
 import android.app.Application;
 
-import com.facebook.friend.BaseListElement;
+import com.facebook.friend.FriendElement;
 
 public class ScrumptiousApplication extends Application {
 
-	private List<BaseListElement> itens;
+	private List<FriendElement> itens;
 
-	public List<BaseListElement> getItens() {
+	public List<FriendElement> getItens() {
 		return itens;
 	}
 
-	public void setItens(List<BaseListElement> itens) {
+	public void setItens(List<FriendElement> itens) {
 		this.itens = itens;
 	}
 
