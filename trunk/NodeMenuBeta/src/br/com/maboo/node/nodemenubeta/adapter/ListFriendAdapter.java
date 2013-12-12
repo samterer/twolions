@@ -1,23 +1,25 @@
 package br.com.maboo.node.nodemenubeta.adapter;
 
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidbegin.menuviewpagertutorial.R;
-import com.facebook.friend.BaseListElement;
+import com.facebook.friend.FriendElement;
 
 public class ListFriendAdapter extends BaseAdapter {
 
@@ -25,20 +27,13 @@ public class ListFriendAdapter extends BaseAdapter {
 
 	private LayoutInflater inflater;
 
-	private List<BaseListElement> itens;
+	List<FriendElement> friends = new ArrayList<FriendElement>();
 
 	private Typeface tf; // font
 
-	public ListFriendAdapter(Fragment context, List<BaseListElement> itens) {
+	public ListFriendAdapter(Fragment context, List<FriendElement> friends) {
 
-		this.itens = itens;
-
-		Log.i(TAG, "verificando a lista...");
-		for (final BaseListElement b : itens) {
-
-			Log.i(TAG, "graphUser: " + b.getText1());
-
-		}
+		this.friends = friends;
 
 		this.inflater = (LayoutInflater) context.getActivity()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,11 +43,11 @@ public class ListFriendAdapter extends BaseAdapter {
 	}
 
 	public int getCount() {
-		return itens != null ? itens.size() : 0;
+		return friends != null ? friends.size() : 0;
 	}
 
 	public Object getItem(int position) {
-		return itens != null ? itens.get(position) : null;
+		return friends != null ? friends.get(position) : null;
 	}
 
 	public long getItemId(int position) {
@@ -64,7 +59,7 @@ public class ListFriendAdapter extends BaseAdapter {
 
 		ViewHolder holder = null;
 
-		BaseListElement itemRequest = itens.get(position);
+		FriendElement itemRequest = friends.get(position);
 
 		if (holder == null) { // verifica se o holder existe
 
@@ -82,11 +77,11 @@ public class ListFriendAdapter extends BaseAdapter {
 			holder.id = (TextView) view.findViewById(R.id.id);
 			holder.id.setTypeface(tf);
 
-			holder.text1 = (TextView) view.findViewById(R.id.text1);
-			holder.text1.setTypeface(tf);
+			holder.nome = (TextView) view.findViewById(R.id.nome);
+			holder.nome.setTypeface(tf);
 
-			holder.text2 = (TextView) view.findViewById(R.id.text2);
-			holder.text2.setTypeface(tf);
+			holder.text = (TextView) view.findViewById(R.id.text);
+			holder.text.setTypeface(tf);
 
 		} else {
 
@@ -107,16 +102,33 @@ public class ListFriendAdapter extends BaseAdapter {
 		// holder.bgItem.setBackgroundColor(Color.parseColor("#aa55aa"));
 
 		// profile pic
-		// holder.icon.setImageDrawable(itemRequest.getIcon());
+		holder.icon = itemRequest.getIcon();
 
 		// subject
 		holder.id.setText(String.valueOf(itemRequest.getId()));
-		holder.text1.setText(String.valueOf(itemRequest.getText1()));
-		holder.text2.setText(String.valueOf(itemRequest.getText2()));
+		holder.nome.setText(String.valueOf(itemRequest.getNome()));
+		holder.text.setText(String.valueOf(itemRequest.getText()));
 
 		Log.i(TAG, "exibindo item: " + position);
 
 		return view;
+	}
+
+	public Bitmap getBitmap(String bitmapUrl) {
+
+		try {
+
+			URL url = new URL(bitmapUrl);
+
+			return BitmapFactory.decodeStream(url.openConnection()
+					.getInputStream());
+
+		}
+
+		catch (Exception ex) {
+			return null;
+		}
+
 	}
 
 	// Design Patter "ViewHolder" para Android
@@ -124,8 +136,8 @@ public class ListFriendAdapter extends BaseAdapter {
 		RelativeLayout bgItem;
 		ImageView icon;
 		TextView id;
-		TextView text1;
-		TextView text2;
+		TextView nome;
+		TextView text;
 		boolean check;
 	}
 }

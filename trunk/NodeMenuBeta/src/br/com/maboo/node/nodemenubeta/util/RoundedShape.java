@@ -12,12 +12,16 @@ import android.widget.ImageView;
 public class RoundedShape {
 
 	private Bitmap targetBitmap;
+	
+	public RoundedShape() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public RoundedShape(ImageView imgView) {
 		this.targetBitmap = getRoundedShape(getBitmapFromView(imgView));
 	}
 
-	private Bitmap getRoundedShape(Bitmap scaleBitmapImage) {
+	public Bitmap getRoundedShape(Bitmap scaleBitmapImage) {
 		int targetWidth = scaleBitmapImage.getWidth();
 		int targetHeight = scaleBitmapImage.getHeight();
 		Bitmap target = Bitmap.createBitmap(targetWidth, targetHeight,

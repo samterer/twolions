@@ -5,15 +5,16 @@ import java.util.List;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.facebook.model.GraphUser;
 
-public abstract class BaseListElement {
+public abstract class FriendElement {
 
-	private Drawable icon;
+	private ImageView icon;
 	private String id;
-	private String text1;
-	private String text2;
+	private String nome;
+	private String text;
 
 	public List<GraphUser> selectedUsers;
 
@@ -27,34 +28,38 @@ public abstract class BaseListElement {
 		this.id = id;
 	}
 
-	public String getText1() {
-		return text1;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setText1(String text1) {
-		this.text1 = text1;
-
-	}
-
-	public String getText2() {
-		return text2;
-	}
-
-	public void setText2(String text2) {
-		this.text2 = text2;
+	public void setNome(String nome) {
+		this.nome = nome;
 
 	}
 
-	public Drawable getIcon() {
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+
+	}
+
+	public ImageView getIcon() {
 		return icon;
 	}
 
-	public BaseListElement(Drawable icon, String id, String text1, String text2) {
+	public void setIcon(ImageView icon) {
+		this.icon = icon;
+	}
+
+	public FriendElement(ImageView icon, String id, String nome, String text) {
 		super();
 		this.icon = icon;
 		this.id = id;
-		this.text1 = text1;
-		this.text2 = text2;
+		this.nome = nome;
+		this.text = text;
 	}
 
 	public void onActivityResult(Intent data) {

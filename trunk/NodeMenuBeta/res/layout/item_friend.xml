@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="80dp"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -11,35 +11,41 @@
 
         <ImageView
             android:id="@+id/profilePicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_drawer" />
+            android:src="@drawable/fbprofile" />
 
         <TextView
             android:id="@+id/id"
-            android:layout_width="99dp"
+            style="@style/texto10Branco"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/profilePicture"
+            android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/profilePicture"
-            android:text="TextView" />
+            android:text="TextView"
+            android:visibility="gone" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/text1"
+        android:id="@+id/nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="14dp"
+        android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/linearLayout1"
-        android:text="TextView" />
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/text2"
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/text1"
-        android:layout_below="@+id/text1"
-        android:text="TextView" />
+        android:layout_alignBottom="@+id/linearLayout1"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/linearLayout1"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
