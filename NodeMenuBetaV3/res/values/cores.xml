@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="fundo">#ffffff</color>
+    <color name="amarelo">#FFA500</color>
+    <color name="azul">#0000ff</color>
+    <color name="branco">#ffffff</color>
+    <color name="cinza_c">#cccccc</color>
+    <color name="cinza_d">#dddddd</color>
+    <color name="cinza_dark">#4f4f4f</color>
+    <color name="cinza_default">#7b7979</color>
+    <color name="cinza_claro">#d4d4d4</color>
+    <color name="laranja">#FFA500</color>
+    <color name="preto">#000000</color>
+    <color name="transparente">#00000000</color>
+    <color name="verde">#00ff00</color>
+    <color name="vermelho">#ff0000</color>
+    <color name="bg_teste">#dae0e6</color>
+    <color name="pastel">#edf7d9</color>
+    <color name="azul_maboo">#3470c4</color>
+    <color name="cinza_coob">#7c7c7c</color>
+    <color name="cinza_coob_c">#cac8c8</color>
+
+    <!-- cores leves -->
+    <color name="azul_light">#a6a6ed</color>
+    <color name="verde_light">#a5f5a5</color>
+
+    <!-- cores paleta notificações -->
+    <color name="laranja_note">#FF8961</color>
+    <color name="roxo_note">#9a6db0</color>
+    <color name="azul_note">#70c3ed</color>
+    <color name="verde_note">#aed361</color>
+
+</resources>
