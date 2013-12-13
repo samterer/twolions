@@ -1,13 +1,8 @@
 package com.facebook.friend;
 
-import java.util.List;
-
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ImageView;
-
-import com.facebook.model.GraphUser;
 
 public abstract class FriendElement {
 
@@ -16,9 +11,17 @@ public abstract class FriendElement {
 	private String nome;
 	private String text;
 
-	public List<GraphUser> selectedUsers;
-
 	public static final String FRIENDS_KEY = "friends";
+
+	private String urlPic;
+
+	public String getUrlPic() {
+		return urlPic;
+	}
+
+	public void setUrlPic(String urlPic) {
+		this.urlPic = urlPic;
+	}
 
 	public String getId() {
 		return id;
@@ -54,12 +57,13 @@ public abstract class FriendElement {
 		this.icon = icon;
 	}
 
-	public FriendElement(ImageView icon, String id, String nome, String text) {
+	public FriendElement(ImageView icon, String id, String nome, String text, String urlPic) {
 		super();
 		this.icon = icon;
 		this.id = id;
 		this.nome = nome;
 		this.text = text;
+		this.urlPic = urlPic;
 	}
 
 	public void onActivityResult(Intent data) {

@@ -11,11 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-import br.com.maboo.node.nodemenubeta.transaction.TransactionCircle;
 
 import com.androidbegin.menuviewpagertutorial.R;
 
-public class Util extends TransactionCircle {
+public class Util {
 	protected static final String TAG = "Util";
 
 	// verifica se possui conexao com a internet

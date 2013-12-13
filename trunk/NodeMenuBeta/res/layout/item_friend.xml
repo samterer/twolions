@@ -9,21 +9,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
-        <ImageView
-            android:id="@+id/profilePicture"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/fbprofile" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/fbprofile"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/id"
             style="@style/texto10Branco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/profilePicture"
+            android:layout_alignTop="@+id/icon"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/profilePicture"
+            android:layout_toRightOf="@+id/icon"
             android:text="TextView"
             android:visibility="gone" />
     </LinearLayout>
