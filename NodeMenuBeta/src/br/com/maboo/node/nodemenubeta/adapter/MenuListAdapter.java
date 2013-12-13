@@ -7,11 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import br.com.maboo.node.nodemenubeta.util.RoundedShape;
+import br.livroandroid.utils.RoundedShape;
 
 import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.scrumptious.auxiliar.FaceUserVO;
-import com.facebook.widget.ProfilePictureView;
 
 public class MenuListAdapter extends BaseAdapter {
 

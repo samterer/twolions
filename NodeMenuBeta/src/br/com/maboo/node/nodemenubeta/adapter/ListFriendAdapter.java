@@ -1,22 +1,22 @@
 package br.com.maboo.node.nodemenubeta.adapter;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import br.com.maboo.node.nodemenubeta.FriendsApplication;
+import br.livroandroid.utils.DownloadImagemUtil;
 
 import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.friend.FriendElement;
@@ -31,14 +31,25 @@ public class ListFriendAdapter extends BaseAdapter {
 
 	private Typeface tf; // font
 
-	public ListFriendAdapter(Fragment context, List<FriendElement> friends) {
+	private DownloadImagemUtil downloader;
 
+	private Activity context;
+
+	public ListFriendAdapter(Activity context, List<FriendElement> friends) {
+		
+		//Log.i(TAG, "ListFriendAdapter...");
+
+		this.context = context;
 		this.friends = friends;
 
-		this.inflater = (LayoutInflater) context.getActivity()
+		this.inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		tf = Typeface.createFromAsset(context.getActivity().getAssets(),
+		FriendsApplication application = (FriendsApplication) context.getApplication();
+		// Utiliza este objeto para recuperar a classe que faz o download de imagens
+		downloader = application.getDownloadImagemUtil();
+
+		tf = Typeface.createFromAsset(context.getAssets(),
 				"fonts/DroidSansFallback.ttf"); // font
 	}
 
@@ -54,14 +65,13 @@ public class ListFriendAdapter extends BaseAdapter {
 		return position;
 	}
 
-	@SuppressWarnings("unused")
 	public View getView(int position, View view, ViewGroup parent) {
 
 		ViewHolder holder = null;
 
-		FriendElement itemRequest = friends.get(position);
-
-		if (holder == null) { // verifica se o holder existe
+		if (view == null) { // verifica se o holder existe
+			
+			//Log.i(TAG,"criando a view...");
 
 			// Nao existe a View no cache para esta linha então cria um novo
 			holder = new ViewHolder();
@@ -69,10 +79,14 @@ public class ListFriendAdapter extends BaseAdapter {
 			// Busca o layout para cada carro com a foto
 			int layout = R.layout.item_friend;
 			view = inflater.inflate(layout, null);
-			view.setTag(holder); // seta a tag
+			// seta a tag
+			view.setTag(holder);
+
+			// começa a carregar a view
 			view.setId(position);
 
 			holder.icon = (ImageView) view.findViewById(R.id.icon);
+			holder.progress = (ProgressBar) view.findViewById(R.id.progressBar);
 
 			holder.id = (TextView) view.findViewById(R.id.id);
 			holder.id.setTypeface(tf);
@@ -98,37 +112,26 @@ public class ListFriendAdapter extends BaseAdapter {
 
 		}
 
+		holder.icon.setImageBitmap(null);
+
+		FriendElement request = friends.get(position);
+
+		// view carrega, vamos atualizar os valores
+
 		// set background no fundo do item
 		// holder.bgItem.setBackgroundColor(Color.parseColor("#aa55aa"));
 
+		// id
+		holder.id.setText(String.valueOf(request.getId()));
+		// nome
+		holder.nome.setText(String.valueOf(request.getNome()));
+		// text
+		holder.text.setText(String.valueOf(request.getText()));
 		// profile pic
-		holder.icon = itemRequest.getIcon();
-
-		// subject
-		holder.id.setText(String.valueOf(itemRequest.getId()));
-		holder.nome.setText(String.valueOf(itemRequest.getNome()));
-		holder.text.setText(String.valueOf(itemRequest.getText()));
-
-		Log.i(TAG, "exibindo item: " + position);
+		downloader.download(context, request.getUrlPic(), holder.icon,
+				holder.progress);
 
 		return view;
-	}
-
-	public Bitmap getBitmap(String bitmapUrl) {
-
-		try {
-
-			URL url = new URL(bitmapUrl);
-
-			return BitmapFactory.decodeStream(url.openConnection()
-					.getInputStream());
-
-		}
-
-		catch (Exception ex) {
-			return null;
-		}
-
 	}
 
 	// Design Patter "ViewHolder" para Android
@@ -138,6 +141,7 @@ public class ListFriendAdapter extends BaseAdapter {
 		TextView id;
 		TextView nome;
 		TextView text;
+		ProgressBar progress;
 		boolean check;
 	}
 }

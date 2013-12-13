@@ -7,10 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.maboo.node.nodemenubeta.MainActivity;
-import br.com.maboo.node.nodemenubeta.util.RoundedShape;
 
 import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.Request;

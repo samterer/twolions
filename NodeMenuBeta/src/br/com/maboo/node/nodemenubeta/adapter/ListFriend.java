@@ -8,9 +8,9 @@ import com.facebook.friend.FriendElement;
 public class ListFriend implements Serializable {
 	private static final long serialVersionUID = -2251881666082662021L;
 	public static final String KEY = "itemfriend";
-	public List<FriendElement> itens;
+	public List<FriendElement> friends;
 
 	public ListFriend(List<FriendElement> itens) {
-		this.itens = itens;
+		this.friends = itens;
 	}
 }
