@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import br.com.maboo.node.nodemenubeta.MainActivity;
+import br.com.maboo.node.MainActivity;
 
 import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.Request;

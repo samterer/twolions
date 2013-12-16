@@ -1,4 +1,4 @@
-package br.com.maboo.node.nodemenubeta.adapter;
+package br.com.maboo.node.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

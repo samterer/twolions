@@ -1,4 +1,4 @@
-package br.com.maboo.node.nodemenubeta.util;
+package br.com.maboo.node.util;
 
 import android.app.AlertDialog;
 import android.content.Context;

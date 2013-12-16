@@ -1,4 +1,4 @@
-package br.com.maboo.node.nodemenubeta.tab;
+package br.com.maboo.node.tab;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

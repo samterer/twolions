@@ -1,4 +1,4 @@
-package br.com.maboo.node.nodemenubeta.service;
+package br.com.maboo.node.service;
 
 import java.io.IOException;
 import java.util.ArrayList;

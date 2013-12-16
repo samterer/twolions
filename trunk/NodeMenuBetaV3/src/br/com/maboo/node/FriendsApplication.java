@@ -1,4 +1,4 @@
-package br.com.maboo.node.nodemenubeta;
+package br.com.maboo.node;
 
 import android.app.Application;
 import android.util.Log;

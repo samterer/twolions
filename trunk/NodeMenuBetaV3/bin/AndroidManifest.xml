@@ -30,13 +30,13 @@
         android:required="true" />
 
     <application
-        android:name="br.com.maboo.node.nodemenubeta.FriendsApplication"
+        android:name="br.com.maboo.node.FriendsApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock" >
         <activity
-            android:name="br.com.maboo.node.nodemenubeta.LoadingActivity"
+            android:name="br.com.maboo.node.LoadingActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.com.maboo.node.nodemenubeta.MainActivity"
+            android:name="br.com.maboo.node.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
