@@ -1,4 +1,4 @@
-package br.com.maboo.node.nodemenubeta.fragment;
+package br.com.maboo.node.fragment;
 
 import java.lang.reflect.Field;
 
@@ -8,7 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import br.com.maboo.node.nodemenubeta.adapter.ViewPagerAdapter;
+import br.com.maboo.node.adapter.ViewPagerAdapter;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.androidbegin.menuviewpagertutorial.R;

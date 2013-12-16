@@ -1,4 +1,4 @@
-package br.com.maboo.node.nodemenubeta.adapter;
+package br.com.maboo.node.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import br.com.maboo.node.nodemenubeta.FriendsApplication;
+import br.com.maboo.node.FriendsApplication;
 import br.livroandroid.utils.DownloadImagemUtil;
 
 import com.androidbegin.menuviewpagertutorial.R;

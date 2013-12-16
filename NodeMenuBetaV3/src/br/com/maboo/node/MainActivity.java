@@ -1,4 +1,4 @@
-package br.com.maboo.node.nodemenubeta;
+package br.com.maboo.node;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -11,9 +11,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import br.com.maboo.node.nodemenubeta.adapter.MenuListAdapter;
-import br.com.maboo.node.nodemenubeta.fragment.FragmentMap;
-import br.com.maboo.node.nodemenubeta.fragment.FragmentProfile;
+import br.com.maboo.node.adapter.MenuListAdapter;
+import br.com.maboo.node.fragment.FragmentMap;
+import br.com.maboo.node.fragment.FragmentProfile;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;

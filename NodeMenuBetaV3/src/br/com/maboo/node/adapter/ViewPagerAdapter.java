@@ -1,11 +1,11 @@
-package br.com.maboo.node.nodemenubeta.adapter;
+package br.com.maboo.node.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
-import br.com.maboo.node.nodemenubeta.tab.FragmentProfile;
-import br.com.maboo.node.nodemenubeta.tab.FragmentFriend;
+import br.com.maboo.node.tab.FragmentFriend;
+import br.com.maboo.node.tab.FragmentProfile;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 

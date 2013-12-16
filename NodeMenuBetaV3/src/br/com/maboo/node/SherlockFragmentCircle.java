@@ -1,4 +1,4 @@
-package br.com.maboo.node.nodemenubeta;
+package br.com.maboo.node;
 
 import br.livroandroid.transacao.Transacao;
 import br.livroandroid.transacao.TransacaoTask;

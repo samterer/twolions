@@ -15,6 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="28dp"
         android:gravity="center_horizontal"
+        android:visibility="invisible"
         facebook:preset_size="small" >
     </com.facebook.widget.ProfilePictureView>
 
@@ -35,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/selection_profile_pic"
         android:layout_centerHorizontal="true"
-        android:text="Bem Vindo!" />
+        android:text="Bem Vindo!"
+        android:visibility="invisible" />
 
 </RelativeLayout>

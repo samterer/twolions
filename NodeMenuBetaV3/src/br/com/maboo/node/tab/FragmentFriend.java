@@ -1,4 +1,4 @@
-package br.com.maboo.node.nodemenubeta.tab;
+package br.com.maboo.node.tab;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import br.com.maboo.node.nodemenubeta.adapter.ListFriend;
-import br.com.maboo.node.nodemenubeta.adapter.ListFriendAdapter;
+import br.com.maboo.node.adapter.ListFriend;
+import br.com.maboo.node.adapter.ListFriendAdapter;
 import br.livroandroid.transacao.Transacao;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -37,6 +37,11 @@ public class FragmentFriend extends SherlockFragment implements Transacao,
 	private ListView listview_log;
 
 	private View view;
+	
+	private String URL_GRAPH_P1 = "https://graph.facebook.com/";
+	private String URL_GRAPH_P2 = "/picture?width=90&height=90";
+	private String URL_FACE = "http://www.facebook.com/";
+	
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -69,7 +74,7 @@ public class FragmentFriend extends SherlockFragment implements Transacao,
 	 * @param id
 	 */
 	private void sendToProfilePage(String id) {
-		String url = "http://www.facebook.com/" + id;
+		String url = URL_FACE + id;
 		Intent i = new Intent(Intent.ACTION_VIEW);
 		i.setData(Uri.parse(url));
 		startActivity(i);
@@ -111,8 +116,8 @@ public class FragmentFriend extends SherlockFragment implements Transacao,
 		for (final GraphUser g : temp) {
 
 			// url da imagem do usuario
-			String url = "https://graph.facebook.com/" + g.getId().toString()
-					+ "/picture?type=large";
+			String url = URL_GRAPH_P1 + g.getId().toString()
+					+ URL_GRAPH_P2;
 
 			// if (false) {Log.d(TAG, "Friend " + g.getName().toString() + " > "
 			// + url);}
