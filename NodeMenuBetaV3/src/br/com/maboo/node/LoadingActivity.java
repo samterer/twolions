@@ -28,13 +28,17 @@ public class LoadingActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// esconde a actionBar
+		getActionBar().hide();
+
 		// verifica a internet e o gps
 		// se um dos dois não estiver ok o app será fechado
 		if (!Util.isVerify(this)) {
 
 			AlertDialog dialog = new AlertDialog.Builder(this)
 					.setTitle(this.getString(R.string.app_name))
-					.setMessage("Ative o gps, e verifique a conexão com a internet.")
+					.setMessage(
+							"Ative o gps, e verifique a conexão com a internet.")
 					.create();
 
 			dialog.setButton("OK", new DialogInterface.OnClickListener() {
@@ -47,26 +51,32 @@ public class LoadingActivity extends Activity {
 
 			dialog.show();
 		} else {
-			
+
 			try {
-				PackageInfo info = getPackageManager().getPackageInfo("com.eatapp", PackageManager.GET_SIGNATURES);
+				PackageInfo info = getPackageManager().getPackageInfo(
+						"com.eatapp", PackageManager.GET_SIGNATURES);
 				for (Signature signature : info.signatures) {
-				    MessageDigest md = MessageDigest.getInstance("SHA");
-				    md.update(signature.toByteArray());
-				    Log.e("MY KEY HASH:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+					MessageDigest md = MessageDigest.getInstance("SHA");
+					md.update(signature.toByteArray());
+					Log.e("MY KEY HASH:",
+							Base64.encodeToString(md.digest(), Base64.DEFAULT));
 				}
-				} catch (NameNotFoundException e) {
+			} catch (NameNotFoundException e) {
 
-				} catch (NoSuchAlgorithmException e) {
+			} catch (NoSuchAlgorithmException e) {
 
-				}
-			
+			}
+
 			// start the home screen if the back
 			// button wasn't pressed
 			// already
 			Intent intent = new Intent(this, FacebookLoginActivity.class);
 
 			startActivity(intent);
+
+			// fecha essa activity, e a pilha de activitys começa
+			// na proxima
+			finish();
 		}
 
 	}

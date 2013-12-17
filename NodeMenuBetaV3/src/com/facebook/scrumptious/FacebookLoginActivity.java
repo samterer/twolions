@@ -39,6 +39,9 @@ public class FacebookLoginActivity extends FragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		// esconde a actionBar
+		getActionBar().hide();
+		
 		uiHelper = new UiLifecycleHelper(this, callback);
 	    uiHelper.onCreate(savedInstanceState);
 

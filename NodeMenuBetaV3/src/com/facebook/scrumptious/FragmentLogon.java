@@ -20,7 +20,7 @@ import com.facebook.model.GraphUser;
 import com.facebook.scrumptious.auxiliar.FaceUserVO;
 import com.facebook.widget.ProfilePictureView;
 
-public class FragmentLogin extends Fragment {
+public class FragmentLogon extends Fragment {
 
 	private static final String TAG = "SelectionFragment";
 
@@ -127,9 +127,9 @@ public class FragmentLogin extends Fragment {
 
 			public void run() {
 
-				onDetach();
+				//onDetach();
 
-				onDestroy();
+				//onDestroy();
 
 				// start the home screen if the back
 				// button wasn't pressed
