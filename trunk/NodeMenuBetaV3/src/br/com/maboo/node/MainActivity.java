@@ -12,8 +12,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import br.com.maboo.node.adapter.MenuListAdapter;
+import br.com.maboo.node.fragment.FragmentHelp;
+import br.com.maboo.node.fragment.FragmentLogout;
 import br.com.maboo.node.fragment.FragmentMap;
 import br.com.maboo.node.fragment.FragmentProfile;
+import br.com.maboo.node.fragment.FragmentSettings;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -27,11 +30,21 @@ public class MainActivity extends SherlockFragmentActivity {
 	ListView mDrawerList;
 	ActionBarDrawerToggle mDrawerToggle;
 	MenuListAdapter mMenuAdapter;
+
+	// tamanho do menu
+	private final int TAM_MENU = 5;
+	// numero dos itens
+	private final int PROFILE = 0;
+	private final int MAP = 1;
+	private final int SETTINGS = 2;
+	private final int HELP = 3;
+	private final int LOGOUT = 4;
+
 	String[] title;
 	String[] subtitle;
 	int[] icon;
-	Fragment fragment1 = new FragmentMap();
-	Fragment fragment2 = new FragmentProfile();
+	Fragment[] fragments;
+
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
 
@@ -92,22 +105,60 @@ public class MainActivity extends SherlockFragmentActivity {
 		if (savedInstanceState == null) {
 			selectItem(1);
 		}
+
 	}
 
 	private void initMenu() {
 		// Get the Title
 		mTitle = mDrawerTitle = getTitle();
-
-		String name_user = FaceUserVO.user_name;
 		
+		// fragments
+		fragments = new Fragment[TAM_MENU];
+
 		// Generate title
-		title = new String[] { name_user, "Map" };
+		title = new String[TAM_MENU];
 
 		// Generate subtitle
-		subtitle = new String[] { "noob", "Node map" };
-
+		// subtitle = new String[] { "noob", "Node map" };
+		subtitle = new String[TAM_MENU];
+		
 		// Generate icon
-		icon = new int[] { R.drawable.action_about, R.drawable.action_settings };
+		// icon = new int[] { R.drawable.action_about, R.drawable.location_map
+		// };
+		icon = new int[TAM_MENU];
+
+		// cria os fragments (paginas no menu lateral
+		// profile
+		String name_user = FaceUserVO.user_name;
+		title[PROFILE] = name_user;
+		subtitle[PROFILE] = "noob";
+		icon[PROFILE] = R.drawable.action_help;
+		fragments[PROFILE] = new FragmentProfile();
+
+		// maps
+		title[MAP] = "Map";
+		subtitle[MAP] = "node map";
+		icon[MAP] = R.drawable.location_map;
+		fragments[MAP] = new FragmentMap();
+
+		// settings
+		title[SETTINGS] = "Settings";
+		subtitle[SETTINGS] = "edit settings";
+		icon[SETTINGS] = R.drawable.action_settings;
+		fragments[SETTINGS] = new FragmentSettings();
+
+		// help
+		title[HELP] = "Help";
+		subtitle[HELP] = "do you need some help?";
+		icon[HELP] = R.drawable.action_help;
+		fragments[HELP] = new FragmentHelp();
+
+		// logout app
+		title[LOGOUT] = "Exit";
+		subtitle[LOGOUT] = "logout";
+		icon[LOGOUT] = R.drawable.content_backspace;
+		fragments[LOGOUT] = new FragmentLogout();
+
 	}
 
 	@Override
@@ -139,14 +190,15 @@ public class MainActivity extends SherlockFragmentActivity {
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
 		// Locate Position
-		switch (position) {
-		case 0:
-			ft.replace(R.id.content_frame, fragment2);
-			break;
-		case 1:
-			ft.replace(R.id.content_frame, fragment1);
-			break;
-		}
+		ft.replace(R.id.content_frame, fragments[position]);
+		// switch (position) {
+		// case 0:
+		// ft.replace(R.id.content_frame, fragment2);
+		// break;
+		// case 1:
+		// ft.replace(R.id.content_frame, fragment1);
+		// break;
+		// }
 		ft.commit();
 		mDrawerList.setItemChecked(position, true);
 		// Get the title followed by the position
