@@ -1,6 +1,8 @@
 package br.com.maboo.node.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +13,15 @@ import br.com.maboo.node.map.GeoPointManager;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.androidbegin.menuviewpagertutorial.R;
+import com.facebook.scrumptious.auxiliar.FaceUserVO;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 public class FragmentMap extends SherlockFragment implements OnMapClickListener {
 
@@ -64,6 +69,16 @@ public class FragmentMap extends SherlockFragment implements OnMapClickListener 
 			// inicializa a classe interna que controla os "controles" do maps
 			GeoPointManager geo = new GeoPointManager(getActivity());
 			geo.initPointManager(map);
+
+			map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+				public void onInfoWindowClick(Marker marker) {
+
+					Toast.makeText(getActivity().getApplicationContext(),
+							"Bem vindo ao "+marker.getTitle()+" "+FaceUserVO.user_name, Toast.LENGTH_SHORT).show();
+
+				}
+
+			});
 
 		}
 
