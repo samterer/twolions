@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
-import br.com.maboo.node.tab.FragmentFriend;
-import br.com.maboo.node.tab.FragmentProfile;
+import br.com.maboo.node.tab.TabFriend;
+import br.com.maboo.node.tab.TabProfile;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -26,12 +26,12 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 			// Open FragmentTab1.java
 		case 0:
-			FragmentProfile fragmenttab1 = new FragmentProfile();
+			TabProfile fragmenttab1 = new TabProfile();
 			return fragmenttab1;
 
 			// Open FragmentTab2.java
 		case 1:
-			FragmentFriend fragmenttab2 = new FragmentFriend();
+			TabFriend fragmenttab2 = new TabFriend();
 			return fragmenttab2;
 		}
 		return null;

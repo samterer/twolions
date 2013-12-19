@@ -15,10 +15,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import br.com.maboo.node.FriendsApplication;
 import br.livroandroid.utils.DownloadImagemUtil;
 
 import com.androidbegin.menuviewpagertutorial.R;
+import com.facebook.application.FriendsApplication;
 import com.facebook.friend.FriendElement;
 
 public class ListFriendAdapter extends BaseAdapter {

@@ -1,4 +1,4 @@
-package br.com.maboo.node;
+package com.facebook.application;
 
 import android.app.Application;
 import android.util.Log;

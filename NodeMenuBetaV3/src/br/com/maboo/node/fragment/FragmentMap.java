@@ -7,24 +7,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.maboo.node.map.ControllerMap;
-import br.com.maboo.node.map.GeoPoint;
+import br.com.maboo.node.map.GeoPointManager;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.androidbegin.menuviewpagertutorial.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 
-public class FragmentMap extends SherlockFragment implements
-		OnMapClickListener, OnMapLongClickListener {
+public class FragmentMap extends SherlockFragment implements OnMapClickListener {
+
+	private String TAG = "FragmentMap";
 
 	private View v;
 	private MapView mapView;
-	
+
 	private TextView mTapText;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,11 +58,13 @@ public class FragmentMap extends SherlockFragment implements
 			// instacia o maps no formato completo 'GoogleMap'
 			GoogleMap map = mapView.getMap();
 
-			// inicializa a classe interna que controla os "controles" do maps
-			new GeoPoint(map);
-
 			// controler do maps
 			new ControllerMap(map);
+
+			// inicializa a classe interna que controla os "controles" do maps
+			GeoPointManager geo = new GeoPointManager(getActivity());
+			geo.initPointManager(map);
+
 		}
 
 	}
@@ -87,23 +89,11 @@ public class FragmentMap extends SherlockFragment implements
 		mapView.onLowMemory();
 	}
 
+	@Override
 	public void onMapClick(LatLng point) {
-		Toast.makeText(getActivity(), "onMapClick...", Toast.LENGTH_SHORT)
-				.show();
+		Toast.makeText(getActivity().getApplicationContext(), "teste...",
+				Toast.LENGTH_SHORT).show();
 
-		mTapText.setText("tapped, point=" + point);
 	}
-
-	public void onMapLongClick(LatLng point) {
-		Toast.makeText(getActivity(), "onMapLongClick...", Toast.LENGTH_SHORT)
-				.show();
-
-		mTapText.setText("long pressed, point=" + point);
-	}
-
-
-
-
-
 
 }
