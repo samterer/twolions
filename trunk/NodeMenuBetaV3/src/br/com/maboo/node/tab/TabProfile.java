@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.androidbegin.menuviewpagertutorial.R;
 
-public class FragmentProfile extends SherlockFragment {
+public class TabProfile extends SherlockFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

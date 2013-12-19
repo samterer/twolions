@@ -25,7 +25,7 @@ import com.facebook.Session;
 import com.facebook.friend.FriendElement;
 import com.facebook.model.GraphUser;
 
-public class FragmentFriend extends SherlockFragment implements Transacao,
+public class TabFriend extends SherlockFragment implements Transacao,
 		OnItemClickListener {
 
 	private String TAG = "FragmentFriend";
