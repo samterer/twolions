@@ -1,5 +1,6 @@
 package br.com.maboo.node;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -239,6 +240,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		} else {
 			// Otherwise, ask user if he wants to leave :)
 			super.onBackPressed();
+			
 		}
 	}
 }

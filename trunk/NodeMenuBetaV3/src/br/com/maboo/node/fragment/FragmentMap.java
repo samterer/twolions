@@ -133,6 +133,14 @@ public class FragmentMap extends SherlockFragment {
 		super.onLowMemory();
 		mapView.onLowMemory();
 	}
+	
+	/*******************************************************************************
+	 * maker (ponto para criar locais)
+	 *******************************************************************************/
+	
+	public void moveMaker(View v){
+		AndroidUtils.toast(getActivity().getApplicationContext(), "click on maker...");
+	}
 
 	/*******************************************************************************
 	 * menu
