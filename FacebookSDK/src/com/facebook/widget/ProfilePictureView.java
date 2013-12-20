@@ -153,8 +153,16 @@ public class ProfilePictureView extends FrameLayout {
         initialize(context);
         parseAttributes(attrs);
     }
-
+    
     /**
+     * Return image from ProfilePicture	
+     * @return
+     */
+    public ImageView getImage() {
+		return image;
+	}
+
+	/**
      * Gets the current preset size type
      *
      * @return The current preset size type, if set; CUSTOM if not
