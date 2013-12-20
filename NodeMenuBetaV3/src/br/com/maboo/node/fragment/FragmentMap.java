@@ -1,34 +1,39 @@
 package br.com.maboo.node.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+import br.com.maboo.node.map.AnimeCamera;
 import br.com.maboo.node.map.ControllerMap;
 import br.com.maboo.node.map.GeoPointManager;
+import br.com.maboo.node.map.ManagerClickOnMarker;
+import br.livroandroid.utils.AndroidUtils;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.androidbegin.menuviewpagertutorial.ChatActivity;
 import com.androidbegin.menuviewpagertutorial.R;
-import com.facebook.scrumptious.auxiliar.FaceUserVO;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
-public class FragmentMap extends SherlockFragment implements OnMapClickListener {
+public class FragmentMap extends SherlockFragment {
 
 	private String TAG = "FragmentMap";
 
 	private View v;
 	private MapView mapView;
+	private GoogleMap map;
 
 	private TextView mTapText;
 
@@ -50,7 +55,7 @@ public class FragmentMap extends SherlockFragment implements OnMapClickListener 
 		return v;
 	}
 
-	public void init() {
+	private void init() {
 
 		if (mapView != null) {
 
@@ -61,7 +66,7 @@ public class FragmentMap extends SherlockFragment implements OnMapClickListener 
 			}
 
 			// instacia o maps no formato completo 'GoogleMap'
-			GoogleMap map = mapView.getMap();
+			map = mapView.getMap();
 
 			// controler do maps
 			new ControllerMap(map);
@@ -70,15 +75,40 @@ public class FragmentMap extends SherlockFragment implements OnMapClickListener 
 			GeoPointManager geo = new GeoPointManager(getActivity());
 			geo.initPointManager(map);
 
+			/*********************
+			 * click em um markers
+			 *********************/
 			map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 				public void onInfoWindowClick(Marker marker) {
 
-					Toast.makeText(getActivity().getApplicationContext(),
-							"Bem vindo ao "+marker.getTitle()+" "+FaceUserVO.user_name, Toast.LENGTH_SHORT).show();
+					ManagerClickOnMarker mco = new ManagerClickOnMarker(
+							getActivity(), ChatActivity.class);
+					mco.goTo("local", marker.getTitle());
 
 				}
 
 			});
+
+			map.setOnMarkerClickListener(new OnMarkerClickListener() {
+
+				@Override
+				public boolean onMarkerClick(Marker marker) {
+					AndroidUtils.toast(getActivity().getApplicationContext(),
+							"zoom, here: " + marker.getTitle());
+
+					new AnimeCamera(map, new LatLng(
+							marker.getPosition().latitude,
+							marker.getPosition().longitude)).moveCamera();
+					return false;
+				}
+			});
+
+			/*********************
+			 * double click em um markers
+			 *********************/
+
+			// habilita o menu no maps
+			setHasOptionsMenu(true);
 
 		}
 
@@ -104,11 +134,29 @@ public class FragmentMap extends SherlockFragment implements OnMapClickListener 
 		mapView.onLowMemory();
 	}
 
-	@Override
-	public void onMapClick(LatLng point) {
-		Toast.makeText(getActivity().getApplicationContext(), "teste...",
-				Toast.LENGTH_SHORT).show();
+	/*******************************************************************************
+	 * menu
+	 *******************************************************************************/
 
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.menu_map, menu);
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
+
+		switch (item.getItemId()) {
+		case R.id.item1:
+			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+			break;
+
+		case R.id.item2:
+			map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+			break;
+		}
+		return true;
+	}
 }

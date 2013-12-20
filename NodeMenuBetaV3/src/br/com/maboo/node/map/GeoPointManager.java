@@ -81,8 +81,7 @@ public class GeoPointManager {
 	 */
 	private void criaPonto() {
 
-		Toast.makeText(act.getApplicationContext(), "criaPonto...",
-				Toast.LENGTH_SHORT).show();
+		//Toast.makeText(act.getApplicationContext(), "criaPonto...",	Toast.LENGTH_SHORT).show();
 
 		// recupera a lista de pontos
 		ArrayList<GeoPointVO> list = new ListaGeoPoint().getList();
