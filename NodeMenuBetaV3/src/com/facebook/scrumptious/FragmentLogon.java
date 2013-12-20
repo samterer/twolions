@@ -137,6 +137,8 @@ public class FragmentLogon extends Fragment {
 				Intent intent = new Intent(getActivity(), MainActivity.class);
 
 				startActivity(intent);
+			
+				getActivity().finish();
 			}
 		}, SPLASH_TIME_OUT); // time in milliseconds
 								// (1 second = 1000
