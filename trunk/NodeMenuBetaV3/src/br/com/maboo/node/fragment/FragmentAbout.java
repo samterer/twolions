@@ -8,12 +8,12 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.androidbegin.menuviewpagertutorial.R;
 
-public class FragmentHelp extends SherlockFragment {
+public class FragmentAbout extends SherlockFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragmenthelp, container, false);
+		View view = inflater.inflate(R.layout.fragmentabout, container, false);
 
 		return view;
 	}

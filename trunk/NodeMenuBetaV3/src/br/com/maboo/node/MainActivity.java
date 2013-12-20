@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import br.com.maboo.node.adapter.MenuListAdapter;
-import br.com.maboo.node.fragment.FragmentHelp;
+import br.com.maboo.node.fragment.FragmentAbout;
 import br.com.maboo.node.fragment.FragmentLogout;
 import br.com.maboo.node.fragment.FragmentMap;
 import br.com.maboo.node.fragment.FragmentProfile;
@@ -132,7 +132,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		String name_user = FaceUserVO.user_name;
 		title[PROFILE] = name_user;
 		subtitle[PROFILE] = "noob";
-		icon[PROFILE] = R.drawable.action_help;
+		icon[PROFILE] = R.drawable.fbprofile;
 		fragments[PROFILE] = new FragmentProfile();
 
 		// maps
@@ -148,10 +148,10 @@ public class MainActivity extends SherlockFragmentActivity {
 		fragments[SETTINGS] = new FragmentSettings();
 
 		// help
-		title[HELP] = "Help";
-		subtitle[HELP] = "do you need some help?";
-		icon[HELP] = R.drawable.action_help;
-		fragments[HELP] = new FragmentHelp();
+		title[HELP] = "About";
+		subtitle[HELP] = "who does this";
+		icon[HELP] = R.drawable.action_about;
+		fragments[HELP] = new FragmentAbout();
 
 		// logout app
 		title[LOGOUT] = "Exit";
