@@ -16,7 +16,6 @@ import android.util.Base64;
 import android.util.Log;
 import br.com.maboo.node.util.Util;
 
-import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.scrumptious.FacebookLoginActivity;
 
 public class LoadingActivity extends Activity {

@@ -4,19 +4,10 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Align;
-import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.location.Location;
 import android.util.Log;
-import android.widget.Toast;
+import br.com.maboo.node.R;
 
-import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.scrumptious.auxiliar.FaceUserVO;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -81,7 +72,8 @@ public class GeoPointManager {
 	 */
 	private void criaPonto() {
 
-		//Toast.makeText(act.getApplicationContext(), "criaPonto...",	Toast.LENGTH_SHORT).show();
+		// Toast.makeText(act.getApplicationContext(), "criaPonto...",
+		// Toast.LENGTH_SHORT).show();
 
 		// recupera a lista de pontos
 		ArrayList<GeoPointVO> list = new ListaGeoPoint().getList();
@@ -97,8 +89,9 @@ public class GeoPointManager {
 
 			map.addMarker(new MarkerOptions()
 					.icon(BitmapDescriptorFactory
-							.fromResource(R.drawable.ic_mark)).title(g.getDesc()).snippet("teste...")
-					.anchor(0.0f, 1.0f).position(g.getLatLng()).flat(true));
+							.fromResource(R.drawable.ic_mark))
+					.title(g.getDesc()).snippet("teste...").anchor(0.0f, 1.0f)
+					.position(g.getLatLng()).flat(true));
 		}
 
 	}

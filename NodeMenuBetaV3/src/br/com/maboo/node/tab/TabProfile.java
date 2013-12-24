@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import br.com.maboo.node.R;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.androidbegin.menuviewpagertutorial.R;
 
 public class TabProfile extends SherlockFragment {
 
@@ -14,8 +14,8 @@ public class TabProfile extends SherlockFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Get the view from fragmenttab2.xml
-		View view = inflater.inflate(R.layout.fragmentprofile, container, false);
-
+		View view = inflater
+				.inflate(R.layout.fragmentprofile, container, false);
 
 		return view;
 	}

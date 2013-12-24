@@ -13,12 +13,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import br.com.maboo.node.adapter.ListFriend;
+import br.com.maboo.node.R;
 import br.com.maboo.node.adapter.ListFriendAdapter;
 import br.livroandroid.transacao.Transacao;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
@@ -37,11 +36,10 @@ public class TabFriend extends SherlockFragment implements Transacao,
 	private ListView listview_log;
 
 	private View view;
-	
+
 	private String URL_GRAPH_P1 = "https://graph.facebook.com/";
 	private String URL_GRAPH_P2 = "/picture?width=90&height=90";
 	private String URL_FACE = "http://www.facebook.com/";
-	
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -116,8 +114,7 @@ public class TabFriend extends SherlockFragment implements Transacao,
 		for (final GraphUser g : temp) {
 
 			// url da imagem do usuario
-			String url = URL_GRAPH_P1 + g.getId().toString()
-					+ URL_GRAPH_P2;
+			String url = URL_GRAPH_P1 + g.getId().toString() + URL_GRAPH_P2;
 
 			// if (false) {Log.d(TAG, "Friend " + g.getName().toString() + " > "
 			// + url);}

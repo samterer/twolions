@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import br.com.maboo.node.MainActivity;
+import br.com.maboo.node.R;
 
-import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
@@ -96,26 +96,26 @@ public class FragmentLogon extends Fragment {
 					}
 				});
 		request.executeAsync();
-	}	
-		
+	}
+
 	private void createProfile(String id, String name) {
 		// Set the id for the ProfilePictureView
 		// view that in turn displays the profile
 		// picture.
 		profilePictureView.setProfileId(id);
-		
+
 		// Set the Textview's text to the user's name.
 		userNameView.setText("Bem Vindo " + name);
-		
+
 		// salva nome\id do usuario
 		FaceUserVO.user_name = name;
 		FaceUserVO.id_user = id;
 		FaceUserVO.profilePicture = profilePictureView.getImage();
-		
+
 		startMap();
-		
-	}	
-		
+
+	}
+
 	private void startMap() {
 		// começa um tempo e chama a tela padrao do
 		// app(maps...)
@@ -127,9 +127,9 @@ public class FragmentLogon extends Fragment {
 
 			public void run() {
 
-				//onDetach();
+				// onDetach();
 
-				//onDestroy();
+				// onDestroy();
 
 				// start the home screen if the back
 				// button wasn't pressed
@@ -137,7 +137,7 @@ public class FragmentLogon extends Fragment {
 				Intent intent = new Intent(getActivity(), MainActivity.class);
 
 				startActivity(intent);
-			
+
 				getActivity().finish();
 			}
 		}, SPLASH_TIME_OUT); // time in milliseconds

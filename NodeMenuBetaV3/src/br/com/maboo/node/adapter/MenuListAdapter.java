@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import br.com.maboo.node.R;
 import br.livroandroid.utils.RoundedShape;
 
-import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.scrumptious.auxiliar.FaceUserVO;
 
 public class MenuListAdapter extends BaseAdapter {
@@ -52,18 +52,17 @@ public class MenuListAdapter extends BaseAdapter {
 
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
+
 		int id_layout = 0;
 		// muda o layout do menu se for para o "profile" do usuario
-		if(position == 0) {
+		if (position == 0) {
 			id_layout = R.layout.drawer_list_item_face;
 		} else { // item comum do menu
 			id_layout = R.layout.drawer_list_item;
 		}
-		
-		View itemView = inflater.inflate(id_layout, parent,
-				false);	
-		
+
+		View itemView = inflater.inflate(id_layout, parent, false);
+
 		// Locate the TextViews in drawer_list_item.xml
 		txtTitle = (TextView) itemView.findViewById(R.id.title);
 		txtSubTitle = (TextView) itemView.findViewById(R.id.subtitle);
@@ -75,17 +74,15 @@ public class MenuListAdapter extends BaseAdapter {
 		txtTitle.setText(mTitle[position]);
 		txtSubTitle.setText(mSubTitle[position]);
 
-		
 		// o primeiro item é sempre a foto do profile
 		// padrao do layout do app
-		if(position == 0) {
+		if (position == 0) {
 			// recupera profila do usuario
-			imgIcon = (ImageView) itemView
-					.findViewById(R.id.icon);
-			
+			imgIcon = (ImageView) itemView.findViewById(R.id.icon);
+
 			RoundedShape rs = new RoundedShape(FaceUserVO.profilePicture);
 			imgIcon.setImageBitmap(rs.getTargetBitmap());
-			
+
 		} else {
 			// Set the results into ImageView
 			imgIcon.setImageResource(mIcon[position]);
