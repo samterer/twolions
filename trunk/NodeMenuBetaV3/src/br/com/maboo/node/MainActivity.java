@@ -109,8 +109,6 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	private void initMenu() {
 
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 		// Get the Title
 		mTitle = mDrawerTitle = getTitle();
 
