@@ -6,7 +6,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import br.com.maboo.node.R;
 import br.livroandroid.utils.DownloadImagemUtil;
 
-import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.application.FriendsApplication;
 import com.facebook.friend.FriendElement;
 
@@ -36,8 +35,8 @@ public class ListFriendAdapter extends BaseAdapter {
 	private Activity context;
 
 	public ListFriendAdapter(Activity context, List<FriendElement> friends) {
-		
-		//Log.i(TAG, "ListFriendAdapter...");
+
+		// Log.i(TAG, "ListFriendAdapter...");
 
 		this.context = context;
 		this.friends = friends;
@@ -45,8 +44,10 @@ public class ListFriendAdapter extends BaseAdapter {
 		this.inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		FriendsApplication application = (FriendsApplication) context.getApplication();
-		// Utiliza este objeto para recuperar a classe que faz o download de imagens
+		FriendsApplication application = (FriendsApplication) context
+				.getApplication();
+		// Utiliza este objeto para recuperar a classe que faz o download de
+		// imagens
 		downloader = application.getDownloadImagemUtil();
 
 		tf = Typeface.createFromAsset(context.getAssets(),
@@ -70,8 +71,8 @@ public class ListFriendAdapter extends BaseAdapter {
 		ViewHolder holder = null;
 
 		if (view == null) { // verifica se o holder existe
-			
-			//Log.i(TAG,"criando a view...");
+
+			// Log.i(TAG,"criando a view...");
 
 			// Nao existe a View no cache para esta linha então cria um novo
 			holder = new ViewHolder();

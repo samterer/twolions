@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.androidbegin.menuviewpagertutorial"
+    package="br.com.maboo.node"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -19,7 +19,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--
      The following two permissions are not required to use
-     Google Maps Android API v2, but are recommended.
+     Google Maps Android API v2, but are recommended.
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -71,9 +71,13 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCPpY3AOkZKO60KnLZ-Z8w0nhhf65z6esE" >
         </meta-data>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" >
+        </meta-data>
 
         <activity
-            android:name="com.androidbegin.menuviewpagertutorial.ChatActivity"
+            android:name="br.com.maboo.node.chat.ChatActivity"
             android:label="@string/title_activity_chat" >
         </activity>
     </application>

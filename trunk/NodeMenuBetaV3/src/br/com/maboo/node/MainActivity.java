@@ -1,6 +1,5 @@
 package br.com.maboo.node;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -21,7 +20,6 @@ import br.com.maboo.node.fragment.FragmentSettings;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.androidbegin.menuviewpagertutorial.R;
 import com.facebook.scrumptious.auxiliar.FaceUserVO;
 
 public class MainActivity extends SherlockFragmentActivity {
@@ -112,7 +110,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	private void initMenu() {
 		// Get the Title
 		mTitle = mDrawerTitle = getTitle();
-		
+
 		// fragments
 		fragments = new Fragment[TAM_MENU];
 
@@ -122,7 +120,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		// Generate subtitle
 		// subtitle = new String[] { "noob", "Node map" };
 		subtitle = new String[TAM_MENU];
-		
+
 		// Generate icon
 		// icon = new int[] { R.drawable.action_about, R.drawable.location_map
 		// };
@@ -192,14 +190,6 @@ public class MainActivity extends SherlockFragmentActivity {
 		FragmentTransaction ft = fm.beginTransaction();
 		// Locate Position
 		ft.replace(R.id.content_frame, fragments[position]);
-		// switch (position) {
-		// case 0:
-		// ft.replace(R.id.content_frame, fragment2);
-		// break;
-		// case 1:
-		// ft.replace(R.id.content_frame, fragment1);
-		// break;
-		// }
 		ft.commit();
 		mDrawerList.setItemChecked(position, true);
 		// Get the title followed by the position
@@ -240,7 +230,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		} else {
 			// Otherwise, ask user if he wants to leave :)
 			super.onBackPressed();
-			
+
 		}
 	}
 }

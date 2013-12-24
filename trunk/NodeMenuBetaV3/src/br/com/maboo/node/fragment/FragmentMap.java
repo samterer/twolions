@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import br.com.maboo.node.R;
+import br.com.maboo.node.chat.ChatActivity;
 import br.com.maboo.node.map.AnimeCamera;
 import br.com.maboo.node.map.ControllerMap;
 import br.com.maboo.node.map.GeoPointManager;
@@ -15,12 +16,9 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.androidbegin.menuviewpagertutorial.ChatActivity;
-import com.androidbegin.menuviewpagertutorial.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -35,8 +33,6 @@ public class FragmentMap extends SherlockFragment {
 	private MapView mapView;
 	private GoogleMap map;
 
-	private TextView mTapText;
-
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
@@ -45,8 +41,7 @@ public class FragmentMap extends SherlockFragment {
 
 		// get map
 		mapView = (MapView) v.findViewById(R.id.map);
-		// get header map
-		mTapText = (TextView) v.findViewById(R.id.text);
+
 		// instancia o mapView
 		mapView.onCreate(savedInstanceState);
 
@@ -133,13 +128,14 @@ public class FragmentMap extends SherlockFragment {
 		super.onLowMemory();
 		mapView.onLowMemory();
 	}
-	
+
 	/*******************************************************************************
 	 * maker (ponto para criar locais)
 	 *******************************************************************************/
-	
-	public void moveMaker(View v){
-		AndroidUtils.toast(getActivity().getApplicationContext(), "click on maker...");
+
+	public void moveMaker(View v) {
+		AndroidUtils.toast(getActivity().getApplicationContext(),
+				"click on maker...");
 	}
 
 	/*******************************************************************************

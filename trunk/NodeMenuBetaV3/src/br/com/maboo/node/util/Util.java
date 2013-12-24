@@ -11,8 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-
-import com.androidbegin.menuviewpagertutorial.R;
+import br.com.maboo.node.R;
 
 public class Util {
 	protected static final String TAG = "Util";
@@ -55,7 +54,6 @@ public class Util {
 			return false;
 		}
 	}
-	
 
 	// verifica se existe rede
 	public static boolean isVerify(Context context) {
@@ -64,19 +62,19 @@ public class Util {
 		boolean gps = isGpsAvailable(context); // verifica se o gps esta ativo
 
 		if (!net) {
-			//msg = "Sem conexão com a internet baby";
-			Log.i(TAG,"Sem conexão com a internet.");
+			// msg = "Sem conexão com a internet baby";
+			Log.i(TAG, "Sem conexão com a internet.");
 		}
 
 		if (!gps) {
-			//msg = "O gps não esta ativo.";
-			Log.i(TAG,"O gps não esta ativo.");
+			// msg = "O gps não esta ativo.";
+			Log.i(TAG, "O gps não esta ativo.");
 		}
 
 		if (!net || !gps) {
-			//toast(context, "Verifique o acesso a internet e o GPS");
-			Log.i(TAG,"Verifique o acesso a internet e o GPS.");
-			
+			// toast(context, "Verifique o acesso a internet e o GPS");
+			Log.i(TAG, "Verifique o acesso a internet e o GPS.");
+
 			return false;
 		}
 

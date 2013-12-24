@@ -8,10 +8,10 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import br.com.maboo.node.R;
 import br.com.maboo.node.adapter.ViewPagerAdapter;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.androidbegin.menuviewpagertutorial.R;
 
 public class FragmentProfile extends SherlockFragment {
 
