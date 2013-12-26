@@ -12,10 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import br.com.maboo.node.R;
 import br.com.maboo.node.adapter.ListFriendAdapter;
-import br.livroandroid.transacao.Transacao;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.facebook.Request;
@@ -24,8 +24,7 @@ import com.facebook.Session;
 import com.facebook.friend.FriendElement;
 import com.facebook.model.GraphUser;
 
-public class TabFriend extends SherlockFragment implements Transacao,
-		OnItemClickListener {
+public class TabFriend extends SherlockFragment implements OnItemClickListener {
 
 	private String TAG = "FragmentFriend";
 
@@ -37,14 +36,9 @@ public class TabFriend extends SherlockFragment implements Transacao,
 
 	private View view;
 
-	private String URL_GRAPH_P1 = "https://graph.facebook.com/";
-	private String URL_GRAPH_P2 = "/picture?width=90&height=90";
+	private String URL_GRAPH = "https://graph.facebook.com/";
+	private String FRIEND_SIZE_IMG = "/picture?width=90&height=90";
 	private String URL_FACE = "http://www.facebook.com/";
-
-	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
-
-	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -78,17 +72,25 @@ public class TabFriend extends SherlockFragment implements Transacao,
 		startActivity(i);
 	}
 
-	@Override
-	public void executar() throws Exception {
-		// carrega a lista de friends
+	/**
+	 * carrega a lista de friends
+	 */
+	public void executar() {
+		try {
 
-		itensRandom = new ArrayList<FriendElement>();
-		friends = new ArrayList<FriendElement>();
+			itensRandom = new ArrayList<FriendElement>();
+			friends = new ArrayList<FriendElement>();
 
-		recoverList();
+			recoverList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
+	/**
+	 * Recupera lista de amigos do face
+	 */
 	private void recoverList() {
 
 		temp = new ArrayList<GraphUser>();
@@ -110,11 +112,14 @@ public class TabFriend extends SherlockFragment implements Transacao,
 
 	}
 
+	/**
+	 * Popula lista de amigos do node (padrao FriendElement)
+	 */
 	private void populateTempList() {
 		for (final GraphUser g : temp) {
 
 			// url da imagem do usuario
-			String url = URL_GRAPH_P1 + g.getId().toString() + URL_GRAPH_P2;
+			String url = URL_GRAPH + g.getId().toString() + FRIEND_SIZE_IMG;
 
 			// if (false) {Log.d(TAG, "Friend " + g.getName().toString() + " > "
 			// + url);}
@@ -155,6 +160,10 @@ public class TabFriend extends SherlockFragment implements Transacao,
 		if (itensRandom != null && itensRandom.size() > 0) {
 			listview_log.setAdapter(new ListFriendAdapter(getActivity(),
 					itensRandom));
+
+			// troca o bg já que agora a lista esta populada
+			ImageView img = (ImageView) view.findViewById(R.id.image1);
+			img.setVisibility(View.INVISIBLE);
 		}
 	}
 
@@ -164,7 +173,6 @@ public class TabFriend extends SherlockFragment implements Transacao,
 		FriendElement f = (FriendElement) parent.getAdapter().getItem(posicao);
 
 		sendToProfilePage(f.getId().toString());
-
 	}
 
 }

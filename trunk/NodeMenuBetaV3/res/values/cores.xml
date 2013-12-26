@@ -31,4 +31,9 @@
     <color name="azul_note">#70c3ed</color>
     <color name="verde_note">#aed361</color>
 
+    <!-- node test -->
+    <color name="azul_node">#d2ebff</color>
+    <color name="cinza_node">#aab7c0</color>
+    <color name="laranja_node">#ff7d43</color>
+
 </resources>

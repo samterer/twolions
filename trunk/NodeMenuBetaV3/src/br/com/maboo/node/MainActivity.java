@@ -1,6 +1,8 @@
 package br.com.maboo.node;
 
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -79,6 +81,10 @@ public class MainActivity extends SherlockFragmentActivity {
 		// Enable ActionBar app icon to behave as action to toggle nav drawer
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+		// set default color node in bar
+		getSupportActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#ff7d43")));
 
 		// ActionBarDrawerToggle ties together the the proper interactions
 		// between the sliding drawer and the action bar app icon

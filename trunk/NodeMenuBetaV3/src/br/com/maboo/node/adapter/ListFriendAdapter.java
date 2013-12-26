@@ -15,9 +15,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import br.com.maboo.node.R;
+import br.com.maboo.node.application.FriendsApplication;
 import br.livroandroid.utils.DownloadImagemUtil;
 
-import com.facebook.application.FriendsApplication;
 import com.facebook.friend.FriendElement;
 
 public class ListFriendAdapter extends BaseAdapter {
@@ -37,21 +37,25 @@ public class ListFriendAdapter extends BaseAdapter {
 	public ListFriendAdapter(Activity context, List<FriendElement> friends) {
 
 		// Log.i(TAG, "ListFriendAdapter...");
+		try {
+			this.context = context;
+			this.friends = friends;
 
-		this.context = context;
-		this.friends = friends;
+			this.inflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		this.inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			FriendsApplication application = (FriendsApplication) context
+					.getApplication();
+			// Utiliza este objeto para recuperar a classe que faz o download de
+			// imagens
+			downloader = application.getDownloadImagemUtil();
 
-		FriendsApplication application = (FriendsApplication) context
-				.getApplication();
-		// Utiliza este objeto para recuperar a classe que faz o download de
-		// imagens
-		downloader = application.getDownloadImagemUtil();
+			tf = Typeface.createFromAsset(context.getAssets(),
+					"fonts/DroidSansFallback.ttf"); // font
 
-		tf = Typeface.createFromAsset(context.getAssets(),
-				"fonts/DroidSansFallback.ttf"); // font
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public int getCount() {
