@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="80dp"
+    android:background="#d2ebff"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -48,6 +49,7 @@
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/linearLayout1"
         android:text="Medium Text"
+        android:textColor="@color/cinza_node"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -58,6 +60,7 @@
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/linearLayout1"
         android:text="Medium Text"
+        android:textColor="@color/cinza_node"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
