@@ -3,10 +3,7 @@ package br.com.maboo.node.fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
 import br.com.maboo.node.R;
 import br.com.maboo.node.chat.ChatActivity;
 import br.com.maboo.node.map.AnimeCamera;
@@ -41,7 +38,6 @@ public class FragmentMap extends SherlockFragment {
 	private android.widget.RelativeLayout.LayoutParams layoutParams;
 
 	/**/
-
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
@@ -59,20 +55,6 @@ public class FragmentMap extends SherlockFragment {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		// onClick no ponto para criação de um chat
-		// depois, envia o view do ponto para uma classe que vai gerenciar ele
-		ImageView point = (ImageView) view.findViewById(R.id.point_maker);
-
-		point.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(getActivity(), "TESTANDOOO!", Toast.LENGTH_SHORT)
-						.show();
-
-			}
-		});
 
 		return view;
 	}

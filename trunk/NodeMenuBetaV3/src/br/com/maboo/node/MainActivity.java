@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import br.com.maboo.node.adapter.MenuListAdapter;
 import br.com.maboo.node.fragment.FragmentAbout;
+import br.com.maboo.node.fragment.FragmentFriends;
 import br.com.maboo.node.fragment.FragmentLogout;
 import br.com.maboo.node.fragment.FragmentMap;
 import br.com.maboo.node.fragment.FragmentProfile;
@@ -32,16 +33,20 @@ public class MainActivity extends SherlockFragmentActivity {
 	ActionBarDrawerToggle mDrawerToggle;
 	MenuListAdapter mMenuAdapter;
 
-	// tamanho do menu
-	private final int TAM_MENU = 5;
 	// numero dos itens
 	private final int PROFILE = 0;
 	private final int MAP = 1;
-	private final int SETTINGS = 2;
-	private final int HELP = 3;
-	private final int LOGOUT = 4;
+	private final int FRIENDS = 2;
+	private final int SETTINGS = 3;
+	private final int HELP = 4;
+	private final int LOGOUT = 5;
 
+	// tamanho do menu (baseado no valor do ultimo item)
+	private final int TAM_MENU = LOGOUT+1;
+
+	// titulo no menu lateral
 	String[] title;
+	// subtitulo no menu lateral
 	String[] subtitle;
 	int[] icon;
 	Fragment[] fragments;
@@ -148,6 +153,12 @@ public class MainActivity extends SherlockFragmentActivity {
 		fragments[MAP] = new FragmentMap();
 
 		// settings
+		title[FRIENDS] = "Friends";
+		subtitle[FRIENDS] = "call your friends";
+		icon[FRIENDS] = R.drawable.action_friends;
+		fragments[FRIENDS] = new FragmentFriends();
+
+		// settings
 		title[SETTINGS] = "Settings";
 		subtitle[SETTINGS] = "edit settings";
 		icon[SETTINGS] = R.drawable.action_settings;
@@ -160,7 +171,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		fragments[HELP] = new FragmentAbout();
 
 		// logout app
-		title[LOGOUT] = "Exit";
+		title[LOGOUT] = "Logout";
 		subtitle[LOGOUT] = "logout";
 		icon[LOGOUT] = R.drawable.content_backspace;
 		fragments[LOGOUT] = new FragmentLogout();
