@@ -80,9 +80,7 @@ public class FragmentMap extends SherlockFragment {
 			// tela, assim como itens dinamicos (icone do usuario)
 			new GeoPointManager().initPointManager(map);
 
-			/*********************
-			 * click em um markers
-			 *********************/
+			// click em um node depois de ver os detalhes dele
 			map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 				public void onInfoWindowClick(Marker marker) {
 
@@ -96,6 +94,7 @@ public class FragmentMap extends SherlockFragment {
 
 			});
 
+			// clique em um node pela primeira vez
 			map.setOnMarkerClickListener(new OnMarkerClickListener() {
 
 				@Override
@@ -177,23 +176,23 @@ public class FragmentMap extends SherlockFragment {
 		case R.id.action_location_found:
 
 			Location location = map.getMyLocation();
-			
-			LatLng latLng = new LatLng(location.getLatitude(), location
-					.getLongitude());
-			
+
+			LatLng latLng = new LatLng(location.getLatitude(),
+					location.getLongitude());
+
 			new MoveCamera(map, latLng);
-			
-		//	new ControllerMap(map).setCameraUserPosition();			
+
+			// new ControllerMap(map).setCameraUserPosition();
 			break;
 		// Normal style map
 		case R.id.item1:
 			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-		
+
 			break;
 		// Satellite style map
 		case R.id.item2:
 			map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-			
+
 			break;
 		}
 		return true;
