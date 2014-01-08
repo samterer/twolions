@@ -1,12 +1,13 @@
 package br.com.maboo.node.fragment;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import br.com.maboo.node.R;
 import br.com.maboo.node.chat.ChatActivity;
-import br.com.maboo.node.map.AnimeCamera;
+import br.com.maboo.node.map.MoveCamera;
 import br.com.maboo.node.map.ControllerMap;
 import br.com.maboo.node.map.GeoPointManager;
 import br.com.maboo.node.map.ManagerClickOnMarker;
@@ -72,12 +73,12 @@ public class FragmentMap extends SherlockFragment {
 			// instacia o maps no formato completo 'GoogleMap'
 			map = mapView.getMap();
 
-			// controler do maps
-			new ControllerMap(map);
+			// controler do maps (icones sobre o mapa)
+			new ControllerMap(map).setUserPosition(true);
 
-			// inicializa a classe interna que controla os "controles" do maps
-			GeoPointManager geo = new GeoPointManager(getActivity());
-			geo.initPointManager(map);
+			// inicializa a classe interna responsavel por criar os nodes na
+			// tela, assim como itens dinamicos (icone do usuario)
+			new GeoPointManager().initPointManager(map);
 
 			/*********************
 			 * click em um markers
@@ -87,6 +88,8 @@ public class FragmentMap extends SherlockFragment {
 
 					ManagerClickOnMarker mco = new ManagerClickOnMarker(
 							getActivity(), ChatActivity.class);
+					// local é o valor da chave, sempre olha a classe que vai
+					// receber essa intent
 					mco.goTo("local", marker.getTitle());
 
 				}
@@ -98,11 +101,11 @@ public class FragmentMap extends SherlockFragment {
 				@Override
 				public boolean onMarkerClick(Marker marker) {
 					AndroidUtils.toast(getActivity().getApplicationContext(),
-							"zoom, here: " + marker.getTitle());
+							"click here: " + marker.getTitle());
 
-					new AnimeCamera(map, new LatLng(
+					new MoveCamera(map, new LatLng(
 							marker.getPosition().latitude,
-							marker.getPosition().longitude)).moveCamera();
+							marker.getPosition().longitude));
 					return false;
 				}
 			});
@@ -117,6 +120,10 @@ public class FragmentMap extends SherlockFragment {
 		}
 
 	}
+
+	/*******************************************************************************
+	 * default services
+	 *******************************************************************************/
 
 	public void onResume() {
 		super.onResume();
@@ -133,6 +140,10 @@ public class FragmentMap extends SherlockFragment {
 		mapView.onDestroy();
 	}
 
+	/*******************************************************************************
+	 * gerencia a bateria
+	 *******************************************************************************/
+
 	public void onLowMemory() {
 		super.onLowMemory();
 		mapView.onLowMemory();
@@ -148,7 +159,7 @@ public class FragmentMap extends SherlockFragment {
 	}
 
 	/*******************************************************************************
-	 * menu
+	 * menu (action bar)
 	 *******************************************************************************/
 
 	@Override
@@ -162,12 +173,27 @@ public class FragmentMap extends SherlockFragment {
 		super.onOptionsItemSelected(item);
 
 		switch (item.getItemId()) {
+		// Location user
+		case R.id.action_location_found:
+
+			Location location = map.getMyLocation();
+			
+			LatLng latLng = new LatLng(location.getLatitude(), location
+					.getLongitude());
+			
+			new MoveCamera(map, latLng);
+			
+		//	new ControllerMap(map).setCameraUserPosition();			
+			break;
+		// Normal style map
 		case R.id.item1:
 			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+		
 			break;
-
+		// Satellite style map
 		case R.id.item2:
 			map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+			
 			break;
 		}
 		return true;

@@ -12,6 +12,9 @@ public class ListaGeoPoint {
 		recuperaLista();
 	}
 
+	/*******************************************************************************
+	 * recupera a lista de nodes
+	 *******************************************************************************/
 	private void recuperaLista() {
 
 		// list de edereços

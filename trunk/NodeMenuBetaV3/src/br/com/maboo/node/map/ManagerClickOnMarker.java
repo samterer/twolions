@@ -25,19 +25,18 @@ public class ManagerClickOnMarker extends SherlockFragment {
 				cls);
 	}
 
-	
-	/*
+	/*******************************************************************************
 	 * go to cls, without attrs
-	 */
+	 *******************************************************************************/
 	public void goTo() {
 		// cria intent
 		start();
 	}
 	
-	/*
+	/*******************************************************************************
 	 * go to cls, with attrs
 	 * type string
-	 */
+	 *******************************************************************************/
 	public void goTo(String key, String value) {
 		Bundle bundle = new Bundle();
 		bundle.putString(key, value);
@@ -47,9 +46,9 @@ public class ManagerClickOnMarker extends SherlockFragment {
 		start();
 	}
 	
-	/*
+	/*******************************************************************************
 	 * executa a intent 
-	 */
+	 *******************************************************************************/
 	private void start(){
 		try{
 			activity.startActivity(intent);			
