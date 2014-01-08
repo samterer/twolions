@@ -2,7 +2,6 @@ package br.com.maboo.node.map;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
@@ -26,14 +25,6 @@ public class GeoPointManager {
 
 	private GoogleMap map;
 
-	// private TransacaoTask task;
-
-	private Activity act;
-
-	public GeoPointManager(Activity act) {
-
-		this.act = act;
-	}
 
 	// posicao inicial do mapa
 	public void initPointManager(final GoogleMap map) {
@@ -44,32 +35,29 @@ public class GeoPointManager {
 			@Override
 			public boolean onMyLocationButtonClick() {
 
-				Location location = map.getMyLocation();
+				Location loc = map.getMyLocation();
 
+				// cria marcador do usuario (icone do user)
 				map.addMarker(new MarkerOptions().position(
-						new LatLng(location.getLatitude(), location
+						new LatLng(loc.getLatitude(), loc
 								.getLongitude())).title(
 						"It's Me! " + FaceUserVO.user_name));
 
-				LatLng latLng = new LatLng(location.getLatitude(), location
-						.getLongitude());
-
 				// lança posicao inicial
-				new AnimeCamera(map, latLng);
+				new MoveCamera(map, new LatLng(loc.getLatitude(), loc
+						.getLongitude()));
 				return false;
 			}
 		});
 
-		// task = new TransacaoTask(act, this, R.string.wait);
-		// task.execute();
-
+		// cria os nodes no mapa (será numa task separada)
 		criaPonto();
 
 	}
 
-	/**
+	/*******************************************************************************
 	 * Cria os pontos
-	 */
+	 *******************************************************************************/
 	private void criaPonto() {
 
 		// Toast.makeText(act.getApplicationContext(), "criaPonto...",
