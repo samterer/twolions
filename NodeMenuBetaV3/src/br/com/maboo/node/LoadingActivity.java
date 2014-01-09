@@ -61,9 +61,9 @@ public class LoadingActivity extends Activity {
 							Base64.encodeToString(md.digest(), Base64.DEFAULT));
 				}
 			} catch (NameNotFoundException e) {
-
+				e.printStackTrace();
 			} catch (NoSuchAlgorithmException e) {
-
+				e.printStackTrace();
 			}
 
 			// start the home screen if the back

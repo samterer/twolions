@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/selectionFragment"
-        android:name="com.facebook.scrumptious.FragmentLogon"
+        android:name="com.facebook.scrumptious.FragmentSelection"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.facebook.scrumptious.SplashFragment"
+        android:name="com.facebook.scrumptious.FragmentSplash"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

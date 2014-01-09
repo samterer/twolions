@@ -1,5 +1,8 @@
 package com.facebook.scrumptious;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,11 +19,13 @@ import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
+import com.facebook.friend.FriendElement;
+import com.facebook.friend.ListFriendElement;
 import com.facebook.model.GraphUser;
 import com.facebook.scrumptious.auxiliar.FaceUserVO;
 import com.facebook.widget.ProfilePictureView;
 
-public class FragmentLogon extends Fragment {
+public class FragmentSelection extends Fragment {
 
 	private static final String TAG = "SelectionFragment";
 
@@ -74,6 +79,11 @@ public class FragmentLogon extends Fragment {
 		return view;
 	}
 
+	/*******************************************************************************
+	 * 1. faz a requisição pelos dados do usuario
+	 * 2. recupera lista de amigos
+	 * 3. inicia o app
+	 *******************************************************************************/
 	private void makeMeRequest(final Session session) {
 		// Make an API call to get user data and define a
 		// new callback to handle the response.
@@ -85,19 +95,27 @@ public class FragmentLogon extends Fragment {
 						if (session == Session.getActiveSession()) {
 							if (g != null) {
 
+								// cria o profile do usuario no Node
 								createProfile(g.getId().toString(), g.getName()
 										.toString());
-
+								
+								// recupera lista de amigos
+								createFriendList();
 							}
 						}
 						if (response.getError() != null) {
 							// Handle errors, will do so later.
+						} else { // tudo Ok!
+							startMap();
 						}
 					}
 				});
 		request.executeAsync();
 	}
 
+	/*******************************************************************************
+	 * cria profile do usuario
+	 *******************************************************************************/
 	private void createProfile(String id, String name) {
 		// Set the id for the ProfilePictureView
 		// view that in turn displays the profile
@@ -112,10 +130,79 @@ public class FragmentLogon extends Fragment {
 		FaceUserVO.id_user = id;
 		FaceUserVO.profilePicture = profilePictureView.getImage();
 
-		startMap();
+	}
+
+	/*******************************************************************************
+	 * carrega a lista de friends
+	 *******************************************************************************/
+	
+	private String URL_GRAPH = "https://graph.facebook.com/";
+	private String FRIEND_SIZE_IMG = "/picture?width=90&height=90";
+	
+	private List<GraphUser> temp;
+	
+	public void createFriendList() {
+		try {
+
+		//	itensRandom = new ArrayList<FriendElement>();
+		//	friends = new ArrayList<FriendElement>();
+
+			ListFriendElement.friends = new ArrayList<FriendElement>();
+			
+			recoverList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
+	/*******************************************************************************
+	 * Recupera lista de amigos do face
+	 *******************************************************************************/
+	private void recoverList() {
+
+		temp = new ArrayList<GraphUser>();
+		Request request = Request.newMyFriendsRequest(
+				Session.getActiveSession(),
+				new Request.GraphUserListCallback() {
+
+					@Override
+					public void onCompleted(List<GraphUser> users,
+							Response response) {
+
+						temp = users;
+
+						populateTempList();
+
+					}
+				});
+		request.executeAsync();
+
+	}
+
+	/*******************************************************************************
+	 * Popula lista de amigos do node (padrao FriendElement)
+	 *******************************************************************************/
+	private void populateTempList() {
+		for (final GraphUser g : temp) {
+
+			// url da imagem do usuario
+			String url = URL_GRAPH + g.getId().toString() + FRIEND_SIZE_IMG;
+
+			// if (false) {Log.d(TAG, "Friend " + g.getName().toString() + " > "
+			// + url);}
+
+			ListFriendElement.friends.add(new FriendElement(null, g.getId().toString(), g
+					.getName().toString().toString(), "noob", url) {
+			});
+
+		}
+
+	}
+	
+	/*******************************************************************************
+	 * inicia realmente o app, pela tela do Map
+	 *******************************************************************************/
 	private void startMap() {
 		// começa um tempo e chama a tela padrao do
 		// app(maps...)
@@ -149,6 +236,10 @@ public class FragmentLogon extends Fragment {
 								// called
 	}
 
+	/*******************************************************************************
+	 * default services
+	 *******************************************************************************/
+	
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == REAUTH_ACTIVITY_CODE) {
