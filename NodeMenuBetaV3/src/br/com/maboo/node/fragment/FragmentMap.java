@@ -7,14 +7,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.SearchView;
 import br.com.maboo.node.R;
 import br.com.maboo.node.chat.ChatActivity;
-import br.com.maboo.node.map.SecondClickOnMarker;
 import br.com.maboo.node.map.ControllerMap;
-import br.com.maboo.node.map.MoveToSearchAddressTask;
 import br.com.maboo.node.map.MarkerManager;
 import br.com.maboo.node.map.MoveCamera;
+import br.com.maboo.node.map.MoveToSearchAddressTask;
+import br.com.maboo.node.map.SecondClickOnMarker;
 import br.livroandroid.utils.AndroidUtils;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -30,7 +32,8 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
-public class FragmentMap extends SherlockFragment implements SearchView.OnQueryTextListener {
+public class FragmentMap extends SherlockFragment implements
+		SearchView.OnQueryTextListener {
 
 	private String TAG = "FragmentMap";
 
@@ -164,6 +167,9 @@ public class FragmentMap extends SherlockFragment implements SearchView.OnQueryT
 	/*******************************************************************************
 	 * menu (action bar)
 	 *******************************************************************************/
+	// utilizado unicamente apos o submit de uma pesquisa
+	private Menu menu;
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
@@ -176,9 +182,11 @@ public class FragmentMap extends SherlockFragment implements SearchView.OnQueryT
 				.getActionView();
 		searchView.setSearchableInfo(searchManager
 				.getSearchableInfo(getActivity().getComponentName()));
-		
+
 		// listener
 		searchView.setOnQueryTextListener(this);
+
+		this.menu = menu;
 
 		return;
 	}
@@ -223,10 +231,25 @@ public class FragmentMap extends SherlockFragment implements SearchView.OnQueryT
 	@Override
 	// pesquisa um endereço
 	public boolean onQueryTextSubmit(String query) {
-		//AndroidUtils.toast(getActivity().getApplicationContext(), query);
-		
-		new MoveToSearchAddressTask(getActivity(),map).execute(query);
-		
+		// AndroidUtils.toast(getActivity().getApplicationContext(), query);
+
+		// esconde o teclado
+		hideKeyBoard();
+
+		// move a camera para o ponto no mapa
+		new MoveToSearchAddressTask(getActivity(), map).execute(query);
+
 		return false;
+	}
+
+	/*
+	 * esconde o teclado
+	 */
+	private void hideKeyBoard() {
+		// esconde o teclado
+		SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
+				.getActionView();
+		AndroidUtils.closeVirtualKeyboard(
+				getActivity().getApplicationContext(), searchView);
 	}
 }
