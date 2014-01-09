@@ -19,12 +19,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * @author jeff
  * 
  */
-public class GeoPointManager {
+public class MarkerManager {
 
 	private String TAG = "GeoPointManager";
 
 	private GoogleMap map;
-
 
 	// posicao inicial do mapa
 	public void initPointManager(final GoogleMap map) {
@@ -39,13 +38,12 @@ public class GeoPointManager {
 
 				// cria marcador do usuario (icone do user)
 				map.addMarker(new MarkerOptions().position(
-						new LatLng(loc.getLatitude(), loc
-								.getLongitude())).title(
-						"It's Me! " + FaceUserVO.user_name));
+						new LatLng(loc.getLatitude(), loc.getLongitude()))
+						.title("It's Me! " + FaceUserVO.user_name));
 
 				// lança posicao inicial
 				new MoveCamera(map, new LatLng(loc.getLatitude(), loc
-						.getLongitude()));
+						.getLongitude()), 0);
 				return false;
 			}
 		});
@@ -64,11 +62,11 @@ public class GeoPointManager {
 		// Toast.LENGTH_SHORT).show();
 
 		// recupera a lista de pontos
-		ArrayList<GeoPointVO> list = new ListaGeoPoint().getList();
+		ArrayList<MarkerVO> list = new ListaMarker().getList();
 
 		for (int i = 0; i < list.size(); i++) {
 
-			GeoPointVO g = list.get(i);
+			MarkerVO g = list.get(i);
 
 			Log.i(TAG,
 					"criando ponto...: " + g.getDesc() + " | lat,Lon:"

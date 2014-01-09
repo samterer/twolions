@@ -13,18 +13,23 @@ import com.google.android.gms.maps.model.LatLng;
 public class MoveCamera {
 
 	private GoogleMap map;
-	private int ZOOM = 19;
-
-	public MoveCamera(GoogleMap map) {
-		this.map = map;
-	}
+	private int ZOOM = 18;
 
 	/*******************************************************************************
 	 * move a camera automaticamente para a posição recebida
+	 * 'zoom' 
+	 * padrao = attr ZOOM
+	 * se o usuario passar o valor 0, seta o zoom padrao
 	 *******************************************************************************/
-	public MoveCamera(GoogleMap map, LatLng latLng) {
+	public MoveCamera(GoogleMap map, LatLng latLng, int zoomRequest) {
 
 		this.map = map;
+		
+		// casos especificos de zoom
+		// como no caso da pesquisa por um endereço
+		if(zoomRequest > 0 && zoomRequest < ZOOM){
+			ZOOM = zoomRequest;
+		}
 
 		moveCamera(latLng);
 	}

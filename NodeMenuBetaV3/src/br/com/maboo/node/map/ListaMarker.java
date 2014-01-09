@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class ListaGeoPoint {
+public class ListaMarker {
 
-	private ArrayList<GeoPointVO> list;
+	private ArrayList<MarkerVO> list;
 
-	public ListaGeoPoint() {
+	public ListaMarker() {
 		recuperaLista();
 	}
 
@@ -30,15 +30,15 @@ public class ListaGeoPoint {
 				"São Paulo" };
 
 		// cria lista de pontos baseada na lista recuperada
-		list = new ArrayList<GeoPointVO>();
+		list = new ArrayList<MarkerVO>();
 		for (int j = 0; j < temp_list.size(); j++) {
-			GeoPointVO g = new GeoPointVO(temp_list.get(j), j, descs[j]);
+			MarkerVO g = new MarkerVO(temp_list.get(j), j, descs[j]);
 			list.add(g);
 		}
 
 	}
 
-	public ArrayList<GeoPointVO> getList() {
+	public ArrayList<MarkerVO> getList() {
 		return list;
 	}
 

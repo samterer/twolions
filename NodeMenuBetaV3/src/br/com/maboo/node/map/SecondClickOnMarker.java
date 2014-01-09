@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
-public class ManagerClickOnMarker extends SherlockFragment {
+public class SecondClickOnMarker extends SherlockFragment {
 	
 	private String TAG = "ManagerClickOnMarker";
 	
@@ -16,7 +16,7 @@ public class ManagerClickOnMarker extends SherlockFragment {
 	private Intent intent;
 	
 	// instancia a class
-	public ManagerClickOnMarker(Activity activity, Class<?> cls) {
+	public SecondClickOnMarker(Activity activity, Class<?> cls) {
 		this.activity = activity;
 		this.cls = cls;
 		
