@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import br.com.maboo.node.R;
 import br.com.maboo.node.util.Util;
 
-public class SplashFragment extends Fragment {
+public class FragmentSplash extends Fragment {
 
 	private static final String TAG = "SplashFragment";
 

@@ -22,22 +22,25 @@ import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.friend.FriendElement;
+import com.facebook.friend.ListFriendElement;
 import com.facebook.model.GraphUser;
 
-public class FragmentFriends extends SherlockFragment  implements OnItemClickListener {
+public class FragmentFriends extends SherlockFragment implements OnItemClickListener {
 
 	private String TAG = "FragmentFriend";
 
-	private List<FriendElement> friends;
-	private List<GraphUser> temp;
+	//private List<FriendElement> friends;
+	//private List<GraphUser> temp;
 	private ArrayList<FriendElement> itensRandom;
 
 	private ListView listview_log;
 
 	private View view;
+	
+	private int TAM_LIST = 400;
 
-	private String URL_GRAPH = "https://graph.facebook.com/";
-	private String FRIEND_SIZE_IMG = "/picture?width=90&height=90";
+	//private String URL_GRAPH = "https://graph.facebook.com/";
+	//private String FRIEND_SIZE_IMG = "/picture?width=90&height=90";
 	private String URL_FACE = "http://www.facebook.com/";
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,11 +52,13 @@ public class FragmentFriends extends SherlockFragment  implements OnItemClickLis
 		listview_log = (ListView) view.findViewById(R.id.list_friend);
 		listview_log.setOnItemClickListener(this);
 
-		// startTransaction(this);
 		try {
-			executar();
+		//	executar();
+		
+			randomList();
+			atualizarView();
+		
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -74,24 +79,26 @@ public class FragmentFriends extends SherlockFragment  implements OnItemClickLis
 
 	/**
 	 * carrega a lista de friends
-	 */
+	 *//*
 	public void executar() {
 		try {
 
 			itensRandom = new ArrayList<FriendElement>();
-			friends = new ArrayList<FriendElement>();
+		//	friends = new ArrayList<FriendElement>();
 
+			ListFriendElement.friends = new ArrayList<FriendElement>();
+			
 			recoverList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-	}
+	}*/
 
 	/**
 	 * Recupera lista de amigos do face
 	 */
-	private void recoverList() {
+/*	private void recoverList() {
 
 		temp = new ArrayList<GraphUser>();
 		Request request = Request.newMyFriendsRequest(
@@ -110,11 +117,11 @@ public class FragmentFriends extends SherlockFragment  implements OnItemClickLis
 				});
 		request.executeAsync();
 
-	}
+	}*/
 
 	/**
 	 * Popula lista de amigos do node (padrao FriendElement)
-	 */
+	 *//*
 	private void populateTempList() {
 		for (final GraphUser g : temp) {
 
@@ -124,7 +131,7 @@ public class FragmentFriends extends SherlockFragment  implements OnItemClickLis
 			// if (false) {Log.d(TAG, "Friend " + g.getName().toString() + " > "
 			// + url);}
 
-			friends.add(new FriendElement(null, g.getId().toString(), g
+			ListFriendElement.friends.add(new FriendElement(null, g.getId().toString(), g
 					.getName().toString().toString(), "noob", url) {
 			});
 
@@ -133,21 +140,26 @@ public class FragmentFriends extends SherlockFragment  implements OnItemClickLis
 		randomList();
 		atualizarView();
 
-	}
+	}*/
 
 	/**
 	 * random list (gera uma lista randomica de 10 amigos do usuario logado)
 	 */
 	private void randomList() {
 		// Log.i(TAG, "randomList...");
+		
+		itensRandom = new ArrayList<FriendElement>();
+		
+		// tamanho total da lista
+		TAM_LIST = ListFriendElement.friends.size();
 
 		// a lista de amigos usada tera apenas 10 pessoas conhecidas,s empre de
 		// maneira randomica
-		Collections.shuffle(friends);
+		// Collections.shuffle(ListFriendElement.friends);
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < TAM_LIST; i++) {
 
-			FriendElement b = friends.get(i);
+			FriendElement b = ListFriendElement.friends.get(i);
 
 			itensRandom.add(b);
 		}
