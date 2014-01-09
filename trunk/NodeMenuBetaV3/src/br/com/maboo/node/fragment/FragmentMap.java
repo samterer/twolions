@@ -1,16 +1,20 @@
 package br.com.maboo.node.fragment;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import br.com.maboo.node.R;
 import br.com.maboo.node.chat.ChatActivity;
-import br.com.maboo.node.map.MoveCamera;
+import br.com.maboo.node.map.SecondClickOnMarker;
 import br.com.maboo.node.map.ControllerMap;
-import br.com.maboo.node.map.GeoPointManager;
-import br.com.maboo.node.map.ManagerClickOnMarker;
+import br.com.maboo.node.map.MoveToSearchAddressTask;
+import br.com.maboo.node.map.MarkerManager;
+import br.com.maboo.node.map.MoveCamera;
 import br.livroandroid.utils.AndroidUtils;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -26,7 +30,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
-public class FragmentMap extends SherlockFragment {
+public class FragmentMap extends SherlockFragment implements SearchView.OnQueryTextListener {
 
 	private String TAG = "FragmentMap";
 
@@ -78,13 +82,13 @@ public class FragmentMap extends SherlockFragment {
 
 			// inicializa a classe interna responsavel por criar os nodes na
 			// tela, assim como itens dinamicos (icone do usuario)
-			new GeoPointManager().initPointManager(map);
+			new MarkerManager().initPointManager(map);
 
 			// click em um node depois de ver os detalhes dele
 			map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 				public void onInfoWindowClick(Marker marker) {
 
-					ManagerClickOnMarker mco = new ManagerClickOnMarker(
+					SecondClickOnMarker mco = new SecondClickOnMarker(
 							getActivity(), ChatActivity.class);
 					// local é o valor da chave, sempre olha a classe que vai
 					// receber essa intent
@@ -104,7 +108,7 @@ public class FragmentMap extends SherlockFragment {
 
 					new MoveCamera(map, new LatLng(
 							marker.getPosition().latitude,
-							marker.getPosition().longitude));
+							marker.getPosition().longitude), 0);
 					return false;
 				}
 			});
@@ -160,11 +164,23 @@ public class FragmentMap extends SherlockFragment {
 	/*******************************************************************************
 	 * menu (action bar)
 	 *******************************************************************************/
-
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.menu_map, menu);
+
+		// Associate searchable configuration with the SearchView
+		SearchManager searchManager = (SearchManager) getActivity()
+				.getSystemService(Context.SEARCH_SERVICE);
+		SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
+				.getActionView();
+		searchView.setSearchableInfo(searchManager
+				.getSearchableInfo(getActivity().getComponentName()));
+		
+		// listener
+		searchView.setOnQueryTextListener(this);
+
+		return;
 	}
 
 	@Override
@@ -177,12 +193,9 @@ public class FragmentMap extends SherlockFragment {
 
 			Location location = map.getMyLocation();
 
-			LatLng latLng = new LatLng(location.getLatitude(),
-					location.getLongitude());
+			new MoveCamera(map, new LatLng(location.getLatitude(),
+					location.getLongitude()), 0);
 
-			new MoveCamera(map, latLng);
-
-			// new ControllerMap(map).setCameraUserPosition();
 			break;
 		// Normal style map
 		case R.id.item1:
@@ -196,5 +209,24 @@ public class FragmentMap extends SherlockFragment {
 			break;
 		}
 		return true;
+	}
+
+	/*******************************************************************************
+	 * search methods
+	 *******************************************************************************/
+	@Override
+	public boolean onQueryTextChange(String newText) {
+		//
+		return false;
+	}
+
+	@Override
+	// pesquisa um endereço
+	public boolean onQueryTextSubmit(String query) {
+		//AndroidUtils.toast(getActivity().getApplicationContext(), query);
+		
+		new MoveToSearchAddressTask(getActivity(),map).execute(query);
+		
+		return false;
 	}
 }

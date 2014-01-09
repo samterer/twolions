@@ -8,7 +8,7 @@ import com.google.android.gms.maps.model.LatLng;
  * @author Usuario
  * 
  */
-public class GeoPointVO {
+public class MarkerVO {
 
 	private LatLng latLng;
 	private int idGeoPoint;
@@ -30,7 +30,7 @@ public class GeoPointVO {
 		this.idGeoPoint = idGeoPoint;
 	}
 
-	public GeoPointVO(LatLng latLng, int idGeoPoint, String desc) {
+	public MarkerVO(LatLng latLng, int idGeoPoint, String desc) {
 		this.idGeoPoint = idGeoPoint;
 		this.latLng = latLng;
 		this.desc = desc;
