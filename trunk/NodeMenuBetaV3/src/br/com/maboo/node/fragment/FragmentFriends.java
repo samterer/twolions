@@ -110,7 +110,9 @@ public class FragmentFriends extends SherlockFragment implements
 
 			// troca o bg já que agora a lista esta populada
 			ImageView img = (ImageView) view.findViewById(R.id.image1);
-			img.setVisibility(View.INVISIBLE);
+			if (img.isShown()) { // verifica se a img já não esta oculta
+				img.setVisibility(View.INVISIBLE);
+			}
 		}
 	}
 
@@ -130,7 +132,7 @@ public class FragmentFriends extends SherlockFragment implements
 	 *******************************************************************************/
 	// utilizado unicamente apos o submit de uma pesquisa
 	private Menu menu;
-	
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
@@ -146,7 +148,7 @@ public class FragmentFriends extends SherlockFragment implements
 
 		// listener
 		searchView.setOnQueryTextListener(this);
-		
+
 		this.menu = menu;
 
 		return;
@@ -167,6 +169,8 @@ public class FragmentFriends extends SherlockFragment implements
 					"");
 			Log.i(TAG, "onQueryTextChange Empty String");
 			listview_log.clearTextFilter();
+			
+			listview_log.invalidate();
 		} else {
 			Log.i(TAG, "onQueryTextChange " + newText.toString());
 			((ListFriendAdapter) listview_log.getAdapter()).getFilter().filter(
@@ -185,9 +189,9 @@ public class FragmentFriends extends SherlockFragment implements
 		// esconde o teclado
 		hideKeyBoard();
 
-		// for (FriendElement f : requestFriend) {
-		// Log.i(TAG, "f: "+f.getNome());
-		// }
+		// devolve uma lista apenas com o item pesquisado (itens relacionados)
+		((ListFriendAdapter) listview_log.getAdapter()).getFilter().filter(
+				query.toString());
 
 		return false;
 	}
