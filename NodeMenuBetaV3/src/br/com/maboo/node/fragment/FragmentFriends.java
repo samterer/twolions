@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import br.com.maboo.node.R;
@@ -33,6 +33,7 @@ public class FragmentFriends extends SherlockFragment implements
 	private String TAG = "FragmentFriends";
 
 	private ArrayList<FriendElement> requestFriend;
+	private ListFriendAdapter adapter;
 
 	private ListView listview_log;
 
@@ -107,12 +108,8 @@ public class FragmentFriends extends SherlockFragment implements
 		if (requestFriend != null && requestFriend.size() > 0) {
 			listview_log.setAdapter(new ListFriendAdapter(getActivity(),
 					requestFriend));
-
-			// troca o bg já que agora a lista esta populada
-			ImageView img = (ImageView) view.findViewById(R.id.image1);
-			if (img.isShown()) { // verifica se a img já não esta oculta
-				img.setVisibility(View.INVISIBLE);
-			}
+			// adpter instance
+			adapter = (ListFriendAdapter) listview_log.getAdapter();
 		}
 	}
 
@@ -132,6 +129,8 @@ public class FragmentFriends extends SherlockFragment implements
 	 *******************************************************************************/
 	// utilizado unicamente apos o submit de uma pesquisa
 	private Menu menu;
+	// campo de pesquisa
+	private SearchView searchField;
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -141,14 +140,15 @@ public class FragmentFriends extends SherlockFragment implements
 		// Associate searchable configuration with the SearchView
 		SearchManager searchManager = (SearchManager) getActivity()
 				.getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
+		SearchView searchField = (SearchView) menu.findItem(R.id.action_search)
 				.getActionView();
-		searchView.setSearchableInfo(searchManager
+		searchField.setSearchableInfo(searchManager
 				.getSearchableInfo(getActivity().getComponentName()));
 
 		// listener
-		searchView.setOnQueryTextListener(this);
+		searchField.setOnQueryTextListener(this);
 
+		// menu
 		this.menu = menu;
 
 		return;
@@ -157,25 +157,27 @@ public class FragmentFriends extends SherlockFragment implements
 	/*******************************************************************************
 	 * search methods
 	 *******************************************************************************/
-	private String first;
-
 	@Override
 	public boolean onQueryTextChange(String newText) {
 
 		Log.i(TAG, "onQueryTextChange");
 
-		if (TextUtils.isEmpty(newText)) {
-			((ListFriendAdapter) listview_log.getAdapter()).getFilter().filter(
-					"");
-			Log.i(TAG, "onQueryTextChange Empty String");
-			listview_log.clearTextFilter();
-			
-			listview_log.invalidate();
-		} else {
-			Log.i(TAG, "onQueryTextChange " + newText.toString());
-			((ListFriendAdapter) listview_log.getAdapter()).getFilter().filter(
-					newText.toString());
-		}
+		if (searchField != null)
+			if (searchField.isClickable()) {
+				if (TextUtils.isEmpty(newText)) {
+					adapter.getFilter().filter("");
+					Log.i(TAG, "onQueryTextChange Empty String");
+
+					// limpa filtro
+					listview_log.clearTextFilter();
+
+					adapter.clearAdapter();
+
+					Log.i(TAG, "onQueryTextChange " + newText.toString());
+					adapter.getFilter().filter(newText.toString());
+				}
+			}
+
 		return true;
 	}
 
@@ -190,8 +192,7 @@ public class FragmentFriends extends SherlockFragment implements
 		hideKeyBoard();
 
 		// devolve uma lista apenas com o item pesquisado (itens relacionados)
-		((ListFriendAdapter) listview_log.getAdapter()).getFilter().filter(
-				query.toString());
+		adapter.getFilter().filter(query.toString());
 
 		return false;
 	}

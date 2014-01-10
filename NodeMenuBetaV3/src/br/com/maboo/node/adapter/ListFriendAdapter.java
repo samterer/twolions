@@ -79,6 +79,16 @@ public class ListFriendAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
+	
+	/*
+	 * limpa o adapter e a list
+	 */
+	public void clearAdapter()
+    {
+        originalList.clear();
+        temporarylist.clear();
+        notifyDataSetChanged();
+    }
 
 	public View getView(int position, View view, ViewGroup parent) {
 
