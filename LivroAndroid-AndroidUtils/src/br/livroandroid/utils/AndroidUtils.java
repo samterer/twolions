@@ -100,4 +100,5 @@ public class AndroidUtils {
 	public static void toast(Context ctx, String msg) {
 		Toast.makeText(ctx, msg, Toast.LENGTH_SHORT).show();
 	}
+	
 }
