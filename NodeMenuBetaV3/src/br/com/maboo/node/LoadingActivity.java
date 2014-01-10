@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import br.com.maboo.node.util.Util;
+import br.livroandroid.utils.AndroidUtils;
 
 import com.facebook.scrumptious.FacebookLoginActivity;
 
@@ -32,7 +33,7 @@ public class LoadingActivity extends Activity {
 
 		// verifica a internet e o gps
 		// se um dos dois não estiver ok o app será fechado
-		if (!Util.isVerify(this)) {
+		if (!Util.isVerify(getApplicationContext())) {
 
 			AlertDialog dialog = new AlertDialog.Builder(this)
 					.setTitle(this.getString(R.string.app_name))
@@ -42,6 +43,8 @@ public class LoadingActivity extends Activity {
 
 			dialog.setButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
+
+					// onDestroy();
 
 					finish();
 
