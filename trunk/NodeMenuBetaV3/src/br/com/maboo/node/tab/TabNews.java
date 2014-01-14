@@ -13,8 +13,7 @@ public class TabNews extends SherlockFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Get the view from fragmenttab2.xml
-		View view = inflater
-				.inflate(R.layout.fragmentprofile, container, false);
+		View view = inflater.inflate(R.layout.fragmentnews, container, false);
 
 		return view;
 	}

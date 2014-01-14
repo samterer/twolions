@@ -3,6 +3,8 @@
 
     <!-- id -->
     <string name="app_id">1468982943327966</string>
+    
+    <string name="map_id">AIzaSyCPpY3AOkZKO60KnLZ-Z8w0nhhf65z6esE</string>
 
     <!-- default -->
     <string name="app_name">node</string>
