@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import br.com.maboo.node.R;
@@ -39,7 +38,7 @@ public class FragmentFriends extends SherlockFragment implements
 
 	private View view;
 
-	private int TAM_LIST = 400;
+	// private int TAM_LIST = 400;
 
 	private String URL_FACE = "http://www.facebook.com/";
 
@@ -54,7 +53,7 @@ public class FragmentFriends extends SherlockFragment implements
 		listview_log.setOnItemClickListener(this);
 
 		try {
-			chargeList();
+			carregaLista();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,13 +79,13 @@ public class FragmentFriends extends SherlockFragment implements
 	/*******************************************************************************
 	 * random list (gera uma lista randomica de 10 amigos do usuario logado)
 	 *******************************************************************************/
-	private void chargeList() {
+	private void carregaLista() {
 		// Log.i(TAG, "randomList...");
 
 		requestFriend = new ArrayList<FriendElement>();
 
 		// tamanho total da lista
-		TAM_LIST = ListFriendElement.friends.size();
+		int TAM_LIST = ListFriendElement.friends.size();
 
 		for (int i = 0; i < TAM_LIST; i++) {
 
@@ -106,10 +105,16 @@ public class FragmentFriends extends SherlockFragment implements
 
 		// atualiza os friends na thread principal
 		if (requestFriend != null && requestFriend.size() > 0) {
-			listview_log.setAdapter(new ListFriendAdapter(getActivity(),
-					requestFriend));
-			// adpter instance
-			adapter = (ListFriendAdapter) listview_log.getAdapter();
+
+			// Pass results to ListFriendAdapter Class
+			adapter = new ListFriendAdapter(getActivity(), requestFriend);
+
+			// Binds the Adapter to the ListView
+			listview_log.setAdapter(adapter);
+
+			// listview_log.setAdapter(new
+			// ListFriendAdapter(getActivity(),requestFriend));
+
 		}
 	}
 
@@ -162,10 +167,13 @@ public class FragmentFriends extends SherlockFragment implements
 
 		Log.i(TAG, "onQueryTextChange");
 
-		if (searchField != null)
-			if (searchField.isClickable()) {
+		try {
+			if (searchField.isFocusable()) {
+
+				Log.i(TAG, "click...");
+
 				if (TextUtils.isEmpty(newText)) {
-					adapter.getFilter().filter("");
+					// adapter.getFilter().filter("");
 					Log.i(TAG, "onQueryTextChange Empty String");
 
 					// limpa filtro
@@ -174,9 +182,17 @@ public class FragmentFriends extends SherlockFragment implements
 					adapter.clearAdapter();
 
 					Log.i(TAG, "onQueryTextChange " + newText.toString());
-					adapter.getFilter().filter(newText.toString());
+
+				} else {
+					showResults("");
 				}
+			} else {
+				// adapter.getFilter().filter(newText.toString());
+				showResults(newText);
 			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 
 		return true;
 	}
@@ -192,9 +208,22 @@ public class FragmentFriends extends SherlockFragment implements
 		hideKeyBoard();
 
 		// devolve uma lista apenas com o item pesquisado (itens relacionados)
-		adapter.getFilter().filter(query.toString());
+		// adapter.getFilter().filter(query.toString());
 
-		return false;
+		showResults(query);
+
+		return true;
+	}
+
+	/*
+	 * ativa a pesquisa no 'adapter'
+	 */
+	private void showResults(String query) {
+
+		adapter.getFilter().filter(query);
+
+		adapter.notifyDataSetChanged();
+
 	}
 
 	/*
@@ -209,6 +238,7 @@ public class FragmentFriends extends SherlockFragment implements
 	}
 
 	public boolean onClose() {
+		showResults("");
 		Log.i(TAG, "onClose");
 		return false;
 	}
