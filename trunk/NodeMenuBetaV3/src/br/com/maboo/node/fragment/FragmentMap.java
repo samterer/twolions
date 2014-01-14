@@ -3,6 +3,8 @@ package br.com.maboo.node.fragment;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -200,23 +202,35 @@ public class FragmentMap extends SherlockFragment implements
 		// move to location
 		map.animateCamera(CameraUpdateFactory.newLatLng(lastLatLng), 3000, null);
 
+		String types = "food|bar|store|museum|art_gallery";
+		try {
+			types = URLEncoder.encode(types, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		// build places query string
-		/*
-		 * String placesSearchStr =
-		 * "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
-		 * "json?location=" + lat + "," + lng + "&radius=100000&sensor=true" +
-		 * "&types=food|bar|store|museum|art_gallery" + "&key=" +
-		 * "AIzaSyCPpY3AOkZKO60KnLZ-Z8w0nhhf65z6esE";
-		 */
+		StringBuilder urlString = new StringBuilder(
+				"https://maps.googleapis.com/maps/api/place/search/json?");
+		urlString.append("&location=");
+		urlString.append(Double.toString(lat));
+		urlString.append(",");
+		urlString.append(Double.toString(lng));
+		urlString.append("&radius=1000");
+		urlString.append("&types=" + "Restaurant");
+		urlString.append("&sensor=false&key=" + "1468982943327966");
+
 		// ADD KEY
 
-		String placesSearchStr = "https://maps.googleapis.com/ma..."
-				+ "json?location=" + lat + "," + lng
-				+ "&radius=1000&sensor=true" + "&types=geocode" + "&key="
-				+ R.string.map_id;
+		/*
+		 * String placesSearchStr = "https://maps.googleapis.com/ma..." +
+		 * "json?location=" + lat + "," + lng + "&radius=1000&sensor=true" +
+		 * "&types=" + types + "&key=" + R.string.map_id;
+		 */
 
 		// execute query
-		new GetPlaces().execute(placesSearchStr);
+		new GetPlaces().execute(urlString.toString());
 
 		locMan.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 30000,
 				100, this);

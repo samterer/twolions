@@ -56,9 +56,9 @@ public class LoadingActivity extends Activity {
 
 			try {
 				PackageInfo info = getPackageManager().getPackageInfo(
-						"com.eatapp", PackageManager.GET_SIGNATURES);
+						"br.com.maboo.node", PackageManager.GET_SIGNATURES);
 				for (Signature signature : info.signatures) {
-					MessageDigest md = MessageDigest.getInstance("SHA");
+					MessageDigest md = MessageDigest.getInstance("SHA1");
 					md.update(signature.toByteArray());
 					Log.e("MY KEY HASH:",
 							Base64.encodeToString(md.digest(), Base64.DEFAULT));
