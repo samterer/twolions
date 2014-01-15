@@ -44,9 +44,13 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		initCompo();
+		
+		initMap();
+		
 		places = getResources().getStringArray(R.array.places);
+		
 		currentLocation();
+		
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		actionBar.setListNavigationCallbacks(ArrayAdapter.createFromResource(
@@ -124,21 +128,22 @@ public class MainActivity extends Activity {
 		@Override
 		protected ArrayList<Place> doInBackground(Void... arg0) {
 			PlacesService service = new PlacesService(
-					"1468982943327966");
+					"AIzaSyCPpY3AOkZKO60KnLZ-Z8w0nhhf65z6esE");
 			ArrayList<Place> findPlaces = service.findPlaces(loc.getLatitude(), // 28.632808
 					loc.getLongitude(), places); // 77.218276
 
 			for (int i = 0; i < findPlaces.size(); i++) {
 
 				Place placeDetail = findPlaces.get(i);
-				Log.e(TAG, "places : " + placeDetail.getName());
+			//	Log.e(TAG, "places : " + placeDetail.getName());
+				Log.e(TAG, "places : " + placeDetail.getId());
 			}
 			return findPlaces;
 		}
 
 	}
 
-	private void initCompo() {
+	private void initMap() {
 		mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
 				.getMap();
 	}
@@ -172,17 +177,17 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
-
+			
 		}
 
 		@Override
 		public void onProviderEnabled(String provider) {
-
+			
 		}
 
 		@Override
 		public void onProviderDisabled(String provider) {
-
+			
 		}
 
 		@Override
