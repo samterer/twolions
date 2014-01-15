@@ -15,14 +15,15 @@ import org.json.JSONObject;
 import android.util.Log;
 
 /**
- *  Create request for Places API.
+ * Create request for Places API.
  * 
  * @author Karn Shah
- * @Date   10/3/2013
- *
+ * @Date 10/3/2013
+ * 
  */
 public class PlacesService {
 
+	private final String TAG = getClass().getSimpleName();
 	private String API_KEY;
 
 	public PlacesService(String apikey) {
@@ -50,7 +51,7 @@ public class PlacesService {
 				try {
 					Place place = Place
 							.jsonToPontoReferencia((JSONObject) array.get(i));
-					Log.v("Places Services ", "" + place);
+					Log.v(TAG, "" + place);
 					arrayList.add(place);
 				} catch (Exception e) {
 				}
@@ -83,11 +84,21 @@ public class PlacesService {
 			urlString.append(Double.toString(longitude));
 			urlString.append("&radius=1000");
 			urlString.append("&types=" + place);
-			urlString.append("&sensor=false&key=" + "1468982943327966");
+			urlString.append("&sensor=false&key=" + API_KEY);
 		}
+
+		Log.v(TAG, "urlString > " + urlString);
+
+		API_KEY = "AIzaSyAhaD4HwgofkA2_9Z7fLbGB1V8Shi-S7do";
 		
-		Log.v("Places Services", "urlString > " + urlString);
-		
+		urlString = new StringBuilder();
+		urlString
+				.append("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="
+						+ latitude
+						+ ","
+						+ longitude
+						+ "&radius=1000&sensor=true&types=food&key="+API_KEY);
+
 		return urlString.toString();
 	}
 
@@ -108,7 +119,7 @@ public class PlacesService {
 				content.append(line + "\n");
 			}
 			bufferedReader.close();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return content.toString();
