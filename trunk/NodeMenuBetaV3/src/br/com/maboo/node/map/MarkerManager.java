@@ -1,16 +1,28 @@
 package br.com.maboo.node.map;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
+import android.app.Activity;
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.util.Log;
 import br.com.maboo.node.R;
+import br.com.maboo.node.chat.ChatActivity;
+import br.livroandroid.utils.AndroidUtils;
 
 import com.facebook.scrumptious.auxiliar.FaceUserVO;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
@@ -24,9 +36,10 @@ public class MarkerManager {
 	private String TAG = "GeoPointManager";
 
 	private GoogleMap map;
+	private Activity act;
 
 	// posicao inicial do mapa
-	public void initPointManager(final GoogleMap map) {
+	public void initPointManager(final GoogleMap map, final Activity act) {
 		this.map = map;
 
 		map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
@@ -45,6 +58,55 @@ public class MarkerManager {
 				new MoveCamera(map, new LatLng(loc.getLatitude(), loc
 						.getLongitude()), 0);
 				return false;
+			}
+		});
+
+		// clique em um node pela primeira vez
+		map.setOnMarkerClickListener(new OnMarkerClickListener() {
+
+			@Override
+			public boolean onMarkerClick(Marker marker) {
+				AndroidUtils.toast(act.getApplicationContext(), "click here: "
+						+ marker.getTitle());
+
+				new MoveCamera(map, new LatLng(marker.getPosition().latitude,
+						marker.getPosition().longitude), 0);
+				return false;
+			}
+		});
+
+		// click em um node depois de ver os detalhes dele
+		map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+			public void onInfoWindowClick(Marker marker) {
+
+				SecondClickOnMarker mco = new SecondClickOnMarker(act,
+						ChatActivity.class);
+				// local é o valor da chave, sempre olha a classe que vai
+				// receber essa intent
+				mco.goTo("local", marker.getTitle());
+
+			}
+
+		});
+
+		// long click, permite criar um novo node
+		map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+
+			@Override
+			public void onMapLongClick(LatLng point) {
+
+				// Convert LatLng to Location
+				Location location = new Location("Test");
+				location.setLatitude(point.latitude);
+				location.setLongitude(point.longitude);
+				location.setTime(new Date().getTime()); // Set time as current
+														// Date
+
+				(new GetAddressTask(act)).execute(location);
+
+				// AndroidUtils.toast(act.getApplicationContext(),"click in: "+
+				// getCompleteAddressString(point.latitude, point.longitude));
+
 			}
 		});
 
