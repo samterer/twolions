@@ -11,6 +11,7 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.media.JetPlayer;
 import android.util.Log;
 import br.com.maboo.node.R;
 import br.com.maboo.node.chat.ChatActivity;
@@ -42,21 +43,23 @@ public class MarkerManager {
 	public void initPointManager(final GoogleMap map, final Activity act) {
 		this.map = map;
 
+		final Location loc = map.getMyLocation();
+
+		// cria marcador do usuario (icone do user)
+		/*
+		 * map.addMarker(new MarkerOptions().position( new
+		 * LatLng(loc.getLatitude(), loc.getLongitude())).title( "It's Me! " +
+		 * FaceUserVO.user_name));
+		 */
+
 		map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
 
 			@Override
 			public boolean onMyLocationButtonClick() {
-
-				Location loc = map.getMyLocation();
-
-				// cria marcador do usuario (icone do user)
-				map.addMarker(new MarkerOptions().position(
-						new LatLng(loc.getLatitude(), loc.getLongitude()))
-						.title("It's Me! " + FaceUserVO.user_name));
-
 				// lança posicao inicial
 				new MoveCamera(map, new LatLng(loc.getLatitude(), loc
 						.getLongitude()), 0);
+
 				return false;
 			}
 		});
@@ -113,6 +116,18 @@ public class MarkerManager {
 		// cria os nodes no mapa (será numa task separada)
 		criaPonto();
 
+		// icone do usuario
+		criaIconUser(loc);
+	}
+
+	private void criaIconUser(Location loc) {
+
+		map.addMarker(new MarkerOptions()
+				.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_mark))
+				.title(FaceUserVO.user_name).snippet("estou...")
+				.anchor(0.0f, 1.0f)
+				.position(new LatLng(loc.getLatitude(), loc.getLongitude()))
+				.flat(true));
 	}
 
 	/*******************************************************************************
