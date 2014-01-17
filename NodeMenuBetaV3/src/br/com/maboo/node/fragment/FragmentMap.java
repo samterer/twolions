@@ -1,9 +1,17 @@
 package br.com.maboo.node.fragment;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 import android.app.SearchManager;
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,45 +86,15 @@ public class FragmentMap extends SherlockFragment implements
 			// instacia o maps no formato completo 'GoogleMap'
 			map = mapView.getMap();
 
+			// visualização inicial do mapa (estilo satelite)
+			map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+
 			// controler do maps (icones sobre o mapa)
 			new ControllerMap(map).setUserPosition(true);
 
 			// inicializa a classe interna responsavel por criar os nodes na
 			// tela, assim como itens dinamicos (icone do usuario)
-			new MarkerManager().initPointManager(map);
-
-			// click em um node depois de ver os detalhes dele
-			map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
-				public void onInfoWindowClick(Marker marker) {
-
-					SecondClickOnMarker mco = new SecondClickOnMarker(
-							getActivity(), ChatActivity.class);
-					// local é o valor da chave, sempre olha a classe que vai
-					// receber essa intent
-					mco.goTo("local", marker.getTitle());
-
-				}
-
-			});
-
-			// clique em um node pela primeira vez
-			map.setOnMarkerClickListener(new OnMarkerClickListener() {
-
-				@Override
-				public boolean onMarkerClick(Marker marker) {
-					AndroidUtils.toast(getActivity().getApplicationContext(),
-							"click here: " + marker.getTitle());
-
-					new MoveCamera(map, new LatLng(
-							marker.getPosition().latitude,
-							marker.getPosition().longitude), 0);
-					return false;
-				}
-			});
-
-			/*********************
-			 * double click em um markers
-			 *********************/
+			new MarkerManager().initPointManager(map, getActivity());
 
 			// habilita o menu no maps
 			setHasOptionsMenu(true);
@@ -154,19 +132,11 @@ public class FragmentMap extends SherlockFragment implements
 	}
 
 	/*******************************************************************************
-	 * maker (ponto para criar locais)
-	 *******************************************************************************/
-
-	public void moveMaker(View v) {
-		AndroidUtils.toast(getActivity().getApplicationContext(),
-				"click on maker...");
-	}
-
-	/*******************************************************************************
 	 * menu (action bar)
 	 *******************************************************************************/
 	// utilizado unicamente apos o submit de uma pesquisa
 	private Menu menu;
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
@@ -184,7 +154,7 @@ public class FragmentMap extends SherlockFragment implements
 		searchView.setOnQueryTextListener(this);
 
 		this.menu = menu;
-		
+
 		return;
 	}
 
@@ -238,11 +208,12 @@ public class FragmentMap extends SherlockFragment implements
 
 		return false;
 	}
-	
-	private void hideKeyBoard(){
+
+	private void hideKeyBoard() {
 		// esconde o teclado
 		SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
 				.getActionView();
-		AndroidUtils.closeVirtualKeyboard(getActivity().getApplicationContext(), searchView);
+		AndroidUtils.closeVirtualKeyboard(
+				getActivity().getApplicationContext(), searchView);
 	}
 }
