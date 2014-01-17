@@ -60,6 +60,9 @@ public class PlacesService {
 		} catch (JSONException ex) {
 			Logger.getLogger(PlacesService.class.getName()).log(Level.SEVERE,
 					null, ex);
+		} catch (IndexOutOfBoundsException index) {
+			Logger.getLogger(PlacesService.class.getName()).log(Level.SEVERE,
+					null, index);
 		}
 		return null;
 	}
@@ -97,7 +100,7 @@ public class PlacesService {
 						+ latitude
 						+ ","
 						+ longitude
-						+ "&radius=1000&sensor=true&types=food&key="+API_KEY);
+						+ "&radius=1000&sensor=true&types="+place.toLowerCase()+"&key="+API_KEY);
 
 		return urlString.toString();
 	}

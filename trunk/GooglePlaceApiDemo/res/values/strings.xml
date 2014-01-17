@@ -6,10 +6,10 @@
     <string name="hello_world">Hello world!</string>
 
     <string-array name="places">
-        <item>ATM</item>
+        <item>food</item>
         <item>Bank</item>
         <item>Cafe</item>
-        <item>Fire-Station</item>
+        <item>bar</item>
         <item>Hospital</item>
         <item>Pharmacy</item>
         <item>Police</item>
