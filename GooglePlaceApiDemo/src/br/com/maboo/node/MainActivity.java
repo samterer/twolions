@@ -44,13 +44,13 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		initMap();
-		
+
 		places = getResources().getStringArray(R.array.places);
-		
+
 		currentLocation();
-		
+
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		actionBar.setListNavigationCallbacks(ArrayAdapter.createFromResource(
@@ -94,25 +94,30 @@ public class MainActivity extends Activity {
 			if (dialog.isShowing()) {
 				dialog.dismiss();
 			}
-			for (int i = 0; i < result.size(); i++) {
-				mMap.addMarker(new MarkerOptions()
-						.title(result.get(i).getName())
-						.position(
-								new LatLng(result.get(i).getLatitude(), result
-										.get(i).getLongitude()))
-						.icon(BitmapDescriptorFactory
-								.fromResource(R.drawable.pin))
-						.snippet(result.get(i).getVicinity()));
+			try {
+				for (int i = 0; i < result.size(); i++) {
+					mMap.addMarker(new MarkerOptions()
+							.title(result.get(i).getName())
+							.position(
+									new LatLng(result.get(i).getLatitude(),
+											result.get(i).getLongitude()))
+							.icon(BitmapDescriptorFactory
+									.fromResource(R.drawable.pin))
+							.snippet(result.get(i).getVicinity()));
+				}
+				CameraPosition cameraPosition = new CameraPosition.Builder()
+						.target(new LatLng(result.get(0).getLatitude(), result
+								.get(0).getLongitude())) // Sets the center of
+															// the map to
+						// Mountain View
+						.zoom(14) // Sets the zoom
+						.tilt(30) // Sets the tilt of the camera to 30 degrees
+						.build(); // Creates a CameraPosition from the builder
+				mMap.animateCamera(CameraUpdateFactory
+						.newCameraPosition(cameraPosition));
+			} catch (IndexOutOfBoundsException index) {
+				index.printStackTrace();
 			}
-			CameraPosition cameraPosition = new CameraPosition.Builder()
-					.target(new LatLng(result.get(0).getLatitude(), result.get(
-							0).getLongitude())) // Sets the center of the map to
-												// Mountain View
-					.zoom(14) // Sets the zoom
-					.tilt(30) // Sets the tilt of the camera to 30 degrees
-					.build(); // Creates a CameraPosition from the builder
-			mMap.animateCamera(CameraUpdateFactory
-					.newCameraPosition(cameraPosition));
 		}
 
 		@Override
@@ -135,7 +140,7 @@ public class MainActivity extends Activity {
 			for (int i = 0; i < findPlaces.size(); i++) {
 
 				Place placeDetail = findPlaces.get(i);
-			//	Log.e(TAG, "places : " + placeDetail.getName());
+				// Log.e(TAG, "places : " + placeDetail.getName());
 				Log.e(TAG, "places : " + placeDetail.getId());
 			}
 			return findPlaces;
@@ -177,17 +182,17 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
-			
+
 		}
 
 		@Override
 		public void onProviderEnabled(String provider) {
-			
+
 		}
 
 		@Override
 		public void onProviderDisabled(String provider) {
-			
+
 		}
 
 		@Override
