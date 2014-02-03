@@ -27,7 +27,8 @@ import com.facebook.friend.FriendElement;
 import com.facebook.friend.ListFriendElement;
 
 public class FragmentFriends extends SherlockFragment implements
-		OnItemClickListener, SearchView.OnQueryTextListener {
+		OnItemClickListener, SearchView.OnQueryTextListener,
+		SearchView.OnCloseListener {
 
 	private String TAG = "FragmentFriends";
 
@@ -112,9 +113,6 @@ public class FragmentFriends extends SherlockFragment implements
 			// Binds the Adapter to the ListView
 			listview_log.setAdapter(adapter);
 
-			// listview_log.setAdapter(new
-			// ListFriendAdapter(getActivity(),requestFriend));
-
 		}
 	}
 
@@ -167,31 +165,25 @@ public class FragmentFriends extends SherlockFragment implements
 
 		Log.i(TAG, "onQueryTextChange");
 
-		try {
-			if (searchField.isFocusable()) {
+		if (TextUtils.isEmpty(newText)) {
+			// adapter.getFilter().filter("");
+			Log.i(TAG, "onQueryTextChange Empty String");
 
-				Log.i(TAG, "click...");
+			// limpa filtro
+			listview_log.clearTextFilter();
+			adapter.notifyDataSetChanged();
 
-				if (TextUtils.isEmpty(newText)) {
-					// adapter.getFilter().filter("");
-					Log.i(TAG, "onQueryTextChange Empty String");
+			adapter.clearAdapter();
 
-					// limpa filtro
-					listview_log.clearTextFilter();
+			// recarrega a lista
+			carregaLista();
 
-					adapter.clearAdapter();
+			// Log.i(TAG, "onQueryTextChange " + newText.toString());
 
-					Log.i(TAG, "onQueryTextChange " + newText.toString());
+		} else {
+			Log.i(TAG, "onQueryTextChange " + newText.toString());
 
-				} else {
-					showResults("");
-				}
-			} else {
-				// adapter.getFilter().filter(newText.toString());
-				showResults(newText);
-			}
-		} catch (NullPointerException e) {
-			e.printStackTrace();
+			adapter.getFilter().filter(newText.toString());
 		}
 
 		return true;
@@ -208,22 +200,12 @@ public class FragmentFriends extends SherlockFragment implements
 		hideKeyBoard();
 
 		// devolve uma lista apenas com o item pesquisado (itens relacionados)
-		// adapter.getFilter().filter(query.toString());
-
-		showResults(query);
-
-		return true;
-	}
-
-	/*
-	 * ativa a pesquisa no 'adapter'
-	 */
-	private void showResults(String query) {
-
-		adapter.getFilter().filter(query);
-
+		adapter.getFilter().filter(query.toString());
 		adapter.notifyDataSetChanged();
 
+		// showResults(query);
+
+		return false;
 	}
 
 	/*
@@ -237,8 +219,10 @@ public class FragmentFriends extends SherlockFragment implements
 				getActivity().getApplicationContext(), searchView);
 	}
 
+	/*
+	 * close list
+	 */
 	public boolean onClose() {
-		showResults("");
 		Log.i(TAG, "onClose");
 		return false;
 	}
