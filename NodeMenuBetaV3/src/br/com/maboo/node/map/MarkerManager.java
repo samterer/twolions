@@ -1,17 +1,11 @@
 package br.com.maboo.node.map;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.media.JetPlayer;
 import android.util.Log;
 import br.com.maboo.node.R;
 import br.com.maboo.node.chat.ChatActivity;
@@ -46,11 +40,10 @@ public class MarkerManager {
 		final Location loc = map.getMyLocation();
 
 		// cria marcador do usuario (icone do user)
-		/*
-		 * map.addMarker(new MarkerOptions().position( new
-		 * LatLng(loc.getLatitude(), loc.getLongitude())).title( "It's Me! " +
-		 * FaceUserVO.user_name));
-		 */
+
+		// map.addMarker(new MarkerOptions().position(
+		// new LatLng(loc.getLatitude(), loc.getLongitude())).title(
+		// "It's Me! " + FaceUserVO.user_name));
 
 		map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
 

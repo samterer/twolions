@@ -132,8 +132,6 @@ public class FragmentFriends extends SherlockFragment implements
 	 *******************************************************************************/
 	// utilizado unicamente apos o submit de uma pesquisa
 	private Menu menu;
-	// campo de pesquisa
-	private SearchView searchField;
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -165,25 +163,32 @@ public class FragmentFriends extends SherlockFragment implements
 
 		Log.i(TAG, "onQueryTextChange");
 
-		if (TextUtils.isEmpty(newText)) {
-			// adapter.getFilter().filter("");
-			Log.i(TAG, "onQueryTextChange Empty String");
+		try {
 
-			// limpa filtro
-			listview_log.clearTextFilter();
-			adapter.notifyDataSetChanged();
+			if (TextUtils.isEmpty(newText)) {
+				// adapter.getFilter().filter("");
+				Log.i(TAG, "onQueryTextChange Empty String");
 
-			adapter.clearAdapter();
+				// limpa filtro
+				listview_log.clearTextFilter();
+				adapter.notifyDataSetChanged();
 
-			// recarrega a lista
-			carregaLista();
+				adapter.clearAdapter();
 
-			// Log.i(TAG, "onQueryTextChange " + newText.toString());
+				// recarrega a lista
+				carregaLista();
 
-		} else {
-			Log.i(TAG, "onQueryTextChange " + newText.toString());
+				hideKeyBoard();
 
-			adapter.getFilter().filter(newText.toString());
+				// Log.i(TAG, "onQueryTextChange " + newText.toString());
+
+			} else {
+				Log.i(TAG, "onQueryTextChange " + newText.toString());
+
+				adapter.getFilter().filter(newText.toString());
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
 		}
 
 		return true;
@@ -202,8 +207,6 @@ public class FragmentFriends extends SherlockFragment implements
 		// devolve uma lista apenas com o item pesquisado (itens relacionados)
 		adapter.getFilter().filter(query.toString());
 		adapter.notifyDataSetChanged();
-
-		// showResults(query);
 
 		return false;
 	}

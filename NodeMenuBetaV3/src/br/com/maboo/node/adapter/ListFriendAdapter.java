@@ -29,7 +29,6 @@ public class ListFriendAdapter extends BaseAdapter implements Filterable {
 	private LayoutInflater inflater;
 
 	private List<FriendElement> originalList = new ArrayList<FriendElement>();
-	private List<FriendElement> temporarylist = new ArrayList<FriendElement>();
 
 	private Typeface tf; // font
 
@@ -46,7 +45,6 @@ public class ListFriendAdapter extends BaseAdapter implements Filterable {
 
 			// lists
 			this.originalList = originalList;
-			temporarylist = originalList;
 
 			// inflate
 			this.inflater = (LayoutInflater) context
@@ -86,7 +84,6 @@ public class ListFriendAdapter extends BaseAdapter implements Filterable {
 	 */
 	public void clearAdapter() {
 		originalList.clear();
-		temporarylist.clear();
 		notifyDataSetChanged();
 	}
 
