@@ -15,13 +15,4 @@
         android:layout_marginBottom="41dp"
         android:visibility="invisible" />
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/funny_error"
-        android:visibility="visible" />
-
 </RelativeLayout>

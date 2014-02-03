@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -21,7 +22,7 @@ import br.livroandroid.utils.DownloadImagemUtil;
 
 import com.facebook.friend.FriendElement;
 
-public class ListFriendAdapter extends BaseAdapter {
+public class ListFriendAdapter extends BaseAdapter implements Filterable {
 
 	private String TAG = "ListFriendAdapter";
 
@@ -77,18 +78,17 @@ public class ListFriendAdapter extends BaseAdapter {
 	}
 
 	public long getItemId(int position) {
-		return position;
+		return Long.valueOf(originalList.get(position).getId());
 	}
-	
+
 	/*
 	 * limpa o adapter e a list
 	 */
-	public void clearAdapter()
-    {
-        originalList.clear();
-        temporarylist.clear();
-        notifyDataSetChanged();
-    }
+	public void clearAdapter() {
+		originalList.clear();
+		temporarylist.clear();
+		notifyDataSetChanged();
+	}
 
 	public View getView(int position, View view, ViewGroup parent) {
 
@@ -172,38 +172,61 @@ public class ListFriendAdapter extends BaseAdapter {
 
 	// filtro
 	public Filter getFilter() {
-		Filter filter = new Filter() {
+		Filter filtro = new Filter() {
+			@Override
+			protected FilterResults performFiltering(CharSequence constraint) {
+
+				FilterResults filtroResultado = new FilterResults();
+
+				if (constraint == null || constraint.length() == 0) {
+
+					// Se nao tiver nada para filtrar entao etorna a lista
+					// completa
+					filtroResultado.values = originalList;
+					filtroResultado.count = originalList.size();
+					return filtroResultado;
+				} else {
+
+					List<FriendElement> auxFriends = new ArrayList<FriendElement>();
+
+					for (FriendElement p : originalList) {
+						if (p.getNome().toUpperCase()
+								.contains(constraint.toString().toUpperCase())) {
+							auxFriends.add(p);
+						}
+					}
+
+					filtroResultado.values = auxFriends;
+					filtroResultado.count = auxFriends.size();
+				}
+
+				return filtroResultado;
+			} // FIm do performFiltering
 
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void publishResults(CharSequence constraint,
-					FilterResults results) {
-				temporarylist = (List<FriendElement>) results.values;
-				notifyDataSetChanged();
-			}
+					FilterResults resultado) {
 
-			@Override
-			protected FilterResults performFiltering(CharSequence constraint) {
-				FilterResults results = new FilterResults();
-				ArrayList<String> FilteredList = new ArrayList<String>();
-				if (constraint == null || constraint.length() == 0) {
-					// No filter implemented we return all the list
-					results.values = originalList;
-					results.count = originalList.size();
-				} else {
-					for (int i = 0; i < originalList.size(); i++) {
-						String data = originalList.get(i).getNome();
-						if (data.toLowerCase().contains(constraint.toString())) {
-							FilteredList.add(data);
-						}
-					}
-					results.values = FilteredList;
-					results.count = FilteredList.size();
+				// Temos que informar a nova lista
+				if (resultado.count == 0)
+
+					// Notifica os ouvintes
+					notifyDataSetInvalidated();
+
+				else {
+					// Preencho a lista(originalList) do adapter com o novo
+					// valor
+					originalList = (List<FriendElement>) resultado.values;
+
+					// Notifica ovites apos a lista ter novos valores
+					notifyDataSetChanged();
 				}
-				return results;
-			}
+
+			} // Fim do publishResults
+
 		};
-		return filter;
+		return filtro;
 	}
 
 }

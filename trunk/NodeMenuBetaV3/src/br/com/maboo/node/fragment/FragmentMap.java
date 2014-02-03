@@ -1,28 +1,18 @@
 package br.com.maboo.node.fragment;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-
 import android.app.SearchManager;
 import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 import br.com.maboo.node.R;
-import br.com.maboo.node.chat.ChatActivity;
 import br.com.maboo.node.map.ControllerMap;
 import br.com.maboo.node.map.MarkerManager;
 import br.com.maboo.node.map.MoveCamera;
 import br.com.maboo.node.map.MoveToSearchAddressTask;
-import br.com.maboo.node.map.SecondClickOnMarker;
 import br.livroandroid.utils.AndroidUtils;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -31,12 +21,9 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 
 public class FragmentMap extends SherlockFragment implements
 		SearchView.OnQueryTextListener {
