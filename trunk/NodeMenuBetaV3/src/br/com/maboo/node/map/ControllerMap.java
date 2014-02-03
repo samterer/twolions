@@ -30,7 +30,7 @@ public class ControllerMap {
 
 		// esconde o bt de my location
 		map.getUiSettings().setMyLocationButtonEnabled(false);
-	
+
 	}
 
 	/*******************************************************************************

@@ -51,6 +51,9 @@ public class FragmentMap extends SherlockFragment implements
 		// instancia o mapView
 		mapView.onCreate(savedInstanceState);
 
+		// habilita o menu no maps
+		setHasOptionsMenu(true);
+
 		try {
 			init();
 		} catch (Exception e) {
@@ -82,9 +85,6 @@ public class FragmentMap extends SherlockFragment implements
 			// inicializa a classe interna responsavel por criar os nodes na
 			// tela, assim como itens dinamicos (icone do usuario)
 			new MarkerManager().initPointManager(map, getActivity());
-
-			// habilita o menu no maps
-			setHasOptionsMenu(true);
 
 		}
 
