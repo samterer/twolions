@@ -144,8 +144,8 @@ public class FragmentSelection extends Fragment {
 	public void createFriendList() {
 		try {
 
-		//	itensRandom = new ArrayList<FriendElement>();
-		//	friends = new ArrayList<FriendElement>();
+		//	itensRandom = new ArrayList<MapAddrElement>();
+		//	friends = new ArrayList<MapAddrElement>();
 
 			ListFriendElement.friends = new ArrayList<FriendElement>();
 			
@@ -181,7 +181,7 @@ public class FragmentSelection extends Fragment {
 	}
 
 	/*******************************************************************************
-	 * Popula lista de amigos do node (padrao FriendElement)
+	 * Popula lista de amigos do node (padrao MapAddrElement)
 	 *******************************************************************************/
 	private void populateTempList() {
 		for (final GraphUser g : temp) {

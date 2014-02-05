@@ -10,18 +10,17 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.AutoCompleteTextView;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import br.com.maboo.node.R;
 import br.com.maboo.node.util.DownloadUrl;
 
 // Fetches all places from GooglePlaces AutoComplete Web Service
 public class PlacesTask extends AsyncTask<String, Object, String> {
 
-	private AutoCompleteTextView atvPlaces;
+	private ListView atvPlaces;
 	private Context context;
 
-	public void setAdapter(Context context, AutoCompleteTextView atvPlaces) {
+	public void setAdapter(Context context, ListView atvPlaces) {
 		this.context = context;
 		this.atvPlaces = atvPlaces;
 	}
@@ -32,7 +31,9 @@ public class PlacesTask extends AsyncTask<String, Object, String> {
 		String data = "";
 
 		// Obtain browser key from https://code.google.com/apis/console
-		String key = "key=" + context.getString(R.string.map_id);
+		// essa nao é a chave original, mas funciona
+		String key = "key=AIzaSyAhaD4HwgofkA2_9Z7fLbGB1V8Shi-S7do";// +
+																	// context.getString(R.string.map_id);
 
 		String input = "";
 
@@ -112,7 +113,7 @@ public class PlacesTask extends AsyncTask<String, Object, String> {
 			String[] from = new String[] { "description" };
 			int[] to = new int[] { android.R.id.text1 };
 
-			// Creating a SimpleAdapter for the AutoCompleteTextView
+			// Creating a SimpleAdapter for the listView
 			SimpleAdapter adapter = new SimpleAdapter(context, result,
 					android.R.layout.simple_list_item_1, from, to);
 

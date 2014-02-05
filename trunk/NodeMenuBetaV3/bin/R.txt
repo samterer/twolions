@@ -407,7 +407,6 @@ int id abs__up 0x7f050011
 int id action_location_found 0x7f05005d
 int id action_search 0x7f05005c
 int id activity_face_logon 0x7f05002e
-int id autocomplete 0x7f050054
 int id com_facebook_login_activity_progress_bar 0x7f050033
 int id com_facebook_picker_activity_circle 0x7f050032
 int id com_facebook_picker_checkbox 0x7f050035
@@ -441,6 +440,7 @@ int id item2 0x7f05005f
 int id large 0x7f050002
 int id linearLayout1 0x7f050055
 int id listMode 0x7f050008
+int id list_addr 0x7f050054
 int id list_friend 0x7f05004d
 int id listview_drawer 0x7f05004c
 int id login_button 0x7f050059

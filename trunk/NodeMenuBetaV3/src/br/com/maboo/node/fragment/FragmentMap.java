@@ -1,15 +1,23 @@
 package br.com.maboo.node.fragment;
 
+import java.util.List;
+
+import android.app.SearchManager;
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AutoCompleteTextView;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 import br.com.maboo.node.R;
 import br.com.maboo.node.map.ControllerMap;
@@ -29,7 +37,8 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 
 public class FragmentMap extends SherlockFragment implements
-		OnItemClickListener {
+		OnItemClickListener, SearchView.OnQueryTextListener,
+		SearchView.OnCloseListener {
 
 	private String TAG = "FragmentMap";
 
@@ -37,9 +46,6 @@ public class FragmentMap extends SherlockFragment implements
 	private MapView mapView;
 	private GoogleMap map;
 
-	/**
-	 * 
-	 * */
 	private static final String IMAGEVIEW_TAG = "Android Logo";
 	private android.widget.RelativeLayout.LayoutParams layoutParams;
 
@@ -58,9 +64,6 @@ public class FragmentMap extends SherlockFragment implements
 		// habilita o menu no maps
 		setHasOptionsMenu(true);
 
-		// autocomplete
-		autoComplete();
-
 		try {
 			init();
 		} catch (Exception e) {
@@ -73,48 +76,43 @@ public class FragmentMap extends SherlockFragment implements
 	public void onItemClick(AdapterView<?> adapterView, View view,
 			int position, long id) {
 
-		String str = (String) adapterView.getItemAtPosition(position);
-		Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
+		// When clicked, show a toast with the TextView text
+		Toast.makeText(getActivity().getApplicationContext(),
+				((TextView) view).getText(), Toast.LENGTH_SHORT).show();
 
-		// move a camera para o ponto no mapa
-		// new MoveCameraToAddressTask(getActivity(), map).execute(query);
+		// endereco por extenso
+		moveCameraParaEndereco((String) ((TextView) view).getText());
 	}
 
-	/**
-	 * pesquisa endereço automaticamente (tempo real)
-	 */
-	private AutoCompleteTextView atvPlaces;
+	private void moveCameraParaEndereco(String endereco) {
 
-	private void autoComplete() {
-		atvPlaces = (AutoCompleteTextView) view.findViewById(R.id.autocomplete);
-		atvPlaces.setThreshold(1);
-
-		atvPlaces.addTextChangedListener(new TextWatcher() {
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-
-				PlacesTask placesTask = new PlacesTask();
-
-				// adapter
-				placesTask.setAdapter(getActivity(), atvPlaces);
-
-				// execute
-				placesTask.execute(s.toString());
+		// convert o endereco em lat e lon e move a camera para o ponto
+		Geocoder coder = new Geocoder(getActivity().getApplicationContext());
+		List<Address> address;
+		Address loc;
+		try {
+			address = coder.getFromLocationName(endereco, 5);
+			if (address == null) {
+				return;
 			}
+			loc = address.get(0);
 
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-				// TODO Auto-generated method stub
-			}
+			// direciona o usuario para o local
+			new MoveCamera(map, new LatLng(loc.getLatitude(),
+					loc.getLongitude()), 0);
 
-			@Override
-			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
-			}
-		});
+			// esconde o teclado
+			hideKeyBoard();
+
+			// limpa lista de enderecos
+			limpaLista();
+
+			// esconde o searchView
+			onClose();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void init() {
@@ -177,11 +175,24 @@ public class FragmentMap extends SherlockFragment implements
 	 *******************************************************************************/
 	// utilizado unicamente apos o submit de uma pesquisa
 	private Menu menu;
+	private SearchView searchView;
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.menu_map, menu);
+
+		// Associate searchable configuration with the SearchView
+		SearchManager searchManager = (SearchManager) getActivity()
+				.getSystemService(Context.SEARCH_SERVICE);
+
+		searchView = (SearchView) menu.findItem(R.id.action_search)
+				.getActionView();
+		searchView.setSearchableInfo(searchManager
+				.getSearchableInfo(getActivity().getComponentName()));
+
+		// listener
+		searchView.setOnQueryTextListener(this);
 
 		this.menu = menu;
 
@@ -216,10 +227,113 @@ public class FragmentMap extends SherlockFragment implements
 		return true;
 	}
 
-	private void hideKeyBoard() {
+	/*******************************************************************************
+	 * search methods
+	 *******************************************************************************/
+	/**
+	 * prepara a lista onde o endereços serão carregados
+	 */
+	private ListView list_addr;
+
+	/**
+	 * inicializa a lista de endereços
+	 */
+	private void initList() {
+		list_addr = (ListView) view.findViewById(R.id.list_addr);
+		list_addr.setOnItemClickListener(this);
+
+		list_addr.setVisibility(View.VISIBLE);
+	}
+
+	/**
+	 * Limpa a lista de enderecos e a fecha, escondendo o teclado
+	 */
+	private void limpaLista() {
+		// limpa o filtro de pesquisa
+		list_addr.clearTextFilter();
+
+		// esconde a view da list
+		list_addr.setVisibility(View.GONE);
+
 		// esconde o teclado
+		hideKeyBoard();
+	}
+
+	@Override
+	public boolean onQueryTextChange(String newText) {
+
+		Log.i(TAG, "onQueryTextChange");
+
+		try {
+
+			if (TextUtils.isEmpty(newText)) {
+				// adapter.getFilter().filter("");
+				Log.i(TAG, "onQueryTextChange Empty String");
+
+				// limpa a lista de enderecos
+				limpaLista();
+
+				// Log.i(TAG, "onQueryTextChange " + newText.toString());
+
+			} else {
+				Log.i(TAG, "onQueryTextChange " + newText.toString());
+
+				// abre a lista de endereço
+				initList();
+
+				PlacesTask placesTask = new PlacesTask();
+
+				// adapter
+				placesTask.setAdapter(getActivity().getApplicationContext(),
+						list_addr);
+
+				// execute
+				placesTask.execute(newText);
+
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+
+		return true;
+	}
+
+	@Override
+	// pesquisa um endereço
+	public boolean onQueryTextSubmit(String query) {
+		// AndroidUtils.toast(getActivity().getApplicationContext(), query);
+
+		Log.i(TAG, ">> search name: " + query);
+
+		// endereco por extenso
+		moveCameraParaEndereco(query);
+
+		// esconde o teclado
+		hideKeyBoard();
+
+		return false;
+	}
+
+	/*
+	 * esconde o teclado
+	 */
+	private void hideKeyBoard() {
+		// fecha teclado
 		AndroidUtils.closeVirtualKeyboard(
-				getActivity().getApplicationContext(), atvPlaces);
+				getActivity().getApplicationContext(), searchView);
+	}
+
+	/*
+	 * close list
+	 */
+	public boolean onClose() {
+		Log.i(TAG, "onClose");
+
+		if (searchView != null) {
+			searchView.clearFocus();
+		}
+
+		return false;
 	}
 
 }

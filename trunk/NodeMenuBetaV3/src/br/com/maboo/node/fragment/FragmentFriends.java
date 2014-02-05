@@ -107,7 +107,7 @@ public class FragmentFriends extends SherlockFragment implements
 		// atualiza os friends na thread principal
 		if (requestFriend != null && requestFriend.size() > 0) {
 
-			// Pass results to ListFriendAdapter Class
+			// Pass results to ListMapAddrAdapter Class
 			adapter = new ListFriendAdapter(getActivity(), requestFriend);
 
 			// Binds the Adapter to the ListView
