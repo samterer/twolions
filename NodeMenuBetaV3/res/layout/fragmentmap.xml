@@ -12,4 +12,16 @@
         map:uiZoomControls="false" >
     </com.google.android.gms.maps.MapView>
 
+    <LinearLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <br.com.maboo.node.map.CustomAutoCompleteTextView
+            android:id="@+id/autocomplete"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/str_atv_places" />
+    </LinearLayout>
+
 </FrameLayout>
