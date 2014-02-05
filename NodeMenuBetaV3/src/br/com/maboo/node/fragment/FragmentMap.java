@@ -72,6 +72,7 @@ public class FragmentMap extends SherlockFragment implements
 
 	public void onItemClick(AdapterView<?> adapterView, View view,
 			int position, long id) {
+
 		String str = (String) adapterView.getItemAtPosition(position);
 		Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
 
