@@ -17,11 +17,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
 
-        <br.com.maboo.node.map.CustomAutoCompleteTextView
-            android:id="@+id/autocomplete"
+        <ListView
+            android:id="@+id/list_addr"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/str_atv_places" />
+            android:visibility="gone" />
     </LinearLayout>
 
 </FrameLayout>

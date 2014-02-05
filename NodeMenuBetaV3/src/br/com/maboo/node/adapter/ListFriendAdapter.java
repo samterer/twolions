@@ -24,7 +24,7 @@ import com.facebook.friend.FriendElement;
 
 public class ListFriendAdapter extends BaseAdapter implements Filterable {
 
-	private String TAG = "ListFriendAdapter";
+	private String TAG = "ListMapAddrAdapter";
 
 	private LayoutInflater inflater;
 
@@ -38,7 +38,7 @@ public class ListFriendAdapter extends BaseAdapter implements Filterable {
 
 	public ListFriendAdapter(Activity context, List<FriendElement> originalList) {
 
-		// Log.i(TAG, "ListFriendAdapter...");
+		// Log.i(TAG, "ListMapAddrAdapter...");
 		try {
 			// instance
 			this.context = context;

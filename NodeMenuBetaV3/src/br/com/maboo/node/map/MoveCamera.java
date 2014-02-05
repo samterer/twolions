@@ -16,18 +16,16 @@ public class MoveCamera {
 	private int ZOOM = 18;
 
 	/*******************************************************************************
-	 * move a camera automaticamente para a posição recebida
-	 * 'zoom' 
-	 * padrao = attr ZOOM
-	 * se o usuario passar o valor 0, seta o zoom padrao
+	 * move a camera automaticamente para a posição recebida 'zoom' padrao =
+	 * attr ZOOM se o usuario passar o valor 0, seta o zoom padrao
 	 *******************************************************************************/
 	public MoveCamera(GoogleMap map, LatLng latLng, int zoomRequest) {
 
 		this.map = map;
-		
+
 		// casos especificos de zoom
 		// como no caso da pesquisa por um endereço
-		if(zoomRequest > 0 && zoomRequest < ZOOM){
+		if (zoomRequest > 0 && zoomRequest < ZOOM) {
 			ZOOM = zoomRequest;
 		}
 
