@@ -77,8 +77,9 @@ public class MarkerManager {
 
 				SecondClickOnMarker mco = new SecondClickOnMarker(act,
 						ChatActivity.class);
-				// local é o valor da chave, sempre olha a classe que vai
-				// receber essa intent
+				// local é o valor da chave, semprer olha a Activity que vai
+				// receber essa intent, para saber o que a chave "local" vai
+				// tratar
 				mco.goTo("local", marker.getTitle());
 
 			}
