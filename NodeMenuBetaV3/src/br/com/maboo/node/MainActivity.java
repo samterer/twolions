@@ -42,7 +42,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	private final int LOGOUT = 5;
 
 	// tamanho do menu (baseado no valor do ultimo item)
-	private final int TAM_MENU = LOGOUT+1;
+	private final int TAM_MENU = LOGOUT + 1;
 
 	// titulo no menu lateral
 	String[] title;
@@ -203,15 +203,22 @@ public class MainActivity extends SherlockFragmentActivity {
 		}
 	}
 
+	// Select a item in navigation drawer
 	private void selectItem(int position) {
+
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
+
 		// Locate Position
+		ft.setCustomAnimations(R.anim.frag_slide_in, R.anim.frag_slide_out);
+
 		ft.replace(R.id.content_frame, fragments[position]);
 		ft.commit();
 		mDrawerList.setItemChecked(position, true);
+
 		// Get the title followed by the position
 		setTitle(title[position]);
+
 		// Close drawer
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}

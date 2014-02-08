@@ -101,9 +101,6 @@ public class MarkerManager {
 
 				(new GetAddressTask(act)).execute(location);
 
-				// AndroidUtils.toast(act.getApplicationContext(),"click in: "+
-				// getCompleteAddressString(point.latitude, point.longitude));
-
 			}
 		});
 
