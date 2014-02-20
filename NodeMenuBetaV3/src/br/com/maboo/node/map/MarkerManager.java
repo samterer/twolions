@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
+import android.view.View;
 import br.com.maboo.node.R;
 import br.com.maboo.node.chat.ChatActivity;
 import br.livroandroid.utils.AndroidUtils;
@@ -32,10 +33,13 @@ public class MarkerManager {
 
 	private GoogleMap map;
 	private Activity act;
+	private View view;
 
 	// posicao inicial do mapa
-	public void initPointManager(final GoogleMap map, final Activity act) {
+	public void initPointManager(final GoogleMap map, final Activity act,
+			final View view) {
 		this.map = map;
+		this.view = view;
 
 		final Location loc = map.getMyLocation();
 
@@ -99,16 +103,16 @@ public class MarkerManager {
 				location.setTime(new Date().getTime()); // Set time as current
 														// Date
 
-				(new GetAddressTask(act)).execute(location);
+				(new GetAddressTask(act, view)).execute(location);
 
 			}
 		});
 
 		// cria os nodes no mapa (será numa task separada)
-		criaPonto();
+		// criaPonto();
 
 		// icone do usuario
-		criaIconUser(loc);
+		// criaIconUser(loc);
 	}
 
 	private void criaIconUser(Location loc) {

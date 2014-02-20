@@ -136,7 +136,8 @@ public class FragmentMap extends SherlockFragment implements
 
 			// inicializa a classe interna responsavel por criar os nodes na
 			// tela, assim como itens dinamicos (icone do usuario)
-			new MarkerManager().initPointManager(map, getActivity());
+			// mando a view para provaveis animacoes
+			new MarkerManager().initPointManager(map, getActivity(), view);
 
 		}
 
