@@ -12,17 +12,24 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.text.Html;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import br.com.maboo.node.R;
 
-class GetAddressTask extends AsyncTask<Location, Void, String> {
-	Context mContext;
+class GetAddressTask extends AsyncTask<Location, Void, Address> {
+	private Context mContext;
+	private View view;
 
 	// Progress dialog
-	ProgressDialog pDialog;
+	private ProgressDialog pDialog;
 
-	public GetAddressTask(Context context) {
+	public GetAddressTask(Context context, View view) {
 		super();
-		mContext = context;
+		this.mContext = context;
+		this.view = view;
 	}
 
 	@Override
@@ -43,12 +50,60 @@ class GetAddressTask extends AsyncTask<Location, Void, String> {
 	 * indeterminate activity indicator and set the text of the UI element that
 	 * shows the address. If the lookup failed, display the error message.
 	 */
-	@Override
-	protected void onPostExecute(String address) {
+	protected void onPostExecute(Address address) {
 		// dismiss the dialog after getting all products
 		pDialog.dismiss();
 
-		Toast.makeText(mContext, " adr: " + address, Toast.LENGTH_LONG).show();
+		// Toast.makeText(mContext, " adr: " + address,
+		// Toast.LENGTH_LONG).show();
+		// divide o endereço
+
+		// anime up
+		Animation barUp = AnimationUtils.loadAnimation(mContext, R.anim.bar_up);
+
+		// sobe barra de informações do endereço
+		RelativeLayout rl = (RelativeLayout) view
+				.findViewById(R.id.bar_map_info);
+
+		// verifica se a bar já esta na tela
+		if (rl.getVisibility() == View.INVISIBLE
+				|| rl.getVisibility() == View.GONE) {
+			// inicia animação
+			rl.startAnimation(barUp);
+		} else {
+			rl.setVisibility(View.VISIBLE);
+		}
+
+		// preenche o endereço
+		TextView endPt1 = (TextView) view.findViewById(R.id.endPt1);
+		String pt1 = "";
+
+		if (address.getFeatureName() != null) {
+			if (address.getFeatureName().length() > 10) {
+				pt1 = address.getFeatureName();
+			}
+		} else {
+			pt1 = address.getAddressLine(0);
+		}
+
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < pt1.length(); i++) {
+			if (i < 40) {
+				sb.append(pt1.charAt(i));
+			} else {
+				sb.append("...");
+				break;
+			}
+		}
+		pt1 = sb.toString();
+		// set address line 1
+		endPt1.setText(pt1);
+
+		TextView endPt2 = (TextView) view.findViewById(R.id.endPt2);
+		String pt2 = address.getSubAdminArea() + " - "
+				+ address.getCountryName();
+		// set address line 2
+		endPt2.setText(pt2);
 	}
 
 	/**
@@ -59,8 +114,7 @@ class GetAddressTask extends AsyncTask<Location, Void, String> {
 	 * @return A string containing the address of the current location, or an
 	 *         empty string if no address can be found, or an error message
 	 */
-	@Override
-	protected String doInBackground(Location... params) {
+	protected Address doInBackground(Location... params) {
 
 		Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
 
@@ -82,7 +136,8 @@ class GetAddressTask extends AsyncTask<Location, Void, String> {
 			Log.e("LocationSampleActivity", "IO Exception in getFromLocation()");
 			e1.printStackTrace();
 
-			return ("IO Exception trying to get address");
+			// return ("IO Exception trying to get address");
+			return null;
 
 		} catch (IllegalArgumentException e2) {
 
@@ -94,7 +149,8 @@ class GetAddressTask extends AsyncTask<Location, Void, String> {
 			Log.e("LocationSampleActivity", errorString);
 			e2.printStackTrace();
 
-			return errorString;
+			// return errorString;
+			return null;
 		}
 		// If the reverse geocode returned an address
 		if (addresses != null && addresses.size() > 0) {
@@ -106,22 +162,20 @@ class GetAddressTask extends AsyncTask<Location, Void, String> {
 			 * Format the first line of address (if available), city, and
 			 * country name.
 			 */
-			String addressText = String.format(
-					"%s, %s, %s",
-					// If there's a street address, add it
-					address.getMaxAddressLineIndex() > 0 ? address
-							.getAddressLine(0) : "",
-					// Locality is usually a city
-					address.getLocality(),
-					// The country of the address
-					address.getCountryName());
-
+			/*
+			 * String addressText = String.format( "%s, %s, %s", // If there's a
+			 * street address, add it address.getMaxAddressLineIndex() > 0 ?
+			 * address .getAddressLine(0) : "", // Locality is usually a city
+			 * address.getLocality(), // The country of the address
+			 * address.getCountryName());
+			 */
 			// Return the text
-			return addressText;
+			return address;
 
 		} else {
 
-			return "No address found";
+			// return "No address found";
+			return null;
 
 		}
 	}

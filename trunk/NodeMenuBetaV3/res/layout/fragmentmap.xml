@@ -24,4 +24,6 @@
             android:visibility="gone" />
     </LinearLayout>
 
+    <include layout="@layout/bar_map_info" />
+
 </FrameLayout>
