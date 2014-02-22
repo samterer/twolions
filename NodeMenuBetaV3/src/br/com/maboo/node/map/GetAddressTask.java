@@ -4,17 +4,17 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
-import android.text.Html;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import br.com.maboo.node.R;
@@ -23,24 +23,57 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 	private Context mContext;
 	private View view;
 
-	// Progress dialog
-	private ProgressDialog pDialog;
+	// loading progress
+	ProgressBar pDialog;
+	// text na progress bar
+	TextView textProgressBar;
+
+	// info bar do map
+	RelativeLayout rl;
+	TextView endPt1;
+	TextView endPt2;
+
+	// animação
+	Animation barUp;
 
 	public GetAddressTask(Context context, View view) {
 		super();
 		this.mContext = context;
 		this.view = view;
+
+		// sobe barra de informações do endereço
+		rl = (RelativeLayout) view.findViewById(R.id.bar_map_info);
+
+		pDialog = (ProgressBar) view.findViewById(R.id.progressBar);
+		textProgressBar = (TextView) view.findViewById(R.id.textProgressBar);
+
+		endPt1 = (TextView) view.findViewById(R.id.endPt1);
+		endPt2 = (TextView) view.findViewById(R.id.endPt2);
+
+		// anime up
+		barUp = AnimationUtils.loadAnimation(mContext, R.anim.bar_up);
+
 	}
 
 	@Override
 	protected void onPreExecute() {
 		// Toast.makeText(mContext, "searching...", Toast.LENGTH_LONG).show();
 
-		pDialog = new ProgressDialog(mContext);
-		pDialog.setMessage(Html.fromHtml("<b>Search</b><br/>Loading Places..."));
-		pDialog.setIndeterminate(false);
-		pDialog.setCancelable(false);
-		pDialog.show();
+		// verifica se a bar já esta na tela
+		if (rl.getVisibility() == View.INVISIBLE
+				|| rl.getVisibility() == View.GONE) { // inicia animação
+			rl.startAnimation(barUp);
+			rl.setVisibility(View.VISIBLE);
+		} else {
+
+			// esconde os textos
+			endPt1.setVisibility(View.INVISIBLE);
+			endPt2.setVisibility(View.INVISIBLE);
+
+			// exibe o progress
+			pDialog.setVisibility(View.VISIBLE);
+			textProgressBar.setVisibility(View.VISIBLE);
+		}
 
 		super.onPreExecute();
 	}
@@ -52,38 +85,21 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 	 */
 	protected void onPostExecute(Address address) {
 		// dismiss the dialog after getting all products
-		pDialog.dismiss();
+		pDialog.setVisibility(View.GONE);
+		textProgressBar.setVisibility(View.GONE);
 
 		// Toast.makeText(mContext, " adr: " + address,
 		// Toast.LENGTH_LONG).show();
 		// divide o endereço
 
-		// anime up
-		Animation barUp = AnimationUtils.loadAnimation(mContext, R.anim.bar_up);
-
-		// sobe barra de informações do endereço
-		RelativeLayout rl = (RelativeLayout) view
-				.findViewById(R.id.bar_map_info);
-
-		// verifica se a bar já esta na tela
-		if (rl.getVisibility() == View.INVISIBLE
-				|| rl.getVisibility() == View.GONE) {
-			// inicia animação
-			rl.startAnimation(barUp);
-		} else {
-			rl.setVisibility(View.VISIBLE);
-		}
-
 		// preenche o endereço
-		TextView endPt1 = (TextView) view.findViewById(R.id.endPt1);
+		// linha superior do endereço
 		String pt1 = "";
 
-		if (address.getFeatureName() != null) {
-			if (address.getFeatureName().length() > 10) {
-				pt1 = address.getFeatureName();
+		if (address.getThoroughfare() != null) {
+			if (address.getLocale().getDisplayName().length() > 0) {
+				pt1 = address.getThoroughfare();
 			}
-		} else {
-			pt1 = address.getAddressLine(0);
 		}
 
 		StringBuffer sb = new StringBuffer();
@@ -99,11 +115,21 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 		// set address line 1
 		endPt1.setText(pt1);
 
-		TextView endPt2 = (TextView) view.findViewById(R.id.endPt2);
+		// linha inferior do endereço
 		String pt2 = address.getSubAdminArea() + " - "
 				+ address.getCountryName();
 		// set address line 2
 		endPt2.setText(pt2);
+
+		// exibe os textos
+		Handler handler = new Handler();
+		final Runnable r = new Runnable() {
+			public void run() {
+				endPt1.setVisibility(View.VISIBLE);
+				endPt2.setVisibility(View.VISIBLE);
+			}
+		};
+		handler.postDelayed(r, 350);
 	}
 
 	/**

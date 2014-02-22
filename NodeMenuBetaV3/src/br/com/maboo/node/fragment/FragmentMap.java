@@ -337,4 +337,20 @@ public class FragmentMap extends SherlockFragment implements
 		return false;
 	}
 
+	/*******************************************************************************
+	 * fecha o app
+	 *******************************************************************************/
+	private Toast backtoast;
+
+	public void onBackPressed() {
+		if (backtoast != null && backtoast.getView().getWindowToken() != null) {
+			getActivity().finish();
+		} else {
+			backtoast = Toast.makeText(getActivity(), "Press back to exit",
+					Toast.LENGTH_SHORT);
+			backtoast.show();
+		}
+
+		// super.getActivity().onBackPressed();
+	}
 }

@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import br.com.maboo.node.adapter.MenuListAdapter;
 import br.com.maboo.node.fragment.FragmentAbout;
 import br.com.maboo.node.fragment.FragmentFriends;
@@ -243,6 +244,8 @@ public class MainActivity extends SherlockFragmentActivity {
 		getSupportActionBar().setTitle(mTitle);
 	}
 
+	private Toast backtoast;
+
 	@Override
 	public void onBackPressed() {
 
@@ -253,8 +256,19 @@ public class MainActivity extends SherlockFragmentActivity {
 			manager.popBackStack();
 
 		} else {
+			if (backtoast != null
+					&& backtoast.getView().getWindowToken() != null) {
+				this.finish();
+			} else {
+				backtoast = Toast.makeText(this, "Press back to exit",
+						Toast.LENGTH_SHORT);
+				backtoast.show();
+			}
+
+			// super.getActivity().onBackPressed();
+
 			// Otherwise, ask user if he wants to leave :)
-			super.onBackPressed();
+			// super.onBackPressed();
 
 		}
 	}

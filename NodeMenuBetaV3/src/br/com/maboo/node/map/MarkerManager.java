@@ -8,6 +8,7 @@ import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import br.com.maboo.node.R;
 import br.com.maboo.node.chat.ChatActivity;
 import br.livroandroid.utils.AndroidUtils;
@@ -159,6 +160,23 @@ public class MarkerManager {
 				.getDisplayMetrics().density;
 
 		return (int) ((nDP * conversionScale) + 0.5f);
+
+	}
+
+	/*******************************************************************************
+	 * ao precionar a tecla de back ele apaga ou retorna todas as modificações
+	 * na tela
+	 *******************************************************************************/
+	public void onBackPressed() {
+		// super.getActivity().onBackPressed();
+
+		RelativeLayout rl = (RelativeLayout) view
+				.findViewById(R.id.bar_map_info);
+
+		// esconde a info bar
+		if (rl.getVisibility() == View.VISIBLE) {
+			rl.setVisibility(View.INVISIBLE);
+		}
 
 	}
 }
