@@ -11,8 +11,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import br.com.maboo.node.adapter.MenuListAdapter;
 import br.com.maboo.node.fragment.FragmentAbout;
@@ -21,6 +24,7 @@ import br.com.maboo.node.fragment.FragmentLogout;
 import br.com.maboo.node.fragment.FragmentMap;
 import br.com.maboo.node.fragment.FragmentProfile;
 import br.com.maboo.node.fragment.FragmentSettings;
+import br.com.maboo.node.sessao.Sessao;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -244,6 +248,9 @@ public class MainActivity extends SherlockFragmentActivity {
 		getSupportActionBar().setTitle(mTitle);
 	}
 
+	/*******************************************************************************
+	 * onBackPressed
+	 *******************************************************************************/
 	private Toast backtoast;
 
 	@Override
@@ -256,6 +263,18 @@ public class MainActivity extends SherlockFragmentActivity {
 			manager.popBackStack();
 
 		} else {
+
+			// verifica a tela que o usuario esta (momento)
+			if (Sessao.TELA == 1) {
+
+				hideInfoBar();
+
+				// muda estado da tela
+				Sessao.TELA = 0;
+				return;
+			}
+
+			// regra de saida do app
 			if (backtoast != null
 					&& backtoast.getView().getWindowToken() != null) {
 				this.finish();
@@ -271,5 +290,22 @@ public class MainActivity extends SherlockFragmentActivity {
 			// super.onBackPressed();
 
 		}
+	}
+
+	/**
+	 * esconde a barra de informacao do endereço
+	 */
+	private void hideInfoBar() {
+
+		// anime down
+		Animation barDown = AnimationUtils.loadAnimation(this, R.anim.bar_down);
+
+		// esconde a info bar
+		RelativeLayout rl = (RelativeLayout) findViewById(R.id.bar_map_info);
+		if (rl.getVisibility() == View.VISIBLE) {
+			rl.startAnimation(barDown);
+			rl.setVisibility(View.INVISIBLE);
+		}
+
 	}
 }

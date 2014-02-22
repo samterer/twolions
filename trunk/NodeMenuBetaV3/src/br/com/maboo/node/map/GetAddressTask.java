@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import br.com.maboo.node.R;
+import br.com.maboo.node.sessao.Sessao;
 
 class GetAddressTask extends AsyncTask<Location, Void, Address> {
 	private Context mContext;
@@ -41,6 +42,16 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 		this.mContext = context;
 		this.view = view;
 
+		init();
+
+		// muda tela na sessao
+		Sessao.TELA = 1;
+	}
+
+	/**
+	 * inicializa componentes da barra de informação
+	 */
+	private void init() {
 		// sobe barra de informações do endereço
 		rl = (RelativeLayout) view.findViewById(R.id.bar_map_info);
 
@@ -52,7 +63,6 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 
 		// anime up
 		barUp = AnimationUtils.loadAnimation(mContext, R.anim.bar_up);
-
 	}
 
 	@Override
@@ -84,14 +94,30 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 	 * shows the address. If the lookup failed, display the error message.
 	 */
 	protected void onPostExecute(Address address) {
+
 		// dismiss the dialog after getting all products
 		pDialog.setVisibility(View.GONE);
 		textProgressBar.setVisibility(View.GONE);
 
-		// Toast.makeText(mContext, " adr: " + address,
-		// Toast.LENGTH_LONG).show();
-		// divide o endereço
+		drawAddress(address);
 
+		// exibe os textos
+		Handler handler = new Handler();
+		final Runnable r = new Runnable() {
+			public void run() {
+				endPt1.setVisibility(View.VISIBLE);
+				endPt2.setVisibility(View.VISIBLE);
+			}
+		};
+		handler.postDelayed(r, 350);
+	}
+
+	/**
+	 * preenche os campos de texto com os devidos endereços
+	 * 
+	 * @param address
+	 */
+	private void drawAddress(Address address) {
 		// preenche o endereço
 		// linha superior do endereço
 		String pt1 = "";
@@ -120,16 +146,6 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 				+ address.getCountryName();
 		// set address line 2
 		endPt2.setText(pt2);
-
-		// exibe os textos
-		Handler handler = new Handler();
-		final Runnable r = new Runnable() {
-			public void run() {
-				endPt1.setVisibility(View.VISIBLE);
-				endPt2.setVisibility(View.VISIBLE);
-			}
-		};
-		handler.postDelayed(r, 350);
 	}
 
 	/**
