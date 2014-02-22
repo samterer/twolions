@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -301,10 +302,16 @@ public class MainActivity extends SherlockFragmentActivity {
 		Animation barDown = AnimationUtils.loadAnimation(this, R.anim.bar_down);
 
 		// esconde a info bar
-		RelativeLayout rl = (RelativeLayout) findViewById(R.id.bar_map_info);
-		if (rl.getVisibility() == View.VISIBLE) {
-			rl.startAnimation(barDown);
-			rl.setVisibility(View.INVISIBLE);
+		LinearLayout llayout = (LinearLayout) findViewById(R.id.bar_map_info);
+		if (llayout.getVisibility() == View.VISIBLE) {
+
+			llayout.startAnimation(barDown);
+			llayout.setVisibility(View.INVISIBLE);
+
+			// esconde o layout dos bts
+			RelativeLayout rLayout = (RelativeLayout) findViewById(R.id.bts_map_info);
+			rLayout.startAnimation(barDown);
+			rLayout.setVisibility(View.GONE);
 		}
 
 	}

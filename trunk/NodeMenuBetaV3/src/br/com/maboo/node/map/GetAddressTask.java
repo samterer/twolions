@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,12 +31,16 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 	TextView textProgressBar;
 
 	// info bar do map
-	RelativeLayout rl;
+	LinearLayout lLayout;
 	TextView endPt1;
 	TextView endPt2;
 
 	// animação
 	Animation barUp;
+	Animation barDown;
+
+	// layout onde os botoes ficam dentro
+	RelativeLayout rLayout;
 
 	public GetAddressTask(Context context, View view) {
 		super();
@@ -53,7 +58,7 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 	 */
 	private void init() {
 		// sobe barra de informações do endereço
-		rl = (RelativeLayout) view.findViewById(R.id.bar_map_info);
+		lLayout = (LinearLayout) view.findViewById(R.id.bar_map_info);
 
 		pDialog = (ProgressBar) view.findViewById(R.id.progressBar);
 		textProgressBar = (TextView) view.findViewById(R.id.textProgressBar);
@@ -63,6 +68,10 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 
 		// anime up
 		barUp = AnimationUtils.loadAnimation(mContext, R.anim.bar_up);
+		barDown = AnimationUtils.loadAnimation(mContext, R.anim.bar_down);
+
+		// layout onde os bts ficam dentro
+		rLayout = (RelativeLayout) view.findViewById(R.id.bts_map_info);
 	}
 
 	@Override
@@ -70,11 +79,19 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 		// Toast.makeText(mContext, "searching...", Toast.LENGTH_LONG).show();
 
 		// verifica se a bar já esta na tela
-		if (rl.getVisibility() == View.INVISIBLE
-				|| rl.getVisibility() == View.GONE) { // inicia animação
-			rl.startAnimation(barUp);
-			rl.setVisibility(View.VISIBLE);
+		if (lLayout.getVisibility() == View.INVISIBLE
+				|| lLayout.getVisibility() == View.GONE) { // inicia animação
+
+			rLayout.setVisibility(View.INVISIBLE);
+
+			lLayout.startAnimation(barUp);
+			lLayout.setVisibility(View.VISIBLE);
+
 		} else {
+
+			// esconde os botoes
+			rLayout.startAnimation(barDown);
+			rLayout.setVisibility(View.GONE);
 
 			// esconde os textos
 			endPt1.setVisibility(View.INVISIBLE);
@@ -99,6 +116,10 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 		pDialog.setVisibility(View.GONE);
 		textProgressBar.setVisibility(View.GONE);
 
+		// esconde os botos
+		rLayout.startAnimation(barDown);
+		rLayout.setVisibility(View.GONE);
+
 		drawAddress(address);
 
 		// exibe os textos
@@ -107,9 +128,25 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 			public void run() {
 				endPt1.setVisibility(View.VISIBLE);
 				endPt2.setVisibility(View.VISIBLE);
+
+				// exibe os botoes
+				showBtBarInfo();
 			}
 		};
 		handler.postDelayed(r, 350);
+	}
+
+	/**
+	 * exibe os botoes da barra de info
+	 */
+	private void showBtBarInfo() {
+
+		Animation growUp = AnimationUtils.loadAnimation(mContext,
+				R.anim.bt_bar_up);
+
+		rLayout.startAnimation(growUp);
+
+		rLayout.setVisibility(View.VISIBLE);
 	}
 
 	/**
