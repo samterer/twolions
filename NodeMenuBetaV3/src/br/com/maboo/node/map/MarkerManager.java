@@ -6,9 +6,9 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.RelativeLayout;
 import br.com.maboo.node.R;
 import br.com.maboo.node.chat.ChatActivity;
 import br.livroandroid.utils.AndroidUtils;
@@ -37,8 +37,8 @@ public class MarkerManager {
 	private View view;
 
 	// posicao inicial do mapa
-	public void initPointManager(final GoogleMap map, final Activity act,
-			final View view) {
+	public void initPointManager(final GoogleMap map,
+			final FragmentActivity act, final View view) {
 		this.map = map;
 		this.view = view;
 
@@ -163,20 +163,4 @@ public class MarkerManager {
 
 	}
 
-	/*******************************************************************************
-	 * ao precionar a tecla de back ele apaga ou retorna todas as modificações
-	 * na tela
-	 *******************************************************************************/
-	public void onBackPressed() {
-		// super.getActivity().onBackPressed();
-
-		RelativeLayout rl = (RelativeLayout) view
-				.findViewById(R.id.bar_map_info);
-
-		// esconde a info bar
-		if (rl.getVisibility() == View.VISIBLE) {
-			rl.setVisibility(View.INVISIBLE);
-		}
-
-	}
 }
