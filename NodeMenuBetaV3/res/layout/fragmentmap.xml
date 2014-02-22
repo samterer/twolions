@@ -31,8 +31,7 @@
         android:layout_gravity="bottom" >
 
         <include
-            layout="@layout/bar_map_info"
-            android:visibility="invisible" />
+            layout="@layout/bar_map_info" />
     </LinearLayout>
 
 </FrameLayout>
