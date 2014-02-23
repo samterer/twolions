@@ -19,7 +19,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--
      The following two permissions are not required to use
-     Google Maps Android API v2, but are recommended.
+     Google Maps Android API v2, but are recommended.
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -60,7 +60,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="br.com.maboo.node.chat.ChatActivity"
+            android:name="br.com.maboo.node.nodechat.NodeChatActivity"
             android:label="@string/title_activity_chat"
             android:parentActivityName="br.com.maboo.node.MainActivity"
             android:screenOrientation="portrait" >

@@ -1,16 +1,16 @@
-package br.com.maboo.node.chat;
+package br.com.maboo.node.nodechat;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 import br.com.maboo.node.R;
 
-public class ChatActivity extends Activity {
+public class NodeChatActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_chat);
+		setContentView(R.layout.activity_chat_node);
 
 		// Para recuperar os dados do Bundle em outra Activity
 		Bundle extras = getIntent().getExtras();

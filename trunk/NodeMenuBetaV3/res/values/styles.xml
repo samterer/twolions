@@ -2,4 +2,12 @@
 
     <style name="AppTheme" parent="android:Theme.Light" />
 
+    <style name="PopupSelectList">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/com_facebook_button_check</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 </resources>
