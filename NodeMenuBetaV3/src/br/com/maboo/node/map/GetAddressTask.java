@@ -14,9 +14,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import br.com.maboo.node.R;
 import br.com.maboo.node.sessao.Sessao;
@@ -34,13 +34,11 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 	LinearLayout lLayout;
 	TextView endPt1;
 	TextView endPt2;
+	ImageView iconBar;
 
 	// animação
 	Animation barUp;
 	Animation barDown;
-
-	// layout onde os botoes ficam dentro
-	RelativeLayout rLayout;
 
 	public GetAddressTask(Context context, View view) {
 		super();
@@ -65,13 +63,12 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 
 		endPt1 = (TextView) view.findViewById(R.id.endPt1);
 		endPt2 = (TextView) view.findViewById(R.id.endPt2);
+		iconBar = (ImageView) view.findViewById(R.id.iconeBar);
 
 		// anime up
 		barUp = AnimationUtils.loadAnimation(mContext, R.anim.bar_up);
 		barDown = AnimationUtils.loadAnimation(mContext, R.anim.bar_down);
 
-		// layout onde os bts ficam dentro
-		rLayout = (RelativeLayout) view.findViewById(R.id.bts_map_info);
 	}
 
 	@Override
@@ -82,20 +79,17 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 		if (lLayout.getVisibility() == View.INVISIBLE
 				|| lLayout.getVisibility() == View.GONE) { // inicia animação
 
-			rLayout.setVisibility(View.INVISIBLE);
-
 			lLayout.startAnimation(barUp);
 			lLayout.setVisibility(View.VISIBLE);
 
 		} else {
 
-			// esconde os botoes
-			rLayout.startAnimation(barDown);
-			rLayout.setVisibility(View.GONE);
-
 			// esconde os textos
 			endPt1.setVisibility(View.INVISIBLE);
 			endPt2.setVisibility(View.INVISIBLE);
+
+			// icone da barra
+			iconBar.setVisibility(View.INVISIBLE);
 
 			// exibe o progress
 			pDialog.setVisibility(View.VISIBLE);
@@ -110,43 +104,32 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 	 * indeterminate activity indicator and set the text of the UI element that
 	 * shows the address. If the lookup failed, display the error message.
 	 */
-	protected void onPostExecute(Address address) {
+	protected void onPostExecute(final Address address) {
 
 		// dismiss the dialog after getting all products
 		pDialog.setVisibility(View.GONE);
 		textProgressBar.setVisibility(View.GONE);
 
-		// esconde os botos
-		rLayout.startAnimation(barDown);
-		rLayout.setVisibility(View.GONE);
-
-		drawAddress(address);
+		// carrega o endereço nos campos
+		try {
+			drawAddress(address);
+		} catch (NullPointerException e) {
+		}
 
 		// exibe os textos
 		Handler handler = new Handler();
 		final Runnable r = new Runnable() {
 			public void run() {
+				// carrega a classe AddressStatic com o endereço da vez
+				AddressStatic.address = address;
+				// titulo do endereços
 				endPt1.setVisibility(View.VISIBLE);
 				endPt2.setVisibility(View.VISIBLE);
-
-				// exibe os botoes
-				showBtBarInfo();
+				// icone da barra
+				iconBar.setVisibility(View.VISIBLE);
 			}
 		};
 		handler.postDelayed(r, 350);
-	}
-
-	/**
-	 * exibe os botoes da barra de info
-	 */
-	private void showBtBarInfo() {
-
-		Animation growUp = AnimationUtils.loadAnimation(mContext,
-				R.anim.bt_bar_up);
-
-		rLayout.startAnimation(growUp);
-
-		rLayout.setVisibility(View.VISIBLE);
 	}
 
 	/**

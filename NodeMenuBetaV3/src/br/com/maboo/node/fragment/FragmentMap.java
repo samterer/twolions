@@ -73,6 +73,9 @@ public class FragmentMap extends SherlockFragment implements
 		return view;
 	}
 
+	/**
+	 * verifica cliques em itens da lista de autoSearch
+	 */
 	public void onItemClick(AdapterView<?> adapterView, View view,
 			int position, long id) {
 
@@ -84,6 +87,11 @@ public class FragmentMap extends SherlockFragment implements
 		moveCameraParaEndereco((String) ((TextView) view).getText());
 	}
 
+	/**
+	 * move a camera para o endereço digitado
+	 * 
+	 * @param endereco
+	 */
 	private void moveCameraParaEndereco(String endereco) {
 
 		// convert o endereco em lat e lon e move a camera para o ponto
@@ -260,6 +268,9 @@ public class FragmentMap extends SherlockFragment implements
 		hideKeyBoard();
 	}
 
+	/*
+	 * recebe o texto que esta sendo inserido em tempo real
+	 */
 	@Override
 	public boolean onQueryTextChange(String newText) {
 
@@ -299,8 +310,10 @@ public class FragmentMap extends SherlockFragment implements
 		return true;
 	}
 
+	/*
+	 * pesquisa pelo endereço digitado
+	 */
 	@Override
-	// pesquisa um endereço
 	public boolean onQueryTextSubmit(String query) {
 		// AndroidUtils.toast(getActivity().getApplicationContext(), query);
 

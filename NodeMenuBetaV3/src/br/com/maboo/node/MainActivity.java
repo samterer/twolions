@@ -16,7 +16,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 import br.com.maboo.node.adapter.MenuListAdapter;
 import br.com.maboo.node.fragment.FragmentAbout;
@@ -301,17 +300,20 @@ public class MainActivity extends SherlockFragmentActivity {
 		// anime down
 		Animation barDown = AnimationUtils.loadAnimation(this, R.anim.bar_down);
 
-		// esconde a info bar
-		LinearLayout llayout = (LinearLayout) findViewById(R.id.bar_map_info);
-		if (llayout.getVisibility() == View.VISIBLE) {
+		// esconde a bar de info no map
+		LinearLayout infoBar = (LinearLayout) findViewById(R.id.bar_map_info);
+		if (infoBar.getVisibility() == View.VISIBLE) {
+			// esconde bar
+			infoBar.startAnimation(barDown);
+			infoBar.setVisibility(View.INVISIBLE);
+		}
 
-			llayout.startAnimation(barDown);
-			llayout.setVisibility(View.INVISIBLE);
-
-			// esconde o layout dos bts
-			RelativeLayout rLayout = (RelativeLayout) findViewById(R.id.bts_map_info);
-			rLayout.startAnimation(barDown);
-			rLayout.setVisibility(View.GONE);
+		// esconde a bar de criação de node
+		LinearLayout createChat = (LinearLayout) findViewById(R.id.activity_create_chat_node);
+		if (createChat.getVisibility() == View.VISIBLE) {
+			// esconde chat
+			createChat.startAnimation(barDown);
+			createChat.setVisibility(View.INVISIBLE);
 		}
 
 	}

@@ -38,7 +38,10 @@
     <string name="single_user_selected">%1$s</string>
     <string name="two_users_selected">%1$s and %2$s</string>
     <string name="multiple_users_selected">%1$s and %2$s others</string>
-    <string name="title_activity_chat">ChatActivity</string>
     <string name="title_activity_search_results">SearchResultsActivity</string>
+
+    <!-- activitys -->
+    <string name="title_activity_create_chat">title_activity_create_chat</string>
+    <string name="title_activity_chat">ChatActivity</string>
 
 </resources>
