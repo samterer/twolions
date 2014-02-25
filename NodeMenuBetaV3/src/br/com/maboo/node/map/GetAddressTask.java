@@ -19,11 +19,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import br.com.maboo.node.R;
-import br.com.maboo.node.sessao.Sessao;
+import br.com.maboo.node.sessao.TelaSessao;
 
 class GetAddressTask extends AsyncTask<Location, Void, Address> {
+
+	private String TAG = "GetAddressTask";
+
 	private Context mContext;
-	private View view;
+	private View mView;
 
 	// loading progress
 	ProgressBar pDialog;
@@ -43,12 +46,12 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 	public GetAddressTask(Context context, View view) {
 		super();
 		this.mContext = context;
-		this.view = view;
+		this.mView = view;
 
 		init();
 
 		// muda tela na sessao
-		Sessao.TELA = 1;
+		TelaSessao.TELA = TelaSessao.MAPA_PESQUISA;
 	}
 
 	/**
@@ -56,14 +59,14 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 	 */
 	private void init() {
 		// sobe barra de informações do endereço
-		lLayout = (LinearLayout) view.findViewById(R.id.bar_map_info);
+		lLayout = (LinearLayout) mView.findViewById(R.id.bar_map_info);
 
-		pDialog = (ProgressBar) view.findViewById(R.id.progressBar);
-		textProgressBar = (TextView) view.findViewById(R.id.textProgressBar);
+		pDialog = (ProgressBar) mView.findViewById(R.id.progressBar);
+		textProgressBar = (TextView) mView.findViewById(R.id.textProgressBar);
 
-		endPt1 = (TextView) view.findViewById(R.id.endPt1);
-		endPt2 = (TextView) view.findViewById(R.id.endPt2);
-		iconBar = (ImageView) view.findViewById(R.id.iconeBar);
+		endPt1 = (TextView) mView.findViewById(R.id.endPt1);
+		endPt2 = (TextView) mView.findViewById(R.id.endPt2);
+		iconBar = (ImageView) mView.findViewById(R.id.iconeBar);
 
 		// anime up
 		barUp = AnimationUtils.loadAnimation(mContext, R.anim.bar_up);
@@ -220,17 +223,6 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 			// Get the first address
 			Address address = addresses.get(0);
 
-			/*
-			 * Format the first line of address (if available), city, and
-			 * country name.
-			 */
-			/*
-			 * String addressText = String.format( "%s, %s, %s", // If there's a
-			 * street address, add it address.getMaxAddressLineIndex() > 0 ?
-			 * address .getAddressLine(0) : "", // Locality is usually a city
-			 * address.getLocality(), // The country of the address
-			 * address.getCountryName());
-			 */
 			// Return the text
 			return address;
 
