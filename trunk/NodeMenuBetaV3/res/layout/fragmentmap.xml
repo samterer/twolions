@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
+        android:visibility="invisible"
         map:uiZoomControls="false" >
     </com.google.android.gms.maps.MapView>
 
@@ -30,18 +31,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom" >
 
-        <include
-            layout="@layout/bar_map_info" />
+        <include layout="@layout/bar_map_info" />
     </LinearLayout>
-    
+
     <!-- criação do node -->
-    
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
-        <include
-            layout="@layout/activity_create_chat_node" />
+        <include layout="@layout/create_node_chat" />
     </LinearLayout>
 
 </FrameLayout>

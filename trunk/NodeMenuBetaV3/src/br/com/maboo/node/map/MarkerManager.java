@@ -12,7 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import br.com.maboo.node.R;
-import br.com.maboo.node.nodechat.CreateNodeChatActivity;
+import br.com.maboo.node.nodechat.CreateNodeChat;
 import br.com.maboo.node.nodechat.NodeChatActivity;
 import br.livroandroid.utils.AndroidUtils;
 
@@ -123,14 +123,14 @@ public class MarkerManager {
 			@Override
 			public void onMapLongClick(LatLng point) {
 
-				// Convert LatLng to Location for send to GetAddressTask
+				// Convert LatLng to Location for send to BarInfoAddress
 				Location location = new Location("Test");
 				location.setLatitude(point.latitude);
 				location.setLongitude(point.longitude);
 				location.setTime(new Date().getTime()); // Set time as current
 														// Date
 
-				(new GetAddressTask(activity, mView)).execute(location);
+				(new BarInfoAddress(activity, mView)).execute(location);
 
 			}
 		});
@@ -169,12 +169,12 @@ public class MarkerManager {
 	public void criaNode(View v) {
 		// exibe a tela de criação do node
 		LinearLayout lLayout = (LinearLayout) mView
-				.findViewById(R.id.activity_create_chat_node);
+				.findViewById(R.id.create_node_chat);
 		lLayout.startAnimation(barUp);
 		lLayout.setVisibility(View.VISIBLE);
 
 		// init classe de criação de node
-		new CreateNodeChatActivity().initInstance(map, mActivity, mView);
+		new CreateNodeChat().initInstance(map, mActivity, mView);
 	}
 
 }

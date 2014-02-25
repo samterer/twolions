@@ -19,9 +19,9 @@ import br.com.maboo.node.util.ImageLoader;
 import com.facebook.friend.FriendElement;
 import com.google.android.gms.maps.GoogleMap;
 
-public class CreateNodeChatActivity {
+public class CreateNodeChat {
 
-	private String TAG = "CreateNodeChatActivity";
+	private String TAG = "CreateNodeChat";
 
 	// extend datas
 	private Activity mActivity;
@@ -79,35 +79,25 @@ public class CreateNodeChatActivity {
 		// text para inserção de amigos
 		final TextView title = (TextView) mView.findViewById(R.id.textCheck);
 		title.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				// verifica se o check private foi selecionado
 				if (check.isChecked()) {
 					Log.i(TAG, "selecione amigos...");
 				}
-
 			}
 		});
 
+		// slide for hide screen create chat
 		final LinearLayout createChat = (LinearLayout) mView
-				.findViewById(R.id.activity_create_chat_node);
+				.findViewById(R.id.create_node_chat);
 		createChat.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
 					((MainActivity) mActivity).onBackPressed();
 					return true;
 				}
-
-				if (event.getAction() == MotionEvent.ACTION_UP) {
-
-					Log.e(TAG, "Up");
-					return true;
-				}
-
 				return false;
 			}
 		});
@@ -123,12 +113,14 @@ public class CreateNodeChatActivity {
 		String zoom = "15";
 
 		// widith screen
-		int displayW = 900;
-		int displayH = 340;
+		int displayW = 640;
+		int displayH = 640;
 
 		String url = "http://maps.googleapis.com/maps/api/staticmap?center="
 				+ lat + "," + lon + "&zoom=" + zoom + "&size=" + displayW + "x"
 				+ displayH + "&sensor=false&maptype=normal";
+
+		Log.i(TAG, "get image map from url: " + url);
 
 		return url;
 	}
