@@ -324,7 +324,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		}
 
 		// esconde a bar de criação de node
-		LinearLayout createChat = (LinearLayout) findViewById(R.id.activity_create_chat_node);
+		LinearLayout createChat = (LinearLayout) findViewById(R.id.create_node_chat);
 		if (createChat.getVisibility() == View.VISIBLE) {
 			// esconde chat
 			createChat.startAnimation(barDown);

@@ -8,6 +8,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,9 +47,6 @@ public class FragmentMap extends SherlockFragment implements
 	private MapView mapView;
 	private GoogleMap map;
 
-	private static final String IMAGEVIEW_TAG = "Android Logo";
-	private android.widget.RelativeLayout.LayoutParams layoutParams;
-
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
@@ -60,9 +58,6 @@ public class FragmentMap extends SherlockFragment implements
 
 		// instancia o mapView
 		mapView.onCreate(savedInstanceState);
-
-		// habilita o menu no maps
-		setHasOptionsMenu(true);
 
 		try {
 			init();
@@ -131,6 +126,8 @@ public class FragmentMap extends SherlockFragment implements
 				MapsInitializer.initialize(getActivity());
 			} catch (GooglePlayServicesNotAvailableException e) {
 				e.printStackTrace();
+			} catch (NullPointerException e) {
+				e.printStackTrace();
 			}
 
 			// instacia o maps no formato completo 'GoogleMap'
@@ -146,6 +143,18 @@ public class FragmentMap extends SherlockFragment implements
 			// tela, assim como itens dinamicos (icone do usuario)
 			// mando a view para provaveis animacoes
 			new MarkerManager().initPointManager(map, getActivity(), view);
+
+			// habilita a barra
+			Handler handler = new Handler();
+			final Runnable r = new Runnable() {
+				public void run() {
+					// exibe o maps
+					mapView.setVisibility(View.VISIBLE);
+					// habilita o menu no maps
+					setHasOptionsMenu(true);
+				}
+			};
+			handler.postDelayed(r, 350);
 
 		}
 

@@ -21,9 +21,9 @@ import android.widget.TextView;
 import br.com.maboo.node.R;
 import br.com.maboo.node.sessao.TelaSessao;
 
-class GetAddressTask extends AsyncTask<Location, Void, Address> {
+class BarInfoAddress extends AsyncTask<Location, Void, Address> {
 
-	private String TAG = "GetAddressTask";
+	private String TAG = "BarInfoAddress";
 
 	private Context mContext;
 	private View mView;
@@ -43,7 +43,7 @@ class GetAddressTask extends AsyncTask<Location, Void, Address> {
 	Animation barUp;
 	Animation barDown;
 
-	public GetAddressTask(Context context, View view) {
+	public BarInfoAddress(Context context, View view) {
 		super();
 		this.mContext = context;
 		this.mView = view;

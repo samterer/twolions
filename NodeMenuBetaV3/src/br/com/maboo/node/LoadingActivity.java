@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import br.com.maboo.node.util.Util;
-import br.livroandroid.utils.AndroidUtils;
 
 import com.facebook.scrumptious.FacebookLoginActivity;
 
