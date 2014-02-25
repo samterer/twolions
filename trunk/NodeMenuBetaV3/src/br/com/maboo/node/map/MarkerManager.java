@@ -35,7 +35,7 @@ public class MarkerManager {
 	// extend datas
 	private GoogleMap map;
 	private Activity mActivity;
-	private View view;
+	private View mView;
 
 	// localizacao do usuario
 	private Location loc;
@@ -44,19 +44,12 @@ public class MarkerManager {
 	Animation barUp;
 	Animation barDown;
 
-	// 1 - criação
-	// 2 - visualizacao
-	// 3 - remove
-	private int TIPO_CRIACAO = 0;
-	private int TIPO_VISUALIZACAO = 1;
-	private int TIPO_REMOVE = 2;
-
 	// posicao inicial do mapa
 	public void initPointManager(final GoogleMap map,
 			final FragmentActivity activity, final View view) {
 
 		this.map = map;
-		this.view = view;
+		this.mView = view;
 		this.mActivity = activity;
 
 		// localização do usuario
@@ -114,7 +107,8 @@ public class MarkerManager {
 
 				SecondClickOnMarker mco = new SecondClickOnMarker(activity,
 						NodeChatActivity.class);
-				// local é o valor da chave, semprer olha a Activity que vai
+				// local é o valor da chave, o programador de sempre olhar a
+				// Activity que vai
 				// receber essa intent, para saber o que a chave "local" vai
 				// tratar
 				mco.goTo("local", marker.getTitle());
@@ -129,20 +123,20 @@ public class MarkerManager {
 			@Override
 			public void onMapLongClick(LatLng point) {
 
-				// Convert LatLng to Location
+				// Convert LatLng to Location for send to GetAddressTask
 				Location location = new Location("Test");
 				location.setLatitude(point.latitude);
 				location.setLongitude(point.longitude);
 				location.setTime(new Date().getTime()); // Set time as current
 														// Date
 
-				(new GetAddressTask(activity, view)).execute(location);
+				(new GetAddressTask(activity, mView)).execute(location);
 
 			}
 		});
 
 		// listener do botao da barra de info
-		ImageView icone = (ImageView) view.findViewById(R.id.iconeBar);
+		final ImageView icone = (ImageView) mView.findViewById(R.id.iconeBar);
 		icone.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 
@@ -161,7 +155,7 @@ public class MarkerManager {
 	 * hide info bar
 	 *******************************************************************************/
 	private void hideInfoBar() {
-		LinearLayout llayout = (LinearLayout) view
+		LinearLayout llayout = (LinearLayout) mView
 				.findViewById(R.id.bar_map_info);
 		if (llayout.getVisibility() == View.VISIBLE) {
 			llayout.startAnimation(barDown);
@@ -173,13 +167,14 @@ public class MarkerManager {
 	 * cria um novo node
 	 *******************************************************************************/
 	public void criaNode(View v) {
-		LinearLayout lLayout = (LinearLayout) view
+		// exibe a tela de criação do node
+		LinearLayout lLayout = (LinearLayout) mView
 				.findViewById(R.id.activity_create_chat_node);
 		lLayout.startAnimation(barUp);
 		lLayout.setVisibility(View.VISIBLE);
 
 		// init classe de criação de node
-		new CreateNodeChatActivity().initInstance(map, mActivity, view);
+		new CreateNodeChatActivity().initInstance(map, mActivity, mView);
 	}
 
 }

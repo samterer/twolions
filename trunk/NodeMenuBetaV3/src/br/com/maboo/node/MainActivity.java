@@ -24,13 +24,15 @@ import br.com.maboo.node.fragment.FragmentLogout;
 import br.com.maboo.node.fragment.FragmentMap;
 import br.com.maboo.node.fragment.FragmentProfile;
 import br.com.maboo.node.fragment.FragmentSettings;
-import br.com.maboo.node.sessao.Sessao;
+import br.com.maboo.node.sessao.TelaSessao;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.facebook.scrumptious.auxiliar.FaceUserVO;
 
 public class MainActivity extends SherlockFragmentActivity {
+
+	private String TAG = "MainActivity";
 
 	// Declare Variables
 	DrawerLayout mDrawerLayout;
@@ -53,20 +55,30 @@ public class MainActivity extends SherlockFragmentActivity {
 	String[] title;
 	// subtitulo no menu lateral
 	String[] subtitle;
+	// icone do subtitulo
 	int[] icon;
+	// fragment do item
 	Fragment[] fragments;
 
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
 		// Get the view from drawer_main.xml
 		setContentView(R.layout.drawer_main);
 
 		initMenu();
 
+		posInitMenu(icicle);
+
+	}
+
+	/*
+	 * pre carrega os dados da view da tela
+	 */
+	private void posInitMenu(Bundle icicle) {
 		// Locate DrawerLayout in drawer_main.xml
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -103,12 +115,10 @@ public class MainActivity extends SherlockFragmentActivity {
 				R.string.drawer_close) {
 
 			public void onDrawerClosed(View view) {
-				// TODO Auto-generated method stub
 				super.onDrawerClosed(view);
 			}
 
 			public void onDrawerOpened(View drawerView) {
-				// TODO Auto-generated method stub
 				// Set the title on the action when drawer open
 				getSupportActionBar().setTitle(mDrawerTitle);
 				super.onDrawerOpened(drawerView);
@@ -117,12 +127,16 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		if (savedInstanceState == null) {
+		// abre o fragment default
+		if (icicle == null) {
 			selectItem(1);
 		}
 
 	}
 
+	/*
+	 * inicializa a tela
+	 */
 	private void initMenu() {
 
 		// Get the Title
@@ -265,12 +279,13 @@ public class MainActivity extends SherlockFragmentActivity {
 		} else {
 
 			// verifica a tela que o usuario esta (momento)
-			if (Sessao.TELA == 1) {
+			if (TelaSessao.TELA == TelaSessao.MAPA_PESQUISA
+					|| TelaSessao.TELA == TelaSessao.CRIACAO_NODE) {
 
 				hideInfoBar();
 
 				// muda estado da tela
-				Sessao.TELA = 0;
+				TelaSessao.TELA = 0;
 				return;
 			}
 

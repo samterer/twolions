@@ -1,16 +1,19 @@
 package br.com.maboo.node.nodechat;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import br.com.maboo.node.MainActivity;
 import br.com.maboo.node.R;
 import br.com.maboo.node.map.AddressStatic;
+import br.com.maboo.node.sessao.TelaSessao;
 import br.com.maboo.node.util.ImageLoader;
 
 import com.facebook.friend.FriendElement;
@@ -21,38 +24,28 @@ public class CreateNodeChatActivity {
 	private String TAG = "CreateNodeChatActivity";
 
 	// extend datas
-	private GoogleMap map;
 	private Activity mActivity;
-	private View view;
+	private View mView;
 
-	// tipo da interação
-	private int TIPO;
-
-	// amigos convidados para o ndoe
+	// amigos convidados para o node
 	private FriendElement[] mList;
 
 	public void initInstance(final GoogleMap map, final Activity activity,
 			final View view) {
-		this.map = map;
-		this.view = view;
+
+		this.mView = view;
 		this.mActivity = activity;
 
 		// inicia as classes principais
 		initMethods();
+
+		// muda tela na sessao
+		TelaSessao.TELA = TelaSessao.CRIACAO_NODE;
 	}
 
 	public void initMethods() {
-		// esconde a actionBar
-		// getActionBar().hide();
-
-		// seta o layout
-		// setContentView(R.layout.activity_create_chat_node);
-
-		// receive a extras
-		init();
-
-		// image view from layout
-		ImageView imgView = (ImageView) view.findViewById(R.id.imgMap);
+		// image mView from layout
+		ImageView imgView = (ImageView) mView.findViewById(R.id.imgMap);
 
 		// desenha o mapa
 		drawMapImage(getImageMap(), R.drawable.loader, imgView);
@@ -64,24 +57,11 @@ public class CreateNodeChatActivity {
 	}
 
 	/**
-	 * verifica atividade
-	 */
-	private void init() {
-		Intent in = mActivity.getIntent();
-		if (in != null) {
-			Bundle b = in.getExtras();
-			if (b != null) {
-				TIPO = (int) b.getInt("tipo");
-			}
-		}
-	}
-
-	/**
 	 * veririca interações com a tela
 	 */
 	private void interactive() {
 		// check mark for private node
-		final CheckedTextView check = (CheckedTextView) view
+		final CheckedTextView check = (CheckedTextView) mView
 				.findViewById(R.id.checkText);
 		check.setOnClickListener(new OnClickListener() {
 
@@ -97,7 +77,7 @@ public class CreateNodeChatActivity {
 		});
 
 		// text para inserção de amigos
-		final TextView title = (TextView) view.findViewById(R.id.textCheck);
+		final TextView title = (TextView) mView.findViewById(R.id.textCheck);
 		title.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -109,6 +89,28 @@ public class CreateNodeChatActivity {
 
 			}
 		});
+
+		final LinearLayout createChat = (LinearLayout) mView
+				.findViewById(R.id.activity_create_chat_node);
+		createChat.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+					((MainActivity) mActivity).onBackPressed();
+					return true;
+				}
+
+				if (event.getAction() == MotionEvent.ACTION_UP) {
+
+					Log.e(TAG, "Up");
+					return true;
+				}
+
+				return false;
+			}
+		});
 	}
 
 	/**
@@ -118,7 +120,7 @@ public class CreateNodeChatActivity {
 
 		String lat = String.valueOf(AddressStatic.address.getLatitude());
 		String lon = String.valueOf(AddressStatic.address.getLongitude());
-		String zoom = "17";
+		String zoom = "15";
 
 		// widith screen
 		int displayW = 900;
