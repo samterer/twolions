@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <SurfaceView
+    <br.com.maboo.imageedit.camera.MySurfaceView
         android:id="@+id/preview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
@@ -24,22 +24,22 @@
             android:text="Cancel" />
 
         <Button
-            android:id="@+id/snap"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:onClick="onSnapClick"
-            android:text="Snap" />
-
-        <Button
             android:id="@+id/change"
             android:layout_width="100dip"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/snap"
-            android:layout_alignBottom="@+id/snap"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentRight="true"
             android:onClick="swithCamera"
             android:text="Change" />
+
+        <Button
+            android:id="@+id/snap"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/change"
+            android:layout_alignBottom="@+id/change"
+            android:layout_centerHorizontal="true"
+            android:onClick="onSnapClick"
+            android:text="Take" />
     </RelativeLayout>
 
 </RelativeLayout>
