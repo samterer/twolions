@@ -38,13 +38,10 @@
             android:name="br.com.maboo.imageedit.core.ActivityCircle"
             android:screenOrientation="portrait" />
         <activity
-            android:name="br.com.maboo.imageedit.camera.CameraScreen"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="br.com.maboo.imageedit.camera.MakePhoto"
             android:screenOrientation="portrait" />
         <activity
-            android:name="br.com.maboo.imageedit.camera.PreviewActivity"
+            android:name="br.com.maboo.imageedit.core.MainActivity"
             android:screenOrientation="portrait" />
     </application>
 

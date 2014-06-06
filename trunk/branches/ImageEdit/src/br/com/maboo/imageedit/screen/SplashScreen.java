@@ -1,14 +1,12 @@
 package br.com.maboo.imageedit.screen;
 
-import br.com.maboo.imageedit.R;
-import br.com.maboo.imageedit.R.anim;
-import br.com.maboo.imageedit.R.id;
-import br.com.maboo.imageedit.R.layout;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
+import br.com.maboo.imageedit.R;
+import br.com.maboo.imageedit.core.MainActivity;
 
 public class SplashScreen extends Activity {
 
@@ -43,7 +41,7 @@ public class SplashScreen extends Activity {
 
 				// go to screen of camera
 				Intent intent = new Intent(SplashScreen.this,
-						GridMaskScreen.class);
+						MainActivity.class);
 				startActivity(intent);
 				
 				// fecha esta activity
