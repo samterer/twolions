@@ -8,16 +8,11 @@
     <string name="m_wait">Aguarde</string>
     <string name="instructions">Please Swipe</string>
 
-    <string-array name="desserts">
-        <item>Cupcake</item>
-        <item>Donut</item>
-        <item>Eclair</item>
-        <item>Froyo</item>
-        <item>Gingerbread</item>
-        <item>Honeycomb</item>
-        <item>Ice Cream Sandwich</item>
-        <item>Jelly Bean</item>
-        <item>Key Lime Pie</item>
+    <string-array name="masks">
+        <item>h3</item>
+        <item>h4</item>
+        <item>h5</item>
+        <item>h6</item>
     </string-array>
 
 </resources>

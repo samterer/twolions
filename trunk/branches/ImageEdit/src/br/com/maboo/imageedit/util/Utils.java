@@ -1,10 +1,13 @@
 package br.com.maboo.imageedit.util;
 
+import java.io.File;
+
 import br.com.maboo.imageedit.R;
 import br.com.maboo.imageedit.R.string;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Environment;
 import android.util.Log;
 
 public class Utils {
@@ -56,6 +59,13 @@ public class Utils {
 		} catch (Exception e) {
 			Log.e("appLog", e.getMessage(), e);
 		}
+	}
+
+	public static File getDir() {
+		File sdDir = Environment
+				.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+		sdDir.mkdirs();
+		return new File(sdDir, "photoApp");
 	}
 
 }

@@ -14,9 +14,6 @@ import android.view.SurfaceView;
  */
 public class MySurfaceView extends SurfaceView {
 
-	SurfaceHolder holder;
-	Bitmap bmp;
-
 	// this constructor used when requested as an XML resource
 	public MySurfaceView(Context context, AttributeSet attrs) {
 		super(context, attrs);
