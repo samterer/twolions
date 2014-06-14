@@ -9,18 +9,21 @@ import java.util.Date;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -28,6 +31,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.Toast;
 import br.com.maboo.imageedit.R;
+import br.com.maboo.imageedit.model.DrawableId;
+import br.com.maboo.imageedit.util.Utils;
 
 @SuppressLint("DrawAllocation")
 public class MakePhoto extends Activity implements SurfaceHolder.Callback,
@@ -55,12 +60,11 @@ public class MakePhoto extends Activity implements SurfaceHolder.Callback,
 		// monta mascara
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			idDrawable = extras.getInt("id");
+			idDrawable = DrawableId.LIST[extras.getInt("id")];
 		}
 
 		// coloca mascara na tela
 		Drawable d = getResources().getDrawable(idDrawable);
-		Log.i("appLog", "put mask d: " + d.getCurrent().toString());
 
 		// init camera
 		init();
@@ -189,12 +193,10 @@ public class MakePhoto extends Activity implements SurfaceHolder.Callback,
 			mCamera.stopPreview();
 			previewing = false;
 			mCamera.release();
-
-			createBitmap(data);
 		}
 
 		// get dir to save
-		File pictureFileDir = getDir();
+		File pictureFileDir = Utils.getDir();
 		if (!pictureFileDir.exists()) {
 			Log.d("appLog", "Can't create directory to save image.");
 			Toast.makeText(this, "Can't create directory to save image.",
@@ -212,17 +214,24 @@ public class MakePhoto extends Activity implements SurfaceHolder.Callback,
 
 		// create file
 		File pictureFile = new File(currentFileName);
+		Bitmap bitmap = (Bitmap) createBitmap(data); // recover img in bitmap
 
-		// save image
-		FileOutputStream fos = null;
+		// rotate bitmap
+		bitmap = rotateBitmap(bitmap);
+		// put overlay in bitmap
+		bitmap = overlay(bitmap);
+		
+		FileOutputStream out = null;
 		try {
-			fos = new FileOutputStream(pictureFile);
-			fos.write(data);
-			fos.close();
+			out = new FileOutputStream(pictureFile);
+			bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+			out.flush();
+			out.close();
 			Toast.makeText(
 					this,
 					"New Image saved:" + photoFile + " on path:"
-							+ getDir().getPath(), Toast.LENGTH_LONG).show();
+							+ Utils.getDir().getPath(), Toast.LENGTH_LONG)
+					.show();
 		} catch (IOException e) {
 			Log.d("appLog",
 					"File" + currentFileName + "not saved: " + e.getMessage());
@@ -231,25 +240,13 @@ public class MakePhoto extends Activity implements SurfaceHolder.Callback,
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		} finally {
-			if (fos != null)
+			if (out != null)
 				try {
-					fos.close();
+					out.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 		}
-
-		/*
-		 * // file name String filename = "mask_1.jpg"; // save dir File sd =
-		 * new File(Environment.getExternalStorageDirectory() + File.separator +
-		 * "My Custom Folder"); // create dir sd.mkdirs(); // temp dir File
-		 * tmpFile = new File(sd,filename); // export file to bitmap Bitmap
-		 * bitmap = (Bitmap) data.getExtras().get("data"); try { out = new
-		 * FileOutputStream(tmpFile); bitmap.compress(Bitmap.CompressFormat.PNG,
-		 * 90, out); out.flush(); out.close(); } catch (IOException e) {
-		 * e.printStackTrace(); } catch (NullPointerException e) {
-		 * e.printStackTrace(); } finally { out.close(); }
-		 */
 
 		// chama tela de preview
 		Handler mHandler = new Handler();
@@ -259,23 +256,17 @@ public class MakePhoto extends Activity implements SurfaceHolder.Callback,
 
 	private Bitmap createBitmap(byte[] data) {
 		Bitmap bitmap = null;
-		Bitmap bmpOfTheImageFromCamera = null;
 		try {
-			// create a bitmap image
-		//	BitmapFactory.Options opts = new BitmapFactory.Options();
-		//	bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, opts);
-		//	bitmap = Bitmap.createScaledBitmap(bitmap, 480, 480, false);
-
 			// get the bitmap from camera imageData
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inSampleSize = 8;
 			// down sample
-			bmpOfTheImageFromCamera = BitmapFactory.decodeByteArray(data, 0,
-					data.length, options);
+			bitmap = BitmapFactory.decodeByteArray(data, 0, data.length,
+					options);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return bmpOfTheImageFromCamera;
+		return bitmap;
 	}
 
 	private Runnable timedTask = new Runnable() {
@@ -285,7 +276,7 @@ public class MakePhoto extends Activity implements SurfaceHolder.Callback,
 		public void run() {
 
 			Log.d("appLog", "Open picture: File" + "file://" + "sdcard/"
-					+ getDir().getPath() + "/" + currentFileName);
+					+ Utils.getDir().getPath() + "/" + currentFileName);
 
 			// exibe imagem
 			Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -305,7 +296,7 @@ public class MakePhoto extends Activity implements SurfaceHolder.Callback,
 			mCamera = Camera.open();
 			Canvas canvas = null;
 			try {
-				canvas = holder.lockCanvas(null);
+				canvas = holder.lockCanvas();
 				synchronized (holder) {
 					onDraw(canvas);
 				}
@@ -323,11 +314,6 @@ public class MakePhoto extends Activity implements SurfaceHolder.Callback,
 
 	protected void onDraw(Canvas canvas) {
 		mPreview.onDraw(canvas);
-		/*
-		 * Bitmap icon = BitmapFactory.decodeResource(getResources(),
-		 * R.drawable.ic_launcher); canvas.drawColor(Color.BLACK);
-		 * canvas.drawBitmap(icon, 100, 100, new Paint());
-		 */
 	}
 
 	@Override
@@ -360,10 +346,79 @@ public class MakePhoto extends Activity implements SurfaceHolder.Callback,
 		}
 	}
 
-	private File getDir() {
-		File sdDir = Environment
-				.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-		sdDir.mkdirs();
-		return new File(sdDir, "photoApp");
+	public Bitmap drawTextToBitmap(int gResId, String gText) {
+		Resources resources = getResources();
+		float scale = resources.getDisplayMetrics().density;
+		Bitmap bitmap = BitmapFactory.decodeResource(resources, gResId);
+
+		android.graphics.Bitmap.Config bitmapConfig = bitmap.getConfig();
+		// set default bitmap config if none
+		if (bitmapConfig == null) {
+			bitmapConfig = android.graphics.Bitmap.Config.ARGB_8888;
+		}
+		// resource bitmaps are imutable,
+		// so we need to convert it to mutable one
+		bitmap = bitmap.copy(bitmapConfig, true);
+
+		Canvas canvas = new Canvas(bitmap);
+		// new antialised Paint
+		Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		// text color - #3D3D3D
+		paint.setColor(Color.rgb(61, 61, 61));
+		// text size in pixels
+		paint.setTextSize((int) (14 * scale));
+		// text shadow
+		paint.setShadowLayer(1f, 0f, 1f, Color.WHITE);
+
+		// draw text to the Canvas center
+		Rect bounds = new Rect();
+		paint.getTextBounds(gText, 0, gText.length(), bounds);
+		int x = (bitmap.getWidth() - bounds.width()) / 2;
+		int y = (bitmap.getHeight() + bounds.height()) / 2;
+
+		canvas.drawText(gText, x, y, paint);
+
+		return bitmap;
+	}
+
+	public Bitmap rotateBitmap(Bitmap bOriginal) {
+		// find the width and height of the screen:
+		Display d = getWindowManager().getDefaultDisplay();
+		int x = d.getWidth();
+		int y = d.getHeight();
+
+		// scale it to fit the screen, x and y swapped because my image is wider
+		// than it is tall
+		Bitmap scaledBitmap = Bitmap.createScaledBitmap(bOriginal, y, x, true);
+
+		// create a matrix object
+		Matrix matrix = new Matrix();
+		matrix.postRotate(90); // anti-clockwise by 90 degrees
+
+		// create a new bitmap from the original using the matrix to transform
+		// the result
+		Bitmap rotatedBitmap = Bitmap
+				.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(),
+						scaledBitmap.getHeight(), matrix, true);
+
+		return rotatedBitmap;
+	}
+
+	public Bitmap overlay(Bitmap bOriginal) {
+		float scale = getResources().getDisplayMetrics().density;
+
+		Bitmap bmOverlay = Bitmap.createBitmap(bOriginal.getWidth(),
+				bOriginal.getHeight(), bOriginal.getConfig());
+		Bitmap bmp2 = BitmapFactory.decodeResource(getResources(),
+				R.drawable.h3_topic);
+
+		Display d = getWindowManager().getDefaultDisplay();
+		int x = (d.getWidth()/2 - bmOverlay.getWidth()/2);
+		int y = (d.getHeight()/2 - bmOverlay.getHeight()/2);
+
+		Canvas canvas = new Canvas(bmOverlay);
+		canvas.drawBitmap(bOriginal, new Matrix(), null);
+		canvas.drawBitmap(bmp2, x, y, null);
+		return bmOverlay;
 	}
 }
