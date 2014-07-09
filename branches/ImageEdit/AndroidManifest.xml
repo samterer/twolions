@@ -20,9 +20,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:screenOrientation="portrait"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         <activity
-            android:name="br.com.maboo.imageedit.screen.SplashScreen"
+            android:name="br.com.maboo.imageedit.activity.ActivitySplashScreen"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,16 +31,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.com.maboo.imageedit.screen.GridMaskScreen"
+            android:name="br.com.maboo.imageedit.screen.SplashScreenPt2"
             android:screenOrientation="portrait" />
         <activity
-            android:name="br.com.maboo.imageedit.core.ActivityCircle"
+            android:name="br.com.maboo.imageedit.activity.ActivityMakePhoto"
             android:screenOrientation="portrait" />
         <activity
-            android:name="br.com.maboo.imageedit.camera.MakePhoto"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="br.com.maboo.imageedit.core.MainActivity"
+            android:name="br.com.maboo.imageedit.activity.ImageSwap"
             android:screenOrientation="portrait" />
     </application>
 
