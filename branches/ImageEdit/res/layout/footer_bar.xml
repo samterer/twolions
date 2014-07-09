@@ -3,25 +3,27 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:background="#A000"
+    android:background="@drawable/footer_bar"
     android:gravity="center_vertical" >
 
-    <Button
+    <ImageView
         android:id="@+id/cancel"
         android:layout_width="100dip"
         android:layout_height="wrap_content"
         android:onClick="onCancelClick"
+        android:src="@drawable/ico_nariz"
         android:text="Cancel" />
 
-    <Button
+    <ImageView
         android:id="@+id/change"
         android:layout_width="100dip"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:onClick="swithCamera"
+        android:src="@drawable/ico_flip_camera"
         android:text="Change" />
 
-    <Button
+    <ImageView
         android:id="@+id/snap"
         android:layout_width="100dip"
         android:layout_height="wrap_content"
@@ -29,6 +31,7 @@
         android:layout_alignBottom="@+id/change"
         android:layout_centerHorizontal="true"
         android:onClick="onSnapClick"
+        android:src="@drawable/ico_camera"
         android:text="Take" />
 
 </RelativeLayout>
