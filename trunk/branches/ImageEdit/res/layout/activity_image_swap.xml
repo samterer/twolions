@@ -1,19 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/aqua" >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:onClick="whatIs"
-        android:text="@string/instructions"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+    android:background="@drawable/bg" >
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <include
+        android:layout_alignParentBottom="true"
+        layout="@layout/footer_hosp" />
 
 </RelativeLayout>

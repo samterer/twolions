@@ -2,17 +2,12 @@
 <resources>
 
     <string name="version">1.0</string>
+    
     <string name="app_name">ImageEdit</string>
+    
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    
     <string name="m_wait">Aguarde</string>
+    
     <string name="instructions">Please Swipe</string>
-
-    <string-array name="masks">
-        <item>h3</item>
-        <item>h4</item>
-        <item>h5</item>
-        <item>h6</item>
-    </string-array>
-
 </resources>
