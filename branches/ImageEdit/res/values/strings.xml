@@ -10,4 +10,6 @@
     <string name="m_wait">Aguarde</string>
     
     <string name="instructions">Please Swipe</string>
+    
+    <string name="todo">TODO</string>
 </resources>

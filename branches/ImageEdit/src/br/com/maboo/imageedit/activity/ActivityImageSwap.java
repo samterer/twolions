@@ -14,11 +14,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import br.com.maboo.imageedit.R;
 import br.com.maboo.imageedit.model.Masks;
+import br.com.maboo.imageedit.util.AnimUtil;
 
-public class ImageSwap extends Activity {
+public class ActivityImageSwap extends Activity {
 
-	private String pageData[]; // Stores the text to swipe.
 	private LayoutInflater inflater; // Used to create individual pages
+	
 	private ViewPager vp; // Reference to class to swipe views
 
 	@Override
@@ -34,6 +35,9 @@ public class ImageSwap extends Activity {
 
 		// set the adapter that will create the individual pages
 		vp.setAdapter(new MyPagesAdapter());
+		
+		// anime bit logo
+		AnimUtil.animeBitLogo(this);
 
 	}
 
@@ -48,10 +52,10 @@ public class ImageSwap extends Activity {
 		// Create the given page (indicated by position)
 		@Override
 		public Object instantiateItem(ViewGroup container, final int position) {
-			View page = inflater.inflate(R.layout.page, null);
+			View page = inflater.inflate(R.layout.photo_swap, null);
 
 			// cast img
-			ImageView iView = (ImageView) page.findViewById(R.id.img);
+			ImageView iView = (ImageView) page.findViewById(R.id.item);
 			
 			iView.setImageDrawable(getResources().getDrawable(
 					Masks.LIST_PHOTO_SWAP[position]));
@@ -63,10 +67,10 @@ public class ImageSwap extends Activity {
 					if(position < 1) { // block click in tutorial
 						return;
 					}
-					Toast.makeText(ImageSwap.this, "mask: " + position,
+					Toast.makeText(ActivityImageSwap.this, "mask: " + position,
 							Toast.LENGTH_SHORT).show();
 					
-					Intent i = new Intent(ImageSwap.this, ActivityMakePhoto.class);
+					Intent i = new Intent(ActivityImageSwap.this, ActivityMakePhoto.class);
 					i.putExtra("id", position);
 					startActivity(i);
 					
