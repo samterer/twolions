@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 import br.com.maboo.imageedit.R;
+import br.com.maboo.imageedit.util.AnimUtil;
 
 public class ActivitySplashScreen extends Activity {
 
@@ -21,7 +22,7 @@ public class ActivitySplashScreen extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.layout_splash);
+		setContentView(R.layout.activity_splash_screen);
 		
 		imgLogo = (ImageView) findViewById(R.id.logo);
 		
@@ -42,12 +43,12 @@ public class ActivitySplashScreen extends Activity {
 				mHandler.removeCallbacks(timedTask);
 
 				// go to screen of camera
-				Intent intent = new Intent(ActivitySplashScreen.this, ImageSwap.class);
+				Intent intent = new Intent(ActivitySplashScreen.this, ActivityImageSwap.class);
 				startActivity(intent);
 				
 				ActivitySplashScreen.this.finish(); // go to next part of splash
 				
-	            overridePendingTransition(R.anim.fadein, R.anim.fadeout); // fecha curtinas
+	            AnimUtil.beginAnimate(ActivitySplashScreen.this);
 
 			} else {
 				// roda a thread

@@ -57,7 +57,7 @@ public class ActivityMakePhoto extends Activity implements SurfaceHolder.Callbac
 		init(); //init camera
 
 		mInflater = LayoutInflater.from(getBaseContext());
-		View view = mInflater.inflate(R.layout.item, null);
+		View view = mInflater.inflate(R.layout.photo, null);
 		addContentView(view, new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT));
 
