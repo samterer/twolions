@@ -37,7 +37,7 @@
             android:name="br.com.maboo.imageedit.activity.ActivityMakePhoto"
             android:screenOrientation="portrait" />
         <activity
-            android:name="br.com.maboo.imageedit.activity.ImageSwap"
+            android:name="br.com.maboo.imageedit.activity.ActivityImageSwap"
             android:screenOrientation="portrait" />
     </application>
 
