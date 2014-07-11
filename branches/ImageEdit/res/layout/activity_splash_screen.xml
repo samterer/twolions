@@ -14,4 +14,9 @@
         android:scaleType="fitXY"
         android:src="@drawable/logo_maboo" />
 
+    <include
+        android:id="@+id/layout_load"
+        layout="@layout/layout_stage"
+        android:visibility="gone" />
+
 </RelativeLayout>

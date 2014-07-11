@@ -16,4 +16,9 @@
         android:layout_alignParentBottom="true"
         layout="@layout/footer_hosp" />
 
+    <include
+        android:id="@+id/layout_load"
+        layout="@layout/layout_stage"
+        android:visibility="visible" />
+
 </RelativeLayout>

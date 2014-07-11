@@ -6,19 +6,21 @@
     <!-- cortinas -->
 
     <ImageView
-        android:id="@+id/cortina_left"
+        android:id="@+id/curtain_left"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:contentDescription="@string/todo"
+        android:scaleType="fitXY"
         android:src="@drawable/cortina_azul" />
 
     <ImageView
-        android:id="@+id/cortina_right"
+        android:id="@+id/curtain_right"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:contentDescription="@string/todo"
+        android:scaleType="fitXY"
         android:src="@drawable/cortina_verde" />
 
     <!-- big logo iclown -->
@@ -29,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/todo"
+        android:visibility="invisible"
         android:src="@drawable/logo" />
 
 </RelativeLayout>
