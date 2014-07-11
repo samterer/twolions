@@ -20,7 +20,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:screenOrientation="portrait"
-        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        android:theme="@android:style/Theme.NoTitleBar" >
         <activity
             android:name="br.com.maboo.imageedit.activity.ActivitySplashScreen"
             android:label="@string/app_name" >
@@ -30,9 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="br.com.maboo.imageedit.screen.SplashScreenPt2"
-            android:screenOrientation="portrait" />
         <activity
             android:name="br.com.maboo.imageedit.activity.ActivityMakePhoto"
             android:screenOrientation="portrait" />

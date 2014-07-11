@@ -1,5 +1,9 @@
 <resources>
 
+    <!-- speed move animations -->
+    <integer name="speed_move">500</integer>
+    <integer name="speed_move_curtains">1000</integer>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>

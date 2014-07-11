@@ -25,6 +25,7 @@ public class ActivityImageSwap extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_image_swap);
 
 		// get an inflater to be used to create single pages
@@ -37,11 +38,18 @@ public class ActivityImageSwap extends Activity {
 		vp.setAdapter(new MyPagesAdapter());
 		
 		// anime bit logo
-		AnimUtil.animeBitLogo(this);
+		ImageView logoBit = (ImageView) findViewById(R.id.logo_bit);
+		AnimUtil.getInstance(this).animeLogoBitIn(logoBit);
+		
+		// anime footer
+		ImageView footerHosp = (ImageView) findViewById(R.id.footer_hosp);
+		AnimUtil.getInstance(this).animeFooterHosp(footerHosp);
 
 	}
 
-	// Implement PagerAdapter Class to handle individual page creation
+	/**
+	 *  PagerAdapter Class to  handle individual page creation
+	 */
 	class MyPagesAdapter extends PagerAdapter {
 		@Override
 		public int getCount() {
