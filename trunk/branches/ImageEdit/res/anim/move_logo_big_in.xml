@@ -4,21 +4,20 @@
     android:interpolator="@android:anim/linear_interpolator" >
 
     <translate
-        android:duration="@integer/speed_move"
+        android:duration="600"
         android:fillAfter="true"
         android:fromYDelta="-100%"
-        android:startOffset="300"
-        android:toYDelta="0%" />
+        android:toYDelta="10%" />
     <translate
-        android:duration="@integer/speed_move"
+        android:duration="300"
         android:fillAfter="true"
-        android:fromYDelta="0%"
+        android:fromYDelta="5%"
         android:startOffset="600"
-        android:toYDelta="-30%" />
+        android:toYDelta="-15%" />
     <translate
-        android:duration="@integer/speed_move"
+        android:duration="200"
         android:fillAfter="true"
-        android:fromYDelta="-30%"
+        android:fromYDelta="-15%"
         android:startOffset="900"
         android:toYDelta="0%" />
 

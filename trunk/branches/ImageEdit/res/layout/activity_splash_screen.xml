@@ -15,7 +15,7 @@
         android:src="@drawable/logo_maboo" />
 
     <include
-        android:id="@+id/layout_load"
+        android:id="@+id/layout_stage"
         layout="@layout/layout_stage"
         android:visibility="gone" />
 

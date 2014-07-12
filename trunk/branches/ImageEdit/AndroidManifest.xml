@@ -22,7 +22,7 @@
         android:screenOrientation="portrait"
         android:theme="@android:style/Theme.NoTitleBar" >
         <activity
-            android:name="br.com.maboo.imageedit.activity.ActivitySplashScreen"
+            android:name="br.com.maboo.imageedit.activity.SplashScreenActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,10 +31,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.com.maboo.imageedit.activity.ActivityMakePhoto"
+            android:name="br.com.maboo.imageedit.activity.MakePhotoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="br.com.maboo.imageedit.activity.ActivityImageSwap"
+            android:name="br.com.maboo.imageedit.activity.ImageSwapActivity"
             android:screenOrientation="portrait" />
     </application>
 

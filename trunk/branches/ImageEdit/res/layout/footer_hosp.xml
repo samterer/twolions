@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/footer_hosp"
-        android:contentDescription="@string/todo" />
+        android:contentDescription="@string/todo"
+        android:visibility="gone" />
 
 </RelativeLayout>
