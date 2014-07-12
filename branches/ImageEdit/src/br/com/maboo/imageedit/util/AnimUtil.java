@@ -1,27 +1,37 @@
 package br.com.maboo.imageedit.util;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import br.com.maboo.imageedit.R;
+import br.com.maboo.imageedit.activity.ImageSwapActivity;
+import br.com.maboo.imageedit.activity.SplashScreenActivity;
 
 public class AnimUtil implements AnimationListener {
 
-	private final int MOVE_LOGO_BIT = 1;
-	private final int MOVE_CURTAINS_IN = 2;
-	private final int MOVE_CURTAINS_OUT = 3;
-	private final int MOVE_LOGO_BIG_IN = 4;
-	private final int MOVE_LOGO_BIG_OUT = 5;
-	private final int MOVE_FOOTER_HOSP = 6;
+	public static final int MOVE_LOGO_BIT_IN = 1;
+	public static final int MOVE_CURTAINS_IN = 2;
+	public static final int MOVE_CURTAINS_OUT = 3;
+	public static final int MOVE_LOGO_BIG_IN_OPEN_SWAP = 4;
+	public static final int MOVE_LOGO_BIG_OUT = 5;
+	public static final int MOVE_FOOTER_HOSP_IN = 6;
 
-	private int mAnimId = 0;
+	private static int mFirstAnimId = 0;
+	private static int mSecondAnimId = 0;
 
 	private static Activity mActivity;
-	
-	private ImageView mLogoBig;
+
+	private ImageView mLogoBig, mLogoBit;
+	private ImageView mCurtainLeft, mCurtainRight;
+	private ImageView mFooterHosp;
+
+	private Handler mHandler;
 
 	public static AnimUtil getInstance(Activity activity) {
 		if (mActivity == null) {
@@ -31,7 +41,7 @@ public class AnimUtil implements AnimationListener {
 	}
 
 	public void animeLogoBigIn(ImageView logoBig) {
-		mAnimId = MOVE_LOGO_BIG_IN;
+		mFirstAnimId = MOVE_LOGO_BIG_IN_OPEN_SWAP;
 
 		Animation move_logo_big_in = AnimationUtils.loadAnimation(
 				mActivity.getApplicationContext(), R.anim.move_logo_big_in);
@@ -40,7 +50,7 @@ public class AnimUtil implements AnimationListener {
 	}
 
 	public void animeLogoBigOut(ImageView logoBig) {
-		mAnimId = MOVE_LOGO_BIG_OUT;
+		mFirstAnimId = MOVE_LOGO_BIG_OUT;
 
 		Animation move_logo_big_out = AnimationUtils.loadAnimation(
 				mActivity.getApplicationContext(), R.anim.move_logo_big_out);
@@ -48,8 +58,20 @@ public class AnimUtil implements AnimationListener {
 		logoBig.startAnimation(move_logo_big_out);
 	}
 
-	public void animeCurtainOut(ImageView curtainLeft, ImageView curtainRight, ImageView logoBig) {
-		mAnimId = MOVE_CURTAINS_OUT;
+	public void animeCurtainOut(ImageView curtainLeft, ImageView curtainRight,
+			ImageView logoBig, ImageView logoBit, ImageView footerHosp) {
+		mSecondAnimId = MOVE_LOGO_BIT_IN;
+
+		mLogoBit = logoBit;
+		mFooterHosp = footerHosp;
+
+		animeCurtainOut(curtainLeft, curtainRight, logoBig);
+	}
+
+	public void animeCurtainOut(ImageView curtainLeft, ImageView curtainRight,
+			ImageView logoBig) {
+		mFirstAnimId = MOVE_CURTAINS_OUT;
+
 
 		Animation move_curtain_out_left = AnimationUtils
 				.loadAnimation(mActivity.getApplicationContext(),
@@ -62,12 +84,17 @@ public class AnimUtil implements AnimationListener {
 				R.anim.move_curtain_out_right);
 		move_curtain_out_right.setAnimationListener(this);
 		curtainRight.startAnimation(move_curtain_out_right);
+
+		animeLogoBigOut(logoBig);
 	}
 
-	public void animeCurtainIn(ImageView curtainLeft, ImageView curtainRight, ImageView logoBig) {
-		mAnimId = MOVE_CURTAINS_IN;
-		
+	public void animeCurtainIn(ImageView curtainLeft, ImageView curtainRight,
+			ImageView logoBig) {
+		mFirstAnimId = MOVE_CURTAINS_IN;
+
 		mLogoBig = logoBig;
+		mCurtainLeft = curtainLeft;
+		mCurtainRight = curtainRight;
 
 		Animation move_curtain_in_left = AnimationUtils.loadAnimation(
 				mActivity.getApplicationContext(), R.anim.move_curtain_in_left);
@@ -82,7 +109,7 @@ public class AnimUtil implements AnimationListener {
 	}
 
 	public void animeLogoBitIn(ImageView logoBit) {
-		mAnimId = MOVE_LOGO_BIT;
+		mFirstAnimId = MOVE_LOGO_BIT_IN;
 
 		Animation move_logo_bit = AnimationUtils.loadAnimation(
 				mActivity.getApplicationContext(), R.anim.move_logo_bit_in);
@@ -93,7 +120,7 @@ public class AnimUtil implements AnimationListener {
 	}
 
 	public void animeFooterHosp(ImageView footerHosp) {
-		mAnimId = MOVE_FOOTER_HOSP;
+		mFirstAnimId = MOVE_FOOTER_HOSP_IN;
 
 		Animation move_footer_hosp = AnimationUtils.loadAnimation(
 				mActivity.getApplicationContext(), R.anim.move_footer_hosp_up);
@@ -105,24 +132,56 @@ public class AnimUtil implements AnimationListener {
 
 	@Override
 	public void onAnimationEnd(Animation animation) {
-		// ao fechar cortinas desce o logo grande
-		if(mAnimId == MOVE_CURTAINS_IN) {
-			if(mLogoBig != null)
-			mLogoBig.setVisibility(View.VISIBLE);
-			animeLogoBigIn(mLogoBig);
+		// first animation end
+		switch (mFirstAnimId) {
+		case MOVE_CURTAINS_IN: // down big logo
+			if (mLogoBig != null) {
+				mLogoBig.setVisibility(View.VISIBLE);
+				animeLogoBigIn(mLogoBig);
+			}
+			break;
+
+		case MOVE_LOGO_BIG_IN_OPEN_SWAP: // open image swap activity
+			if (mActivity != null) {
+				mHandler = new Handler();
+				mHandler.postDelayed(openSwapTask, 2000l);
+			}
+			break;
+		case MOVE_LOGO_BIG_OUT:
+			if (mLogoBig != null)
+				mLogoBig.setVisibility(View.GONE);
+			if (mCurtainLeft != null)
+				mCurtainLeft.setVisibility(View.GONE);
+			if (mCurtainRight != null)
+				mCurtainRight.setVisibility(View.GONE);
+			if (mSecondAnimId == MOVE_LOGO_BIT_IN) {
+				if (mLogoBit != null)
+					mLogoBit.setVisibility(View.VISIBLE);
+					animeLogoBitIn(mLogoBit);
+				if (mFooterHosp != null)
+					mFooterHosp.setVisibility(View.VISIBLE);
+					animeFooterHosp(mFooterHosp);
+			}
+			break;
 		}
+
 	}
+
+	private Runnable openSwapTask = new Runnable() {
+		@Override
+		public void run() {
+			Intent intent = new Intent(mActivity, ImageSwapActivity.class);
+			mActivity.startActivity(intent);
+			mActivity.finish();
+
+			mHandler.removeCallbacks(openSwapTask);
+		}
+	};
 
 	@Override
-	public void onAnimationRepeat(Animation animation) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onAnimationRepeat(Animation animation){}
 
 	@Override
-	public void onAnimationStart(Animation animation) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onAnimationStart(Animation animation){}
 
 }

@@ -27,10 +27,11 @@
 
     <ImageView
         android:id="@+id/logo_big"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/todo"
+        android:scaleType="centerInside"
         android:visibility="invisible"
         android:src="@drawable/logo" />
 

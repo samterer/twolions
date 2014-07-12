@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -11,44 +12,42 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import br.com.maboo.imageedit.R;
 import br.com.maboo.imageedit.model.Masks;
 import br.com.maboo.imageedit.util.AnimUtil;
 
-public class ActivityImageSwap extends Activity {
+public class ImageSwapActivity extends Activity {
 
 	private LayoutInflater inflater; // Used to create individual pages
-	
+
 	private ViewPager vp; // Reference to class to swipe views
+	
+	ImageView mCurtainLeft, mCurtainRight, mLogoBig, mLogoBit, mFooterHosp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.activity_image_swap);
 
 		// get an inflater to be used to create single pages
 		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		// Reference ViewPager defined in activity
 		vp = (ViewPager) findViewById(R.id.viewPager);
-
-		// set the adapter that will create the individual pages
 		vp.setAdapter(new MyPagesAdapter());
-		
-		// anime bit logo
-		ImageView logoBit = (ImageView) findViewById(R.id.logo_bit);
-		AnimUtil.getInstance(this).animeLogoBitIn(logoBit);
-		
-		// anime footer
-		ImageView footerHosp = (ImageView) findViewById(R.id.footer_hosp);
-		AnimUtil.getInstance(this).animeFooterHosp(footerHosp);
 
+		RelativeLayout layoutLoad = (RelativeLayout) findViewById(R.id.layout_stage);
+		layoutLoad.setVisibility(View.VISIBLE);
+
+		mLogoBig = (ImageView) findViewById(R.id.logo_big);
+		mLogoBig.setVisibility(View.VISIBLE);
+
+		hideStage(); // hide the stage in screen
 	}
 
 	/**
-	 *  PagerAdapter Class to  handle individual page creation
+	 * PagerAdapter Class to handle individual page creation
 	 */
 	class MyPagesAdapter extends PagerAdapter {
 		@Override
@@ -64,7 +63,7 @@ public class ActivityImageSwap extends Activity {
 
 			// cast img
 			ImageView iView = (ImageView) page.findViewById(R.id.item);
-			
+
 			iView.setImageDrawable(getResources().getDrawable(
 					Masks.LIST_PHOTO_SWAP[position]));
 
@@ -72,18 +71,16 @@ public class ActivityImageSwap extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					if(position < 1) { // block click in tutorial
+					if (position < 1) { // block click in tutorial
 						return;
 					}
-					Toast.makeText(ActivityImageSwap.this, "mask: " + position,
+					Toast.makeText(ImageSwapActivity.this, "mask: " + position,
 							Toast.LENGTH_SHORT).show();
-					
-					Intent i = new Intent(ActivityImageSwap.this, ActivityMakePhoto.class);
+
+					Intent i = new Intent(ImageSwapActivity.this,
+							MakePhotoActivity.class);
 					i.putExtra("id", position);
 					startActivity(i);
-					
-					// insere animacao das cortinas fechando
-
 				}
 			});
 
@@ -92,25 +89,25 @@ public class ActivityImageSwap extends Activity {
 
 			return page;
 		}
-		
+
 		private int getInitPhotoPos() {
 			int result = 0;
-			
+
 			// ignora tutorial na segunda vez que o app é aberto
-			if(isFirstOpening()) {
+			if (isFirstOpening()) {
 				result = 0;
 			} else {
 				result = 1;
 			}
-			
+
 			return result;
 		}
-		
-		private boolean isFirstOpening(){
+
+		private boolean isFirstOpening() {
 			boolean result = true;
-			
+
 			// veirify properties
-			
+
 			return result;
 		}
 
@@ -126,6 +123,17 @@ public class ActivityImageSwap extends Activity {
 			((ViewPager) container).removeView((View) object);
 			object = null;
 		}
-
 	}
+
+	private void hideStage() {
+		mLogoBig = (ImageView) findViewById(R.id.logo_big);
+		mCurtainLeft = (ImageView) findViewById(R.id.curtain_left);
+		mCurtainRight = (ImageView) findViewById(R.id.curtain_right);
+		mLogoBit = (ImageView) findViewById(R.id.logo_bit);
+		mFooterHosp = (ImageView) findViewById(R.id.footer_hosp);
+
+		AnimUtil.getInstance(this).animeCurtainOut(mCurtainLeft, mCurtainRight,
+				mLogoBig, mLogoBit, mFooterHosp);
+	}
+
 }

@@ -29,7 +29,7 @@ import br.com.maboo.imageedit.util.BitmapUtil;
 import br.com.maboo.imageedit.util.Utils;
 
 @SuppressLint("DrawAllocation")
-public class ActivityMakePhoto extends Activity implements SurfaceHolder.Callback,
+public class MakePhotoActivity extends Activity implements SurfaceHolder.Callback,
 		Camera.ShutterCallback, Camera.PictureCallback {
 
 	private Camera mCamera;

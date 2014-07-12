@@ -5,4 +5,5 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="15dp"
     android:contentDescription="@string/todo"
+    android:visibility="gone"
     android:src="@drawable/logo_interno" />
