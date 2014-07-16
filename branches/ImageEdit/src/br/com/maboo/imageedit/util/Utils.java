@@ -25,14 +25,14 @@ public class Utils {
 				.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 		sdDir.mkdirs();
 
-		File file = new File(sdDir, "photoApp");
+		File file = new File(sdDir, "iclown");
 		if (!file.exists()) {
 			Log.e("Utils", "Can't create directory to save image.");
 			Toast.makeText(context, "Can't create directory to save image.",
 					Toast.LENGTH_LONG).show();
 			return null;
 		} else {
-			return new File(sdDir, "photoApp");
+			return new File(sdDir, "iclown");
 		}
 	}
 

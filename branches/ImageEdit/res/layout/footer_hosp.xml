@@ -10,6 +10,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/footer_hosp"
         android:contentDescription="@string/todo"
-        android:visibility="gone" />
+        android:visibility="invisible" />
 
 </RelativeLayout>

@@ -4,16 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 import br.com.maboo.imageedit.R;
 import br.com.maboo.imageedit.model.Masks;
 import br.com.maboo.imageedit.util.AnimUtil;
@@ -24,18 +23,17 @@ public class ImageSwapActivity extends Activity {
 
 	private ViewPager vp; // Reference to class to swipe views
 	
-	ImageView mCurtainLeft, mCurtainRight, mLogoBig, mLogoBit, mFooterHosp;
+	private ImageView mCurtainLeft, mCurtainRight, mLogoBig, mLogoBit, mFooterHosp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image_swap);
 
-		// get an inflater to be used to create single pages
 		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		vp = (ViewPager) findViewById(R.id.viewPager);
-		vp.setAdapter(new MyPagesAdapter());
+		vp.setAdapter(new CustomPagerAdapter());
 
 		RelativeLayout layoutLoad = (RelativeLayout) findViewById(R.id.layout_stage);
 		layoutLoad.setVisibility(View.VISIBLE);
@@ -46,13 +44,23 @@ public class ImageSwapActivity extends Activity {
 		hideStage(); // hide the stage in screen
 	}
 
+	private void hideStage() {
+		mLogoBig = (ImageView) findViewById(R.id.logo_big);
+		mCurtainLeft = (ImageView) findViewById(R.id.curtain_left);
+		mCurtainRight = (ImageView) findViewById(R.id.curtain_right);
+		mLogoBit = (ImageView) findViewById(R.id.logo_bit);
+		mFooterHosp = (ImageView) findViewById(R.id.footer_hosp);
+
+		AnimUtil.getInstance(this).animeCurtainOut(mCurtainLeft, mCurtainRight,
+				mLogoBig, mLogoBit, mFooterHosp);
+	}
+
 	/**
 	 * PagerAdapter Class to handle individual page creation
 	 */
-	class MyPagesAdapter extends PagerAdapter {
+	class CustomPagerAdapter extends PagerAdapter implements OnPageChangeListener {
 		@Override
 		public int getCount() {
-			// Return total pages, here one for each data item
 			return Masks.LIST_PHOTO_SWAP.length;
 		}
 
@@ -74,41 +82,39 @@ public class ImageSwapActivity extends Activity {
 					if (position < 1) { // block click in tutorial
 						return;
 					}
-					Toast.makeText(ImageSwapActivity.this, "mask: " + position,
-							Toast.LENGTH_SHORT).show();
-
-					Intent i = new Intent(ImageSwapActivity.this,
-							MakePhotoActivity.class);
-					i.putExtra("id", position);
-					startActivity(i);
+					goToMakePhoto(position);
 				}
 			});
 
 			// Add the page to the front of the queue
-			((ViewPager) container).addView(page, getInitPhotoPos());
+			((ViewPager) container).addView(page, isFirst());
 
 			return page;
 		}
 
-		private int getInitPhotoPos() {
-			int result = 0;
-
-			// ignora tutorial na segunda vez que o app é aberto
-			if (isFirstOpening()) {
-				result = 0;
+		private int isFirst() {
+			int first = 0;
+			if (isShowTutorial()) {
+				first = 0;
 			} else {
-				result = 1;
+				first = 1;
 			}
-
-			return result;
+			return first;
 		}
 
-		private boolean isFirstOpening() {
+		private boolean isShowTutorial() {
 			boolean result = true;
 
 			// veirify properties
 
 			return result;
+		}
+		
+		private void goToMakePhoto(int pos) {
+			Intent i = new Intent(ImageSwapActivity.this,
+					MakePhotoActivity.class);
+			i.putExtra("id", pos);
+			startActivity(i);
 		}
 
 		@Override
@@ -117,23 +123,24 @@ public class ImageSwapActivity extends Activity {
 			// required by API
 			return arg0 == (View) arg1;
 		}
+		
+		private View getView(int pos){
+			return vp.getChildAt(pos);
+		}
 
 		@Override
 		public void destroyItem(ViewGroup container, int position, Object object) {
 			((ViewPager) container).removeView((View) object);
 			object = null;
 		}
+
+		@Override
+		public void onPageScrollStateChanged(int pos) {}
+
+		@Override
+		public void onPageScrolled(int arg0, float arg1, int arg2) {}
+
+		@Override
+		public void onPageSelected(int pos) {}
 	}
-
-	private void hideStage() {
-		mLogoBig = (ImageView) findViewById(R.id.logo_big);
-		mCurtainLeft = (ImageView) findViewById(R.id.curtain_left);
-		mCurtainRight = (ImageView) findViewById(R.id.curtain_right);
-		mLogoBit = (ImageView) findViewById(R.id.logo_bit);
-		mFooterHosp = (ImageView) findViewById(R.id.footer_hosp);
-
-		AnimUtil.getInstance(this).animeCurtainOut(mCurtainLeft, mCurtainRight,
-				mLogoBig, mLogoBit, mFooterHosp);
-	}
-
 }
