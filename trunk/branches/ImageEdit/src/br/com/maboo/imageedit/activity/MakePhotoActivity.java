@@ -114,15 +114,6 @@ public class MakePhotoActivity extends Activity implements SurfaceHolder.Callbac
 	}
 
 	/**
-	 * Cancel pic
-	 * 
-	 * @param v
-	 */
-	public void onCancelClick(View v) {
-		onDestroy();
-	}
-
-	/**
 	 * Take a picture
 	 * 
 	 * @param v
@@ -277,11 +268,9 @@ public class MakePhotoActivity extends Activity implements SurfaceHolder.Callbac
 	}
 
 	private Runnable timedTask = new Runnable() {
-
 		@SuppressLint("SdCardPath")
 		@Override
 		public void run() {
-
 			Log.d("appLog", "Open picture: File" + "file://" + "sdcard/"
 					+ mPictureFileDir.getPath() + "/" + mFileName);
 

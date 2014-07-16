@@ -2,7 +2,6 @@ package br.com.maboo.imageedit.util;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
@@ -11,9 +10,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import br.com.maboo.imageedit.R;
 import br.com.maboo.imageedit.activity.ImageSwapActivity;
-import br.com.maboo.imageedit.activity.SplashScreenActivity;
 
 public class AnimUtil implements AnimationListener {
+
+	private static AnimUtil instance;
 
 	public static final int MOVE_LOGO_BIT_IN = 1;
 	public static final int MOVE_CURTAINS_IN = 2;
@@ -27,17 +27,29 @@ public class AnimUtil implements AnimationListener {
 
 	private static Activity mActivity;
 
-	private ImageView mLogoBig, mLogoBit;
-	private ImageView mCurtainLeft, mCurtainRight;
-	private ImageView mFooterHosp;
+	private static ImageView mLogoBig, mLogoBit;
+	private static ImageView mCurtainLeft, mCurtainRight;
+	private static ImageView mFooterHosp;
 
 	private Handler mHandler;
 
 	public static AnimUtil getInstance(Activity activity) {
-		if (mActivity == null) {
-			mActivity = activity;
+		if (instance == null) {
+			instance = new AnimUtil();
 		}
-		return new AnimUtil();
+		clear();
+
+		mActivity = activity;
+
+		return instance;
+	}
+
+	private static void clear() {
+		mLogoBig = null;
+		mLogoBit = null;
+		mCurtainLeft = null;
+		mCurtainRight = null;
+		mFooterHosp = null;
 	}
 
 	public void animeLogoBigIn(ImageView logoBig) {
@@ -71,7 +83,6 @@ public class AnimUtil implements AnimationListener {
 	public void animeCurtainOut(ImageView curtainLeft, ImageView curtainRight,
 			ImageView logoBig) {
 		mFirstAnimId = MOVE_CURTAINS_OUT;
-
 
 		Animation move_curtain_out_left = AnimationUtils
 				.loadAnimation(mActivity.getApplicationContext(),
@@ -157,10 +168,10 @@ public class AnimUtil implements AnimationListener {
 			if (mSecondAnimId == MOVE_LOGO_BIT_IN) {
 				if (mLogoBit != null)
 					mLogoBit.setVisibility(View.VISIBLE);
-					animeLogoBitIn(mLogoBit);
+				animeLogoBitIn(mLogoBit);
 				if (mFooterHosp != null)
 					mFooterHosp.setVisibility(View.VISIBLE);
-					animeFooterHosp(mFooterHosp);
+				animeFooterHosp(mFooterHosp);
 			}
 			break;
 		}
@@ -179,9 +190,11 @@ public class AnimUtil implements AnimationListener {
 	};
 
 	@Override
-	public void onAnimationRepeat(Animation animation){}
+	public void onAnimationRepeat(Animation animation) {
+	}
 
 	@Override
-	public void onAnimationStart(Animation animation){}
+	public void onAnimationStart(Animation animation) {
+	}
 
 }

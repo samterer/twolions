@@ -19,7 +19,6 @@ public class CustomSurfaceView extends SurfaceView {
 
 	public CustomSurfaceView(Context context) {
 		super(context);
-
 	}
 
 	@Override
